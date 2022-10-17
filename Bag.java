@@ -22,16 +22,24 @@ public class Bag {
     }
 
     /**
-     * Allows player to draw one letter at random
+     * Allows player to draw multiple letters at random
      * @param numToDraw number of letters to draw
      * @return list of drawn letters removed from the bag
      */
-    public ArrayList<Letters> drawTile(int numToDraw) {
+    public ArrayList<Letters> drawTiles(int numToDraw) {
         ArrayList returnList = new ArrayList<>();
         for (int i = numToDraw; i > 0; numToDraw--){
             returnList.add(letters.remove(letters.size()-1));
         }
         return returnList;
+    }
+
+    /**
+     * Allows player to draw one letter at random
+     * @return letter removed from the bag
+     */
+    public Letters drawTile(int numToDraw) {
+        return letters.remove(letters.size()-1);
     }
 
 }
