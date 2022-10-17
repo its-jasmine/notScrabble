@@ -5,7 +5,7 @@ public class Player {
     private int turn;
 
     public Player(){
-        Rack hand = new Rack();
+        Rack rack = new Rack();
         this.score = 0;
         this.turn = 0;
     }
