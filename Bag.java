@@ -29,7 +29,8 @@ public class Bag {
     public ArrayList<Letters> drawTiles(int numToDraw) {
         ArrayList returnList = new ArrayList<>();
         for (int i = numToDraw; i > 0; numToDraw--){
-            returnList.add(letters.remove(letters.size()-1));
+            Letters drawnLetter = drawTile();
+            if (drawnLetter != null) returnList.add(drawnLetter);
         }
         return returnList;
     }
@@ -38,7 +39,8 @@ public class Bag {
      * Allows player to draw one letter at random
      * @return letter removed from the bag
      */
-    public Letters drawTile(int numToDraw) {
+    public Letters drawTile() {
+        if (letters.size() == 0) return null;
         return letters.remove(letters.size()-1);
     }
 
