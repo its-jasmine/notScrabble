@@ -1,17 +1,16 @@
 /**
  * @author Rebecca Elliott
+ * @author Jasmine Gad El Hak
  */
 public class Board {
     private static List<List<Square>> squares;
 
     public Board() {
-        squares = new ArrayList<List<Square>>();
-        int i = 0;
-        for (Column c : Column.values()) {
-            squares.add(i, new ArrayList<Square>());
-            int j = 0;
-            for (Row r : Row.values()) {
-                squares.get(i).add(j, new Square());
+        squares = new ArrayList<ArrayList<Square>>();
+        for (Row r : Row.values()) {
+            squares.add(0, new ArrayList<Square>());
+            for (Column c : Column.values()) {
+                squares.get(0).add(new Square()); // Creates a board of PLAIN Squares
             }
         }
     }
@@ -53,7 +52,7 @@ public class Board {
      * @return the enum letter or null
      */
     public Letters getSquareLetter(Column colum, Row row) {
-        return squares.get(colum.int).get(row.int).getLetter();
+        return squares.get(row.ordinal()).get(colum.ordinal()).getLetter();
     }
 
     /**
