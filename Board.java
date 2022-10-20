@@ -71,7 +71,7 @@ public class Board {
      * @param row of the square being checked
      * @return the enum letter or null
      */
-    public Letters getSquareLetter(Column colum, Row row) {
+    public Letter getSquareLetter(Column colum, Row row) {
         return squares[row.ordinal()][colum.ordinal()].getLetter();
     }
 
