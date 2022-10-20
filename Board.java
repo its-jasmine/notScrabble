@@ -88,7 +88,7 @@ public class Board {
      * Calculates the score of a single word
      * @return word score
      */
-    private int scoreWord(head, tail) {
+    private int scoreWord() { // head, tail
         return -1; //  needs logic - Rebecca will do
     }
 
