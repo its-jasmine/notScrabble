@@ -32,8 +32,12 @@ public class Board {
      * @param row of the letter being placed
      * @return true if letter was placed, false otherwise
      */
-    public boolean placeTile(Column colum, Row row) {
-        return false; // needs logic
+    public boolean placeTile(Column colum, Row row, Letter letter) {
+        if (squares[row.ordinal()][colum.ordinal()].isEmpty()) {
+            squares[row.ordinal()][colum.ordinal()].placeTile(letter);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -43,7 +47,11 @@ public class Board {
      * @return true if letter was removed, false otherwise
      */
     public boolean removeTile(Column colum, Row row) {
-        return false; // needs logic
+        if (!squares[row.ordinal()][colum.ordinal()].isEmpty()) {
+            squares[row.ordinal()][colum.ordinal()].removeTile();
+            return true;
+        }
+        return false;
     }
 
 
@@ -53,7 +61,7 @@ public class Board {
      * @param row of the square being checked
      * @return true if the square has no letter yet, false otherwise
      */
-    private boolean isSquareEmpty(Column colum, Row row) { // Column Row enum will need associated int value for indexing
+    private boolean isSquareEmpty(Column colum, Row row) {
         return squares[row.ordinal()][colum.ordinal()].isEmpty();
     }
 
