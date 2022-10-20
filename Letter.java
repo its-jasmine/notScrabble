@@ -3,7 +3,7 @@
  * letter in the game.
  */
 
-public enum Letters {
+public enum Letter {
     A("A", 1, 9),
     B("B", 3, 2),
     C("C", 3, 2),
@@ -36,7 +36,7 @@ public enum Letters {
     public final int value;
     private final int totalNum; // total number of this letter in the game
 
-    Letters(String letter, int value, int totalNum) {
+    Letter(String letter, int value, int totalNum) {
         this.letter = letter;
         this.value = value;
         this.totalNum = totalNum;
