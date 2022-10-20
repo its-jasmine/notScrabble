@@ -1,16 +1,16 @@
 public class Square {
-    public enum SquareType {
+    public enum Type {
         STAR, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
     }
     private Letter letter;
-    private SquareType type;
+    private Type type;
 
-    public Square(SquareType type){
+    public Square(Type type){
         this.letter = null;
         this.type = type;
     }
     public Square(){
-        this(SquareType.PLAIN);
+        this(Type.PLAIN);
     }
     public Letter getTile() {
         return letter;
