@@ -48,7 +48,11 @@ public class Player {
     public void addToScore(int leftOverLetterScore) {
     }
 
+    /**
+     * Not sure what this needs
+     * @return
+     */
     public boolean takeTurn() {
-
+        return true;
     }
 }

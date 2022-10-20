@@ -1,17 +1,17 @@
 import java.util.*;
 public class Rack {
 
-    private List<Letter> tileList;
+    private List<Tile> tileList;
     private final static int MAXTILES = 7;
     private static Bag bag;
 
     public Rack(){
-        List lettersList = new ArrayList<Letter>();
+        List tileList = new ArrayList<Tile>();
     }
     public int getTilesAmount() {
         return tileList.size();
     }
-    public List<Letter> getTilesList() {
+    public List<Tile> getTilesList() {
         return tileList;
     }
 
@@ -25,13 +25,13 @@ public class Rack {
     }
 
     /**
-     * gets the score of the letters currently on the rack
+     * gets the score of the Tiles currently on the rack
      * @return int of the score.
      */
     public int getRackScore(){
-        int rackScore;
-        for (Letter l : tileList){
-            rackScore += l.value;
+        int rackScore = 0;
+        for (Tile tile : tileList){
+            rackScore += tile.value;
         }
         return rackScore;
     }
