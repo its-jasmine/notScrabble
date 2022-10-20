@@ -2,17 +2,14 @@ import java.util.*;
 public class Rack {
 
     private List<Letter> tileList;
-    private int tileAmount;
-    private int rackScore;
     private final static int MAXTILES = 7;
     private static Bag bag;
 
     public Rack(){
         List lettersList = new ArrayList<Letter>();
-        this.tileAmount = 0;
     }
     public int getTilesAmount() {
-        return tileAmount;
+        return tileList.size();
     }
     public List<Letter> getTilesList() {
         return tileList;
@@ -24,8 +21,7 @@ public class Rack {
      *
      */
     public void drawTiles(){
-        tileList.addAll(bag.drawTiles(MAXTILES - tileAmount));
-        tileAmount = tileList.size();
+        tileList.addAll(bag.drawTiles(MAXTILES - tileList.size()));
     }
 
     /**
@@ -33,6 +29,7 @@ public class Rack {
      * @return int of the score.
      */
     public int getRackScore(){
+        int rackScore;
         for (Letter l : tileList){
             rackScore += l.value;
         }
