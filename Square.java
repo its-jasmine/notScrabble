@@ -1,24 +1,24 @@
-public abstract class Square {
-    public enum SquareKind{
-        PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
+public class Square {
+    public enum SquareType {
+        STAR, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
     }
-    private Tile tile;
-    private SquareKind type;
+    private Letter letter;
+    private SquareType type;
 
-    public Square(SquareKind type){
-        this.tile = null;
+    public Square(SquareType type){
+        this.letter = null;
         this.type = type;
     }
     public Square(){
-        this(SquareKind.PLAIN);
+        this(SquareType.PLAIN);
     }
-    public Tile getTile() {
-        return tile;
+    public Letter getTile() {
+        return letter;
     }
     public boolean isEmpty() {
-        return tile == null;
+        return letter == null;
     }
-    public void placeTile(Tile tile) {
-        this.tile = tile;
+    public void placeTile(Letter letter) {
+        this.letter = letter;
     }
 }
