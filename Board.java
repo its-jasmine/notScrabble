@@ -1,16 +1,17 @@
+import java.util.Collections;
+
 /**
  * @author Rebecca Elliott
  * @author Jasmine Gad El Hak
  */
 public class Board {
-    private static List<List<Square>> squares;
+    private static Square[][] squares;
 
     public Board() {
-        squares = new ArrayList<ArrayList<Square>>();
+        squares = new Square[Row.values().length][Column.values().length];
         for (Row r : Row.values()) {
-            squares.add(0, new ArrayList<Square>());
             for (Column c : Column.values()) {
-                squares.get(0).add(new Square()); // Creates a board of PLAIN Squares
+                squares[r.ordinal()][c.ordinal()] = new Square();
             }
         }
     }
@@ -42,7 +43,7 @@ public class Board {
      * @return true if the square has no letter yet, false otherwise
      */
     private boolean isSquareEmpty(Column colum, Row row) { // Column Row enum will need associated int value for indexing
-        return squares.get(colum.int).get(row.int).isEmpty();
+        return squares[row.ordinal()][colum.ordinal()].isEmpty();
     }
 
     /**
@@ -52,7 +53,7 @@ public class Board {
      * @return the enum letter or null
      */
     public Letters getSquareLetter(Column colum, Row row) {
-        return squares.get(row.ordinal()).get(colum.ordinal()).getLetter();
+        return squares[row.ordinal()][colum.ordinal()].getLetter();
     }
 
     /**
