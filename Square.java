@@ -26,5 +26,8 @@ public class Square {
         this.letter = null;
         return temp;
     }
+    public String toString(){
+        return "_";
+    }
 
 }
