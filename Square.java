@@ -2,28 +2,28 @@ public class Square {
     public enum Type {
         STAR, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
     }
-    private Letter letter;
+    private Tile tile;
     private Type type;
 
     public Square(Type type){
-        this.letter = null;
+        this.tile = null;
         this.type = type;
     }
     public Square(){
         this(Type.PLAIN);
     }
-    public Letter getTile() {
-        return letter;
+    public Tile getTile() {
+        return tile;
     }
     public boolean isEmpty() {
-        return letter == null;
+        return tile == null;
     }
-    public void placeTile(Letter letter) {
-        this.letter = letter;
+    public void placeTile(Tile tile) {
+        this.tile = tile;
     }
-    public Letter removeTile() {
-        Letter temp = this.letter;
-        this.letter = null;
+    public Tile removeTile() {
+        Tile temp = this.tile;
+        this.tile = null;
         return temp;
     }
     public String toString(){
