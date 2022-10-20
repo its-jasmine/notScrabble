@@ -37,6 +37,17 @@ public class Board {
     }
 
     /**
+     * Removes letter in square if available
+     * @param colum of the letter being removed
+     * @param row of the letter being removed
+     * @return true if letter was removed, false otherwise
+     */
+    public boolean removeTile(Column colum, Row row) {
+        return false; // needs logic
+    }
+
+
+    /**
      * checks if the square has a letter in it already
      * @param colum of the square being checked
      * @param row of the square being checked
