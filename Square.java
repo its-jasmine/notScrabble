@@ -21,7 +21,7 @@ public class Square {
     public void placeTile(Letter letter) {
         this.letter = letter;
     }
-    public void removeTile(Letter letter) {
+    public void removeTile() {
         this.letter = null;
     }
 
