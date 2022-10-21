@@ -41,16 +41,17 @@ public class Board {
      */
     public int submit(List<Tile> tilesPlaced) {
         if(isValidTileAlignment(tilesPlaced) == null) return -1;
-        // tilesPlaced is now sorted and direction is set
+        // at this point tilesPlaced is now sorted and direction is set
 
         List<LinkedList> words = getWordsCreated(tilesPlaced); // each node has a Tile and Square type
 
-        boolean valid = areValidWords(words);
+        if(!areValidWords(words)) return -1;
+        // at this point words are all valid
 
         int score = scoreWords(words);
 
-        direction = Direction.UNKNOWN;
-        return -1;
+        direction = Direction.UNKNOWN; // reset for next turn
+        return score;
     }
 
     /**
@@ -106,7 +107,7 @@ public class Board {
 
     /**
      * Calculates the score for all the words created this turn
-     * @param words a LinkList with the location of all the tiles played this turn
+     * @param words a list of LinkList where each node has the Tile, and square type
      * @return total score
      */
     private int scoreWords(List<LinkedList> words) {
@@ -114,7 +115,7 @@ public class Board {
         for (LinkedList w : words) {
             score += scoreWord(w);
         }
-        return -1;
+        return score;
     }
 
     /**
@@ -125,6 +126,11 @@ public class Board {
         return -1; // TODO:  Rebecca
     }
 
+    /**
+     * gets the letter from each node in the linked list
+     * @param llWord linkedList form of a word
+     * @return the word as a String
+     */
     private String llToString(LinkedList llWord) {
         String sWord = "";
         // TODO: Rebecca
