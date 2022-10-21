@@ -22,26 +22,11 @@ public class Bag {
     }
 
     /**
-     * Allows player to draw multiple letters at random
-     * @param numToDraw number of letters to draw
-     * @return list of drawn letters removed from the bag
-     */
-    public ArrayList<Letters> drawTiles(int numToDraw) {
-        ArrayList returnList = new ArrayList<>();
-        for (int i = numToDraw; i > 0; numToDraw--){
-            Letters drawnLetter = drawTile();
-            if (drawnLetter != null) returnList.add(drawnLetter);
-        }
-        return returnList;
-    }
-
-    /**
      * Allows player to draw one letter at random
-     * @return letter removed from the bag
+     * @return Letter a random letter removed from the bag
      */
     public Letters drawTile() {
-        if (letters.size() == 0) return null;
-        return letters.remove(letters.size()-1);
+        return letters.remove(letters.size() -1);
     }
 
 }
