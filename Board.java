@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Rebecca Elliott
@@ -7,6 +10,9 @@ import java.util.Collections;
 public class Board {
     private static Square[][] squares;
 
+    private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
+    private static enum Direction {HORIZONTAL, VERTICAL, UNKNOWN};
+
     public Board() {
         squares = new Square[Row.values().length][Column.values().length];
         for (Row r : Row.values()) {
@@ -14,9 +20,11 @@ public class Board {
                 squares[r.ordinal()][c.ordinal()] = new Square();
             }
         }
+        direction = Direction.UNKNOWN;
     }
 
     /**
+     * // probably won't use this, will validate all tiles placed at once
      * Checks if the letter being placed is inline with the word being placed
      * @param colum of the letter being placed
      * @param row of the letter being placed
@@ -27,13 +35,40 @@ public class Board {
     }
 
     /**
+     * calls all the functions needed to validated and score words created this turn
+     * @param tilesPlaced the tiles the player is attempting to place this turn
+     * @return -1 if any validation fails (player tries again), otherwise returns the score for the turn
+     */
+    public int submit(List<Tile> tilesPlaced) {
+        if(isValidTileAlignment(tilesPlaced) == null) return -1;
+        // tilesPlaced is now sorted and direction is set
+
+        List<LinkedList> words = getWordsCreated(tilesPlaced); // each node has a Tile and Square type
+
+        boolean valid = areValidWords(words);
+
+        int score = scoreWords(words);
+
+        direction = Direction.UNKNOWN;
+        return -1;
+    }
+
+    /**
+     * checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
+     * sets the direction field for this turn if tiles are straight
+     * @param tilesPlaced the tiles the player is attempting to place this turn
+     * @return a sorted list of tiles played if the alignment is valid, null otherwise
+     */
+    private List<Tile> isValidTileAlignment(List<Tile> tilesPlaced) {return null;} // TODO
+
+    /**
      * Places letter in square if available
      * @param colum of the letter being placed
      * @param row of the letter being placed
      * @return true if letter was placed, false otherwise
      */
     public boolean placeTile(Column colum, Row row) {
-        return false; // needs logic
+        return false; // TODO
     }
 
     /**
@@ -57,20 +92,61 @@ public class Board {
     }
 
     /**
+     * finds all the words that were created this turn
+     * @param tilesPlayed a sorted list of the tiles played this turn
+     * @return list of a words stored in a double linked list. nodes store Tiles so we have letter and value.
+     */
+    private List<LinkedList> getWordsCreated(List<Tile> tilesPlayed) {
+        List<LinkedList> words = new ArrayList<LinkedList>();
+
+        if (direction == Direction.HORIZONTAL) {} // TODO : Rebecca
+        else if (direction == Direction.VERTICAL) {} // TODO : Rebecca
+        return words;
+    }
+
+    /**
      * Calculates the score for all the words created this turn
-     * @param playedThisTurn a list with the location of all the letters played this turn
+     * @param words a LinkList with the location of all the tiles played this turn
      * @return total score
      */
-    public int scoreWords(List playedThisTurn) {
-        return -1;// needs logic - Rebecca will do
+    private int scoreWords(List<LinkedList> words) {
+        int score = 0;
+        for (LinkedList w : words) {
+            score += scoreWord(w);
+        }
+        return -1;
     }
 
     /**
      * Calculates the score of a single word
      * @return word score
      */
-    private int scoreWord(head, tail) {
-        return -1; //  needs logic - Rebecca will do
+    private int scoreWord(LinkedList word) {
+        return -1; // TODO:  Rebecca
     }
+
+    private String llToString(LinkedList llWord) {
+        String sWord = "";
+        // TODO: Rebecca
+        return sWord;
+    }
+
+    /**
+     * checks if the words are in wordBank
+     * @param words to check
+     * @return true if all are valid, false otherwise
+     */
+    private boolean areValidWords(List<LinkedList> words) {
+        for (LinkedList w : words) {
+            if(!isValidWord(llToString(w))) return false;
+        }
+        return true;}
+
+    /**
+     * checks if the word is in wordBank
+     * @param word to check
+     * @return true if valid, false otherwise
+     */
+    private boolean isValidWord(String word) {return false;} // TODO
 
 }
