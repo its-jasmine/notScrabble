@@ -21,6 +21,7 @@ public class Square {
     public void placeTile(Tile tile) {
         this.tile = tile;
     }
+
     public Tile removeTile() {
         Tile temp = this.tile;
         this.tile = null;
@@ -29,5 +30,4 @@ public class Square {
     public String toString(){
         return "_";
     }
-
 }
