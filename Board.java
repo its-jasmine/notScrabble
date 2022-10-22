@@ -1,4 +1,6 @@
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * @author Rebecca Elliott
@@ -89,7 +91,19 @@ public class Board {
      */
      
     //private int scoreWord(head, tail) {return -1; //  needs logic - Rebecca will do}
-
+    /**
+     * take a word in a LinkedList and converts it to a String
+     * @param llWord linkedList form of a word
+     * @return the word as a String
+     */
+    private String llToString(LinkedList llWord) {
+        String sWord = "";
+        ListIterator<Node> iterator = llWord.listIterator(0);
+        while (iterator.hasNext()){
+            sWord += iterator.next().tile; // this calls toString or the tile
+        }
+        return sWord;
+    }
     public String toString(){
         String s = "";
         for (Row r : Row.values()) {
