@@ -10,7 +10,7 @@ public class Rack {
     }
     public int getTilesAmount() {
         return tileList.size();
-    }
+    } // I don't think anything outside of Rack needs this so it could be removed
     public List<Tile> getTilesList() {
         return tileList;
     }
@@ -18,10 +18,12 @@ public class Rack {
     /**
      * Draws missing tiles from the bag up to 7 and refills the rack.
      * Also updates the tileAmount
-     *
+     * @return OVER if the rack has no Tiles after trying to draw, RUNNING otherwise
      */
-    public void drawTiles(){
+    public Game.Status drawTiles(){
         tileList.addAll(bag.drawTiles(MAXTILES - tileList.size()));
+        if (tileList.size() == 0) return Game.Status.OVER; // no Tiles left, signal for Game that the game is over
+        return Game.Status.RUNNING;
     }
 
     /**

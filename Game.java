@@ -8,9 +8,10 @@ import java.util.Random;
 
 
 public class Game {
+    public enum Status {RUNNING, OVER} // used as a way to have a named boolean for readability
     private final static int MAXPLAYERS = 4; //could make this more
     private final static int MINPLAYERS = 2;
-    private List<Player> players;
+    private List<Player> players; // if we don't want players to be able to join once a game has started this can be final
     private int playerTurn; // index in the player list
     private final Board board;
     private final Bag bag;
@@ -34,10 +35,11 @@ public class Game {
      * Starts the game and continues to tell players to take turns until the game is over
      */
     public void playGame() {
-        boolean isGameOver = false;
-        while (!isGameOver) {
+        Status status = Status.RUNNING; // this is the only place this is needed currently, if other things
+        // need it later it can be turned into an instance field
+        while (status == Status.RUNNING) {
             playerTurn++;
-            isGameOver = playerTakeTurn(playerTurn);
+            status = playerTakeTurn(playerTurn);
         }
         int leftOverLetterScore = 0;
         for (Player p : players) {
@@ -63,9 +65,9 @@ public class Game {
     /**
      * Tells the player to take its turn
      * @param index of the player to take its turn
-     * @return false if turn is over but not the game, true if game is now over(last letter played)
+     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
-    private boolean playerTakeTurn(int index) {
+    private Status playerTakeTurn(int index) {
         return players.get(index).takeTurn();
     }
 }
