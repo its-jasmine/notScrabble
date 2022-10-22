@@ -23,7 +23,7 @@ public class Coordinate {
         return row.ordinal();
     }
 
-    public int getColumIndex() {
+    public int getColumnIndex() {
         return column.ordinal();
     }
 
