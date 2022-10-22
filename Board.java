@@ -1,4 +1,4 @@
-import java.util.Collections;
+import java.util.*;
 
 /**
  * @author Rebecca Elliott
@@ -17,14 +17,32 @@ public class Board {
     }
 
     /**
-     * Checks if the letter being placed is inline with the word being placed
-     * @param colum of the letter being placed
-     * @param row of the letter being placed
-     * @return true if inline, false otherwise
+     * checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
+     * sets the direction field for this turn if tiles are straight
+     * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
+     * @return a sorted list of tiles played if the alignment is valid, null otherwise
      */
-    private boolean isValidTilePlacement(Column colum, Row row) {
-        return false; // needs logic
-    }
+    private List<Coordinate> isValidTileAlignment(List<Coordinate> tilesPlacedCoordinates) {
+        // Get the sorted rows
+        Set<Integer> rowSet = new HashSet<>();
+        for (Coordinate c : tilesPlacedCoordinates) rowSet.add(c.getRowIndex());
+        if (rowSet.size()==1) direction = HORIZONTAL;
+        else {
+            // Get the sorted columns
+            Set<Integer> columnSet = new HashSet<>();
+            for (Coordinate c : tilesPlacedCoordinates) columnSet.add(c.getColumnIndex());
+            if (columnSet.size()==1) direction = VERTICAL;
+            else return null;
+        }
+        // Sort tiles
+        List<Coordinate> sortedTiles = new ArrayList<Coordinate>();
+        if (direction == HORIZONTAL){
+            Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getRowIndex));
+        }
+        else {
+            Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getColumnIndex));
+        }
+        return null;} // TODO
 
     /**
      * Places letter in square if available
