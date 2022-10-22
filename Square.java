@@ -15,6 +15,10 @@ public class Square {
     public Tile getTile() {
         return tile;
     }
+
+    public Type getType() {
+        return type;
+    }
     public boolean isEmpty() {
         return tile == null;
     }
