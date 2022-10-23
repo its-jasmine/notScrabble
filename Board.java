@@ -17,23 +17,95 @@ public class Board {
     }
 
     /**
-     * checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
+    * Determine the direction field for this turn if tiles are straight
+    * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
+    * @return Direction of the tiles (HORIZONTAL or VERTICAL), null otherwise
+    */
+    private Direction getDirection(List<Coordinate> tilesPlacedCoordinates){
+        // Get the sorted rows
+        Set<Integer> rowSet = new HashSet<>();
+        for (Coordinate c : tilesPlacedCoordinates) rowSet.add(c.getRowIndex());
+        if (rowSet.size()==1) return Direction.HORIZONTAL;
+        else {
+            // Get the sorted columns
+            Set<Integer> columnSet = new HashSet<>();
+            for (Coordinate c : tilesPlacedCoordinates) columnSet.add(c.getColumnIndex());
+            if (columnSet.size()==1) return Direction.VERTICAL;
+            else return null;
+        }
+    }
+    /**
+     * Determine if the tiles the player is attempting to place are connected to an existing tile
+     * @param sortedTiles the sorted coordinates of the tiles the player is attempting to place this turn
+     * @return true if the sorted tiles are attached to another tile, false otherwise
+     */
+    private boolean verifyWordAttachment(List<Coordinate> sortedTiles){
+        if (direction == Direction.HORIZONTAL) {
+            // Is there a tile to the left of the first tile played?
+            Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex() - 1, sortedTiles.get(0).getRowIndex());
+            if (!isSquareEmpty(c)) {return true;}
+            // For each tile played is there a letter above or below?
+            for (Coordinate c: sortedTiles){
+                Coordinate above = new Coordinate(c.getColumnIndex(), c.getRowIndex() - 1);
+                Coordinate below = new Coordinate(c.getColumnIndex(), c.getRowIndex() + 1);
+                if (!isSquareEmpty(above)) {return true;}
+                if (!isSquareEmpty(below)) {return true;}
+            }
+            // Is there a tile to the right of the last tile played?
+            Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex() + 1, sortedTiles.get(-1).getRowIndex());
+            if (!isSquareEmpty(c)) {return true;}
+        }
+        else {
+            // Is there a tile above the first tile played?
+            Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex(), sortedTiles.get(0).getRowIndex() - 1);
+            if (!isSquareEmpty(c)) {return true;}
+            // For each tile played is there a letter right or left?
+            for (Coordinate c: sortedTiles){
+                Coordinate left = new Coordinate(c.getColumnIndex() - 1, c.getRowIndex());
+                Coordinate right = new Coordinate(c.getColumnIndex() + 1, c.getRowIndex());
+                if (!isSquareEmpty(left)) {return true;}
+                if (!isSquareEmpty(right)) {return true;}
+            }
+            // Is there a tile to below the last tile played?
+            Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex(), sortedTiles.get(-1).getRowIndex() + 1);
+            if (!isSquareEmpty(c)) {return true;}
+        }
+        return false;
+    }
+
+    /**
+     * Determine if is each square between the first and last tile played is NOT empty
+     * @param sortedTiles the sorted coordinates of the tiles the player is attempting to place this turn
+     * @return true if the sorted tiles placement do no have gaps, false otherwise
+     */
+    private boolean verifyNoGaps(List<Coordinate> sortedTiles){
+        if (direction == Direction.HORIZONTAL){
+            Row ro = sortedTiles.get(0).row;
+            for (int i = sortedTiles.get(0).getColumnIndex(); i <= sortedTiles.get(-1).getColumnIndex(); i++){
+                if (isSquareEmpty(new Coordinate(i, ro))) return false;
+            }
+        }
+        else {
+            Column col = sortedTiles.get(0).column;
+            for (int i = sortedTiles.get(0).getRowIndex(); i <= sortedTiles.get(-1).getRowIndex(); i++){
+                if (isSquareEmpty(new Coordinate(col, i))) return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
      * sets the direction field for this turn if tiles are straight
      * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
      * @return a sorted list of tiles played if the alignment is valid, null otherwise
      */
     private List<Coordinate> isValidTileAlignment(List<Coordinate> tilesPlacedCoordinates) {
-        // Get the sorted rows
-        Set<Integer> rowSet = new HashSet<>();
-        for (Coordinate c : tilesPlacedCoordinates) rowSet.add(c.getRowIndex());
-        if (rowSet.size()==1) direction = Direction.HORIZONTAL;
-        else {
-            // Get the sorted columns
-            Set<Integer> columnSet = new HashSet<>();
-            for (Coordinate c : tilesPlacedCoordinates) columnSet.add(c.getColumnIndex());
-            if (columnSet.size()==1) direction = Direction.VERTICAL;
-            else return null;
-        }
+        // Determine direction
+        Direction d = getDirection(tilesPlacedCoordinates);
+        if (d == null) return null;
+        else direction = d;
+
         // Sort tiles
         List<Coordinate> sortedTiles = new ArrayList<Coordinate>();
         if (direction == Direction.HORIZONTAL){
@@ -43,49 +115,14 @@ public class Board {
             Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getColumnIndex));
         }
         // Check if there are any gaps between tiles placed
-        if (direction == Direction.HORIZONTAL) {
-            if (sortedTiles.size() == (sortedTiles.get(-1).getColumnIndex() - sortedTiles.get(0).getColumnIndex() + 1)){
-                // Is there a tile to the left of the first tile played?
-                Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex() - 1, sortedTiles.get(0).getRowIndex());
-                if (isSquareEmpty(c)) {return sortedTiles;}
-
-                // For each tile played is there a letter above or below?
-                for (Coordinate c: sortedTiles){
-                    Coordinate above = new Coordinate(c.getColumnIndex(), c.getRowIndex() - 1);
-                    Coordinate below = new Coordinate(c.getColumnIndex(), c.getRowIndex() + 1);
-                    if (!isSquareEmpty(above)) {return sortedTiles;}
-                    if (!isSquareEmpty(below)) {return sortedTiles;}
-                }
-
-                // Is there a tile to the right of the last tile played?
-                Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex() + 1, sortedTiles.get(-1).getRowIndex());
-                if (isSquareEmpty(c)) {return sortedTiles;}
-            }
+        if ((sortedTiles.size() == (sortedTiles.get(-1).getColumnIndex() - sortedTiles.get(0).getColumnIndex() + 1))
+                || (sortedTiles.size() == (sortedTiles.get(-1).getRowIndex() - sortedTiles.get(0).getRowIndex() + 1))) {
+                // verify word attachment
+                if (verifyWordAttachment(sortedTiles)) return sortedTiles;
         }
-        else if (sortedTiles.size() == (sortedTiles.get(-1).getRowIndex() - sortedTiles.get(0).getRowIndex() + 1)){
-            // Is there a tile above the first tile played?
-            Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex(), sortedTiles.get(0).getRowIndex() - 1);
-            if (isSquareEmpty(c)) {return sortedTiles;}
-
-            // For each tile played is there a letter right or left?
-            for (Coordinate c: sortedTiles){
-                Coordinate left = new Coordinate(c.getColumnIndex() - 1, c.getRowIndex());
-                Coordinate right = new Coordinate(c.getColumnIndex() + 1, c.getRowIndex());
-                if (!isSquareEmpty(left)) {return sortedTiles;}
-                if (!isSquareEmpty(right)) {return sortedTiles;}
-            }
-
-            // Is there a tile to below the last tile played?
-            Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex(), sortedTiles.get(-1).getRowIndex() + 1);
-            if (isSquareEmpty(c)) {return sortedTiles;}
-        }
+        // If there are gaps between tiles, is each square between the first and last tile played NOT empty?
         else {
-            // Is each square between the first and last tile played NOT empty?
-            for (Coordinate c: sortedTiles){
-                // If there is an empty gap, placement is invalid
-                if (isSquareEmpty(c)){return null;}
-            }
-            return sortedTiles;
+            if (verifyNoGaps(sortedTiles)) return sortedTiles;
         }
         return null;
     }
