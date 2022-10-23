@@ -28,11 +28,10 @@ public class Player {
 
     /**
      * Ends the player's turn.
+     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
-    public void endTurn(){
-        rack.drawTiles();// draws tiles from bag onto the rack
-        turn++; // keeps track of turns
-
+    public Game.Status endTurn(){
+        return rack.drawTiles();// draws tiles from bag onto the rack
     }
 
     /**
@@ -50,9 +49,9 @@ public class Player {
 
     /**
      * Not sure what this needs
-     * @return
+     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
-    public boolean takeTurn() {
-        return true;
+    public Game.Status takeTurn() {
+        return endTurn();
     }
 }
