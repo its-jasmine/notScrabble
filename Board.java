@@ -26,24 +26,24 @@ public class Board {
         // Get the sorted rows
         Set<Integer> rowSet = new HashSet<>();
         for (Coordinate c : tilesPlacedCoordinates) rowSet.add(c.getRowIndex());
-        if (rowSet.size()==1) direction = HORIZONTAL;
+        if (rowSet.size()==1) direction = Direction.HORIZONTAL;
         else {
             // Get the sorted columns
             Set<Integer> columnSet = new HashSet<>();
             for (Coordinate c : tilesPlacedCoordinates) columnSet.add(c.getColumnIndex());
-            if (columnSet.size()==1) direction = VERTICAL;
+            if (columnSet.size()==1) direction = Direction.VERTICAL;
             else return null;
         }
         // Sort tiles
         List<Coordinate> sortedTiles = new ArrayList<Coordinate>();
-        if (direction == HORIZONTAL){
+        if (direction == Direction.HORIZONTAL){
             Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getRowIndex));
         }
         else {
             Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getColumnIndex));
         }
         // Check if there are any gaps between tiles placed
-        if (direction == HORIZONTAL) {
+        if (direction == Direction.HORIZONTAL) {
             if (sortedTiles.size() == (sortedTiles.get(-1).getColumnIndex() - sortedTiles.get(0).getColumnIndex() + 1)){
                 // Is there a tile to the left of the first tile played?
                 Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex() - 1, sortedTiles.get(0).getRowIndex());
