@@ -98,10 +98,7 @@ public class Board {
      */
     private String llToString(LinkedList llWord) {
         String sWord = "";
-        ListIterator<Node> iterator = llWord.listIterator(0);
-        while (iterator.hasNext()){
-            sWord += iterator.next().tile; // this calls toString or the tile
-        }
+        llWord.forEach(node -> sWord += node.tile));
         return sWord;
     }
     public String toString(){
