@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * @author Arthur Atangana
  */
 public class Board {
-    private static Square[][] squares;
+    private static Square[][] squares; // [row][column]
 
     private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
     private enum Direction {HORIZONTAL, VERTICAL, UNKNOWN}
@@ -61,55 +62,46 @@ public class Board {
     }
 
     /**
-     * checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
-     * sets the direction field for this turn if tiles are straight
-     * @param tilesPlaced the tiles the player is attempting to place this turn
-     * @return a sorted list of tiles played if the alignment is valid, null otherwise
-     */
-    private List<Coordinate> isValidTileAlignment(List<Coordinate> tilesPlaced) {return null;} // TODO
-
-    /**
      * Places tile in square if available
-     * @param colum of the tile being placed
-     * @param row of the tile being placed
-     * @return true if tile was placed, false otherwise
+     * @param coordinate of the tile being placed
+     * @return true if letter was placed, false otherwise
      */
-    public boolean placeTile(Coordinate.Column colum, Coordinate.Row row, Tile letter) {
-        if (squares[row.ordinal()][colum.ordinal()].isEmpty()) {
-            squares[row.ordinal()][colum.ordinal()].placeTile(letter);
+    public boolean placeTile(Coordinate coordinate, Tile tile) {
+        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+        if (square.isEmpty()) {
+            square.placeTile(tile);
             return true;
         }
         return false;
     }
 
     /**
-     * Removes tile in square if available
-     * @param colum of the tile being removed
-     * @param row of the tile being removed
-     * @return true if tile was removed, false otherwise
+     * Removes and returns the Tile in a square if available
+     * @param coordinate of the Tile being removed
+     * @return the tile if it was removed, null otherwise
      */
-    public boolean removeTile(Coordinate.Column colum, Coordinate.Row row) {
-        if (!squares[row.ordinal()][colum.ordinal()].isEmpty()) {
-            squares[row.ordinal()][colum.ordinal()].removeTile();
-            return true;
+    public Tile removeTile(Coordinate coordinate) {
+        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+        if (!square.isEmpty()) {
+            return square.removeTile();
         }
-        return false;
+        return null;
     }
 
 
     /**
-     * checks if the square has a letter in it already
+     * checks if the square has a tile in it already
      * @param coordinate of the square being checked
-     * @return true if the square has no letter yet, false otherwise
+     * @return true if the square has no Tile yet, false otherwise
      */
     public boolean isSquareEmpty(Coordinate coordinate) {
         return getSquare(coordinate).isEmpty();
     }
 
     /**
-     * Gets the letter on a square
+     * Gets the tile on a square without removing it
      * @param coordinate of the square being checked
-     * @return the enum letter or null
+     * @return the Tile or null
      */
 
     public Tile getSquareTile(Coordinate coordinate) {
@@ -222,7 +214,7 @@ public class Board {
      * @return word score
      */
     private int scoreWord(LinkedList word) {
-        return -1; // TODO:  Rebecca
+        return -1; // TODO:
     }
 
     /**
@@ -232,9 +224,10 @@ public class Board {
      */
     private String llToString(LinkedList llWord) {
         String sWord = "";
-        // TODO: Rebecca
+        llWord.forEach(node -> sWord += node.tile));
         return sWord;
     }
+
 
     public String toString(){
         String s = "";

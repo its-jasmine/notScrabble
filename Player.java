@@ -36,11 +36,10 @@ public class Player {
     }
     /**
      * Ends the player's turn.
+     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
-    public void endTurn(){
-        rack.drawTiles();// draws tiles from bag onto the rack
-        turn++; // keeps track of turns
-
+    public Game.Status endTurn(){
+        return rack.drawTiles();// draws tiles from bag onto the rack
     }
 
     /**
@@ -59,8 +58,10 @@ public class Player {
     /**
      *
      * @return
+     * Not sure what this needs
+     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
-    public boolean takeTurn() {
+    public Game.Status takeTurn() {
         System.out.println(board);//print board
         System.out.println("It is your turn to play.");
         boolean validInput = false;
@@ -117,7 +118,7 @@ public class Player {
         if (pass){
             System.out.println("passing turn");
             //endTurn();
-            return true;
+            return endTurn();
         }
         for (int i = 0; i < inputTiles.size(); i++){
             Coordinate coordinates = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
@@ -129,7 +130,7 @@ public class Player {
         // the code right now is not taking into account invalid words, or invalid placements, only invalid inputs and non-empty squares.
         //endTurn()
 
-        return true;
+        return endTurn();
     }
 
     /**
