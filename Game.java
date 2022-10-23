@@ -45,7 +45,7 @@ public class Game {
         setFinalScores();
         Player winner = getWinner();
 
-        System.out.println("The winner is player" + (winner) + " with a score of" + winner.getScore() + "!\n" ); // TODO make name field for Player, and toString?
+        System.out.println("The winner is " + (winner.getName()) + " with a score of" + winner.getScore() + "!\n" );
 
     }
 
