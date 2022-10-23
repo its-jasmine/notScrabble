@@ -43,9 +43,6 @@ public class Rack {
      */
     public String toString(){
         // Each tile letter is separated by a space and is collected into a single string
-        return tileList.stream().map(tile -> tile + " ").collect(Collectors.joining());;
+        return tileList.stream().map(tile -> tile + " ").collect(Collectors.joining());
     }
-
-
-
 }
