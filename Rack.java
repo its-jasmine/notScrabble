@@ -1,12 +1,17 @@
 import java.util.*;
+
+/**
+ * @author Arthur Atangana
+ */
 public class Rack {
 
     private List<Tile> tileList;
     private final static int MAXTILES = 7;
-    private static Bag bag;
+    private Bag bag;
 
-    public Rack(){
+    public Rack(Bag bag){
         List tileList = new ArrayList<Tile>();
+        this.bag = bag;
     }
     public int getTilesAmount() {
         return tileList.size();

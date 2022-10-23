@@ -17,17 +17,18 @@ public class Game {
 
 
     public Game(int numPlayers) {
+        this.board = new Board();
+        this.bag = new Bag();
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
         this.players = new ArrayList<Player>();
         for (int i = numPlayers; i > 0; i--) {
-            players.add(new Player());
+            players.add(new Player(board, bag));
         }
         Random random = new Random();
         this.playerTurn = random.nextInt(numPlayers); // picks who goes first
-        this.board = new Board();
-        this.bag = new Bag();
+
     }
 
     /**

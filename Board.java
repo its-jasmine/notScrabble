@@ -3,6 +3,7 @@ import java.util.Collections;
 /**
  * @author Rebecca Elliott
  * @author Jasmine Gad El Hak
+ * @author Arthur Atangana
  */
 public class Board {
     private static Square[][] squares;
@@ -17,9 +18,9 @@ public class Board {
     }
 
     /**
-     * Checks if the letter being placed is inline with the word being placed
-     * @param colum of the letter being placed
-     * @param row of the letter being placed
+     * Checks if the tile being placed is inline with the word being placed
+     * @param colum of the tile being placed
+     * @param row of the tile being placed
      * @return true if inline, false otherwise
      */
     private boolean isValidTilePlacement(Column colum, Row row) {
@@ -27,24 +28,24 @@ public class Board {
     }
 
     /**
-     * Places letter in square if available
-     * @param colum of the letter being placed
-     * @param row of the letter being placed
-     * @return true if letter was placed, false otherwise
+     * Places tile in square if available
+     * @param colum of the tile being placed
+     * @param row of the tile being placed
+     * @return true if tile was placed, false otherwise
      */
-    public boolean placeTile(Column colum, Row row, Letter letter) {
+    public boolean placeTile(Column colum, Row row, Tile tile) {
         if (squares[row.ordinal()][colum.ordinal()].isEmpty()) {
-            squares[row.ordinal()][colum.ordinal()].placeTile(letter);
+            squares[row.ordinal()][colum.ordinal()].placeTile(tile);
             return true;
         }
         return false;
     }
 
     /**
-     * Removes letter in square if available
-     * @param colum of the letter being removed
-     * @param row of the letter being removed
-     * @return true if letter was removed, false otherwise
+     * Removes tile in square if available
+     * @param colum of the tile being removed
+     * @param row of the tile being removed
+     * @return true if tile was removed, false otherwise
      */
     public boolean removeTile(Column colum, Row row) {
         if (!squares[row.ordinal()][colum.ordinal()].isEmpty()) {
@@ -56,29 +57,29 @@ public class Board {
 
 
     /**
-     * checks if the square has a letter in it already
+     * checks if the square has a tile in it already
      * @param colum of the square being checked
      * @param row of the square being checked
-     * @return true if the square has no letter yet, false otherwise
+     * @return true if the square has no tile yet, false otherwise
      */
-    private boolean isSquareEmpty(Column colum, Row row) {
+    public boolean isSquareEmpty(Column colum, Row row) {
         return squares[row.ordinal()][colum.ordinal()].isEmpty();
     }
 
     /**
-     * Gets the letter on a square
+     * Gets the tile on a square
      * @param colum of the square being checked
      * @param row of the square being checked
-     * @return the enum letter or null
+     * @return the enum tile or null
      */
 
-    public Tile getSquareLetter(Column colum, Row row) {
+    public Tile getSquareTile(Column colum, Row row) {
         return squares[row.ordinal()][colum.ordinal()].getTile();
     }
 
     /**
      * Calculates the score for all the words created this turn
-     * @param playedThisTurn a list with the location of all the letters played this turn
+     * @param playedThisTurn a list with the location of all the tiles played this turn
      * @return total score
      */
     //public int scoreWords(List playedThisTurn) { return -1;// needs logic - Rebecca will do}
