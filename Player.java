@@ -61,7 +61,7 @@ public class Player {
      * @return
      */
     public boolean takeTurn() {
-        //print board to be added
+        System.out.println(board);//print board
         System.out.println("It is your turn to play.");
         boolean validInput = false;
         boolean running = true;
@@ -84,11 +84,11 @@ public class Player {
                     break;
                 default:
                     inputTiles = string2Enums(s, "letters");
-                    System.out.println(inputTiles.toString());
+                    //System.out.println(inputTiles.toString());
                     inputColumns = string2Enums(s, "columns");
-                    System.out.println(inputColumns.toString());
+                    //System.out.println(inputColumns.toString());
                     inputRows = string2Enums(s, "rows");
-                    System.out.println(inputRows.toString());
+                    //System.out.println(inputRows.toString());
 
                     if (inputColumns.contains(false) | inputRows.contains(false) | inputTiles.contains(false)) {
                         System.out.println("invalid input");
@@ -119,8 +119,15 @@ public class Player {
             //endTurn();
             return true;
         }
-
-        //rack.placeTiles(tileArray);
+        for (int i = 0; i < inputTiles.size(); i++){
+            Coordinate coordinates = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
+            board.placeTile(coordinates,(Tile) inputTiles.get(i));
+        }
+        //could remove tiles from rack only when word was approved in endTurn()
+        //rack.placeTiles(inputTiles);
+        //for now this code assumes that placing will not result in an error since we checked if the squares are empty.
+        // the code right now is not taking into account invalid words, or invalid placements, only invalid inputs and non-empty squares.
+        //endTurn()
 
         return true;
     }
@@ -131,10 +138,10 @@ public class Player {
      * @param option picks letters, rows or columns enum
      * @return ArrayList [C, A, T]
      */
-    private ArrayList string2Enums(String s, String option){
-        ArrayList<String> letters = new ArrayList();
-        ArrayList<String> rows = new ArrayList();
-        ArrayList<String> columns = new ArrayList();
+    private ArrayList<Object> string2Enums(String s, String option){
+        ArrayList<String> letters = new ArrayList<String>();
+        ArrayList<String> rows = new ArrayList<String>();
+        ArrayList<String> columns = new ArrayList<String>();
         String[] tileArray;
         String[] tileEnums;
         tileArray = s.toUpperCase().split(",");
@@ -205,7 +212,8 @@ public class Player {
 
     /**
      * checks if board squares from user input are empty
-     * @param s String from user input
+     * @param columns  list of coordinate columns
+     * @param rows list of coordinate rows.
      * @return true if squares are empty, false if any square is occupied.
      */
     private boolean isBoardSquareEmpty(ArrayList<Coordinate.Row> rows, ArrayList<Coordinate.Column> columns){
