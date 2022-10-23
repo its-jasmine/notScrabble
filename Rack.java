@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.stream.Collectors;
+
 public class Rack {
 
     private List<Tile> tileList;
@@ -35,6 +37,15 @@ public class Rack {
         }
         return rackScore;
     }
+    /**
+     * Returns string representation of the rack
+     * @return String of all the tile letters.
+     */
+    public String toString(){
+        // Each tile letter is separated by a space and is collected into a single string
+        return tileList.stream().map(tile -> tile + " ").collect(Collectors.joining());;
+    }
+
 
 
 }
