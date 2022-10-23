@@ -1,32 +1,40 @@
 import java.util.*;
 public class Rack {
 
-    private List<Letters> lettersList;
-    private int lettersAmount;
-    private final static MAXLETTERS = 7;
+    private List<Tile> tileList;
+    private final static int MAXTILES = 7;
+    private static Bag bag;
 
     public Rack(){
-        List lettersList = new ArrayList<Letters>();
-        this.lettersAmount = 0;
+        List tileList = new ArrayList<Tile>();
     }
     public int getTilesAmount() {
-        return lettersAmount;
+        return tileList.size();
     }
-    public List<Letters> getTilesList() {
-        return lettersList;
+    public List<Tile> getTilesList() {
+        return tileList;
     }
-    public void getLetters(){
-        if (lettersAmount>=7){
-            System.out.println("The rack already has 7 tiles in it.");
-            return;
-        }
-        //This is for the version that picks up 1 tile from the bag at a time
-        for (int i = 0; i < (7-lettersAmount); i++){
 
-            lettersList.add(getBag().drawLetter());
-            lettersAmount++;
-        }
-
+    /**
+     * Draws missing tiles from the bag up to 7 and refills the rack.
+     * Also updates the tileAmount
+     *
+     */
+    public void drawTiles(){
+        tileList.addAll(bag.drawTiles(MAXTILES - tileList.size()));
     }
+
+    /**
+     * gets the score of the Tiles currently on the rack
+     * @return int of the score.
+     */
+    public int getRackScore(){
+        int rackScore = 0;
+        for (Tile tile : tileList){
+            rackScore += tile.value;
+        }
+        return rackScore;
+    }
+
 
 }
