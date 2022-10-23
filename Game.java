@@ -41,24 +41,11 @@ public class Game {
             playerTurn++;
             status = playerTakeTurn(playerTurn);
         }
-        int leftOverLetterScore = 0;
-        for (Player p : players) {
-            leftOverLetterScore += p.getRackScore();
-        }
+        // game is now over
+        setFinalScores();
+        Player winner = getWinner();
 
-        players.get(playerTurn).addToScore(leftOverLetterScore);
-
-        int highScore = 0;
-        int winner = 0;
-        for (int i = 0; i < players.size(); i++) {
-            int score = players.get(i).getScore();
-            if (score > highScore) {
-                highScore = score;
-                winner = i;
-            }
-        }
-
-        System.out.println("The winner is player" + (winner + 1) + " with a score of" + highScore + "!\n" ); // winner plus 1 so player at index 0 is player 1
+        System.out.println("The winner is player" + (winner) + " with a score of" + winner.getScore() + "!\n" ); // TODO make name field for Player, and toString?
 
     }
 
@@ -69,5 +56,26 @@ public class Game {
      */
     private Status playerTakeTurn(int index) {
         return players.get(index).takeTurn();
+    }
+
+    private Player getWinner() {
+        int highScore = 0;
+        int winner = 0;
+        for (int i = 0; i < players.size(); i++) {
+            int score = players.get(i).getScore();
+            if (score > highScore) {
+                highScore = score;
+                winner = i;
+            }
+        }
+        return players.get(winner);
+    }
+
+    private void setFinalScores() {
+        int leftOverLetterScore = 0;
+        for (Player p : players) {
+            leftOverLetterScore += p.getRackScore();
+        }
+        players.get(playerTurn).addToScore(leftOverLetterScore);
     }
 }
