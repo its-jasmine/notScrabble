@@ -42,7 +42,53 @@ public class Board {
         else {
             Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getColumnIndex));
         }
-        return null;} // TODO
+        // Check if there are any gaps between tiles placed
+        if (direction == HORIZONTAL) {
+            if (sortedTiles.size() == (sortedTiles.get(-1).getColumnIndex() - sortedTiles.get(0).getColumnIndex() + 1)){
+                // Is there a tile to the left of the first tile played?
+                Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex() - 1, sortedTiles.get(0).getRowIndex());
+                if (isSquareEmpty(c)) {return sortedTiles;}
+
+                // For each tile played is there a letter above or below?
+                for (Coordinate c: sortedTiles){
+                    Coordinate above = new Coordinate(c.getColumnIndex(), c.getRowIndex() - 1);
+                    Coordinate below = new Coordinate(c.getColumnIndex(), c.getRowIndex() + 1);
+                    if (!isSquareEmpty(above)) {return sortedTiles;}
+                    if (!isSquareEmpty(below)) {return sortedTiles;}
+                }
+
+                // Is there a tile to the right of the last tile played?
+                Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex() + 1, sortedTiles.get(-1).getRowIndex());
+                if (isSquareEmpty(c)) {return sortedTiles;}
+            }
+        }
+        else if (sortedTiles.size() == (sortedTiles.get(-1).getRowIndex() - sortedTiles.get(0).getRowIndex() + 1)){
+            // Is there a tile above the first tile played?
+            Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex(), sortedTiles.get(0).getRowIndex() - 1);
+            if (isSquareEmpty(c)) {return sortedTiles;}
+
+            // For each tile played is there a letter right or left?
+            for (Coordinate c: sortedTiles){
+                Coordinate left = new Coordinate(c.getColumnIndex() - 1, c.getRowIndex());
+                Coordinate right = new Coordinate(c.getColumnIndex() + 1, c.getRowIndex());
+                if (!isSquareEmpty(left)) {return sortedTiles;}
+                if (!isSquareEmpty(right)) {return sortedTiles;}
+            }
+
+            // Is there a tile to below the last tile played?
+            Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex(), sortedTiles.get(-1).getRowIndex() + 1);
+            if (isSquareEmpty(c)) {return sortedTiles;}
+        }
+        else {
+            // Is each square between the first and last tile played NOT empty?
+            for (Coordinate c: sortedTiles){
+                // If there is an empty gap, placement is invalid
+                if (isSquareEmpty(c)){return null;}
+            }
+            return sortedTiles;
+        }
+        return null;
+    }
 
     /**
      * Places letter in square if available
