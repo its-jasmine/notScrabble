@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Board {
     private static Square[][] squares; // [row][column]
-
+    private WordBank wordBank = new WordBank();
     private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
     private enum Direction {HORIZONTAL, VERTICAL, UNKNOWN}
 
@@ -260,6 +260,7 @@ public class Board {
      * @param word to check
      * @return true if valid, false otherwise
      */
-    private boolean isValidWord(String word) {return false;} // TODO
+    private boolean isValidWord(String word) {
+        return wordBank.isValidWord(word);}
 
 }
