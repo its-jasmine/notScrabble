@@ -1,6 +1,10 @@
+/**
+ * Models a square on the playing board
+ */
+
 public class Square {
     public enum Type {
-        STAR, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
+        START, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
     }
     private Tile tile;
     private Type type;
@@ -14,6 +18,10 @@ public class Square {
     }
     public Tile getTile() {
         return tile;
+    }
+
+    public Type getType() {
+        return type;
     }
     public boolean isEmpty() {
         return tile == null;

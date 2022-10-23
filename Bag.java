@@ -9,24 +9,39 @@ import java.util.*;
 import static java.util.Collections.shuffle;
 
 public class Bag {
-    private List<Letters> letters;
+    private List<Tile> tiles;
 
     public Bag() {
-        this.letters = new ArrayList<Letters>();
-        for (Letters l : Letters.values()) {
-            for (int i = l.getTotalNum();i > 0; i--) {
-                letters.add(l);
+        this.tiles = new ArrayList<Tile>();
+        for (Tile t : Tile.values()) {
+            for (int i = t.getTotalNum();i > 0; i--) {
+                tiles.add(t);
             }
         }
-        shuffle(letters); // randomizes the order letters will be drawn in
+        shuffle(tiles); // randomizes the order tiles will be drawn in
     }
 
     /**
-     * Allows player to draw one letter at random
-     * @return Letter a random letter removed from the bag
+     * Allows player to draw multiple tiles at random
+     * @param numToDraw number of tiles to draw
+     * @return list of drawn tiles removed from the bag
      */
-    public Letters drawTile() {
-        return letters.remove(letters.size() -1);
+    public ArrayList<Tile> drawTiles(int numToDraw) {
+        ArrayList returnList = new ArrayList<>();
+        for (int i = numToDraw; i > 0; numToDraw--){
+            Tile drawnLetter = drawTile();
+            if (drawnLetter != null) returnList.add(drawnLetter);
+        }
+        return returnList;
+    }
+
+    /**
+     * Allows player to draw one tile at random
+     * @return tile removed from the bag
+     */
+    public Tile drawTile() {
+        if (tiles.size() == 0) return null;
+        return tiles.remove(tiles.size()-1);
     }
 
 }

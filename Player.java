@@ -4,6 +4,8 @@ public class Player {
     private int score;
     private int turn;
 
+
+
     public Player(){
         Rack rack = new Rack();
         this.score = 0;
@@ -22,12 +24,34 @@ public class Player {
         return turn;
     }
     public void placeLetter(String letter){
-
-    }
-    public void endTurn(){
-        turn++; // keeps track of turns
-        rack.getTiles();
-
     }
 
+    /**
+     * Ends the player's turn.
+     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
+     */
+    public Game.Status endTurn(){
+        return rack.drawTiles();// draws tiles from bag onto the rack
+    }
+
+    /**
+     * gets the rack score from rack
+     * @return int
+     */
+    public int getRackScore() {
+        return rack.getRackScore();
+    }
+    /**
+     * adds the score of the placed word to score
+     */
+    public void addToScore(int leftOverLetterScore) {
+    }
+
+    /**
+     * Not sure what this needs
+     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
+     */
+    public Game.Status takeTurn() {
+        return endTurn();
+    }
 }
