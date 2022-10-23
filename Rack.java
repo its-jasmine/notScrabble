@@ -40,6 +40,14 @@ public class Rack {
         }
         return rackScore;
     }
+    public boolean isTileinRack(Tile t){
+        for (Tile tile: getTilesList()){
+            if (tile == t){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

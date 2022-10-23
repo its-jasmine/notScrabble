@@ -1,4 +1,5 @@
 //import java.util.Scanner;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -17,6 +18,9 @@ public class Player {
         this.score = 0;
         this.turn = 0;
         this.rack = new Rack(bag);
+    }
+    public Player(){
+
     }
 
     public Rack getRack() {
@@ -62,16 +66,16 @@ public class Player {
         boolean validInput = false;
         boolean running = true;
         boolean pass = false;
+        ArrayList inputTiles = new ArrayList<>();
+        ArrayList inputRows = new ArrayList<>();
+        ArrayList inputColumns = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
-        String[] tileArray;
+
+
 
         do {
-            System.out.println("Enter your word and coordinates (e.g C A2,A A3,T A4): ");
+            System.out.println("Enter your word and coordinates (e.g C A THIRT,A A FOURT,T A FIFT): ");
             String s = sc.nextLine();
-            tileArray = s.toUpperCase().split(",");
-            /*for (String tileString : tileArray){
-                System.out.println(tileString);
-            }*/
             switch (s) {
                 case "pass":
                     System.out.println("You passed your turn");
@@ -79,34 +83,36 @@ public class Player {
                     running = false;
                     break;
                 default:
-                    for (String tileString : tileArray){
-                        if (isInputValid(tileString)){
-                            System.out.println("input is valid for "+ tileString);
-                            if (!isTileInRack(tileString)){ //if tile is not in rack,
-                                validInput = false;
-                                break;
-                            }
-                            if (!isBoardSquareEmpty(tileString)){
-                                validInput = false;
-                                break;
-                            }
-                            validInput = true;
-                        }
-                        else{
-                            System.out.println("invalid input, try again");
-                            validInput = false;
-                            break;
-                        }
-                    }
-                    if (validInput) {
-                        running = false;
-                    }
-                    else {
+                    inputTiles = string2Enums(s, "letters");
+                    System.out.println(inputTiles.toString());
+                    inputColumns = string2Enums(s, "columns");
+                    System.out.println(inputColumns.toString());
+                    inputRows = string2Enums(s, "rows");
+                    System.out.println(inputRows.toString());
+
+                    if (inputColumns.contains(false) | inputRows.contains(false) | inputTiles.contains(false)) {
+                        System.out.println("invalid input");
+                        validInput = false;
                         break;
                     }
+                    if (!isTileInRack(inputTiles)){
+                        System.out.println("Some of the input tiles are not in the rack");
+                        validInput = false;
+                        break;
+                    }
+                    if (!isBoardSquareEmpty(inputRows,inputColumns)){
+                        System.out.println("The coordinates are not available to place tiles");
+                        validInput = false;
+                        break;
+                    }
+                    else{
+                        validInput = true;
+                    }
             }
-        } while (running);
-
+            if (validInput) {
+                running = false;
+            }
+        }while(running);
         System.out.println("this got the right input");
         if (pass){
             System.out.println("passing turn");
@@ -114,37 +120,87 @@ public class Player {
             return true;
         }
 
-        rack.placeTiles(tileArray);
+        //rack.placeTiles(tileArray);
 
         return true;
     }
 
-
     /**
-     * checks if the input from the user was formatted properly where each tile is set as "A A1"
-     * @param s: a string taken from the user's input on command line
-     * @return true if the format is correct, false if not.
+     * gets a string to a list containing enums of either letters, rows or columns.
+     * @param s the string to be transformed.
+     * @param option picks letters, rows or columns enum
+     * @return ArrayList [C, A, T]
      */
-    private boolean isInputValid(String s){
-        System.out.println(s);
-        if (s.length() ==5){
-            return s.matches("[A-Z] [A-O]1[0-5]"); // handles inputs where coordinate is 10-15
+    private ArrayList string2Enums(String s, String option){
+        ArrayList<String> letters = new ArrayList();
+        ArrayList<String> rows = new ArrayList();
+        ArrayList<String> columns = new ArrayList();
+        String[] tileArray;
+        String[] tileEnums;
+        tileArray = s.toUpperCase().split(",");
+        for (String tileString : tileArray){
+            tileEnums = tileString.split(" ");
+            letters.add(tileEnums[0]);
+            columns.add(tileEnums[1]);
+            rows.add(tileEnums[2]);
+            /*System.out.println(tileString);
+            System.out.println(tileEnums[0]);
+            System.out.println(tileEnums[1]);
+            System.out.println(tileEnums[2]);*/
+
         }
-        return s.matches("[A-Z] [A-O][1-9][0-5]?");
+        /*System.out.println(letters.toString());
+        System.out.println(rows.toString());
+        System.out.println(columns.toString());*/
+        ArrayList temp = new ArrayList<>();
+        ArrayList invalid = new ArrayList();
+        invalid.add(false);
+        //System.out.println(invalid.toString());
+        switch (option){
+            case "letters":
+                for (String l: letters){
+                    try{
+                        temp.add(Tile.valueOf(l));
+                    }
+                    catch(Exception e){
+                        return invalid;
+                    }
+                }
+                return temp;
+            case "rows":
+                for (String r: rows){
+                    try{
+                        temp.add(Coordinate.Row.valueOf(r));
+                    }
+                    catch(Exception e){
+                        return invalid;
+                    }
+                }
+                return temp;
+            default:
+                for (String c: columns){
+                    try{
+                        temp.add(Coordinate.Column.valueOf(c));
+                    }
+                    catch(Exception e){
+                        return invalid;
+                    }
+                }
+                return temp;
+        }
     }
 
     /**
      * Checks if the tiles in the user input are in the player's rack
-     * @param s: the tile to check if it is in the rack
-     * @return true if the tile is in the rack, false if not.
+     * @param lettersList : list of tiles to check if in rack.
+     * @return true if the tiles are in the rack, false if not.
      */
-    private boolean isTileInRack(String s){//gets the tileString "A A2"
-        for (Tile t : rack.getTilesList()){
-            if (t.letter.equals(s)){
-                return true;
-            }
+    private boolean isTileInRack(ArrayList<Tile> lettersList){//gets the tileString "A A2"
+        boolean isInRack = false;
+        for (Tile letter: lettersList){
+            isInRack = rack.isTileinRack(letter);
         }
-        return false;
+        return isInRack;
     }
 
     /**
@@ -152,27 +208,18 @@ public class Player {
      * @param s String from user input
      * @return true if squares are empty, false if any square is occupied.
      */
-    private boolean isBoardSquareEmpty(String s){
-        String x = Character.toString(s.charAt(2));
-        String y = Character.toString(s.charAt(3));
-        if (s.length() ==5){
-            y = Character.toString(s.charAt(3))+s.charAt(4);
+    private boolean isBoardSquareEmpty(ArrayList<Coordinate.Row> rows, ArrayList<Coordinate.Column> columns){
+        boolean areAllEmpty = false;
+        for (int i = 0; i< rows.size(); i++){
+            Coordinate coordinates = new Coordinate(columns.get(i),rows.get(i));
+            areAllEmpty = board.isSquareEmpty(coordinates);
         }
-        return board.isSquareEmpty(Column.valueOf(y),Row.valueOf(x));
+        return areAllEmpty;
     }
 
-    /**
-     * converts the player's input to a list of tiles and coordinates.
-     * @param s: the string from the player's input
-     * @return an array list of tiles and coordinates
-     */
-    private ArrayList<Tile> stringToTile(String s){
-        //implementation with jasmine's row and columns
-
-
-    }
     public static void main(String[] args) {
-        //Player p = new Player();
-        //p.takeTurn();
+        Player p = new Player();
+        p.takeTurn();
+        //p.string2Lists("C A ONE,A A TWO,A A THREE", "rows");
     }
 }

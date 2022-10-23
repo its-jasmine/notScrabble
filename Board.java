@@ -35,7 +35,9 @@ public class Board {
         direction = Direction.UNKNOWN;
     }
 
-    private Square getSquare(Coordinate coordinate) {return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];}
+    private Square getSquare(Coordinate coordinate) {
+        return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+    }
 
 
     /**
@@ -74,7 +76,7 @@ public class Board {
      */
     public boolean placeTile(Coordinate.Column colum, Coordinate.Row row, Tile letter) {
         if (squares[row.ordinal()][colum.ordinal()].isEmpty()) {
-            squares[row.ordinal()][colum.ordinal()].placeTile(tile);
+            squares[row.ordinal()][colum.ordinal()].placeTile(letter);
             return true;
         }
         return false;
@@ -100,7 +102,7 @@ public class Board {
      * @param coordinate of the square being checked
      * @return true if the square has no letter yet, false otherwise
      */
-    private boolean isSquareEmpty(Coordinate coordinate) {
+    public boolean isSquareEmpty(Coordinate coordinate) {
         return getSquare(coordinate).isEmpty();
     }
 
