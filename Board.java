@@ -5,12 +5,12 @@ import java.util.Collections;
  * @author Jasmine Gad El Hak
  */
 public class Board {
-    private static Square[][] squares;
+    private static Square[][] squares; // [row][column]
 
     public Board() {
-        squares = new Square[Row.values().length][Column.values().length];
-        for (Row r : Row.values()) {
-            for (Column c : Column.values()) {
+        squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
+        for (Coordinate.Row r : Coordinate.Row.values()) {
+            for (Coordinate.Column c : Coordinate.Column.values()) {
                 squares[r.ordinal()][c.ordinal()] = new Square();
             }
         }
@@ -27,53 +27,50 @@ public class Board {
     }
 
     /**
-     * Places letter in square if available
-     * @param colum of the letter being placed
-     * @param row of the letter being placed
+     * Places tile in square if available
+     * @param coordinate of the tile being placed
      * @return true if letter was placed, false otherwise
      */
-    public boolean placeTile(Column colum, Row row, Letter letter) {
-        if (squares[row.ordinal()][colum.ordinal()].isEmpty()) {
-            squares[row.ordinal()][colum.ordinal()].placeTile(letter);
+    public boolean placeTile(Coordinate coordinate, Tile tile) {
+        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+        if (square.isEmpty()) {
+            square.placeTile(tile);
             return true;
         }
         return false;
     }
 
     /**
-     * Removes letter in square if available
-     * @param colum of the letter being removed
-     * @param row of the letter being removed
-     * @return true if letter was removed, false otherwise
+     * Removes and returns the Tile in a square if available
+     * @param coordinate of the Tile being removed
+     * @return the tile if it was removed, null otherwise
      */
-    public boolean removeTile(Column colum, Row row) {
-        if (!squares[row.ordinal()][colum.ordinal()].isEmpty()) {
-            squares[row.ordinal()][colum.ordinal()].removeTile();
-            return true;
+    public Tile removeTile(Coordinate coordinate) {
+        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+        if (!square.isEmpty()) {
+            return square.removeTile();
         }
-        return false;
+        return null;
     }
 
 
     /**
-     * checks if the square has a letter in it already
-     * @param colum of the square being checked
-     * @param row of the square being checked
-     * @return true if the square has no letter yet, false otherwise
+     * checks if the square has a tile in it already
+     * @param coordinate of the square being checked
+     * @return true if the square has no tile yet, false otherwise
      */
-    private boolean isSquareEmpty(Column colum, Row row) {
-        return squares[row.ordinal()][colum.ordinal()].isEmpty();
+    public boolean isSquareEmpty(Coordinate coordinate) {
+        return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()].isEmpty();
     }
 
     /**
-     * Gets the letter on a square
-     * @param colum of the square being checked
-     * @param row of the square being checked
-     * @return the enum letter or null
+     * Gets the tile on a square without removing it
+     * @param coordinate of the square being checked
+     * @return the tile on the square or null
      */
 
-    public Tile getSquareLetter(Column colum, Row row) {
-        return squares[row.ordinal()][colum.ordinal()].getTile();
+    public Tile getSquareLetter(Coordinate coordinate) {
+        return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()].getTile();
     }
 
     /**
@@ -87,13 +84,13 @@ public class Board {
      * Calculates the score of a single word
      * @return word score
      */
-     
+
     //private int scoreWord(head, tail) {return -1; //  needs logic - Rebecca will do}
 
     public String toString(){
         String s = "";
-        for (Row r : Row.values()) {
-            for (Column c : Column.values()) {
+        for (Coordinate.Row r : Coordinate.Row.values()) {
+            for (Coordinate.Column c : Coordinate.Column.values()) {
                 s += squares[r.ordinal()][c.ordinal()] + " ";
             }
             s += "\n";
