@@ -1,16 +1,31 @@
 public class Player {
 
+    private String name;
     private Rack rack;
     private int score;
     private int turn;
 
 
 
+
     public Player(){
+        this.name = "";
         Rack rack = new Rack();
         this.score = 0;
         this.turn = 0;
     }
+
+    public Player(int playerNumber) {
+        this();
+        this.name = "Player " + playerNumber;
+    }
+
+    public Player(String name) {
+        this();
+        this.name = name;
+    }
+
+    public String getName() {return name;}
 
     public Rack getRack() {
         return rack;

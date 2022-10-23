@@ -23,7 +23,7 @@ public class Game {
 
         this.players = new ArrayList<Player>();
         for (int i = numPlayers; i > 0; i--) {
-            players.add(new Player());
+            players.add(new Player(i + 1));
         }
         Random random = new Random();
         this.playerTurn = random.nextInt(numPlayers); // picks who goes first
