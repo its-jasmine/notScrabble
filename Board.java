@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.List;
 
 /**
@@ -220,10 +221,11 @@ public class Board {
      */
     private String llToString(LinkedList llWord) {
         String sWord = "";
-        // TODO: Rebecca
+        llWord.forEach(node -> sWord += node.tile));
         return sWord;
     }
         
+
     public String toString(){
         String s = "";
         for (Coordinate.Row r : Coordinate.Row.values()) {
