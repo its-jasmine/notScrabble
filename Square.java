@@ -36,6 +36,7 @@ public class Square {
         return temp;
     }
     public String toString(){
-        return "_";
+        if (isEmpty()) return "_";
+        return tile.toString();
     }
 }
