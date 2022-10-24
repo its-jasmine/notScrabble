@@ -1,16 +1,16 @@
 import java.util.*;
 
 /**
+ * BLURB ABOUT BOARD GOES HERE
  * @author Rebecca Elliott
  * @author Jasmine Gad El Hak
  * @author Arthur Atangana
+ * @version Milestone1
  */
 public class Board {
     private static Square[][] squares; // [row][column]
     private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
-
     private enum Direction {HORIZONTAL, VERTICAL, UNKNOWN}
-
 
     public Board() {
         squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
@@ -28,9 +28,9 @@ public class Board {
 
 
     /**
-    * Determine the direction field for this turn if tiles are straight
+    * Determine the direction field for this turn if tiles are straight.
     * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
-    * @return Direction of the tiles (HORIZONTAL or VERTICAL), UNKNOWN otherwise
+    * @return direction of the tiles (HORIZONTAL or VERTICAL), UNKNOWN otherwise
     */
     private Direction getDirection(List<Coordinate> tilesPlacedCoordinates){
         // Get the sorted rows
@@ -85,7 +85,7 @@ public class Board {
     }
 
     /**
-     * Determine if is each square between the first and last tile played is NOT empty
+     * Determine if is each square between the first and last tile played is NOT empty.
      * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
      * @return true if the sorted tiles placement do no have gaps, false otherwise
      */
@@ -106,7 +106,7 @@ public class Board {
     }
 
     /**
-     * Determine if one of the coordinates attempting to be placed is the start square coordinate
+     * Determine if one of the coordinates attempting to be placed is the start square coordinate.
      * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
      * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
@@ -120,7 +120,7 @@ public class Board {
 
     /**
      * Checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
-     * sets the direction field for this turn if tiles are straight
+     * sets the direction field for this turn if tiles are straight.
      * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
      * @return a sorted list of tiles played if the alignment is valid, null otherwise
      */
@@ -157,7 +157,7 @@ public class Board {
     }
 
     /**
-     * calls all the functions needed to validated and score words created this turn
+     * Calls all the functions needed to validated and score words created this turn.
      *
      * @param tilesPlaced the tiles the player is attempting to place this turn
      * @return -1 if any validation fails (player tries again), otherwise returns the score for the turn
@@ -233,10 +233,9 @@ public class Board {
     }
 
     /**
-     * finds all the words that were created this turn
-     *
-     * @param tilesPlayed a sorted list of the tiles played this turn
-     * @return list of a words stored in a double linked list. nodes store Tiles and Square type
+     * Gets all the words that were created this turn.
+     * @param tilesPlayed a sorted list of the tile coordinates played this turn
+     * @return list of words created this turn
      */
     private List<Word> getWordsCreated(List<Coordinate> tilesPlayed) {
         List<Word> words = new ArrayList<>();
@@ -267,8 +266,8 @@ public class Board {
     }
 
     /**
-     * gets any horizontal word, can be one letter long at this point
-     * @param startSearch the place on the board to search from
+     * Gets any horizontal word, can be one letter long at this point.
+     * @param startSearch the location on the board to search from
      * @return word that was created
      */
     private Word getHorizontalWord(Coordinate startSearch) {
@@ -292,8 +291,8 @@ public class Board {
     }
 
     /**
-     * gets any vertical word, can be one letter long at this point
-     * @param startSearch the place on the board to search from
+     * Gets any vertical word, can be one letter long at this point
+     * @param startSearch the location on the board to search from
      * @return word that was created
      */
     private Word getVerticalWord(Coordinate startSearch) {
@@ -316,12 +315,15 @@ public class Board {
         return word;
     }
 
-
+    /**
+     * Returns string representation of board.
+     * @return string of current board state
+    */
     public String toString() {
         String s = "";
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
-                s += squares[r.ordinal()][c.ordinal()] + " ";
+                s += squares[r.ordinal()][c.ordinal()] + " "; // Each square will be separated by a space.
             }
             s += "\n";
         }
