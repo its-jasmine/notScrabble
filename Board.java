@@ -134,7 +134,7 @@ public class Board {
     private List<Coordinate> isValidTileAlignment(List<Coordinate> tilesPlacedCoordinates) {
         // Determine direction
         Direction d = getDirection(tilesPlacedCoordinates);
-        if (d == null) return null;
+        if (d == Direction.UNKNOWN) return null;
         else direction = d;
 
         // Sort tiles
