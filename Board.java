@@ -114,7 +114,7 @@ public class Board {
 
     /**
      * Determine if one of the coordinates attempting to be placed is the start square coordinate
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
      * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
     private boolean isOnStart(List<Coordinate> tilesPlacedCoordinates){
