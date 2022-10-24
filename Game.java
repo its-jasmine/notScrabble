@@ -18,17 +18,18 @@ public class Game {
 
 
     public Game(int numPlayers) {
+        this.board = new Board();
+        this.bag = new Bag();
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
         this.players = new ArrayList<Player>();
         for (int i = numPlayers; i > 0; i--) {
-            players.add(new Player(i + 1));
+            players.add(new Player(board, bag, i + 1));
         }
         Random random = new Random();
         this.playerTurn = random.nextInt(numPlayers); // picks who goes first
-        this.board = new Board();
-        this.bag = new Bag();
+
     }
 
     /**
@@ -38,8 +39,8 @@ public class Game {
         Status status = Status.RUNNING; // this is the only place this is needed currently, if other things
         // need it later it can be turned into an instance field
         while (status == Status.RUNNING) {
-            playerTurn++;
             status = playerTakeTurn(playerTurn);
+            playerTurn = ++playerTurn % players.size();
         }
         // game is now over
         setFinalScores();
