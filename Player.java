@@ -9,15 +9,13 @@ public class Player {
     private Board board;
     private Rack rack;
     private int score;
-    private int turn;
     private String name;
-    
+
 
     public Player(Board board, Bag bag){
         this.board = board;
         this.name = "";
         this.score = 0;
-        this.turn = 0;
         this.rack = new Rack(bag);
     }
 
@@ -38,11 +36,6 @@ public class Player {
     }
     public int getScore() {
         return score;
-    }
-    public int getTurn() {
-        return turn;
-    }
-    public void placeLetter(String letter){
     }
     /**
      * Ends the player's turn.
@@ -73,6 +66,7 @@ public class Player {
      */
     public Game.Status takeTurn() {
         System.out.println(board);//print board
+        System.out.println(rack);
         System.out.println("It is your turn to play.");
         boolean validInput = false;
         boolean running = true;
@@ -130,22 +124,22 @@ public class Player {
             //endTurn();
             return endTurn();
         }
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < inputTiles.size(); i++){
-            Coordinate coordinates = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
-            board.placeTile(coordinates,(Tile) inputTiles.get(i));
+            Coordinate c = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
+            coordinates.add(c);
+            board.placeTile(c,(Tile) inputTiles.get(i));
+            rack.removeTileFromRack((Tile) inputTiles.get(i));
         }
-        //could remove tiles from rack only when word was approved in endTurn()
-        //rack.placeTiles(inputTiles);
-        //for now this code assumes that placing will not result in an error since we checked if the squares are empty.
-        // the code right now is not taking into account invalid words, or invalid placements, only invalid inputs and non-empty squares.
-        //endTurn()
+        board.submit(coordinates); // for now this does not react to wrong words
+
 
         return endTurn();
     }
 
     /**
-     * gets a string to a list containing enums of either letters, rows or columns.
-     * @param s the string to be transformed.
+     * Gets a string to a list containing enums of either letters, rows or columns.
+     * @param s the string to be transformed
      * @param option picks letters, rows or columns enum
      * @return ArrayList [C, A, T]
      */
