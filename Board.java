@@ -117,7 +117,7 @@ public class Board {
      * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
      * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
-    private boolean isFirstWordPlayed(List<Coordinate> tilesPlacedCoordinates){
+    private boolean isOnStart(List<Coordinate> tilesPlacedCoordinates){
         for (Coordinate c: tilesPlacedCoordinates){
             // Start square is at Coordinate(8,8)
             if ((c.getRowIndex() == 8) && (c.getColumnIndex() == 8)) return true;
