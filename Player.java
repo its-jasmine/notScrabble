@@ -20,7 +20,7 @@ public class Player {
     }
 
     public Player(Board board, Bag bag, int playerNumber) {
-        this(Board board, Bag bag);
+        this(board,bag);
         this.name = "Player " + playerNumber;
     }
 
