@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * @author Rebecca Elliott
  * @author Jasmine Gad El Hak
+ * @author Arthur Atangana
  */
 public class Board {
     private static Square[][] squares; // [row][column]
@@ -35,7 +36,9 @@ public class Board {
         direction = Direction.UNKNOWN;
     }
 
-    private Square getSquare(Coordinate coordinate) {return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];}
+    private Square getSquare(Coordinate coordinate) {
+        return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+    }
 
 
     /**
@@ -91,7 +94,7 @@ public class Board {
      * @param coordinate of the square being checked
      * @return true if the square has no Tile yet, false otherwise
      */
-    private boolean isSquareEmpty(Coordinate coordinate) {
+    public boolean isSquareEmpty(Coordinate coordinate) {
         return getSquare(coordinate).isEmpty();
     }
 
@@ -211,7 +214,7 @@ public class Board {
      * @return word score
      */
     private int scoreWord(LinkedList word) {
-        return -1; // TODO:  
+        return -1; // TODO:
     }
 
     /**
@@ -224,7 +227,7 @@ public class Board {
         llWord.forEach(node -> sWord += node.tile));
         return sWord;
     }
-        
+
 
     public String toString(){
         String s = "";

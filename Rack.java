@@ -1,12 +1,17 @@
 import java.util.*;
+
+/**
+ * @author Arthur Atangana
+ */
 public class Rack {
 
     private List<Tile> tileList;
     private final static int MAXTILES = 7;
-    private static Bag bag;
+    private Bag bag;
 
-    public Rack(){
+    public Rack(Bag bag){
         List tileList = new ArrayList<Tile>();
+        this.bag = bag;
     }
     public int getTilesAmount() {
         return tileList.size();
@@ -36,6 +41,14 @@ public class Rack {
             rackScore += tile.value;
         }
         return rackScore;
+    }
+    public boolean isTileinRack(Tile t){
+        for (Tile tile: getTilesList()){
+            if (tile == t){
+                return true;
+            }
+        }
+        return false;
     }
 
 
