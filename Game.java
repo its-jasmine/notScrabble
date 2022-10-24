@@ -25,7 +25,7 @@ public class Game {
 
         this.players = new ArrayList<Player>();
         for (int i = numPlayers; i > 0; i--) {
-            players.add(new Player(board, bag));
+            players.add(new Player(board, bag, i + 1));
         }
         Random random = new Random();
         this.playerTurn = random.nextInt(numPlayers); // picks who goes first
@@ -46,7 +46,7 @@ public class Game {
         setFinalScores();
         Player winner = getWinner();
 
-        System.out.println("The winner is player" + (winner) + " with a score of" + winner.getScore() + "!\n" ); // TODO make name field for Player, and toString?
+        System.out.println("The winner is " + (winner.getName()) + " with a score of" + winner.getScore() + "!\n" );
 
     }
 
