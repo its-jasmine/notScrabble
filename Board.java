@@ -161,7 +161,6 @@ public class Board {
 
         // At this point, the Coordinate placements are invalid
         return null;
-
     }
 
     /**
