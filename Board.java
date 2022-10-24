@@ -54,38 +54,38 @@ public class Board {
     }
     /**
      * Determine if the tiles the player is attempting to place are connected to an existing tile
-     * @param sortedTiles the sorted coordinates of the tiles the player is attempting to place this turn
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
      * @return true if the sorted tiles are attached to another tile, false otherwise
      */
-    private boolean verifyWordAttachment(List<Coordinate> sortedTiles){
+    private boolean verifyWordAttachment(List<Coordinate> tilesPlacedCoordinates){
         if (direction == Direction.HORIZONTAL) {
             // Is there a tile to the left of the first tile played?
-            Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex() - 1, sortedTiles.get(0).getRowIndex());
+            Coordinate c = new Coordinate(tilesPlacedCoordinates.get(0).getColumnIndex() - 1, tilesPlacedCoordinates.get(0).getRowIndex());
             if (!isSquareEmpty(c)) {return true;}
             // For each tile played is there a letter above or below?
-            for (Coordinate c: sortedTiles){
+            for (Coordinate c: tilesPlacedCoordinates){
                 Coordinate above = new Coordinate(c.getColumnIndex(), c.getRowIndex() - 1);
                 Coordinate below = new Coordinate(c.getColumnIndex(), c.getRowIndex() + 1);
                 if (!isSquareEmpty(above)) {return true;}
                 if (!isSquareEmpty(below)) {return true;}
             }
             // Is there a tile to the right of the last tile played?
-            Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex() + 1, sortedTiles.get(-1).getRowIndex());
+            Coordinate c = new Coordinate(tilesPlacedCoordinates.get(-1).getColumnIndex() + 1, tilesPlacedCoordinates.get(-1).getRowIndex());
             if (!isSquareEmpty(c)) {return true;}
         }
         else {
             // Is there a tile above the first tile played?
-            Coordinate c = new Coordinate(sortedTiles.get(0).getColumnIndex(), sortedTiles.get(0).getRowIndex() - 1);
+            Coordinate c = new Coordinate(tilesPlacedCoordinates.get(0).getColumnIndex(), tilesPlacedCoordinates.get(0).getRowIndex() - 1);
             if (!isSquareEmpty(c)) {return true;}
             // For each tile played is there a letter right or left?
-            for (Coordinate c: sortedTiles){
+            for (Coordinate c: tilesPlacedCoordinates){
                 Coordinate left = new Coordinate(c.getColumnIndex() - 1, c.getRowIndex());
                 Coordinate right = new Coordinate(c.getColumnIndex() + 1, c.getRowIndex());
                 if (!isSquareEmpty(left)) {return true;}
                 if (!isSquareEmpty(right)) {return true;}
             }
             // Is there a tile to below the last tile played?
-            Coordinate c = new Coordinate(sortedTiles.get(-1).getColumnIndex(), sortedTiles.get(-1).getRowIndex() + 1);
+            Coordinate c = new Coordinate(tilesPlacedCoordinates.get(-1).getColumnIndex(), tilesPlacedCoordinates.get(-1).getRowIndex() + 1);
             if (!isSquareEmpty(c)) {return true;}
         }
         return false;
@@ -93,19 +93,19 @@ public class Board {
 
     /**
      * Determine if is each square between the first and last tile played is NOT empty
-     * @param sortedTiles the sorted coordinates of the tiles the player is attempting to place this turn
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
      * @return true if the sorted tiles placement do no have gaps, false otherwise
      */
-    private boolean verifyNoGaps(List<Coordinate> sortedTiles){
+    private boolean verifyNoGaps(List<Coordinate> tilesPlacedCoordinates){
         if (direction == Direction.HORIZONTAL){
-            int rowIndex =  sortedTiles.get(0).getRowIndex();
-            for (int i = sortedTiles.get(0).getColumnIndex(); i <= sortedTiles.get(-1).getColumnIndex(); i++){
+            int rowIndex =  tilesPlacedCoordinates.get(0).getRowIndex();
+            for (int i = tilesPlacedCoordinates.get(0).getColumnIndex(); i <= tilesPlacedCoordinates.get(-1).getColumnIndex(); i++){
                 if (isSquareEmpty(new Coordinate(i, rowIndex))) return false;
             }
         }
         else {
-            int columnIndex = sortedTiles.get(0).getColumnIndex();
-            for (int i = sortedTiles.get(0).getRowIndex(); i <= sortedTiles.get(-1).getRowIndex(); i++){
+            int columnIndex = tilesPlacedCoordinates.get(0).getColumnIndex();
+            for (int i = tilesPlacedCoordinates.get(0).getRowIndex(); i <= tilesPlacedCoordinates.get(-1).getRowIndex(); i++){
                 if (isSquareEmpty(new Coordinate(columnIndex, i))) return false;
             }
         }
@@ -114,11 +114,11 @@ public class Board {
 
     /**
      * Determine if one of the coordinates attempting to be placed is the start square coordinate
-     * @param sortedTiles the sorted coordinates of the tiles the player is attempting to place this turn
-     * @return true if one of the sortedTiles land on the start square, false otherwise
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
+     * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
-    private boolean isFirstWordPlayed(List<Coordinate> sortedTiles){
-        for (Coordinate c: sortedTiles){
+    private boolean isFirstWordPlayed(List<Coordinate> tilesPlacedCoordinates){
+        for (Coordinate c: tilesPlacedCoordinates){
             // Start square is at Coordinate(8,8)
             if ((c.getRowIndex() == 8) && (c.getColumnIndex() == 8)) return true;
         }
