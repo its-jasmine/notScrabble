@@ -3,6 +3,7 @@
  * @author Rebecca Elliott
  * @author Jasmine Gad El Hak
  * @author Arthur Atangana
+ * @author Victoria Malouf
  * @version Milestone1
  */
 
@@ -30,7 +31,7 @@ public class Board {
 
 
     /**
-    * Determine the direction field for this turn if tiles are straight.
+    * Determine the direction for this turn if tiles the player is attempting to place are straight.
     * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
     * @return direction of the tiles (HORIZONTAL or VERTICAL), UNKNOWN otherwise
     */
@@ -48,8 +49,9 @@ public class Board {
         }
     }
     /**
-     * Determine if the tiles the player is attempting to place are connected to an existing tile
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
+     * Determine if the tiles the player is attempting to place are connected to an existing tile.
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
+     * attempting to place this turn which are confirmed to be in a straight line
      * @return true if the sorted tiles are attached to another tile, false otherwise
      */
     private boolean verifyWordAttachment(List<Coordinate> tilesPlacedCoordinates){
@@ -87,8 +89,9 @@ public class Board {
     }
 
     /**
-     * Determine if is each square between the first and last tile played is NOT empty.
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
+     * Determine if each square between the first and last tile played is NOT empty.
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
+     * attempting to place this turn which are confirmed to be in a straight line
      * @return true if the sorted tiles placement do no have gaps, false otherwise
      */
     private boolean verifyNoGaps(List<Coordinate> tilesPlacedCoordinates){
@@ -109,7 +112,8 @@ public class Board {
 
     /**
      * Determine if one of the coordinates attempting to be placed is the start square coordinate.
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
+     * attempting to place this turn which are confirmed to be in a straight line
      * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
     private boolean isOnStart(List<Coordinate> tilesPlacedCoordinates){
