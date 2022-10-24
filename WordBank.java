@@ -2,6 +2,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
+/**
+ *
+ * @author Victoria Malouf
+ * @version Milestone1
+ */
 
 public class WordBank {
     private ArrayList<String> validWords;
@@ -28,24 +33,5 @@ public class WordBank {
         return validWords.contains(word);
     }
 
-    public static void main(String[] args) {
-        WordBank wordbank = new WordBank();
-        int p = 0;
-        int f = 0;
-        // Valid words
-        if (wordbank.isValidWord("adsl")) p++; else f++;
-        if (wordbank.isValidWord("thumbzilla")) p++; else f++;
-        if (wordbank.isValidWord("usgs")) p++; else f++;
-        if (wordbank.isValidWord("zshops")) p++; else f++;
-        if (wordbank.isValidWord("zdnet")) p++; else f++;
-        // Invalid words
-        if (!wordbank.isValidWord("zxc")) p++; else f++;
-        if (!wordbank.isValidWord("hignfbh")) p++; else f++;
-        if (!wordbank.isValidWord("silents")) p++; else f++;
-        if (!wordbank.isValidWord("orangez")) p++; else f++;
-        if (!wordbank.isValidWord("breuisn")) p++; else f++;
-
-        System.out.print("PASSED: " + p + "\nFAILED: " + f);
-    }
 
 }
