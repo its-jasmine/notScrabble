@@ -27,11 +27,6 @@ public class Coordinate {
     public final Column column;
     public final Row row;
 
-    public Coordinate(Column column, Row row){
-        this.column = column;
-        this.row = row;
-    }
-
     public Coordinate(int column, int row){
         this.column = Column.values()[column];
         this.row = Row.values()[row];
