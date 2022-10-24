@@ -63,8 +63,14 @@ public class Rack {
         }
         return false;
     }
-    public void removeTileFromRack(Tile t){
+    private void removeTileFromRack(Tile t){
         tileList.remove(t);
+    }
+
+    public void removeTiles(ArrayList<Tile> tiles){
+        for (Tile t: tiles){
+            removeTileFromRack(t);
+        }
     }
 
 
