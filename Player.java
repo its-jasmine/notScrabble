@@ -9,14 +9,12 @@ public class Player {
     private Board board;
     private Rack rack;
     private int score;
-    private int turn;
 
 
 
     public Player(Board board, Bag bag){
         this.board = board;
         this.score = 0;
-        this.turn = 0;
         this.rack = new Rack(bag);
     }
     public Player(){
@@ -28,11 +26,6 @@ public class Player {
     }
     public int getScore() {
         return score;
-    }
-    public int getTurn() {
-        return turn;
-    }
-    public void placeLetter(String letter){
     }
     /**
      * Ends the player's turn.
@@ -63,6 +56,7 @@ public class Player {
      */
     public Game.Status takeTurn() {
         System.out.println(board);//print board
+
         System.out.println("It is your turn to play.");
         boolean validInput = false;
         boolean running = true;
