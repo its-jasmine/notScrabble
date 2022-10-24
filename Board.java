@@ -156,7 +156,7 @@ public class Board {
 
         // Check if this is the first word being played
         else {
-            if (isFirstWordPlayed(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
+            if (isOnStart(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
         }
 
         // At this point, the Coordinate placements are invalid
