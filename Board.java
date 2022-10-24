@@ -51,11 +51,11 @@ public class Board {
      * @return true if the sorted tiles are attached to another tile, false otherwise
      */
     private boolean verifyWordAttachment(List<Coordinate> tilesPlacedCoordinates){
-        Coordinate firstTile = tilesPlacedCoordinates.get(0);
-        Coordinate lastTile = tilesPlacedCoordinates.get(-1);
+        Coordinate firstTileCoordinate = tilesPlacedCoordinates.get(0);
+        Coordinate lastTileCoordinate = tilesPlacedCoordinates.get(-1);
         if (direction == Direction.HORIZONTAL) {
             // Is there a tile to the left of the first tile played?
-            Coordinate toLeft = firstTile.getAdjacentCoordinate("L");
+            Coordinate toLeft = firstTileCoordinate.getAdjacentCoordinate("L");
             if (!isSquareEmpty(toLeft)) {return true;}
             // For each tile played is there a letter above or below?
             for (Coordinate c: tilesPlacedCoordinates){
@@ -65,12 +65,12 @@ public class Board {
                 if (!isSquareEmpty(below)) {return true;}
             }
             // Is there a tile to the right of the last tile played?
-            Coordinate toRight = lastTile.getAdjacentCoordinate("R");
+            Coordinate toRight = lastTileCoordinate.getAdjacentCoordinate("R");
             if (!isSquareEmpty(toRight)) {return true;}
         }
         else {
             // Is there a tile above the first tile played?
-            Coordinate above = firstTile.getAdjacentCoordinate("A");
+            Coordinate above = firstTileCoordinate.getAdjacentCoordinate("A");
             if (!isSquareEmpty(above)) {return true;}
             // For each tile played is there a letter right or left?
             for (Coordinate c: tilesPlacedCoordinates){
@@ -80,7 +80,7 @@ public class Board {
                 if (!isSquareEmpty(right)) {return true;}
             }
             // Is there a tile to below the last tile played?
-            Coordinate below = lastTile.getAdjacentCoordinate("B");
+            Coordinate below = lastTileCoordinate.getAdjacentCoordinate("B");
             if (!isSquareEmpty(below)) {return true;}
         }
         return false;
@@ -92,16 +92,18 @@ public class Board {
      * @return true if the sorted tiles placement do no have gaps, false otherwise
      */
     private boolean verifyNoGaps(List<Coordinate> tilesPlacedCoordinates){
+        Row r = tilesPlacedCoordinates.get(0).row;
+        Column c = tilesPlacedCoordinates.get(0).column;
         if (direction == Direction.HORIZONTAL){
-            Row r =  tilesPlacedCoordinates.get(0).row;
-            for (int i = tilesPlacedCoordinates.get(0).getColumnIndex(); i <= tilesPlacedCoordinates.get(-1).getColumnIndex(); i++){
-                if (isSquareEmpty(new Coordinate(tilesPlacedCoordinates.get(i).column, r))) return false;
+            for (int i = tilesPlacedCoordinates.get(0).getColumnIndex(); i < tilesPlacedCoordinates.get(-1).getColumnIndex(); i++){
+                c = c.next();
+                if (isSquareEmpty(new Coordinate(c, r))) return false;
             }
         }
         else {
-            Column c = tilesPlacedCoordinates.get(0).column;
-            for (int i = tilesPlacedCoordinates.get(0).getRowIndex(); i <= tilesPlacedCoordinates.get(-1).getRowIndex(); i++){
-                if (isSquareEmpty(new Coordinate(c, tilesPlacedCoordinates.get(i).row))) return false;
+            for (int i = tilesPlacedCoordinates.get(0).getRowIndex(); i < tilesPlacedCoordinates.get(-1).getRowIndex(); i++){
+                r = r.next();
+                if (isSquareEmpty(new Coordinate(c, r))) return false;
             }
         }
         return true;
