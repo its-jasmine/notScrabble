@@ -22,8 +22,8 @@ public class Coordinate {
         list.sort(Comparator.comparing(o -> o.column));
     }
 
-    public Column column;
-    public Row row;
+    public final Column column;
+    public final Row row;
 
     public Coordinate(Column column, Row row){
         this.column = column;

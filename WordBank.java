@@ -1,31 +1,23 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-// Option 1 imports
-import java.io.BufferedReader;
-import java.io.FileReader;
-// Option 2 imports
 import java.io.File;
 import java.util.Scanner;
 
 public class WordBank {
     private ArrayList<String> validWords;
-    /*
-    public WordBank() throws Exception {
-        this.validWords = new ArrayList<>();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("validWords.txt"));
-        String currentWord;
-        while ((currentWord = bufferedReader.readLine()) != null){
-            validWords.add(currentWord);
-        }
-        bufferedReader.close();
-    }
-    */
-    public WordBank() throws Exception {
+
+    public WordBank() {
         this.validWords = new ArrayList<>();
         File file = new File("validWords.txt");
-        Scanner sc = new Scanner(file);
-
-        while (sc.hasNextLine())
+        Scanner sc;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        while (sc.hasNextLine()) {
             validWords.add(sc.nextLine());
+        }
     }
     /**
      * Checks validity of word
@@ -36,7 +28,7 @@ public class WordBank {
         return validWords.contains(word);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         WordBank wordbank = new WordBank();
         int p = 0;
         int f = 0;
