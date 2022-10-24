@@ -25,7 +25,7 @@ public class WordBank {
      * @return true if word is valid, false otherwise
      */
     public boolean isValidWord(String word){
-        return validWords.contains(word);
+        return validWords.contains(word.toLowerCase());
     }
 
     public static void main(String[] args) {
