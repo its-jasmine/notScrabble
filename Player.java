@@ -120,15 +120,15 @@ public class Player {
             //endTurn();
             return endTurn();
         }
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < inputTiles.size(); i++){
-            Coordinate coordinates = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
-            board.placeTile(coordinates,(Tile) inputTiles.get(i));
+            Coordinate c = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
+            coordinates.add(c);
+            board.placeTile(c,(Tile) inputTiles.get(i));
+            rack.removeTileFromRack((Tile) inputTiles.get(i));
         }
-        //could remove tiles from rack only when word was approved in endTurn()
-        //rack.placeTiles(inputTiles);
-        //for now this code assumes that placing will not result in an error since we checked if the squares are empty.
-        // the code right now is not taking into account invalid words, or invalid placements, only invalid inputs and non-empty squares.
-        //endTurn()
+        board.submit(coordinates); // for now this does not react to wrong words
+
 
         return endTurn();
     }

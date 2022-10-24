@@ -43,12 +43,15 @@ public class Rack {
         return rackScore;
     }
     public boolean isTileinRack(Tile t){
-        for (Tile tile: getTilesList()){
+        for (Tile tile: tileList){
             if (tile == t){
                 return true;
             }
         }
         return false;
+    }
+    public void removeTileFromRack(Tile t){
+        tileList.remove(t);
     }
 
 

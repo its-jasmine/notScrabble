@@ -224,7 +224,7 @@ public class Board {
      */
     private String llToString(LinkedList llWord) {
         String sWord = "";
-        llWord.forEach(node -> sWord += node.tile));
+        llWord.forEach(node -> sWord += node.tile);
         return sWord;
     }
 
