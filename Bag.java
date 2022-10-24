@@ -1,8 +1,7 @@
 /**
- * @author: Rebecca Elliott
- * @date: 2022
- *
  * This class represents the bag full of tiles that the players draw from.
+ * @author: Rebecca Elliott
+ * @version Milestone1
  */
 
 import java.util.*;
@@ -22,7 +21,7 @@ public class Bag {
     }
 
     /**
-     * Allows player to draw multiple tiles at random
+     * Allows player to draw multiple tiles at random.
      * @param numToDraw number of tiles to draw
      * @return list of drawn tiles removed from the bag
      */
@@ -36,10 +35,10 @@ public class Bag {
     }
 
     /**
-     * Allows player to draw one tile at random
+     * Allows player to draw one tile at random.
      * @return tile removed from the bag
      */
-    public Tile drawTile() {
+    private Tile drawTile() {
         if (tiles.size() == 0) return null;
         return tiles.remove(tiles.size()-1);
     }

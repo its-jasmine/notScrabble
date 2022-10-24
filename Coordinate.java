@@ -1,25 +1,38 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
+/**
+ * This class represents valid coordinates on the game board.
+ * @author: Rebecca Elliott
+ * @version Milestone1
+ */
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import java.util.List;
 import java.util.Comparator;
 
 public class Coordinate {
     public enum Column {
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O;
-        public Column next() {return values()[ordinal() + 1];}
-        public Column previous() {return values()[ordinal() - 1];}
+        private Column next() {return values()[ordinal() + 1];}  // if used outside getAdjacentCoordinate it can cause index out of bounds error
+        private Column previous() {return values()[ordinal() - 1];}
     }
 
     public enum Row {
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE, THIRT, FOURT, FIFT;
-        public Row next() {return values()[ordinal() + 1];}
-        public Row previous() {return values()[ordinal() - 1];}
+        private Row next() {return values()[ordinal() + 1];}
+        private Row previous() {return values()[ordinal() - 1];}
     }
 
+    /**
+     * Sorts a list by each element's row field.
+     * @param list to be sorted
+     */
     public static void sortByRow(List<Coordinate> list) {
         list.sort(Comparator.comparing(o -> o.row));
     }
 
+    /**
+     * Sorts a list by each element's column field.
+     * @param list to be sorted
+     */
     public static void sortByColumn(List<Coordinate> list) {
         list.sort(Comparator.comparing(o -> o.column));
     }
@@ -36,14 +49,18 @@ public class Coordinate {
         return row.ordinal();
     }
 
+    /**
+     * Gets the index related to the column.
+     * @return index in Column
+     */
     public int getColumnIndex() {
         return column.ordinal();
     }
 
     /**
-     * gets the coordinate one space over in the direction given if possible
+     * Gets the coordinate one space over in the direction given if possible.
      * @param direction to check
-     * @return the adjacent coordinate
+     * @return the adjacent coordinate or null if at edge of board
      * @throws IllegalArgumentException
      */
     public Coordinate getAdjacentCoordinate(String direction) throws IllegalArgumentException {

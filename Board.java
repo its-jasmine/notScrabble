@@ -1,16 +1,19 @@
-import java.util.*;
-
 /**
+ * BLURB ABOUT BOARD GOES HERE
  * @author Rebecca Elliott
  * @author Jasmine Gad El Hak
  * @author Arthur Atangana
+ * @author Victoria Malouf
+ * @version Milestone1
  */
+
+import java.util.*;
+
+
 public class Board {
     private static Square[][] squares; // [row][column]
     private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
-
     private enum Direction {HORIZONTAL, VERTICAL, UNKNOWN}
-
 
     public Board() {
         squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
@@ -28,9 +31,9 @@ public class Board {
 
 
     /**
-    * Determine the direction field for this turn if tiles are straight
+    * Determine the direction for this turn if tiles the player is attempting to place are straight.
     * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
-    * @return Direction of the tiles (HORIZONTAL or VERTICAL), UNKNOWN otherwise
+    * @return direction of the tiles (HORIZONTAL or VERTICAL), UNKNOWN otherwise
     */
     private Direction getDirection(List<Coordinate> tilesPlacedCoordinates){
         // Get the sorted rows
@@ -46,8 +49,9 @@ public class Board {
         }
     }
     /**
-     * Determine if the tiles the player is attempting to place are connected to an existing tile
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
+     * Determine if the tiles the player is attempting to place are connected to an existing tile.
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
+     * attempting to place this turn, which are confirmed to be in a straight line
      * @return true if the sorted tiles are attached to another tile, false otherwise
      */
     private boolean verifyWordAttachment(List<Coordinate> tilesPlacedCoordinates){
@@ -87,8 +91,9 @@ public class Board {
     }
 
     /**
-     * Determine if is each square between the first and last tile played is NOT empty
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
+     * Determine if each square between the first and last tile played is NOT empty.
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
+     * attempting to place this turn, which are confirmed to be in a straight line
      * @return true if the sorted tiles placement do no have gaps, false otherwise
      */
     private boolean verifyNoGaps(List<Coordinate> tilesPlacedCoordinates){
@@ -110,8 +115,9 @@ public class Board {
     }
 
     /**
-     * Determine if one of the coordinates attempting to be placed is the start square coordinate
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
+     * Determine if one of the coordinates attempting to be placed is the start square coordinate.
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
+     * attempting to place this turn, which are confirmed to be in a straight line
      * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
     private boolean isOnStart(List<Coordinate> tilesPlacedCoordinates){
@@ -124,7 +130,7 @@ public class Board {
 
     /**
      * Checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
-     * sets the direction field for this turn if tiles are straight
+     * sets the direction field for this turn if tiles are straight.
      * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
      * @return a sorted list of tiles played if the alignment is valid, null otherwise
      */
@@ -161,20 +167,19 @@ public class Board {
     }
 
     /**
-     * calls all the functions needed to validated and score words created this turn
-     *
-     * @param tilesPlaced the tiles the player is attempting to place this turn
+     * Calls all the functions needed to validated and score words created this turn.
+     * @param tilesPlaced the tiles the player has placed this turn
      * @return -1 if any validation fails (player tries again), otherwise returns the score for the turn
      */
     public int submit(List<Coordinate> tilesPlaced) {
         if (isValidTileAlignment(tilesPlaced) == null) return -1;
         // at this point tilesPlaced is now sorted and direction is set
 
-        List<Word> words = getWordsCreated(tilesPlaced); // each node has a Tile and Square type
+        List<Word> words = getWordsCreated(tilesPlaced);
 
         if (!Word.areValidWords(words)) return -1;
-        // at this point words are all valid
 
+        // at this point words are all valid
         int score = Word.scoreWords(words);
 
         direction = Direction.UNKNOWN; // reset for next turn
@@ -182,13 +187,12 @@ public class Board {
     }
 
     /**
-     * Places tile in square if available
-     *
+     * Places tile in square if available.
      * @param coordinate of the tile being placed
      * @return true if letter was placed, false otherwise
      */
-    private boolean placeTile(Coordinate coordinate, Tile tile) {
-        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+    public boolean placeTile(Coordinate coordinate, Tile tile) {
+        Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
             return true;
@@ -205,17 +209,12 @@ public class Board {
     }
 
     /**
-     * Removes and returns the Tile in a square if available
-     *
+     * Removes and returns the Tile in a square if available.
      * @param coordinate of the Tile being removed
      * @return the tile if it was removed, null otherwise
      */
     public Tile removeTile(Coordinate coordinate) {
-        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
-        if (!square.isEmpty()) {
-            return square.removeTile();
-        }
-        return null;
+        return  getSquare(coordinate).removeTile();
     }
 
     public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
@@ -227,8 +226,7 @@ public class Board {
     }
 
     /**
-     * checks if the square has a tile in it already
-     *
+     * Checks if the square has a tile in it already.
      * @param coordinate of the square being checked
      * @return true if the square has no Tile yet, false otherwise
      */
@@ -237,25 +235,27 @@ public class Board {
     }
 
     /**
-     * Gets the tile on a square without removing it
-     *
+     * Gets the tile on a square without removing it.
      * @param coordinate of the square being checked
-     * @return the Tile or null
+     * @return the Tile or null if square has no tile
      */
-
     public Tile getSquareTile(Coordinate coordinate) {
         return getSquare(coordinate).getTile();
     }
 
+    /**
+     * Gets the type of a square at a give coordinate.
+     * @param coordinate of the square being checked
+     * @return the squares type
+     */
     public Square.Type getSquareType(Coordinate coordinate) {
         return getSquare(coordinate).getType();
     }
 
     /**
-     * finds all the words that were created this turn
-     *
-     * @param tilesPlayed a sorted list of the tiles played this turn
-     * @return list of a words stored in a double linked list. nodes store Tiles and Square type
+     * Gets all the words that were created this turn.
+     * @param tilesPlayed a sorted list of the tile coordinates played this turn, coordinates are confirmed in a line
+     * @return list of words created this turn
      */
     private List<Word> getWordsCreated(List<Coordinate> tilesPlayed) {
         List<Word> words = new ArrayList<>();
@@ -282,12 +282,12 @@ public class Board {
                 if (word.size() > 1) words.add(word);
             }
         }
-        return words;
+        return words; // this can be an empty ArrayList in the scenario a player plays one Tile to start the game
     }
 
     /**
-     * gets any horizontal word, can be one letter long at this point
-     * @param startSearch the place on the board to search from
+     * Gets any horizontal word, can be one letter long at this point.
+     * @param startSearch the location on the board to search from
      * @return word that was created
      */
     private Word getHorizontalWord(Coordinate startSearch) {
@@ -311,8 +311,8 @@ public class Board {
     }
 
     /**
-     * gets any vertical word, can be one letter long at this point
-     * @param startSearch the place on the board to search from
+     * Gets any vertical word, can be one letter long at this point.
+     * @param startSearch the location on the board to search from
      * @return word that was created
      */
     private Word getVerticalWord(Coordinate startSearch) {
@@ -335,12 +335,15 @@ public class Board {
         return word;
     }
 
-
+    /**
+     * Returns string representation of board.
+     * @return string of current board state
+    */
     public String toString() {
         String s = "";
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
-                s += squares[r.ordinal()][c.ordinal()] + " ";
+                s += squares[r.ordinal()][c.ordinal()] + " "; // Each square will be separated by a space.
             }
             s += "\n";
         }

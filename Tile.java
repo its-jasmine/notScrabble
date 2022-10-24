@@ -1,6 +1,8 @@
 /**
- * Models the letters in Scrabble. Each value has an associated character, letter value, and the total number of that
+ * Models the letters in the game. Each value has an associated character, letter point value, and the total number of that
  * letter in the game.
+ * @author: Rebecca Elliott
+ * @version Milestone1
  */
 
 public enum Tile {
@@ -33,7 +35,7 @@ public enum Tile {
     BLANK(" ", 0, 2);
 
     public final String letter; // set to public so it can be accessed directly. Since it's final it can't be changed
-    public final int value;
+    public final int value; // set to public so it can be accessed directly. Since it's final it can't be changed
     private final int totalNum; // total number of this letter in the game
 
     Tile(String letter, int value, int totalNum) {
@@ -43,13 +45,17 @@ public enum Tile {
     }
 
     /**
-     * Gets the total number of that letter to be included in the game
-     * @return int number of letter
+     * Gets the total number of that letter to be included in the game.
+     * @return how many of that letter are in the game
      */
     public int getTotalNum() {
         return totalNum;
     }
 
+    /**
+     * Converts Letter to a String.
+     * @return the letter as a String
+     */
     @Override
     public String toString() {
         return letter;
