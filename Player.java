@@ -9,25 +9,23 @@ public class Player {
     private Board board;
     private Rack rack;
     private int score;
-    private int turn;
     private String name;
-    
+
 
     public Player(Board board, Bag bag){
         this.board = board;
         this.name = "";
         this.score = 0;
-        this.turn = 0;
         this.rack = new Rack(bag);
     }
 
     public Player(Board board, Bag bag, int playerNumber) {
-        this(Board board, Bag bag);
+        this(board,bag);
         this.name = "Player " + playerNumber;
     }
 
     public Player(Board board, Bag bag,String name) {
-        this(Board board, Bag bag);
+        this(board, bag);
         this.name = name;
     }
 
@@ -38,11 +36,6 @@ public class Player {
     }
     public int getScore() {
         return score;
-    }
-    public int getTurn() {
-        return turn;
-    }
-    public void placeLetter(String letter){
     }
     /**
      * Ends the player's turn.
@@ -73,6 +66,7 @@ public class Player {
      */
     public Game.Status takeTurn() {
         System.out.println(board);//print board
+        System.out.println(rack);
         System.out.println("It is your turn to play.");
         boolean validInput = false;
         boolean running = true;
@@ -117,7 +111,26 @@ public class Player {
                         break;
                     }
                     else{
-                        validInput = true;
+                        ArrayList<Coordinate> coordinates = new ArrayList<>();
+                        coordinates = coordinatesList(inputRows,inputColumns); //creates list of coordinates
+                        if (!board.placeTiles(coordinates,inputTiles)){ //if placeTiles fails, input again.
+                            board.removeTiles(coordinates);
+                            System.out.println("invalid input, try again");
+                            validInput = false;
+                            break;
+                        }
+                        int turnScore = board.submit(coordinates);
+                        if (score == -1){
+                            System.out.println("Invalid placement, try again.");
+                            validInput = false;
+                            break;
+                        }
+                        else{
+                            rack.removeTiles(inputTiles);
+                            score += turnScore;
+                            validInput = true;
+                        }
+                        //validInput = true;
                     }
             }
             if (validInput) {
@@ -127,25 +140,13 @@ public class Player {
         System.out.println("this got the right input");
         if (pass){
             System.out.println("passing turn");
-            //endTurn();
-            return endTurn();
         }
-        for (int i = 0; i < inputTiles.size(); i++){
-            Coordinate coordinates = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
-            board.placeTile(coordinates,(Tile) inputTiles.get(i));
-        }
-        //could remove tiles from rack only when word was approved in endTurn()
-        //rack.placeTiles(inputTiles);
-        //for now this code assumes that placing will not result in an error since we checked if the squares are empty.
-        // the code right now is not taking into account invalid words, or invalid placements, only invalid inputs and non-empty squares.
-        //endTurn()
-
         return endTurn();
     }
 
     /**
-     * gets a string to a list containing enums of either letters, rows or columns.
-     * @param s the string to be transformed.
+     * Gets a string to a list containing enums of either letters, rows or columns.
+     * @param s the string to be transformed
      * @param option picks letters, rows or columns enum
      * @return ArrayList [C, A, T]
      */
@@ -207,7 +208,14 @@ public class Player {
                 return temp;
         }
     }
-
+    private ArrayList<Coordinate> coordinatesList(ArrayList rows, ArrayList columns){
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+        for (int i = 0; i < rows.size(); i++){
+            Coordinate c = new Coordinate((Coordinate.Column)columns.get(i), (Coordinate.Row) rows.get(i));
+            coordinates.add(c);
+        }
+        return coordinates;
+    }
     /**
      * Checks if the tiles in the user input are in the player's rack
      * @param lettersList : list of tiles to check if in rack.
@@ -237,8 +245,8 @@ public class Player {
     }
 
     public static void main(String[] args) {
-        Player p = new Player();
-        p.takeTurn();
+        //Player p = new Player();
+        //p.takeTurn();
         //p.string2Lists("C A ONE,A A TWO,A A THREE", "rows");
     }
 }
