@@ -145,19 +145,26 @@ public class Board {
         // We have confirmed that the tiles placed are straight, therefore the sorted tiles can be horizontal OR vertical
         if ((tilesPlacedCoordinates.size() == (tilesPlacedCoordinates.get(-1).getColumnIndex() - tilesPlacedCoordinates.get(0).getColumnIndex() + 1))
                 || (tilesPlacedCoordinates.size() == (tilesPlacedCoordinates.get(-1).getRowIndex() - tilesPlacedCoordinates.get(0).getRowIndex() + 1))) {
-                // verify word attachment
-                if (verifyWordAttachment(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
+            // verify word attachment
+            if (verifyWordAttachment(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
         }
 
         // If there are gaps between tiles, check if each square between the first and last tile played NOT empty
-        else if (verifyNoGaps(tilesPlacedCoordinates)) {return tilesPlacedCoordinates;}
+        else if (verifyNoGaps(tilesPlacedCoordinates)) {
+            return tilesPlacedCoordinates;
+        }
 
         // Check if this is the first word being played
-        else {if (isFirstWordPlayed(tilesPlacedCoordinates)) return tilesPlacedCoordinates;}
+        else {
+            if (isFirstWordPlayed(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
+        }
 
         // At this point, the Coordinate placements are invalid
         return null;
-        
+
+    }
+
+    /**
      * calls all the functions needed to validated and score words created this turn
      * @param tilesPlaced the tiles the player is attempting to place this turn
      * @return -1 if any validation fails (player tries again), otherwise returns the score for the turn
