@@ -37,7 +37,7 @@ public class Board {
     /**
     * Determine the direction field for this turn if tiles are straight
     * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
-    * @return Direction of the tiles (HORIZONTAL or VERTICAL), UNKOWN otherwise
+    * @return Direction of the tiles (HORIZONTAL or VERTICAL), UNKNOWN otherwise
     */
     private Direction getDirection(List<Coordinate> tilesPlacedCoordinates){
         // Get the sorted rows
