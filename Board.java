@@ -191,6 +191,14 @@ public class Board {
         }
         return false;
     }
+    public boolean placeTiles(ArrayList<Coordinate> coordinates, ArrayList<Tile> tiles){
+        for (int i = 0; i < coordinates.size(); i++){
+            if (!placeTile(coordinates.get(i),tiles.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Removes and returns the Tile in a square if available.
@@ -201,6 +209,13 @@ public class Board {
         return  getSquare(coordinate).removeTile();
     }
 
+    public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
+        ArrayList<Tile> tilesLst = new ArrayList<>();
+        for (Coordinate c : tiles){
+            tilesLst.add(removeTile(c));
+        }
+        return tilesLst;
+    }
 
     /**
      * Checks if the square has a tile in it already.
