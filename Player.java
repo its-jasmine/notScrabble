@@ -66,7 +66,7 @@ public class Player {
      */
     public Game.Status takeTurn() {
         System.out.println(board);//print board
-
+        System.out.println(rack);
         System.out.println("It is your turn to play.");
         boolean validInput = false;
         boolean running = true;
@@ -138,8 +138,8 @@ public class Player {
     }
 
     /**
-     * gets a string to a list containing enums of either letters, rows or columns.
-     * @param s the string to be transformed.
+     * Gets a string to a list containing enums of either letters, rows or columns.
+     * @param s the string to be transformed
      * @param option picks letters, rows or columns enum
      * @return ArrayList [C, A, T]
      */
