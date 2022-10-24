@@ -32,11 +32,6 @@ public class Coordinate {
         this.row = row;
     }
 
-    public Coordinate(int column, int row){
-        this.column = Column.values()[column];
-        this.row = Row.values()[row];
-    }
-
     public int getRowIndex() {
         return row.ordinal();
     }
