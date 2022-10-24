@@ -10,18 +10,28 @@ public class Player {
     private Rack rack;
     private int score;
     private int turn;
-
-
+    private String name;
+    
 
     public Player(Board board, Bag bag){
         this.board = board;
+        this.name = "";
         this.score = 0;
         this.turn = 0;
         this.rack = new Rack(bag);
     }
-    public Player(){
 
+    public Player(Board board, Bag bag, int playerNumber) {
+        this(Board board, Bag bag);
+        this.name = "Player " + playerNumber;
     }
+
+    public Player(Board board, Bag bag,String name) {
+        this(Board board, Bag bag);
+        this.name = name;
+    }
+
+    public String getName() {return name;}
 
     public Rack getRack() {
         return rack;
