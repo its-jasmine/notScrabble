@@ -2,7 +2,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/** Represents a sequence of consecutive tiles on the game board.
+/**
+ * Represents a sequence of consecutive tiles on the game board.
  * @author Jasmine Gad El Hak
  * @version Milestone1
  */
