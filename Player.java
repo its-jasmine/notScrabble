@@ -111,7 +111,26 @@ public class Player {
                         break;
                     }
                     else{
-                        validInput = true;
+                        ArrayList<Coordinate> coordinates = new ArrayList<>();
+                        coordinates = coordinatesList(inputRows,inputColumns); //creates list of coordinates
+                        if (!board.placeTiles(coordinates,inputTiles)){ //if placeTiles fails, input again.
+                            board.removeTiles(coordinates);
+                            System.out.println("invalid input, try again");
+                            validInput = false;
+                            break;
+                        }
+                        int turnScore = board.submit(coordinates);
+                        if (score == -1){
+                            System.out.println("Invalid placement, try again.");
+                            validInput = false;
+                            break;
+                        }
+                        else{
+                            rack.removeTiles(inputTiles);
+                            score += turnScore;
+                            validInput = true;
+                        }
+                        //validInput = true;
                     }
             }
             if (validInput) {
@@ -121,19 +140,7 @@ public class Player {
         System.out.println("this got the right input");
         if (pass){
             System.out.println("passing turn");
-            //endTurn();
-            return endTurn();
         }
-        ArrayList<Coordinate> coordinates = new ArrayList<>();
-        for (int i = 0; i < inputTiles.size(); i++){
-            Coordinate c = new Coordinate((Coordinate.Column)inputColumns.get(i), (Coordinate.Row) inputRows.get(i));
-            coordinates.add(c);
-            board.placeTile(c,(Tile) inputTiles.get(i));
-            rack.removeTileFromRack((Tile) inputTiles.get(i));
-        }
-        board.submit(coordinates); // for now this does not react to wrong words
-
-
         return endTurn();
     }
 
@@ -201,7 +208,14 @@ public class Player {
                 return temp;
         }
     }
-
+    private ArrayList<Coordinate> coordinatesList(ArrayList rows, ArrayList columns){
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+        for (int i = 0; i < rows.size(); i++){
+            Coordinate c = new Coordinate((Coordinate.Column)columns.get(i), (Coordinate.Row) rows.get(i));
+            coordinates.add(c);
+        }
+        return coordinates;
+    }
     /**
      * Checks if the tiles in the user input are in the player's rack
      * @param lettersList : list of tiles to check if in rack.
@@ -231,8 +245,8 @@ public class Player {
     }
 
     public static void main(String[] args) {
-        Player p = new Player();
-        p.takeTurn();
+        //Player p = new Player();
+        //p.takeTurn();
         //p.string2Lists("C A ONE,A A TWO,A A THREE", "rows");
     }
 }
