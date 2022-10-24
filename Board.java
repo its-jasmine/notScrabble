@@ -183,13 +183,21 @@ public class Board {
      * @param coordinate of the tile being placed
      * @return true if letter was placed, false otherwise
      */
-    public boolean placeTile(Coordinate coordinate, Tile tile) {
+    private boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
         if (square.isEmpty()) {
             square.placeTile(tile);
             return true;
         }
         return false;
+    }
+    public boolean placeTiles(ArrayList<Coordinate> coordinates, ArrayList<Tile> tiles){
+        for (int i = 0; i < coordinates.size(); i++){
+            if (!placeTile(coordinates.get(i),tiles.get(i))){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -206,6 +214,13 @@ public class Board {
         return null;
     }
 
+    public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
+        ArrayList<Tile> tilesLst = new ArrayList<>();
+        for (Coordinate c : tiles){
+            tilesLst.add(removeTile(c));
+        }
+        return tilesLst;
+    }
 
     /**
      * checks if the square has a tile in it already
