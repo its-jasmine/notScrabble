@@ -1,39 +1,61 @@
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+/** Represents a sequence of consecutive tiles on the game board.
+ * @author Jasmine Gad El Hak
+ * @version Milestone1
+ */
 public class Word {
+    /* Represents a placed tile in the sequence of consecutive tiles of a word.*/
     private class Node {
+        /** The tile in the word */
         public Tile tile;
+        /** The type of Square the tile is placed on */
         public Square.Type type;
 
-
+        /** Creates new node.
+         * @param tile the tile in the word
+         * @param type the type of Square the tile is placed on
+         */
         public Node(Tile tile, Square.Type type) {
             this.tile = tile;
             this.type = type;
         }
     }
-    public static final WordBank wordBank = new WordBank();
-
+    /** The word bank for the game */
+    public static final WordBank wordBank = new WordBank(); // used for word validation
+    /** The linked list containing the sequence of tiles in the word */
     private LinkedList<Node> llWord;
+
+    /**
+     * Creates new empty word.
+     */
     public Word(){
         llWord = new LinkedList<Node>();
     }
 
-    public int size(){
-        return llWord.size();
-    }
-
+    /**
+     * Adds new node to word.
+     * @param tile the tile to be added to the word
+     * @param type the type of Square the tile is placed on
+     */
     public void addNode(Tile tile, Square.Type type){
         llWord.add(new Node(tile, type));
     }
 
     /**
-     * checks if the words are in wordBank
-     *
-     * @param words to check
-     * @return true if all are valid, false otherwise
+     * Returns the length of the word.
+     * @return word length
+     */
+    public int size(){
+        return llWord.size();
+    }
+
+    /**
+     * Validates whether all the words are in wordBank.
+     * @param words the words to validate
+     * @return true if all words are valid, false otherwise
      */
     public static boolean areValidWords(List<Word> words) {
         for (Word w : words) {
@@ -42,12 +64,17 @@ public class Word {
         return true;
     }
 
+    /**
+     * Validates whether word is in the game's word bank.
+     * @return true if word is valid, false otherwise
+     */
     private boolean isValidWord() {
         return wordBank.isValidWord(this.toString());
     }
 
-    /* Calculates the score for all the words created this turn
-     * @param words a list of LinkList where each node has the Tile, and square type
+    /**
+     * Calculates the score for all the words in the list.
+     * @param words the list of words
      * @return total score
      */
     public static int scoreWords(List<Word> words) {
@@ -57,6 +84,10 @@ public class Word {
         }
         return score;
     }
+    /**
+     * Calculates the score of the word.
+     * @return word score
+     */
     private int scoreWord(){
         int score = 0;
         for (Node n : llWord) {
@@ -65,9 +96,9 @@ public class Word {
         return score;
     }
 
-    /*
-    Returns string representation of word in all lowercase.
-    @return String representation of Word.
+    /**
+     * Returns string representation of word.
+     * @return string representation of word in all capital letters
      */
     public String toString(){
         // Each tile letter is collected into a single lowercase string
