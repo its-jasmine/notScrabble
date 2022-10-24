@@ -25,7 +25,7 @@ public class Player {
     }
 
     public Player(Board board, Bag bag,String name) {
-        this(Board board, Bag bag);
+        this(board, bag);
         this.name = name;
     }
 
