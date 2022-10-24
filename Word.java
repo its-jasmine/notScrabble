@@ -20,9 +20,7 @@ public class Word {
     public Word(){
         llWord = new LinkedList<Node>();
     }
-    public Word(LinkedList<Node> llWord){
-        this.llWord = llWord;
-    }
+
     public int size(){
         return llWord.size();
     }
