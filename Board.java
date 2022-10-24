@@ -49,7 +49,7 @@ public class Board {
             Set<Integer> columnSet = new HashSet<>();
             for (Coordinate c : tilesPlacedCoordinates) columnSet.add(c.getColumnIndex());
             if (columnSet.size()==1) return Direction.VERTICAL;
-            else return Direction.UNKOWN;
+            else return Direction. UNKNOWN;
         }
     }
     /**
