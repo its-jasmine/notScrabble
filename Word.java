@@ -71,6 +71,6 @@ public class Word {
      */
     public String toString(){
         // Each tile letter is collected into a single lowercase string
-        return llWord.stream().map(tile -> tile.toString()).collect(Collectors.joining()).toLowerCase();
+        return llWord.stream().map(tile -> tile.toString()).collect(Collectors.joining()); 
     }
 }
