@@ -101,7 +101,7 @@ public class Board {
         else {
             Column c = tilesPlacedCoordinates.get(0).column;
             for (int i = tilesPlacedCoordinates.get(0).getRowIndex(); i <= tilesPlacedCoordinates.get(-1).getRowIndex(); i++){
-                if (isSquareEmpty(new Coordinate(columnIndex, tilesPlacedCoordinates.get(i).row))) return false;
+                if (isSquareEmpty(new Coordinate(c, tilesPlacedCoordinates.get(i).row))) return false;
             }
         }
         return true;
