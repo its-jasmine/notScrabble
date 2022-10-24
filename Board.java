@@ -93,7 +93,7 @@ public class Board {
 
     /**
      * Determine if is each square between the first and last tile played is NOT empty
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn
+     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is attempting to place this turn which are confirmed to be in a straight line
      * @return true if the sorted tiles placement do no have gaps, false otherwise
      */
     private boolean verifyNoGaps(List<Coordinate> tilesPlacedCoordinates){
