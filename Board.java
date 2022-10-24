@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * BLURB ABOUT BOARD GOES HERE
  * @author Rebecca Elliott
@@ -7,6 +5,10 @@ import java.util.*;
  * @author Arthur Atangana
  * @version Milestone1
  */
+
+import java.util.*;
+
+
 public class Board {
     private static Square[][] squares; // [row][column]
     private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
@@ -158,19 +160,18 @@ public class Board {
 
     /**
      * Calls all the functions needed to validated and score words created this turn.
-     *
-     * @param tilesPlaced the tiles the player is attempting to place this turn
+     * @param tilesPlaced the tiles the player has placed this turn
      * @return -1 if any validation fails (player tries again), otherwise returns the score for the turn
      */
     public int submit(List<Coordinate> tilesPlaced) {
         if (isValidTileAlignment(tilesPlaced) == null) return -1;
         // at this point tilesPlaced is now sorted and direction is set
 
-        List<Word> words = getWordsCreated(tilesPlaced); // each node has a Tile and Square type
+        List<Word> words = getWordsCreated(tilesPlaced);
 
         if (!Word.areValidWords(words)) return -1;
-        // at this point words are all valid
 
+        // at this point words are all valid
         int score = Word.scoreWords(words);
 
         direction = Direction.UNKNOWN; // reset for next turn
@@ -178,13 +179,12 @@ public class Board {
     }
 
     /**
-     * Places tile in square if available
-     *
+     * Places tile in square if available.
      * @param coordinate of the tile being placed
      * @return true if letter was placed, false otherwise
      */
     public boolean placeTile(Coordinate coordinate, Tile tile) {
-        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+        Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
             return true;
@@ -193,23 +193,17 @@ public class Board {
     }
 
     /**
-     * Removes and returns the Tile in a square if available
-     *
+     * Removes and returns the Tile in a square if available.
      * @param coordinate of the Tile being removed
      * @return the tile if it was removed, null otherwise
      */
     public Tile removeTile(Coordinate coordinate) {
-        Square square = squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
-        if (!square.isEmpty()) {
-            return square.removeTile();
-        }
-        return null;
+        return  getSquare(coordinate).removeTile();
     }
 
 
     /**
-     * checks if the square has a tile in it already
-     *
+     * Checks if the square has a tile in it already.
      * @param coordinate of the square being checked
      * @return true if the square has no Tile yet, false otherwise
      */
@@ -218,23 +212,26 @@ public class Board {
     }
 
     /**
-     * Gets the tile on a square without removing it
-     *
+     * Gets the tile on a square without removing it.
      * @param coordinate of the square being checked
-     * @return the Tile or null
+     * @return the Tile or null if square has no tile
      */
-
     public Tile getSquareTile(Coordinate coordinate) {
         return getSquare(coordinate).getTile();
     }
 
+    /**
+     * Gets the type of a square at a give coordinate.
+     * @param coordinate of the square being checked
+     * @return the squares type
+     */
     public Square.Type getSquareType(Coordinate coordinate) {
         return getSquare(coordinate).getType();
     }
 
     /**
      * Gets all the words that were created this turn.
-     * @param tilesPlayed a sorted list of the tile coordinates played this turn
+     * @param tilesPlayed a sorted list of the tile coordinates played this turn, coordinates are confirmed in a line
      * @return list of words created this turn
      */
     private List<Word> getWordsCreated(List<Coordinate> tilesPlayed) {
@@ -262,7 +259,7 @@ public class Board {
                 if (word.size() > 1) words.add(word);
             }
         }
-        return words;
+        return words; // this can be an empty ArrayList in the scenario a player plays one Tile to start the game
     }
 
     /**
@@ -291,7 +288,7 @@ public class Board {
     }
 
     /**
-     * Gets any vertical word, can be one letter long at this point
+     * Gets any vertical word, can be one letter long at this point.
      * @param startSearch the location on the board to search from
      * @return word that was created
      */

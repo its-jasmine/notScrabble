@@ -25,7 +25,6 @@ public class Rack {
 
     /**
      * Draws missing tiles from the bag up to 7 and refills the rack.
-     * Also updates the tileAmount
      * @return OVER if the rack has no Tiles after trying to draw, RUNNING otherwise
      */
     public Game.Status drawTiles(){
