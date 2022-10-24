@@ -157,7 +157,9 @@ public class Board {
 
         // At this point, the Coordinate placements are invalid
         return null;
-        
+     }
+     
+    /**
      * calls all the functions needed to validated and score words created this turn
      * @param tilesPlaced the tiles the player is attempting to place this turn
      * @return -1 if any validation fails (player tries again), otherwise returns the score for the turn
