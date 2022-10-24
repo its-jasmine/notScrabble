@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.util.List;
 import java.util.Comparator;
 
@@ -36,6 +38,54 @@ public class Coordinate {
 
     public int getColumnIndex() {
         return column.ordinal();
+    }
+
+    /**
+     * gets the coordinate one space over in the direction given if possible
+     * @param direction to check
+     * @return the adjacent coordinate
+     * @throws IllegalArgumentException
+     */
+    public Coordinate getAdjacentCoordinate(String direction) throws IllegalArgumentException {
+        direction = direction.toUpperCase();
+        boolean outOfBounds = false;
+        switch (direction) {
+            case "L":
+                try {
+                    column.previous();
+                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
+                break;
+            case "R":
+                try {
+                    column.next();
+                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
+                break;
+            case "A":
+                try {
+                    row.previous();
+                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
+                break;
+            case "B":
+                try {
+                    row.next();
+                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
+                break;
+            default:
+                throw new IllegalArgumentException("direction must be one of L, R, A, B");
+        }
+        if (!outOfBounds) {
+            switch (direction){
+                case "L":
+                    return new Coordinate(column.previous(), row);
+                case "R":
+                    return new Coordinate(column.next(), row);
+                case "A":
+                    return new Coordinate(column, row.previous());
+                case "B":
+                    return new Coordinate(column, row.next());
+            }
+        }
+        return null;
     }
 
 }

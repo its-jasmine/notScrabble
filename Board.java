@@ -121,7 +121,7 @@ public class Board {
         if (direction == Direction.HORIZONTAL) {
             // get word played, possibly extending previously played word
             LinkedList word = getHorizontalWord(tilesPlayed.get(0));
-            if (word.size() > 1) words.add(word);
+            if (word.size() > 1) words.add(word); // to be counted as a word it must be at least two letters long
 
             // get any newly formed vertical words
             for (Coordinate c: tilesPlayed) {
@@ -145,52 +145,50 @@ public class Board {
     }
 
     /**
-     * gets any horizontal word that is longer than one letter
+     * gets any horizontal word, can be one letter long at this point
      * @param startSearch the place on the board to search from
      * @return word that was created
      */
     private LinkedList getHorizontalWord(Coordinate startSearch) {
         LinkedList word = new LinkedList();
-        Coordinate currentCoordinate = startSearch;
-        Coordinate coordinateToLeft = new Coordinate(currentCoordinate.column.previous(), currentCoordinate.row);
-        Coordinate temp = coordinateToLeft;
+        Coordinate coordinateToLeft = startSearch.getAdjacentCoordinate("L");
 
         // adds letter to the front of the word
-        while (!getSquare(coordinateToLeft).isEmpty()) {
+        while (coordinateToLeft != null && !getSquare(coordinateToLeft).isEmpty()) { // if coordinateToLeft is null we are at the left edge of the board
             word.add(new Node(getSquareTile(coordinateToLeft), getSquareType(coordinateToLeft)));
+            coordinateToLeft = coordinateToLeft.getAdjacentCoordinate("L");
         }
 
-        currentCoordinate = temp;
-        Coordinate coordinateToRight = new Coordinate(currentCoordinate.column.next(), currentCoordinate.row);
+        Coordinate coordinateToRight = startSearch;
         //adds letters to the end of the word
-        while (!getSquare(coordinateToRight).isEmpty()) {
+        while (coordinateToRight != null && !getSquare(coordinateToRight).isEmpty()) {  // if coordinateToRight is null we are at the Right edge of the board
             word.add(new Node(getSquareTile(coordinateToRight), getSquareType(coordinateToRight)));
+            coordinateToRight = coordinateToRight.getAdjacentCoordinate("R");
         }
 
         return word;
     }
 
     /**
-     * gets any vertical word that is longer than one letter
+     * gets any vertical word, can be one letter long at this point
      * @param startSearch the place on the board to search from
      * @return word that was created
      */
     private LinkedList getVerticalWord(Coordinate startSearch) {
         LinkedList word = new LinkedList();
-        Coordinate currentCoordinate = startSearch;
-        Coordinate coordinateAbove = new Coordinate(currentCoordinate.column, currentCoordinate.row.previous());
-        Coordinate temp = coordinateAbove;
+        Coordinate coordinateAbove = startSearch.getAdjacentCoordinate("A");
 
         // adds letter to the front of the word
-        while (!getSquare(coordinateAbove).isEmpty()) {
+        while (coordinateAbove != null && !getSquare(coordinateAbove).isEmpty()) { // if coordinateAbove is null we are at the top of the board
             word.add(new Node(getSquareTile(coordinateAbove), getSquareType(coordinateAbove)));
+            coordinateAbove = coordinateAbove.getAdjacentCoordinate("A");
         }
 
-        currentCoordinate = temp;
-        Coordinate coordinateBelow = new Coordinate(currentCoordinate.column, currentCoordinate.row.next());
+        Coordinate coordinateBelow = startSearch;
         //adds letters to the end of the word
-        while (!getSquare(coordinateBelow).isEmpty()) {
+        while (coordinateBelow != null && !getSquare(coordinateBelow).isEmpty()) { // if coordinateBelow is null we are at the bottom of the board
             word.add(new Node(getSquareTile(coordinateBelow), getSquareType(coordinateBelow)));
+            coordinateBelow = coordinateBelow.getAdjacentCoordinate("B");
         }
 
         return word;
