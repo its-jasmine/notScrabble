@@ -39,8 +39,8 @@ public class Game {
         Status status = Status.RUNNING; // this is the only place this is needed currently, if other things
         // need it later it can be turned into an instance field
         while (status == Status.RUNNING) {
-            playerTurn++;
             status = playerTakeTurn(playerTurn);
+            playerTurn = ++playerTurn % players.size();
         }
         // game is now over
         setFinalScores();
