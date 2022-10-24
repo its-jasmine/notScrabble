@@ -80,18 +80,31 @@ public class Board {
      */
     private boolean verifyNoGaps(List<Coordinate> sortedTiles){
         if (direction == Direction.HORIZONTAL){
-            Row ro = sortedTiles.get(0).row;
+            int rowIndex =  sortedTiles.get(0).getRowIndex();
             for (int i = sortedTiles.get(0).getColumnIndex(); i <= sortedTiles.get(-1).getColumnIndex(); i++){
-                if (isSquareEmpty(new Coordinate(i, ro))) return false;
+                if (isSquareEmpty(new Coordinate(i, rowIndex))) return false;
             }
         }
         else {
-            Column col = sortedTiles.get(0).column;
+            int columnIndex = sortedTiles.get(0).getColumnIndex();
             for (int i = sortedTiles.get(0).getRowIndex(); i <= sortedTiles.get(-1).getRowIndex(); i++){
-                if (isSquareEmpty(new Coordinate(col, i))) return false;
+                if (isSquareEmpty(new Coordinate(columnIndex, i))) return false;
             }
         }
         return true;
+    }
+
+    /**
+     * Determine if one of the coordinates attempting to be placed is the start square coordinate
+     * @param sortedTiles the sorted coordinates of the tiles the player is attempting to place this turn
+     * @return true if one of the sortedTiles land on the start square, false otherwise
+     */
+    private boolean isFirstWordPlayed(List<Coordinate> sortedTiles){
+        for (Coordinate c: sortedTiles){
+            // Start square is at Coordinate(8,8)
+            if ((c.getRowIndex() == 8) && (c.getColumnIndex() == 8)) return true;
+        }
+        return false;
     }
 
     /**
@@ -107,23 +120,24 @@ public class Board {
         else direction = d;
 
         // Sort tiles
-        List<Coordinate> sortedTiles = new ArrayList<Coordinate>();
-        if (direction == Direction.HORIZONTAL){
-            Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getRowIndex));
-        }
-        else {
-            Collections.sort(sortedTiles, Comparator.comparing(Coordinate::getColumnIndex));
-        }
+        if (direction == Direction.HORIZONTAL) Coordinate.sortByRow(tilesPlacedCoordinates);
+        else Coordinate.sortByColumn(tilesPlacedCoordinates);
+
         // Check if there are any gaps between tiles placed
-        if ((sortedTiles.size() == (sortedTiles.get(-1).getColumnIndex() - sortedTiles.get(0).getColumnIndex() + 1))
-                || (sortedTiles.size() == (sortedTiles.get(-1).getRowIndex() - sortedTiles.get(0).getRowIndex() + 1))) {
+        // We have confirmed that the tiles placed are straight, therefore the sorted tiles can be horizontal OR vertical
+        if ((tilesPlacedCoordinates.size() == (tilesPlacedCoordinates.get(-1).getColumnIndex() - tilesPlacedCoordinates.get(0).getColumnIndex() + 1))
+                || (tilesPlacedCoordinates.size() == (tilesPlacedCoordinates.get(-1).getRowIndex() - tilesPlacedCoordinates.get(0).getRowIndex() + 1))) {
                 // verify word attachment
-                if (verifyWordAttachment(sortedTiles)) return sortedTiles;
+                if (verifyWordAttachment(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
         }
-        // If there are gaps between tiles, is each square between the first and last tile played NOT empty?
-        else {
-            if (verifyNoGaps(sortedTiles)) return sortedTiles;
-        }
+
+        // If there are gaps between tiles, check if each square between the first and last tile played NOT empty
+        else if (verifyNoGaps(tilesPlacedCoordinates)) {return tilesPlacedCoordinates;}
+
+        // Check if this is the first word being played
+        else {if (isFirstWordPlayed(tilesPlacedCoordinates)) return tilesPlacedCoordinates;}
+
+        // At this point, the Coordinate placements are invalid
         return null;
     }
 
