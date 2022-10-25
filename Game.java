@@ -1,13 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * Models the letter crossing game.
  *  @author Rebecca Elliott
  *  @version Milestone1
  */
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-
 public class Game {
     public enum Status {RUNNING, OVER} // used as a way to have a named boolean for readability
     private final static int MAXPLAYERS = 4; //could make this more
@@ -23,7 +22,7 @@ public class Game {
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
         this.players = new ArrayList<>();
-        for (int i = numPlayers; i > 0; i--) {
+        for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, i + 1));
         }
         Random random = new Random();
