@@ -156,6 +156,10 @@ public class Player {
      * @return a list of tile or row or column enums, or invalid if the input is wrong.
      */
     private ArrayList<Object> string2Enums(String s, String option){
+        ArrayList temp = new ArrayList<>();
+        ArrayList invalid = new ArrayList();
+        invalid.add(false);
+        if (!s.contains(" ")){return invalid;}
         ArrayList<String> letters = new ArrayList<String>();
         ArrayList<String> rows = new ArrayList<String>();
         ArrayList<String> columns = new ArrayList<String>();
@@ -176,9 +180,7 @@ public class Player {
         /*System.out.println(letters.toString());
         System.out.println(rows.toString());
         System.out.println(columns.toString());*/
-        ArrayList temp = new ArrayList<>();
-        ArrayList invalid = new ArrayList();
-        invalid.add(false);
+
         //System.out.println(invalid.toString());
         switch (option){
             case "letters":
