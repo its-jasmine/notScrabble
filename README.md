@@ -73,9 +73,6 @@ The input formatting is as follows:
 The UI is hard to use. 
 Since this UI will be almost completely replaced in Milestone 2 we made the decision not to fix it.
 
-When the user inputs invalid formats like "pass turn", the program crashes. 
-Since the command line UI will be replaced in milestone two, we made the decision not to fix it.
-
 Extra points for special squares are not implemented at this time.
 
 
