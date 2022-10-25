@@ -167,6 +167,9 @@ public class Player {
         String[] tileEnums;
         tileArray = s.toUpperCase().split(",");
         for (String tileString : tileArray){
+            if (!tileString.matches("[A-Z] [A-O] .*")){
+                return invalid;
+            }
             tileEnums = tileString.split(" ");
             letters.add(tileEnums[0]);
             columns.add(tileEnums[1]);
