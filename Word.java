@@ -37,12 +37,21 @@ public class Word {
     }
 
     /**
-     * Adds new node to word.
+     * Adds new node to the front of the word.
      * @param tile the tile to be added to the word
      * @param type the type of Square the tile is placed on
      */
-    public void addNode(Tile tile, Square.Type type){
-        llWord.add(new Node(tile, type));
+    public void addFirst(Tile tile, Square.Type type){
+        llWord.addFirst(new Node(tile, type));
+    }
+
+    /**
+     * Adds new node to the end of the word.
+     * @param tile the tile to be added to the word
+     * @param type the type of Square the tile is placed on
+     */
+    public void addLast(Tile tile, Square.Type type){
+        llWord.addLast(new Node(tile, type));
     }
 
     /**

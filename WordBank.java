@@ -1,5 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.io.File;
 import java.util.Scanner;
 /**
@@ -14,17 +14,16 @@ import java.util.Scanner;
  */
 
 public class WordBank {
-    private ArrayList<String> validWords;
+    private HashSet<String> validWords;
 
     /**
      * Create a WordBank object.
      */
     public WordBank() {
-        this.validWords = new ArrayList<>();
-        File file = new File("validWords.txt");
+        this.validWords = new HashSet<>();
         Scanner sc;
         try {
-            sc = new Scanner(file);
+            sc = new Scanner(new File("validWords.txt"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

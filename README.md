@@ -78,6 +78,7 @@ Since the command line UI will be replaced in milestone two, we made the decisio
 
 Extra points for special squares are not implemented at this time.
 
+
 ### Roadmap ahead
 
 For milestone 2 and onwards, the team will try to use JIRA, GitHub's Projects, or GitHub's ZenHub extension for task management. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
