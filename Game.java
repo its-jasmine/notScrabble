@@ -8,10 +8,15 @@ import java.util.Random;
  *  @version Milestone1
  */
 public class Game {
+    /** The allowable game statuses */
     public enum Status {RUNNING, OVER} // used as a way to have a named boolean for readability
+    /** The maximum number of players in a game */
     private final static int MAXPLAYERS = 4; //could make this more
+    /** The minimum number of players in a game */
     private final static int MINPLAYERS = 2;
+    /** The list of players in the game */
     private List<Player> players; // if we don't want players to be able to join once a game has started this can be final
+    /** The index corresponding to the player who is currently playing their turn */
     private int playerTurn; // index in the player list
 
 

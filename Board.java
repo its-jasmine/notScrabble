@@ -1,7 +1,7 @@
 import java.util.*;
 
 /**
- * BLURB ABOUT BOARD GOES HERE
+ * Represents a 15x15-grid board where the tiles of the game are played.
  * @author Rebecca Elliott
  * @author Jasmine Gad El Hak
  * @author Arthur Atangana
@@ -9,10 +9,16 @@ import java.util.*;
  * @version Milestone1
  */
 public class Board {
+    /** The list of squares on the board */
     private static Square[][] squares; // [row][column]
-    private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
+    /** The direction of the word currently be validated */
+    private Direction direction;
+    /** The allowable word alignment directions */
     private enum Direction {HORIZONTAL, VERTICAL, UNKNOWN}
 
+    /**
+     * Creates a new board with plain squares.
+     */
     public Board() {
         squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
         for (Coordinate.Row r : Coordinate.Row.values()) {
@@ -23,6 +29,11 @@ public class Board {
         direction = Direction.UNKNOWN;
     }
 
+    /**
+     * Gets the square at the specified coordinate on the board.
+     * @param coordinate of the Square to retrieve
+     * @return Square at specified coordinate
+     */
     private Square getSquare(Coordinate coordinate) {
         return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
     }
@@ -194,6 +205,7 @@ public class Board {
     /**
      * Places tile in square if available.
      * @param coordinate of the tile being placed
+     * @param tile to be placed
      * @return true if letter was placed, false otherwise
      */
     private boolean placeTile(Coordinate coordinate, Tile tile) {
@@ -204,6 +216,13 @@ public class Board {
         }
         return false;
     }
+
+    /**
+     * Places all the tiles at the specified coordinates.
+     * @param coordinates of the tiles to be placed.
+     * @param tiles to be placed on the board.
+     * @return true if all tiles are successfully placed on the board, false otherwise
+     */
     public boolean placeTiles(ArrayList<Coordinate> coordinates, ArrayList<Tile> tiles){
         for (int i = 0; i < coordinates.size(); i++){
             if (!placeTile(coordinates.get(i),tiles.get(i))){
@@ -364,10 +383,5 @@ public class Board {
             s += "\n";
         }
         return s;
-    }
-
-    public static void main(String[] args) {
-        Board b = new Board();
-        System.out.print(b);
     }
 }

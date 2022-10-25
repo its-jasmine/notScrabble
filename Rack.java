@@ -2,6 +2,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
+ * Represents a rack that contains the tiles that a player can use during their turn.
  * @author Arthur Atangana
  * @version Milestone1
  */
@@ -84,12 +85,4 @@ public class Rack {
             removeTileFromRack(t);
         }
     }
-
-    public static void main(String[] args) {
-        Rack rack = new Rack(new Bag());
-        System.out.println(rack);
-    }
-
-
-
 }

@@ -3,11 +3,14 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
+ * Represents a player in the game.
  * @author Arthur Atangana
  * @version Milestone1
  */
 public class Player {
+    /** The board of the game the player is participating in */
     private Board board;
+    /** The player's rack which */
     private Rack rack;
     private int score;
     private String name;
@@ -253,11 +256,5 @@ public class Player {
             areAllEmpty = board.isSquareEmpty(coordinates);
         }
         return areAllEmpty;
-    }
-
-    public static void main(String[] args) {
-        //Player p = new Player();
-        //p.takeTurn();
-        //p.string2Lists("C A ONE,A A TWO,A A THREE", "rows");
     }
 }
