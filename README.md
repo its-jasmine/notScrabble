@@ -85,16 +85,3 @@ For milestone 2 and onwards, the team will try to use JIRA, GitHub's Projects, o
 
 Goals for milestone 2:
 Milestone 1 provides an initial design and implementation of the Model part of the **M**VC pattern. The roadmap ahead is concerned with the design and implementation of the View and Controller part of the M**VC** pattern. Unit tests of Model logic will be implemented with all parts of the missing or incomplete implementation of the placement and scoring of words having corresponding failing unit tests. 
-
-
-### Design decisions
-| Data Structure/Relevant Operation | Class | Reasoning |
-|:-------:|----------|-------------------------------------------------------|
-| Enums | Tile | Scrabble has a fixed amount of letters each with a constant value |
-| Multidimensional Arrays | Board | The grid is a two-dimensional 15 by 15 fixed array|
-| Collections.shuffle | Bag | The shuffle function randomizes the order tiles will be drawn in |
-| random.nextInt | Game | Randomizes the player that goes first |
-
-
-
-
