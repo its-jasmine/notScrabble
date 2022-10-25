@@ -45,9 +45,9 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4.
 After a Game is created, the playGame method is invoked. Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined. 
 
-When prompted, a player may pass or play their turn by entering a string of letters and coordinates into the terminal. Entering no letters will pass the turn.
+When prompted, a player may pass or play their turn by entering a string of letters and coordinates into the terminal. Entering "pass" will pass the turn.
 
-The order and formatting of user input is **important**. Letters must be caitalized, columns must be labeled A-O, and rows must be labeled ONE-FIFT. With coordinate "A ONE" corresponding to the top left square and coordinate "O FIFT" corresponding to the bottom right square. 
+The order and formatting of user input is **important**. Letters must be capitalized, columns must be labeled A-O, and rows must be labeled ONE-FIFT. With coordinate "A ONE" corresponding to the top left square and coordinate "O FIFT" corresponding to the bottom right square. 
 
 NOTE: All tiles the user is attempting to place during their turn must be included in the same input, so be careful!.
 
