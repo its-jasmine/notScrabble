@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * BLURB ABOUT BOARD GOES HERE
  * @author Rebecca Elliott
@@ -6,10 +8,6 @@
  * @author Victoria Malouf
  * @version Milestone1
  */
-
-import java.util.*;
-
-
 public class Board {
     private static Square[][] squares; // [row][column]
     private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check
@@ -219,6 +217,11 @@ public class Board {
         return  getSquare(coordinate).removeTile();
     }
 
+    /**
+     * removes tiles from the board
+     * @param tiles : a list of coordinates for the tiles to be removed
+     * @return a list a removed tiles;
+     */
     public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
         ArrayList<Tile> tilesLst = new ArrayList<>();
         for (Coordinate c : tiles){

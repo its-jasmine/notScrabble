@@ -1,11 +1,10 @@
 import java.util.*;
-
 import java.util.stream.Collectors;
 
 /**
  * @author Arthur Atangana
+ * @version Milestone1
  */
-
 public class Rack {
 
     private List<Tile> tileList;
@@ -55,6 +54,11 @@ public class Rack {
         return tileList.stream().map(tile -> tile + " ").collect(Collectors.joining());
     }
 
+    /**
+     * Verifies if the tile is in the rack.
+     * @param t : the tile to check if it is in the rack.
+     * @return true if the tile is in the rack, false otherwise.
+     */
     public boolean isTileinRack(Tile t){
         for (Tile tile: tileList){
             if (tile == t){
@@ -63,10 +67,18 @@ public class Rack {
         }
         return false;
     }
+
+    /**
+     * Removes a specific tile from the rack
+     * @param t : the tile to be removed from the rack.
+     */
     private void removeTileFromRack(Tile t){
         tileList.remove(t);
     }
-
+    /**
+     * Removes tiles from the rack
+     * @param tiles : a list of tiles to be removed from the rack.
+     */
     public void removeTiles(ArrayList<Tile> tiles){
         for (Tile t: tiles){
             removeTileFromRack(t);
