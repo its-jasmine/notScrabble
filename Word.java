@@ -33,7 +33,7 @@ public class Word {
      * Creates new empty word.
      */
     public Word(){
-        llWord = new LinkedList<Node>();
+        llWord = new LinkedList<>();
     }
 
     /**
