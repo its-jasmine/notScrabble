@@ -141,8 +141,8 @@ public class Board {
         else direction = d;
 
         // Sort tiles
-        if (direction == Direction.HORIZONTAL) Coordinate.sortByRow(tilesPlacedCoordinates);
-        else Coordinate.sortByColumn(tilesPlacedCoordinates);
+        if (direction == Direction.HORIZONTAL) Coordinate.sortByColumn(tilesPlacedCoordinates);
+        else Coordinate.sortByRow(tilesPlacedCoordinates);
 
         // Check if there are any gaps between tiles placed
         // We have confirmed that the tiles placed are straight, therefore the sorted tiles can be horizontal OR vertical
