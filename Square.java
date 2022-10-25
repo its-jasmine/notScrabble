@@ -6,7 +6,7 @@
  */
 
 public class Square {
-    /** Acceptable square type on game board */
+    /** The allowable square type on game board */
     public enum Type {
         START, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
     }

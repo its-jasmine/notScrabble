@@ -3,38 +3,69 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
+ * Represents a player in the game.
  * @author Arthur Atangana
  * @version Milestone1
  */
 public class Player {
+    /** The board of the game the player is participating in */
     private Board board;
+    /** The player's rack */
     private Rack rack;
+    /** The player's current score */
     private int score;
+    
     private String name;
 
-
+    /**
+     * Creates a new player with a specified board and bag.
+     * @param board of the game the player is participating in
+     * @param bag that the player will draw tiles from
+     */
     public Player(Board board, Bag bag){
         this.board = board;
         this.name = "";
         this.score = 0;
         this.rack = new Rack(bag);
     }
-
+    /**
+     * Creates a new player with a specified board, bag and player number.
+     * @param board of the game the player is participating in
+     * @param bag that the player will draw tiles from
+     * @param playerNumber the index of the player being created
+     */
     public Player(Board board, Bag bag, int playerNumber) {
         this(board,bag);
         this.name = "Player " + playerNumber;
     }
-
+    /**
+     * Creates a new player with a specified board, bag and player number.
+     * @param board of the game the player is participating in
+     * @param bag that the player will draw tiles from
+     * @param name of the player
+     */
     public Player(Board board, Bag bag,String name) {
         this(board, bag);
         this.name = name;
     }
 
+    /**
+     * Returns the name of the player.
+     * @return name of the player
+     */
     public String getName() {return name;}
 
+    /**
+     * Returns the player's rack.
+     * @return the player's rack
+     */
     public Rack getRack() {
         return rack;
     }
+    /**
+     * Returns the player's score.
+     * @return the player's score
+     */
     public int getScore() {
         return score;
     }
@@ -54,7 +85,7 @@ public class Player {
         return rack.getRackScore();
     }
     /**
-     * adds the score of the placed word to score
+     * Adds the score of the placed word to score.
      */
     public void addToScore(int leftOverLetterScore) {
     }
@@ -150,7 +181,7 @@ public class Player {
     }
 
     /**
-     * transforms the user input into a list of enums or returns "invalid"
+     * Transforms the user input into a list of enums or returns "invalid"
      * @param s : the user input.
      * @param option : whether string2Enums should process tile, row, columns
      * @return a list of tile or row or column enums, or invalid if the input is wrong.
@@ -259,11 +290,5 @@ public class Player {
             areAllEmpty = board.isSquareEmpty(coordinates);
         }
         return areAllEmpty;
-    }
-
-    public static void main(String[] args) {
-        //Player p = new Player();
-        //p.takeTurn();
-        //p.string2Lists("C A ONE,A A TWO,A A THREE", "rows");
     }
 }

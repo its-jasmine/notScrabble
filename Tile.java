@@ -34,10 +34,19 @@ public enum Tile {
     Z("Z", 10, 1);
     // BLANK(" ", 0, 2); for milestone 2
 
+    /** The letter on the tile */
     public final String letter; // set to public so it can be accessed directly. Since it's final it can't be changed
+    /** The score value of the tile */
     public final int value; // set to public so it can be accessed directly. Since it's final it can't be changed
+    /** The total quantity of that tile in the bag */
     private final int totalNum; // total number of this letter in the game
 
+    /**
+     * Creates a new tile with the specified letter, value and quantity.
+     * @param letter of the tile
+     * @param value of the tile
+     * @param totalNum the quantity of that tile in the bag
+     */
     Tile(String letter, int value, int totalNum) {
         this.letter = letter;
         this.value = value;
@@ -59,9 +68,5 @@ public enum Tile {
     @Override
     public String toString() {
         return letter;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Tile.A);
     }
 }

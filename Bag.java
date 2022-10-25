@@ -8,8 +8,12 @@ import static java.util.Collections.shuffle;
  * @version Milestone1
  */
 public class Bag {
+    /** The list of tiles in the bag */
     private List<Tile> tiles;
 
+    /**
+     * Creates a new bag with the appropriate amount of tiles (according to Scrabble specifications).
+     */
     public Bag() {
         this.tiles = new ArrayList<>();
         for (Tile t : Tile.values()) {
@@ -41,15 +45,6 @@ public class Bag {
     private Tile drawTile() {
         if (tiles.size() == 0) return null;
         return tiles.remove(tiles.size()-1);
-    }
-
-    public static void main(String[] args) {
-        Bag bag = new Bag();
-        ArrayList<Tile> tiles = bag.drawTiles(7);
-        for (Tile t: tiles) {
-            System.out.println(t.toString());
-        }
-
     }
 
 }

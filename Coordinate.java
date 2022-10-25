@@ -3,10 +3,11 @@ import java.util.Comparator;
 
 /**
  * This class represents valid coordinates on the game board.
- * @author: Rebecca Elliott
+ * @author Rebecca Elliott
  * @version Milestone1
  */
 public class Coordinate {
+    /** The allowable columns on the board */
     public enum Column {
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O;
 
@@ -34,6 +35,7 @@ public class Coordinate {
             return c;
         }
     }
+    /** The allowable rows on the board */
     public enum Row {
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE, THIRT, FOURT, FIFT;
 
@@ -61,6 +63,7 @@ public class Coordinate {
             return r;}
     }
 
+    /** The allowable adjacency directions of a coordinate */
     public enum Adjacent{ // used as directional inputs for finding adjacent coordinates
         LEFT, RIGHT, ABOVE, BELOW
     }
@@ -81,14 +84,25 @@ public class Coordinate {
         list.sort(Comparator.comparing(o -> o.column));
     }
 
+    /** The column of the coordinate */
     public final Column column;
+    /** The row of the coordinate */
     public final Row row;
 
+    /**
+     * Creates a new coordinate.
+     * @param column of the coordinate
+     * @param row of the coordinate
+     */
     public Coordinate(Column column, Row row){
         this.column = column;
         this.row = row;
     }
 
+    /**
+     * Returns the index of the row.
+     * @return index of the row
+     */
     public int getRowIndex() {
         return row.ordinal();
     }
