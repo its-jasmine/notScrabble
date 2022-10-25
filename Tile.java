@@ -1,7 +1,7 @@
 /**
  * Models the letters in the game. Each value has an associated character, letter point value, and the total number of that
  * letter in the game.
- * @author: Rebecca Elliott
+ * @author Rebecca Elliott
  * @version Milestone1
  */
 
@@ -62,7 +62,6 @@ public enum Tile {
     }
 
     public static void main(String[] args) {
-        Tile tile = Tile.A;
-        System.out.println(tile);
+        System.out.println(Tile.A);
     }
 }
