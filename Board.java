@@ -120,8 +120,8 @@ public class Board {
      * attempting to place this turn, which are confirmed to be in a straight line
      * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
-    private boolean isOnStart(List<Coordinate> tilesPlacedCoordinates){
-        for (Coordinate c: tilesPlacedCoordinates){
+    private boolean isOnStart(List<Coordinate> tileCoordinates){
+        for (Coordinate c: tileCoordinates){
             // Start square is at Coordinate(8,8)
             if ((c.getRowIndex() == 7) && (c.getColumnIndex() == 7)) return true;
         }
