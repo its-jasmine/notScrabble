@@ -59,9 +59,8 @@ public class Player {
     }
 
     /**
-     *
-     * @return
-     * Not sure what this needs
+     * in javadocs branch
+     * 
      * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
     public Game.Status takeTurn() {
@@ -130,7 +129,9 @@ public class Player {
                         }
                         else{
                             rack.removeTiles(inputTiles);
+                            System.out.printf("Your word scored %d points!\n", turnScore);
                             score += turnScore;
+                            System.out.printf("Your total score is now %d\n", score);
                             validInput = true;
                         }
                         //validInput = true;
@@ -140,7 +141,7 @@ public class Player {
                 running = false;
             }
         }while(running);
-        System.out.println("this got the right input");
+        System.out.println("this is a valid input");
         if (pass){
             System.out.println("passing turn");
         }
