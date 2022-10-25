@@ -84,9 +84,6 @@ Extra points for special squares are not implemented at this time.
 For milestone 2 and onwards, the team will try to use JIRA, GitHub's Projects, or GitHub's ZenHub extension for task management. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
 
 Goals for milestone 2:
-- Implement logic so that the first word played must be at least two tiles long. (Currently a player may legally place only one tile to start)
-- Implement logic so that a scrabble can be scored (7 tiles placed at once)
-
 Milestone 1 provides an initial design and implementation of the Model part of the **M**VC pattern. The roadmap ahead is concerned with the design and implementation of the View and Controller part of the M**VC** pattern. Unit tests of Model logic will be implemented with all parts of the missing or incomplete implementation of the placement and scoring of words having corresponding failing unit tests. 
 
 
