@@ -23,7 +23,6 @@ This project is divided into 4 milestones with this README file corresponding to
    * [Rest of deliverables](#rest-of-deliverables)
    * [Known issues](#known-issues)
    * [Roadmap ahead](#roadmap-ahead)
-   * [Design decisions](#design-decisions)
 <!--te-->
 
 ### Authors   
@@ -80,5 +79,9 @@ Extra points for special squares are not implemented at this time.
 
 For milestone 2 and onwards, the team will try to use JIRA, GitHub's Projects, or GitHub's ZenHub extension for task management. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
 
-Goals for milestone 2:
 Milestone 1 provides an initial design and implementation of the Model part of the **M**VC pattern. The roadmap ahead is concerned with the design and implementation of the View and Controller part of the M**VC** pattern. Unit tests of Model logic will be implemented with all parts of the missing or incomplete implementation of the placement and scoring of words having corresponding failing unit tests. 
+
+**Goal** for milestone 2:
+- Delegate the responsibilities of the Board class by creating a wordAnalyzer class which is responsible for verifying valid tile placement and possible words created
+
+Accomplishing this goal will help with cohesion!
