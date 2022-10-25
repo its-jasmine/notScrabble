@@ -11,14 +11,14 @@ import java.util.Comparator;
 public class Coordinate {
     public enum Column {
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O;
-        private Column next() {return values()[ordinal() + 1];}  // if used outside getAdjacentCoordinate it can cause index out of bounds error
-        private Column previous() {return values()[ordinal() - 1];}
+        public Column next() {return values()[ordinal() + 1];}  // if used outside getAdjacentCoordinate it can cause index out of bounds error
+        public Column previous() {return values()[ordinal() - 1];}
     }
 
     public enum Row {
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE, THIRT, FOURT, FIFT;
-        private Row next() {return values()[ordinal() + 1];}
-        private Row previous() {return values()[ordinal() - 1];}
+        public Row next() {return values()[ordinal() + 1];}
+        public Row previous() {return values()[ordinal() - 1];}
     }
 
     /**
