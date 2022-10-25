@@ -38,6 +38,10 @@ public class Board {
         // at this point tilesPlaced is now sorted and direction is set
 
         List<Word> words = getWordsCreated(tilesPlaced);
+        if (words.size() == 0) { // no words at least two letters long, were created
+            System.out.println("Words must be at least two letters long.");
+            return -1;
+        }
 
         if (!Word.areValidWords(words)) {
             System.out.println("One or more of the words created was invalid.");
