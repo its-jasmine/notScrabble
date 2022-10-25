@@ -66,7 +66,7 @@ public class Player {
     public Game.Status takeTurn() {
         System.out.println(board);//print board
         System.out.println(rack);
-        System.out.println("It is your turn to play.");
+        System.out.printf("%s's turn to play.\n", name);
         boolean validInput = false;
         boolean running = true;
         boolean pass = false;
@@ -78,7 +78,7 @@ public class Player {
 
 
         do {
-            System.out.println("Enter your word and coordinates (e.g C A THIRT,A A FOURT,T A FIFT): ");
+            System.out.println("Enter your word and coordinates (e.g C A THIRT,A A FOURT,T A FIFT) or enter 'pass': ");
             String s = sc.nextLine();
             switch (s) {
                 case "pass":
