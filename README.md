@@ -43,9 +43,9 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 ### Usage 
 
 To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4.
-After a Game is created, the playGame method is invoked. Players will take turns until the last tile is played resulting in the game being over.
+After a Game is created, the playGame method is invoked. Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined. 
 
-When prompted, a player may pass or play their turn by entering a string of letters and coordinates into the terminal. 
+When prompted, a player may pass or play their turn by entering a string of letters and coordinates into the terminal. Entering no letters will pass the turn.
 
 The order and formatting of user input is **important**. Letters must be caitalized, columns must be labeled A-O, and rows must be labeled ONE-FIFT. With coordinate "A ONE" corresponding to the top left square and coordinate "O FIFT" corresponding to the bottom right square. 
 
@@ -70,7 +70,12 @@ The input formatting is as follows:
 
 ### Known issues
 
-I'm not sure...
+The UI is hard to use. 
+Since this UI will be almost completely replaced in Milestone 2 we made the decision not to fix it.
+
+The first word played can be one letter long and return a score of 0.
+
+Extra points for special squares and Scrabbles are not implemented at this time.
 
 ### Roadmap ahead
 
@@ -78,7 +83,6 @@ For milestone 2 and onwards, the team will try to use JIRA, GitHub's Projects, o
 
 Goals for milestone 2:
 - Implement logic so that the first word played must be at least two tiles long. (Currently a player may legally place only one tile to start)
-- Implement logic so that Coordinate previous and next methods may not index out of bounds (ie., previous Coordinate of A ONE or next Coordinate of O FIFT)
 - Implement logic so that a scrabble can be scored (7 tiles placed at once)
 
 Milestone 1 provides an initial design and implementation of the Model part of the **M**VC pattern. The roadmap ahead is concerned with the design and implementation of the View and Controller part of the M**VC** pattern. Unit tests of Model logic will be implemented with all parts of the missing or incomplete implementation of the placement and scoring of words having corresponding failing unit tests. 
