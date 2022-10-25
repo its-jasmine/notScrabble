@@ -80,8 +80,9 @@ public class Player {
         do {
             System.out.println("Enter your word and coordinates (e.g C A THIRT,A A FOURT,T A FIFT) or enter 'pass': ");
             String s = sc.nextLine();
-            switch (s) {
-                case "pass":
+
+            switch (s.toUpperCase()) {
+                case "PASS":
                     System.out.println("You passed your turn");
                     pass = true;
                     running = false;
