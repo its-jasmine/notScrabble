@@ -1,11 +1,9 @@
 import java.util.*;
-
 import java.util.stream.Collectors;
 
 /**
  * @author Arthur Atangana
  */
-
 public class Rack {
 
     private List<Tile> tileList;
