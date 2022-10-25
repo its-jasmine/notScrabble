@@ -20,11 +20,9 @@ This project is divided into 4 milestones with this README file corresponding to
    * [Authors](#authors)
    * [Version](#version)
    * [Usage](#usage)
-      * [First turn](#first-turn)
    * [Rest of deliverables](#rest-of-deliverables)
    * [Known issues](#known-issues)
    * [Roadmap ahead](#roadmap-ahead)
-     * [Goals for milestone 2](#goals-for-milestone-2)
    * [Design decisions](#design-decisions)
 <!--te-->
 
