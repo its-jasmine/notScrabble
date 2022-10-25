@@ -215,9 +215,9 @@ public class Board {
         return  getSquare(coordinate).removeTile();
     }
 
-    public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
+    public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tileCoordinates){
         ArrayList<Tile> tilesLst = new ArrayList<>();
-        for (Coordinate c : tiles){
+        for (Coordinate c : tileCoordinates){
             tilesLst.add(removeTile(c));
         }
         return tilesLst;
