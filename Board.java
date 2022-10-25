@@ -137,12 +137,12 @@ public class Board {
 
     /**
      * Determine if one of the coordinates attempting to be placed is the start square coordinate.
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
+     * @param tileCoordinates the sorted coordinates of the tiles the player is
      * attempting to place this turn, which are confirmed to be in a straight line
      * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
      */
-    private boolean isOnStart(List<Coordinate> tilesPlacedCoordinates){
-        for (Coordinate c: tilesPlacedCoordinates){
+    private boolean isOnStart(List<Coordinate> tileCoordinates){
+        for (Coordinate c: tileCoordinates){
             // Start square is at Coordinate(7,7)
             if ((c.getRowIndex() == 7) && (c.getColumnIndex() == 7)) return true; // for milestone2 "if (getSquare(c).getType() == Square.Type.START)"
         }
@@ -191,7 +191,7 @@ public class Board {
      * @param coordinate of the tile being placed
      * @return true if letter was placed, false otherwise
      */
-    public boolean placeTile(Coordinate coordinate, Tile tile) {
+    private boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
@@ -213,7 +213,7 @@ public class Board {
      * @param coordinate of the Tile being removed
      * @return the tile if it was removed, null otherwise
      */
-    public Tile removeTile(Coordinate coordinate) {
+    private Tile removeTile(Coordinate coordinate) {
         return  getSquare(coordinate).removeTile();
     }
 
@@ -224,7 +224,7 @@ public class Board {
      */
     public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
         ArrayList<Tile> tilesLst = new ArrayList<>();
-        for (Coordinate c : tiles){
+        for (Coordinate c : tileCoordinates){
             tilesLst.add(removeTile(c));
         }
         return tilesLst;
@@ -244,7 +244,7 @@ public class Board {
      * @param coordinate of the square being checked
      * @return the Tile or null if square has no tile
      */
-    public Tile getSquareTile(Coordinate coordinate) {
+    private Tile getSquareTile(Coordinate coordinate) {
         return getSquare(coordinate).getTile();
     }
 
@@ -253,7 +253,7 @@ public class Board {
      * @param coordinate of the square being checked
      * @return the squares type
      */
-    public Square.Type getSquareType(Coordinate coordinate) {
+    private Square.Type getSquareType(Coordinate coordinate) {
         return getSquare(coordinate).getType();
     }
 
