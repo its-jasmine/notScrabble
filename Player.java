@@ -120,8 +120,11 @@ public class Player {
                             break;
                         }
                         int turnScore = board.submit(coordinates);
-                        if (score == -1){
+                        if (turnScore == -1){
                             System.out.println("Invalid placement, try again.");
+                            board.removeTiles(coordinates);
+                            System.out.println(board);//print board
+                            System.out.println(rack);
                             validInput = false;
                             break;
                         }

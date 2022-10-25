@@ -86,4 +86,9 @@ public class Game {
         }
         players.get(playerTurn).addToScore(leftOverLetterScore);
     }
+
+    public static void main(String[] args) {
+        Game game = new Game(2);
+        game.playGame();
+    }
 }
