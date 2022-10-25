@@ -19,7 +19,10 @@ public class Game {
     /** The index corresponding to the player who is currently playing their turn */
     private int playerTurn; // index in the player list
 
-
+    /**
+     * Creates a new game with the specifed number of players and selects a random player to go first.
+     * @param numPlayers
+     */
     public Game(int numPlayers) {
         Board board = new Board();
         Bag bag = new Bag();
@@ -91,6 +94,10 @@ public class Game {
         players.get(playerTurn).addToScore(leftOverLetterScore);
     }
 
+    /**
+     * Runs a game of 2 players.
+     * @param args
+     */
     public static void main(String[] args) {
         Game game = new Game(2);
         game.playGame();

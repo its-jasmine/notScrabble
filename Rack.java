@@ -7,19 +7,35 @@ import java.util.stream.Collectors;
  * @version Milestone1
  */
 public class Rack {
-
+    /** The list of tiles in the rack */
     private List<Tile> tileList;
+    /** The maximum number of tiles in the rack */
     private final static int MAXTILES = 7;
+    /** The bag that the tiles will be drawn from */
     private final Bag bag;
 
+    /**
+     * Creates a new full rack (has 7 tiles, drawn from given bag).
+     * @param bag where the tiles are drawn from
+     */
     public Rack(Bag bag){
         tileList = new ArrayList<>();
         this.bag = bag;
         drawTiles(); // draw tiles at beginning of game
     }
+
+    /**
+     * Return the number of tiles currently in the rack.
+     * @return number of tiles in rack
+     */
     public int getTilesAmount() {
         return tileList.size();
     } // I don't think anything outside of Rack needs this so it could be removed
+
+    /**
+     * Returns the list of tiles in the rack.
+     * @return list of tiles in the rack
+     */
     public List<Tile> getTilesList() {
         return tileList;
     }
