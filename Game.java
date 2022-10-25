@@ -21,7 +21,7 @@ public class Game {
 
     /**
      * Creates a new game with the specifed number of players and selects a random player to go first.
-     * @param numPlayers
+     * @param numPlayers the number of players of the game
      */
     public Game(int numPlayers) {
         Board board = new Board();
@@ -96,7 +96,7 @@ public class Game {
 
     /**
      * Runs a game of 2 players.
-     * @param args
+     * @param args N/A
      */
     public static void main(String[] args) {
         Game game = new Game(2);
