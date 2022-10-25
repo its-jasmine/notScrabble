@@ -23,7 +23,7 @@ public class Game {
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
         this.players = new ArrayList<>();
-        for (int i = numPlayers; i > 0; i--) {
+        for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, i + 1));
         }
         Random random = new Random();
