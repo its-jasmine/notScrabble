@@ -14,6 +14,19 @@ This project is divided into 4 milestones with this README file corresponding to
 - UML class diagrams and sequence diagrams are provided
 - Design choices such as data structures and relevant operations are discussed
 
+## Table of contents
+
+<!--ts-->
+   * [Authors](#authors)
+   * [Version](#version)
+   * [Usage](#usage)
+      * [First turn](#first-turn)
+   * [Rest of deliverables](#rest-of-deliverables)
+   * [Known issues](#known-issues)
+   * [Roadmap ahead](#roadmap-ahead)
+     * [Goals for milestone 2](#goals-for-milestone-2)
+   * [Design decisions](#design-decisions)
+<!--te-->
 
 ### Authors   
 
@@ -31,20 +44,27 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 
 ### Usage 
 
-To start the game the number of players need to be specified.
+To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4.
+After a Game is created, the playGame method is invoked. Players will take turns until the last tile is played resulting in the game being over.
 
 When prompted, a player may pass or play their turn by entering a string of letters and coordinates into the terminal. 
 
-Columns: A-F, Rows: ONE-FIFT 
+The order and formatting of user input is **important**. Letters must be caitalized, columns must be labeled A-O, and rows must be labeled ONE-FIFT. With coordinate "A ONE" corresponding to the top left square and coordinate "O FIFT" corresponding to the bottom right square. 
+
+NOTE: All tiles the user is attempting to place during their turn must be included in the same input, so be careful!.
+
+The input formatting is as follows: 
+> LETTER COLUMN ROW,LETTER COLUMN ROW,...                           
 
     "A H EIGHT,N I EIGHT,D J EIGHT"
     
-NOTE: All tiles the user is attempting to place during their turn must be included.  Correct formatting is required: 
-> Letter Column Row,noSpace
+ **First turn** reminder: The player who places the first word onto the board must place a tile on the start square. (coordinate H EIGHT) 
+
+<img width="639" alt="Screen Shot 2022-10-25 at 10 04 24 AM" src="https://user-images.githubusercontent.com/84146479/197795120-00438956-c3fc-4f35-a596-05640f70e335.png">
 
 ### Rest of Deliverables
 
-| Milestone | Due Date | Main Deliverables|
+| Milestone | Due Date | Main Deliverables |
 |:-------:|----------|-------------------------------------------------------|
 | 2 | 11/11/2022 | **GUI-based version:** The display will be in a JFrame where user input occurs via the mouse. Unit tests for the Model with failing unit tests for incomplete functionality implementations will be provided. Changes to UML and data structures from Milestone 1 will be documented.|
 | 3 | 11/21/2022 | **Fully functioning game with AI capabilities:** Tile placement validation, scoring, blank tile and premium square functionalities are included. AI players with the ability to play the highest scoring word will be implemented. Changes from Milestone 2 will be documented. (The code will smell like fresh flowers) 🌻 
@@ -52,15 +72,27 @@ NOTE: All tiles the user is attempting to place during their turn must be includ
 
 ### Known issues
 
+I'm not sure...
 
 ### Roadmap ahead
 
+For milestone 2 and onwards, the team will try to use JIRA, GitHub's Projects, or GitHub's ZenHub extension for task management. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
+
+Goals for milestone 2:
+- Implement logic so that the first word played must be at least two tiles long. (Currently a player may legally place only one tile to start)
+- Implement logic so that Coordinate previous and next methods may not index out of bounds (ie., previous Coordinate of A ONE or next Coordinate of O FIFT)
+- Implement logic so that a scrabble can be scored (7 tiles placed at once)
+
+Milestone 1 provides an initial design and implementation of the Model part of the **M**VC pattern. The roadmap ahead is concerned with the design and implementation of the View and Controller part of the M**VC** pattern. Unit tests of Model logic will be implemented with all parts of the missing or incomplete implementation of the placement and scoring of words having corresponding failing unit tests. 
+
 
 ### Design decisions
-| Data Structure | Class | Reasoning |
-|:-------------:|------------|------------|
-| Enums | Tile | Scrabble has a fixed amount of letters each with a constant value  |
+| Data Structure/Relevant Operation | Class | Reasoning |
+|:-------:|----------|-------------------------------------------------------|
+| Enums | Tile | Scrabble has a fixed amount of letters each with a constant value |
 | Multidimensional Arrays | Board | The grid is a two-dimensional 15 by 15 fixed array|
+| Collections.shuffle | Bag | The shuffle function randomizes the order tiles will be drawn in |
+| random.nextInt | Game | Randomizes the player that goes first |
 
 
 
