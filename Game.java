@@ -94,10 +94,6 @@ public class Game {
         players.get(playerTurn).addToScore(leftOverLetterScore);
     }
 
-    /**
-     * Runs a game of 2 players.
-     * @param args N/A
-     */
     public static void main(String[] args) {
         Game game = new Game(2);
         game.playGame();
