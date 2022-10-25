@@ -84,7 +84,9 @@ public class Coordinate {
         list.sort(Comparator.comparing(o -> o.column));
     }
 
+    /** The column of the coordinate */
     public final Column column;
+    /** The row of the coordinate */
     public final Row row;
 
     /**
