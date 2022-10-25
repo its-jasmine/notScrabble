@@ -237,7 +237,7 @@ public class Board {
      * @param coordinate of the square being checked
      * @return the Tile or null if square has no tile
      */
-    public Tile getSquareTile(Coordinate coordinate) {
+    private Tile getSquareTile(Coordinate coordinate) {
         return getSquare(coordinate).getTile();
     }
 
@@ -246,7 +246,7 @@ public class Board {
      * @param coordinate of the square being checked
      * @return the squares type
      */
-    public Square.Type getSquareType(Coordinate coordinate) {
+    private Square.Type getSquareType(Coordinate coordinate) {
         return getSquare(coordinate).getType();
     }
 
