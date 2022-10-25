@@ -189,7 +189,7 @@ public class Board {
      * @param coordinate of the tile being placed
      * @return true if letter was placed, false otherwise
      */
-    public boolean placeTile(Coordinate coordinate, Tile tile) {
+    private boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
