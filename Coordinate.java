@@ -9,14 +9,60 @@ import java.util.Comparator;
 public class Coordinate {
     public enum Column {
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O;
-        public Column next() {return values()[ordinal() + 1];}  // if used outside getAdjacentCoordinate it can cause index out of bounds error
-        public Column previous() {return values()[ordinal() - 1];}
-    }
 
+        /**
+         * Gets the next sequential Column enum.
+         * @return the next enum or null if there isn't another one
+         */
+        public Column next() {
+            Column c;
+            try {
+                c = values()[ordinal() + 1];
+            } catch (IndexOutOfBoundsException err) {return null;}
+            return c;
+        }
+
+        /**
+         * Gets the previous sequential Column enum.
+         * @return the previous enum or null if there isn't another one
+         */
+        public Column previous() {
+            Column c;
+            try {
+                c = values()[ordinal() - 1];
+            } catch (IndexOutOfBoundsException err) {return null;}
+            return c;
+        }
+    }
     public enum Row {
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE, THIRT, FOURT, FIFT;
-        public Row next() {return values()[ordinal() + 1];}
-        public Row previous() {return values()[ordinal() - 1];}
+
+        /**
+         * Gets the next sequential Row enum.
+         * @return the next enum or null if there isn't another one
+         */
+        public Row next() {
+            Row r;
+            try {
+                r = values()[ordinal() + 1];
+            } catch (IndexOutOfBoundsException err) {return null;}
+            return r;
+        }
+
+        /**
+         * Gets the previous sequential Row enum.
+         * @return the previous enum or null if there isn't another one
+         */
+        public Row previous() {
+            Row r;
+            try {
+                r = values()[ordinal() - 1];
+            } catch (IndexOutOfBoundsException err) {return null;}
+            return r;}
+    }
+
+    public enum Adjacent{ // used as directional inputs for finding adjacent coordinates
+        LEFT, RIGHT, ABOVE, BELOW
     }
 
     /**
@@ -59,48 +105,27 @@ public class Coordinate {
      * Gets the coordinate one space over in the direction given if possible.
      * @param direction to check
      * @return the adjacent coordinate or null if at edge of board
-     * @throws IllegalArgumentException
      */
-    public Coordinate getAdjacentCoordinate(String direction) throws IllegalArgumentException {
-        direction = direction.toUpperCase();
-        boolean outOfBounds = false;
+    public Coordinate getAdjacentCoordinate(Adjacent direction) {
         switch (direction) {
-            case "L":
-                try {
-                    column.previous();
-                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
-                break;
-            case "R":
-                try {
-                    column.next();
-                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
-                break;
-            case "A":
-                try {
-                    row.previous();
-                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
-                break;
-            case "B":
-                try {
-                    row.next();
-                } catch (IndexOutOfBoundsException err) { outOfBounds = true;}
-                break;
+            case LEFT:
+                Column cL = column.previous();
+                if (cL == null) return null;
+                return new Coordinate(cL, row);
+            case RIGHT:
+                Column cR = column.next();
+                if (cR == null) return null;
+                return new Coordinate(cR, row);
+            case ABOVE:
+                Row rA = row.previous();
+                if (rA == null) return null;
+                return new Coordinate(column, rA);
+            case BELOW:
+                Row rB = row.next();
+                if (rB == null) return null;
+                return new Coordinate(column, rB);
             default:
-                throw new IllegalArgumentException("direction must be one of L, R, A, B");
+                return null;
         }
-        if (!outOfBounds) {
-            switch (direction){
-                case "L":
-                    return new Coordinate(column.previous(), row);
-                case "R":
-                    return new Coordinate(column.next(), row);
-                case "A":
-                    return new Coordinate(column, row.previous());
-                case "B":
-                    return new Coordinate(column, row.next());
-            }
-        }
-        return null;
     }
-
 }

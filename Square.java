@@ -13,7 +13,7 @@ public class Square {
     /** The tile currently placed on the square, or null */
     private Tile tile;
     /** The square type */
-    private Type type;
+    private final Type type;
 
     /**
      * Creates a new empty square (i.e., with no tile placed on it) of the given type.

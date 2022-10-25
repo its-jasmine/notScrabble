@@ -9,10 +9,10 @@ public class Rack {
 
     private List<Tile> tileList;
     private final static int MAXTILES = 7;
-    private Bag bag;
+    private final Bag bag;
 
     public Rack(Bag bag){
-        tileList = new ArrayList<Tile>();
+        tileList = new ArrayList<>();
         this.bag = bag;
         drawTiles(); // draw tiles at beginning of game
     }

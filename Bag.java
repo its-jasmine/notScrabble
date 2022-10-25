@@ -11,7 +11,7 @@ public class Bag {
     private List<Tile> tiles;
 
     public Bag() {
-        this.tiles = new ArrayList<Tile>();
+        this.tiles = new ArrayList<>();
         for (Tile t : Tile.values()) {
             for (int i = t.getTotalNum();i > 0; i--) {
                 tiles.add(t);
