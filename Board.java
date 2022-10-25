@@ -46,6 +46,7 @@ public class Board {
 
         // at this point words are all valid
         int score = Word.scoreWords(words);
+        if (tilesPlaced.size() == 7) score += 50;
 
         direction = Direction.UNKNOWN; // reset for next turn
         return score;
