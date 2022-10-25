@@ -217,6 +217,11 @@ public class Board {
         return  getSquare(coordinate).removeTile();
     }
 
+    /**
+     * removes tiles from the board
+     * @param tiles : a list of coordinates for the tiles to be removed
+     * @return a list a removed tiles;
+     */
     public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
         ArrayList<Tile> tilesLst = new ArrayList<>();
         for (Coordinate c : tiles){

@@ -59,9 +59,7 @@ public class Player {
     }
 
     /**
-     *
-     * @return
-     * Not sure what this needs
+     * Processes the turn of a player.
      * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
     public Game.Status takeTurn() {
@@ -145,10 +143,10 @@ public class Player {
     }
 
     /**
-     * Gets a string to a list containing enums of either letters, rows or columns.
-     * @param s the string to be transformed
-     * @param option picks letters, rows or columns enum
-     * @return ArrayList [C, A, T]
+     * transforms the user input into a list of enums or returns "invalid"
+     * @param s : the user input.
+     * @param option : whether string2Enums should process tile, row, columns
+     * @return a list of tile or row or column enums, or invalid if the input is wrong.
      */
     private ArrayList<Object> string2Enums(String s, String option){
         ArrayList<String> letters = new ArrayList<String>();
@@ -208,6 +206,13 @@ public class Player {
                 return temp;
         }
     }
+
+    /**
+     * Transforms the lists of rows and columns into coordinates
+     * @param rows : a list of rows enum.
+     * @param columns : a list of columns enums.
+     * @return an arrayList of coordinate objects
+     */
     private ArrayList<Coordinate> coordinatesList(ArrayList rows, ArrayList columns){
         ArrayList<Coordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < rows.size(); i++){
