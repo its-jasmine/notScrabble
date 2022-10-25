@@ -13,8 +13,9 @@ public class Rack {
     private Bag bag;
 
     public Rack(Bag bag){
-        List tileList = new ArrayList<Tile>();
+        tileList = new ArrayList<Tile>();
         this.bag = bag;
+        drawTiles(); // draw tiles at beginning of game
     }
     public int getTilesAmount() {
         return tileList.size();
@@ -83,6 +84,11 @@ public class Rack {
         for (Tile t: tiles){
             removeTileFromRack(t);
         }
+    }
+
+    public static void main(String[] args) {
+        Rack rack = new Rack(new Bag());
+        System.out.println(rack);
     }
 
 

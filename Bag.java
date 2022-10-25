@@ -26,8 +26,8 @@ public class Bag {
      * @return list of drawn tiles removed from the bag
      */
     public ArrayList<Tile> drawTiles(int numToDraw) {
-        ArrayList returnList = new ArrayList<>();
-        for (int i = numToDraw; i > 0; numToDraw--){
+        ArrayList<Tile> returnList = new ArrayList<>();
+        for (int i = numToDraw; i > 0; i--){
             Tile drawnLetter = drawTile();
             if (drawnLetter != null) returnList.add(drawnLetter);
         }
@@ -41,6 +41,15 @@ public class Bag {
     private Tile drawTile() {
         if (tiles.size() == 0) return null;
         return tiles.remove(tiles.size()-1);
+    }
+
+    public static void main(String[] args) {
+        Bag bag = new Bag();
+        ArrayList<Tile> tiles = bag.drawTiles(7);
+        for (Tile t: tiles) {
+            System.out.println(t.toString());
+        }
+
     }
 
 }
