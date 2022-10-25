@@ -219,10 +219,10 @@ public class Board {
 
     /**
      * removes tiles from the board
-     * @param tiles : a list of coordinates for the tiles to be removed
+     * @param tileCoordinates : a list of coordinates for the tiles to be removed
      * @return a list a removed tiles;
      */
-    public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tiles){
+    public ArrayList<Tile> removeTiles(ArrayList<Coordinate> tileCoordinates){
         ArrayList<Tile> tilesLst = new ArrayList<>();
         for (Coordinate c : tileCoordinates){
             tilesLst.add(removeTile(c));
@@ -345,10 +345,16 @@ public class Board {
      * @return string of current board state
     */
     public String toString() {
-        String s = "";
+        String s = "   ";
+        for (Coordinate.Column c : Coordinate.Column.values()) {
+            s += c + "  ";
+        }
+        s += "\n";
         for (Coordinate.Row r : Coordinate.Row.values()) {
+            int row = r.ordinal() + 1;
+            if(row < 10) s += row + "  "; else s += row + " "; // keeps columns straight
             for (Coordinate.Column c : Coordinate.Column.values()) {
-                s += squares[r.ordinal()][c.ordinal()] + " "; // Each square will be separated by a space.
+                s += squares[r.ordinal()][c.ordinal()] + "  "; // Each square will be separated by two spaces.
             }
             s += "\n";
         }
