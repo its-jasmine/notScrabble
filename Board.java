@@ -211,7 +211,7 @@ public class Board {
      * @param coordinate of the Tile being removed
      * @return the tile if it was removed, null otherwise
      */
-    public Tile removeTile(Coordinate coordinate) {
+    private Tile removeTile(Coordinate coordinate) {
         return  getSquare(coordinate).removeTile();
     }
 
