@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * @author Arthur Atangana
+ * @version Milestone1
  */
 public class Player {
     private Board board;

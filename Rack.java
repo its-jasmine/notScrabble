@@ -3,6 +3,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author Arthur Atangana
+ * @version Milestone1
  */
 public class Rack {
 

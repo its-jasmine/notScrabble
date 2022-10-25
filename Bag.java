@@ -4,6 +4,7 @@ import static java.util.Collections.shuffle;
 /**
  * This class represents the bag full of tiles that the players draw from.
  * @author Rebecca Elliott
+ * @author Arthur Atangana
  * @version Milestone1
  */
 public class Bag {
