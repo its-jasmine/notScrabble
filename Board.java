@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * BLURB ABOUT BOARD GOES HERE
  * @author Rebecca Elliott
@@ -6,10 +8,6 @@
  * @author Victoria Malouf
  * @version Milestone1
  */
-
-import java.util.*;
-
-
 public class Board {
     private static Square[][] squares; // [row][column]
     private Direction direction; // keeps track of the direction of the tiles that were placed, set in alignment check

@@ -1,13 +1,11 @@
+import java.util.List;
+import java.util.Comparator;
+
 /**
  * This class represents valid coordinates on the game board.
  * @author: Rebecca Elliott
  * @version Milestone1
  */
-
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import java.util.List;
-import java.util.Comparator;
-
 public class Coordinate {
     public enum Column {
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O;

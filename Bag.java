@@ -1,12 +1,11 @@
-/**
- * This class represents the bag full of tiles that the players draw from.
- * @author: Rebecca Elliott
- * @version Milestone1
- */
-
 import java.util.*;
 import static java.util.Collections.shuffle;
 
+/**
+ * This class represents the bag full of tiles that the players draw from.
+ * @author Rebecca Elliott
+ * @version Milestone1
+ */
 public class Bag {
     private List<Tile> tiles;
 
