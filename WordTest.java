@@ -40,7 +40,7 @@ public class WordTest {
      */
     @Test
     public void testSingleLetterWord() {
-        w.addFirst(Tile.B, Square.Type.START);
+        w.addFirst(Tile.B, Square.Type.PLAIN);
         assertEquals(1, w.size());
         words.add(w);
         assertEquals(true, w.areValidWords(words));
@@ -65,7 +65,7 @@ public class WordTest {
      */
     @Test
     public void testAddLast() {
-        w.addLast(Tile.C, Square.Type.START);
+        w.addLast(Tile.C, Square.Type.PLAIN);
         w.addLast(Tile.O, Square.Type.PLAIN);
         w.addLast(Tile.N, Square.Type.PLAIN);
         w.addLast(Tile.S, Square.Type.PLAIN);
@@ -83,7 +83,7 @@ public class WordTest {
     @Test
     public void testAddFirstAndLast() {
         // Word: "DEVELOP"
-        w.addFirst(Tile.E, Square.Type.START);
+        w.addFirst(Tile.E, Square.Type.PLAIN);
         w.addLast(Tile.L, Square.Type.PLAIN);
         w.addFirst(Tile.V, Square.Type.PLAIN);
         w.addLast(Tile.O, Square.Type.PLAIN);
@@ -219,18 +219,33 @@ public class WordTest {
     }
 
     /**
+     * Tests that scoreWords for a START Square Type works as expected
+     * FAIL: Expected: 10, Actual: 5
+     */
+    @Test
+    public void testScoreStartWord() {
+        // Word: "PIE" P=3, I=1, E=1 --> score = 5x2 = 10
+        w.addLast(Tile.P, Square.Type.START);
+        w.addLast(Tile.I, Square.Type.PLAIN);
+        w.addLast(Tile.E, Square.Type.PLAIN);
+        words.add(w);
+        assertEquals(10, w.scoreWords(words));
+    }
+
+    /**
      * Tests that scoreWords for a combination of Square Types work as expected
-     * FAIL: Expected: 42, Actual: 4
+     * FAIL: Expected: 96, Actual: 5
      */
     @Test
     public void testScoreAllTileTypes() {
-        // Word: "NOTE" N=1x2=2, O=1x3=3, T=1, E=1 --> score = 7x2x3 = 42
+        // Word: "NOTE" N=1x2=2, O=1x3=3, T=1, E=1, S=1 --> score = 8x2x3x2 = 96
         w.addLast(Tile.N, Square.Type.DOUBLE_LETTER);
         w.addLast(Tile.O, Square.Type.TRIPLE_LETTER);
         w.addLast(Tile.T, Square.Type.DOUBLE_WORD);
         w.addLast(Tile.E, Square.Type.TRIPLE_WORD);
+        w.addLast(Tile.S, Square.Type.START);
         words.add(w);
-        assertEquals(42, w.scoreWords(words));
+        assertEquals(96, w.scoreWords(words));
     }
 
     /**
