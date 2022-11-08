@@ -101,4 +101,27 @@ public class Rack {
             removeTileFromRack(t);
         }
     }
+
+    /**
+     * Determines the tile in the rack closest to A.
+     * @return Tile with the lowest ordinal value
+     */
+    public Tile getHighestTile(){
+        Tile highestTile = tileList.get(0);
+        for (Tile t: tileList) {
+            if (t.ordinal() < highestTile.ordinal()){
+                highestTile = t;
+            }
+        }
+        return highestTile;
+    }
+
+    public static void main(String[] args) {
+        Bag b = new Bag();
+        Rack r = new Rack(b);
+        System.out.println(r);
+        Tile t = r.getHighestTile();
+        System.out.println("Highest tile: " + t);
+        System.out.println(t.ordinal());
+    }
 }

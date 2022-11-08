@@ -29,13 +29,22 @@ public class Game {
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
+        //Random random = new Random();
+        //this.playerTurn = random.nextInt(numPlayers); // pick who goes first
         this.players = new ArrayList<>();
+        this.playerTurn = 0;
+        int highestTile = 26; // 26 letters in the alphabet (Highest possible ordinal is 25, BLANK not included until M3)
         for (int i = 0; i < numPlayers; i++) {
+            ArrayList<Tile> tile = bag.drawTiles(1);
+            int tileOrdinal = tile.get(0).ordinal();
+            if (tileOrdinal < highestTile){
+                highestTile = tileOrdinal;
+                this.playerTurn = i;
+            }
+            System.out.println("Tile: " + tile);
             players.add(new Player(board, bag, i + 1));
         }
-        Random random = new Random();
-        this.playerTurn = random.nextInt(numPlayers); // pick who goes first
-
+        System.out.println("playerTurn: "+playerTurn);
     }
 
     /**
@@ -99,7 +108,7 @@ public class Game {
      * @param args N/A
      */
     public static void main(String[] args) {
-        Game game = new Game(2);
+        Game game = new Game(4);
         game.playGame();
     }
 }
