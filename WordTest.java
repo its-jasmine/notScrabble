@@ -18,7 +18,7 @@ public class WordTest {
     List<Word> words;
 
     /**
-     * Initiates a new Word object and an ArrayList that will hold Word Objects
+     * Initiates a new Word object and an ArrayList that will hold Word objects
      * @throws Exception
      */
     @Before
@@ -51,7 +51,6 @@ public class WordTest {
      */
     @Test
     public void testAddFirst() {
-        // Word: "BACK"
         w.addFirst(Tile.K, Square.Type.PLAIN);
         w.addFirst(Tile.C, Square.Type.PLAIN);
         w.addFirst(Tile.A, Square.Type.PLAIN);
@@ -66,7 +65,6 @@ public class WordTest {
      */
     @Test
     public void testAddLast() {
-        // Word: "CONSULT"
         w.addLast(Tile.C, Square.Type.START);
         w.addLast(Tile.O, Square.Type.PLAIN);
         w.addLast(Tile.N, Square.Type.PLAIN);
