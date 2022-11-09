@@ -156,7 +156,7 @@ public class BoardValidator {
     /**
      * Reset Direction to UNKNOWN.
      */
-    private void restDirection() {
+    private void resetDirection() {
         direction = Direction.UNKNOWN;
     }
 }
