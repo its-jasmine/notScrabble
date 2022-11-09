@@ -23,7 +23,7 @@ public class WordBank {
         this.validWords = new HashSet<>();
         Scanner sc;
         try {
-            sc = new Scanner(new File("validWords.txt"));
+            sc = new Scanner(new File("dictionary.txt"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -37,7 +37,7 @@ public class WordBank {
      * @return true if word is valid, false otherwise
      */
     public boolean isValidWord(String word){
-        return validWords.contains(word.toLowerCase());
+        return validWords.contains(word);
     }
 
 }
