@@ -292,29 +292,4 @@ public class Player {
         return areAllEmpty;
     }
 
-    /**
-     * Returns the tile in the player's rack closest to A.
-     * @return Tile closest to A in the rack
-     */
-    public Tile highestTile(){
-        return rack.getHighestTile();
-    }
-
-    public static void main(String[] args) {
-        Board b = new Board();
-        Bag bag = new Bag();
-        Player p1 = new Player(b, bag, 1);
-        Player p2 = new Player(b, bag, 2);
-        Player p3 = new Player(b, bag, 3);
-        Player p4 = new Player(b, bag, 4);
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(p1);
-        players.add(p2);
-        players.add(p3);
-        players.add(p4);
-        for (Player p: players){
-            System.out.println(p.getRack());
-            System.out.println("Highest Tile: " + p.highestTile());
-        }
-    }
 }

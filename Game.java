@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Models the letter crossing game.
@@ -29,22 +27,45 @@ public class Game {
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
-        //Random random = new Random();
-        //this.playerTurn = random.nextInt(numPlayers); // pick who goes first
+        this.playerTurn = firstPlayer(bag, numPlayers);
+
         this.players = new ArrayList<>();
-        this.playerTurn = 0;
-        int highestTile = 26; // 26 letters in the alphabet (Highest possible ordinal is 25, BLANK not included until M3)
         for (int i = 0; i < numPlayers; i++) {
-            ArrayList<Tile> tile = bag.drawTiles(1);
-            int tileOrdinal = tile.get(0).ordinal();
-            if (tileOrdinal < highestTile){
-                highestTile = tileOrdinal;
-                this.playerTurn = i;
-            }
-            System.out.println("Tile: " + tile);
             players.add(new Player(board, bag, i + 1));
         }
-        System.out.println("playerTurn: "+playerTurn);
+    }
+
+    /**
+     * Determine the player who draws the tile closest to A.
+     * @param bag of this Game
+     * @return index of the Player that will go first
+     */
+    private int firstPlayer(Bag bag, int numPlayers) {
+        int playerIndex = -1;
+        ArrayList<Tile> tilesDrawn = new ArrayList<>(); // Need to return all tiles drawn back to bag
+        int lowestOrdinal, lowestOrdinalCount;
+        do {
+            ArrayList<Tile> tilesDrawnThisRound = new ArrayList<>();
+            lowestOrdinal = 26; // Highest ordinal is 25 so ordinal of first tile will start as the lowestOrdinal
+            lowestOrdinalCount = 0;
+            for (int i = 0; i < numPlayers; i++) {
+                ArrayList<Tile> tile = bag.drawTiles(1);
+                tilesDrawn.add(tile.get(0));
+                tilesDrawnThisRound.add(tile.get(0));
+                if (tile.get(0).ordinal() < lowestOrdinal) {
+                    lowestOrdinal = tile.get(0).ordinal();
+                    playerIndex = i;
+                }
+            }
+            for (Tile t : tilesDrawnThisRound) { // Check if 2 players picked the same highest tile
+                if (t.ordinal() == lowestOrdinal) {
+                    lowestOrdinalCount++;
+                }
+            }
+        }
+        while (lowestOrdinalCount > 1);
+        bag.returnTiles(tilesDrawn);
+        return playerIndex;
     }
 
     /**
