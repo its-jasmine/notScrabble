@@ -21,6 +21,7 @@ public class CoordinateTest {
             assertEquals(expected.get(i), coordsToSort.get(i));
         }
 
+
     }
 
     /**
