@@ -24,9 +24,6 @@ public class CoordinateTest {
 
     }
 
-    /**
-     * Verifies the sort
-     */
     @Test
     public void sortByColumn() {
         Coordinate.Column[] columnValues = Coordinate.Column.values();
