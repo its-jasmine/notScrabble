@@ -12,25 +12,6 @@ public class BoardValidatorTest {
 
 
     @Test
-    public void verifyNoGaps() {
-    coordinateList = new ArrayList<>();
-    coordinateList.add(new Coordinate(Coordinate.Column.A, Coordinate.Row.ONE));
-    coordinateList.add(new Coordinate(Coordinate.Column.A, Coordinate.Row.THREE));
-    }
-
-    @Test
-    public void verifyWordAttachment() {
-    }
-
-    @Test
-    public void getDirection() {
-    }
-
-    @Test
-    public void isOnStart() {
-    }
-
-    @Test
     public void isValidTileAlignment() {
         // This method returns UNKNOWN if the alignment is NOT valid
 
