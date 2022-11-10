@@ -15,6 +15,8 @@ public class Board {
     private final BoardValidator boardValidator = new BoardValidator(this);
 
     private final WordExtractor wordExtractor = new WordExtractor(this);
+    private Tile tileBeingPlaced;
+
 
     /**
      * Creates a new board with plain squares.
@@ -64,14 +66,22 @@ public class Board {
         if (tilesPlaced.size() == 7) score += 50;
         return score;
     }
-
+    public void tileToPlace(Tile t){
+        tileBeingPlaced = t;
+    }
+    public Tile getTileToPlace() {
+        return tileBeingPlaced;
+    }
+    public void resetTiletoPlace() {
+        tileBeingPlaced = null;
+    }
     /**
      * Places tile in square if available.
      * @param coordinate of the tile being placed
      * @param tile to be placed
      * @return true if letter was placed, false otherwise
      */
-    private boolean placeTile(Coordinate coordinate, Tile tile) {
+    public boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
@@ -79,6 +89,7 @@ public class Board {
         }
         return false;
     }
+
 
     /**
      * Places all the tiles at the specified coordinates.
@@ -166,4 +177,7 @@ public class Board {
         }
         return s;
     }
+
+
+
 }

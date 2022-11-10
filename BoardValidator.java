@@ -27,7 +27,7 @@ public class BoardValidator {
      * @return the direction the tiles were played in, direction is UNKNOWN if alignment is invalid
      */
     public Direction isValidTileAlignment(List<Coordinate> tilesPlacedCoordinates) {
-        restDirection();
+        //restDirection();
         // Determine direction
         direction = getDirection(tilesPlacedCoordinates);
         if (direction == Direction.UNKNOWN) return null;

@@ -89,7 +89,7 @@ public class Rack {
      * Removes a specific tile from the rack
      * @param t : the tile to be removed from the rack.
      */
-    private void removeTileFromRack(Tile t){
+    public void removeTileFromRack(Tile t){
         tileList.remove(t);
     }
     /**
