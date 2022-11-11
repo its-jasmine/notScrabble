@@ -1,9 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class RackView extends JPanel {
 
-    private JButton rackGrid[][];
+    private JButton rackGrid[];
     private Rack rackModel;
     private RackController rackController;
     private Board boardModel;
@@ -20,21 +21,31 @@ public class RackView extends JPanel {
         passButton.setBackground(Color.RED);
         this.add(passButton);
 
-        rackGrid = new JButton[1][9];
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 9; j++) {
-                JButton button = new JButton("A");
-                //button.setActionCommand();
-                button.setBackground(Color.ORANGE);
-                button.setOpaque(true);
-                button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                rackGrid[i][j] = button;
-                button.addActionListener(rackController);
-                this.add(button);
-            }
+        rackGrid = new JButton[7];
+        for (int i = 0; i < 7; i++) {
+            JButton button = new JButton();
+            //button.setActionCommand();
+            button.setBackground(Color.ORANGE);
+            button.setOpaque(true);
+            button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            rackGrid[i] = button;
+            button.addActionListener(rackController);
+            this.add(button);
         }
         JButton submitButton = new JButton("Submit");
         submitButton.setBackground(Color.WHITE);
         this.add(submitButton);
+    }
+
+
+    public void updateRackView(RackEvent e) {
+        for (JButton button : rackGrid){
+            if (button.getText() != null){
+                continue;
+            }
+            else{
+                button.setText(e.getTile().letter);
+            }
+        }
     }
 }

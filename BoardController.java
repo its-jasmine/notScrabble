@@ -24,10 +24,10 @@ public class BoardController implements ActionListener {
             if (boardModel.placeTile(c, t)) { // if placing the tile on board is successfull
                 button.setText(t.letter); //update button text on board tile
                 boardModel.resetTiletoPlace(); //resets selected tile from rack to null
-                specificrackModel.removeTileFromRack(t); //remove tile from rack
+                //specificrackModel.removeTileFromRack(t); //remove tile from rack
             }
             else{
-
+                return;
             }
         }
         else {

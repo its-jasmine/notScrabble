@@ -16,12 +16,14 @@ public class Board {
 
     private final WordExtractor wordExtractor = new WordExtractor(this);
     private Tile tileBeingPlaced;
+    private List<BoardView> views;
 
 
     /**
      * Creates a new board with plain squares.
      */
     public Board() {
+        views = new ArrayList<>();
         squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
@@ -86,6 +88,9 @@ public class Board {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
+            for (BoardView view : views){
+                view.addTileToBoardView(new BoardEvent(this,tile,coordinate));
+            }
             return true;
         }
         return false;
@@ -113,6 +118,9 @@ public class Board {
      * @return the tile if it was removed, null otherwise
      */
     private Tile removeTile(Coordinate coordinate) {
+        for (BoardView view : views){
+            view.removeTileFromBoardView(new BoardEvent(this,coordinate));
+        }
         return  getSquare(coordinate).removeTile();
     }
 

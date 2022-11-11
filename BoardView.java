@@ -30,4 +30,11 @@ public class BoardView extends JPanel {
         }
 
     }
+    public void addTileToBoardView(BoardEvent e){
+
+    }
+
+    public void removeTileFromBoardView(BoardEvent e){
+
+    }
 }

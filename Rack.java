@@ -14,17 +14,18 @@ public class Rack {
     private final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
-    private RackView rackView;
+    private ArrayList<RackView> views;
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).
      * @param bag where the tiles are drawn from
      */
-    public Rack(Bag bag, Board board){
+    public Rack(Bag bag, RackView rackView){
         tileList = new ArrayList<>();
         this.bag = bag;
         drawTiles(); // draw tiles at beginning of game
-        this.rackView = new RackView(board,this);
+        views.add(rackView);
+        //this.rackView = new RackView(board,this);
     }
 
     /**
@@ -50,6 +51,9 @@ public class Rack {
     public Game.Status drawTiles(){
         tileList.addAll(bag.drawTiles(MAXTILES - tileList.size()));
         if (tileList.size() == 0) return Game.Status.OVER; // no Tiles left, signal for Game that the game is over
+        for (Tile t : tileList){
+            updateRackView(t);
+        }
         return Game.Status.RUNNING;
     }
 
@@ -94,6 +98,7 @@ public class Rack {
      */
     public void removeTileFromRack(Tile t){
         tileList.remove(t);
+        updateRackView(t);
     }
     /**
      * Removes tiles from the rack
@@ -105,7 +110,9 @@ public class Rack {
         }
     }
 
-    public void updateRackView(JButton button) {
-
+    public void updateRackView(Tile t){
+        for (RackView view : views){
+            view.updateRackView(new RackEvent(this,t));
+        }
     }
 }
