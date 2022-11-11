@@ -26,14 +26,7 @@ public class BoardController implements ActionListener {
             button.setText(t.letter);
             boardModel.placeTile(c,t);
         }
-        else {
-            System.out.println("tileToPlace in board is null?");
-        }
-
-        //boardModel.resetTiletoPlace();
-
-        //e.setText(t.letter); // trying to make the button text change
-
+        boardModel.resetTiletoPlace();
     }
 
 }
