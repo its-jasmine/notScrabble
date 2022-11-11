@@ -9,9 +9,9 @@ public class BoardView extends JPanel {
     private Board boardModel;
     private BoardController boardController;
 
-    public BoardView(){
+    public BoardView(Board board){
         super();
-        boardModel = new Board();
+        Board boardModel = board;
         boardController = new BoardController(boardModel);
         this.setLayout(new GridLayout(15,15));
         this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));

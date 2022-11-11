@@ -68,6 +68,7 @@ public class Board {
     }
     public void tileToPlace(Tile t){
         tileBeingPlaced = t;
+        System.out.println(tileBeingPlaced+ " in board class");
     }
     public Tile getTileToPlace() {
         return tileBeingPlaced;

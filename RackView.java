@@ -7,9 +7,11 @@ public class RackView extends JPanel {
     private Rack rackModel;
     private RackController rackController;
     private Board boardModel;
-    public RackView(Board board){
+    public RackView(Board board, Rack rack){
         super();
         this.boardModel = board;
+        this.rackModel = rack;
+        rackController = new RackController(rackModel, boardModel);
         this.setLayout(new GridLayout(1,19));
         this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 
@@ -21,6 +23,7 @@ public class RackView extends JPanel {
                 button.setOpaque(false);
                 button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 rackGrid[i][j] = button;
+                button.addActionListener(rackController);
                 this.add(button);
             }
         }

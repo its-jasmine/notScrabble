@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class GameView extends JFrame {
 
-    public GameView(Board board) throws HeadlessException {
+    public GameView(Board board, Rack rack) throws HeadlessException { //this is bad rack and board shouldnt be there??
         super("notScrabble");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //this.setLocationRelativeTo(null);
@@ -28,9 +28,14 @@ public class GameView extends JFrame {
 
 
 
-        BoardView centerPanel = new BoardView();
+        BoardView centerPanel = new BoardView(board);
         //centerPanel.setHorizontalAlignment(JLabel.CENTER);
         contentpane.add(centerPanel, BorderLayout.CENTER);
+
+        RackView southPanel = new RackView(board, rack);
+        //southPanel.setHorizontalAlignment(JLabel.CENTER);
+        southPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
+        contentpane.add(southPanel, BorderLayout.SOUTH);
 
         JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -45,11 +50,6 @@ public class GameView extends JFrame {
         scoreLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(scoreLabel, 2);
 
-        RackView sourthPanel = new RackView(board);
-        //sourthPanel.setHorizontalAlignment(JLabel.CENTER);
-        sourthPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        contentpane.add(sourthPanel, BorderLayout.SOUTH);
-
         JLabel eastLabel = new JLabel("maybe another rack");
         eastLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         contentpane.add(eastLabel, BorderLayout.EAST);
@@ -63,6 +63,6 @@ public class GameView extends JFrame {
     }
 
     public static void main(String[] args) {
-        GameView b = new GameView(new Board());
+        GameView b = new GameView(new Board(),new Rack(new Bag()));
     }
 }

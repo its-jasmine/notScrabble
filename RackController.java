@@ -6,7 +6,7 @@ public class RackController implements ActionListener {
     private Rack rackModel;
     private Board boardModel;
 
-    public RackController(Rack rackModel, Board BoardModel){
+    public RackController(Rack rackModel, Board boardModel){
         this.rackModel = rackModel;
         this.boardModel = boardModel;
     }
@@ -18,10 +18,14 @@ public class RackController implements ActionListener {
     }
     private void getTile(String input){
         Tile t = Tile.valueOf(input);
+        System.out.println(t+ " in rack controller");
+        boardModel.tileToPlace(t);
+/*
         if (rackModel.isTileinRack(t)){//just in case;
             rackModel.removeTileFromRack(t);
             boardModel.tileToPlace(t);
         }
+*/
     }
 
 }
