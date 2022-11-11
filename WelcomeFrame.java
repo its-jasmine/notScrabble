@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,28 +29,37 @@ public class WelcomeFrame extends JFrame {
     }
     public WelcomeFrame() {
         WelcomeController c = new WelcomeController(this);
-
+        setLayout(new GridLayout(2, 1));
         setTitle("notScrabble");
-        //setSize(800, 600);
+        setSize(900, 400);
         ImageIcon logo = new ImageIcon("notScrabble_logo.png");
 
-
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
-        setIconImage(logo.getImage());
-        //JLabel welcome = new JLabel("Welcome to notScrabble.");
-        //panel.add(welcome);
+        panel.setBorder(new BevelBorder(BevelBorder.RAISED));
+        //panel.setLayout(new BorderLayout());
+        //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.setLayout(new GridLayout(2,1,10,10));
+
+        //setIconImage(logo.getImage());
+        JLabel welcome = new JLabel(logo);
+        welcome.setBorder(new BevelBorder(BevelBorder.RAISED));
+
+        add(welcome);
 
 
 
         JButton instructions = new JButton("Instructions");
+        //panel.add(instructions, BorderLayout.NORTH);
         panel.add(instructions);
 
         instructions.setActionCommand(INSTRUCTIONS_CMD);
         instructions.addActionListener(c);
 
         JButton newGame = new JButton("New Game");
+        //panel.add(newGame, BorderLayout.CENTER);
         panel.add(newGame);
+
         newGame.setActionCommand(NEW_GAME_CMD);
         newGame.addActionListener(c);
 
