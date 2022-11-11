@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,15 +14,17 @@ public class Rack {
     private final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
+    private RackView rackView;
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).
      * @param bag where the tiles are drawn from
      */
-    public Rack(Bag bag){
+    public Rack(Bag bag, Board board){
         tileList = new ArrayList<>();
         this.bag = bag;
         drawTiles(); // draw tiles at beginning of game
+        this.rackView = new RackView(board,this);
     }
 
     /**
@@ -100,5 +103,9 @@ public class Rack {
         for (Tile t: tiles){
             removeTileFromRack(t);
         }
+    }
+
+    public void updateRackView(JButton button) {
+
     }
 }

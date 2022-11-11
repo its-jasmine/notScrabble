@@ -26,7 +26,7 @@ public class Player {
         this.board = board;
         this.name = "";
         this.score = 0;
-        this.rack = new Rack(bag);
+        this.rack = new Rack(bag, board);
     }
     /**
      * Creates a new player with a specified board, bag and player number.

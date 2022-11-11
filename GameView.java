@@ -63,6 +63,7 @@ public class GameView extends JFrame {
     }
 
     public static void main(String[] args) {
-        GameView b = new GameView(new Board(),new Rack(new Bag()));
+        Board board = new Board();
+        GameView b = new GameView(board,new Rack(new Bag(),board));
     }
 }
