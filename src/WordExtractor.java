@@ -19,8 +19,8 @@ public class WordExtractor {
      * @param tilesPlayed a sorted list of the tile coordinates played this turn, coordinates are confirmed in a line
      * @return list of potential words created this turn
      */
-    public List<Word> getWordsCreated(List<Coordinate> tilesPlayed, BoardValidator.Direction direction) {
-        List<Word> words = new ArrayList<>();
+    public ArrayList<Word> getWordsCreated(List<Coordinate> tilesPlayed, BoardValidator.Direction direction) {
+        ArrayList<Word> words = new ArrayList<>();
 
         if (direction == BoardValidator.Direction.HORIZONTAL) {
             // get word played, possibly extending previously played word

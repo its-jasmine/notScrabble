@@ -5,13 +5,20 @@ import java.awt.*;
 public class GameView extends JFrame {
 
     private Game game;
+    private Container contentpane;
+    private BoardView boardPanel;
+    private RackView rackView;
 
-    public GameView() throws HeadlessException {
+    public GameView(int numPlayers) throws HeadlessException {
         super("notScrabble");
-        game = new Game(2);
+        game = new Game(numPlayers);
+        game.addView(this);
+        Board board = new Board();
+
+
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //this.setLocationRelativeTo(null);
-        Container contentpane = this.getContentPane();
+        contentpane = this.getContentPane();
         contentpane.setLayout(new BorderLayout());
         Container northContainer = new Container();
         northContainer.setLayout(new GridLayout(1,3));
@@ -31,14 +38,16 @@ public class GameView extends JFrame {
 
 
 
-        BoardView centerPanel = new BoardView(board);
+        boardPanel = new BoardView(game.getBoard());
+        game.addBoardViewToBoard(boardPanel);
         //centerPanel.setHorizontalAlignment(JLabel.CENTER);
-        contentpane.add(centerPanel, BorderLayout.CENTER);
+        contentpane.add(boardPanel, BorderLayout.CENTER);
 
-        RackView southPanel = new RackView(board);
+        rackView = new RackView(game.getBoard());
+        game.addRackViewToRacks(rackView);
         //southPanel.setHorizontalAlignment(JLabel.CENTER);
-        southPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        contentpane.add(southPanel, BorderLayout.SOUTH);
+        rackView.setBorder(new BevelBorder(BevelBorder.RAISED));
+        contentpane.add(rackView, BorderLayout.SOUTH);
 
         JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -66,7 +75,12 @@ public class GameView extends JFrame {
     }
 
     public static void main(String[] args) {
-        Board board = new Board();
-        GameView b = new GameView(board,new Rack(new Bag()));
+        new GameView(2);
+    }
+
+    public void update(Player player) {
+        contentpane.remove(rackView);
+        contentpane.add(player.getRack().)
+
     }
 }

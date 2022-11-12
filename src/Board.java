@@ -26,6 +26,7 @@ public class Board {
     public Board() {
         placedTilesCoordinates = new ArrayList<>();
         views = new ArrayList<>();
+        views.add(new BoardView(this));
         squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
@@ -200,5 +201,9 @@ public class Board {
 
     public List<Coordinate> getCoordinateList() {
         return placedTilesCoordinates;
+    }
+
+    public void addView(BoardView boardView) {
+        views.add(boardView);
     }
 }

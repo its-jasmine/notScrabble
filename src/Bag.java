@@ -8,11 +8,12 @@ import static java.util.Collections.shuffle;
  * @version Milestone1
  */
 public class Bag {
+    public static final int MAX_TILES = 98; // will be 100 when blanks are added
     /** The list of tiles in the bag */
     private List<Tile> tiles;
 
     /**
-     * Creates a new bag with the appropriate amount of tiles (according to Scrabble specifications).
+     * Creates a new bag with the appropriate amount of tiles (according to Scrabble specifications). 100 when blanks are included.
      */
     public Bag() {
         this.tiles = new ArrayList<>();
@@ -47,4 +48,20 @@ public class Bag {
         return tiles.remove(tiles.size()-1);
     }
 
+    /**
+     * Gets the number of tiles still in the bag.
+     * @return Number of tiles in bag
+     */
+    public int getNumTilesLeft() {
+        return tiles.size();
+    }
+
+    /**
+     * Puts given tiles back into bag.
+     * @param rTiles tiles to be returned
+     */
+    public void returnTiles(ArrayList<Tile> rTiles) {
+        tiles.addAll(rTiles);
+        shuffle(tiles);
+    }
 }

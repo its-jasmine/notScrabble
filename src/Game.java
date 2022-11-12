@@ -8,8 +8,10 @@ import java.util.Random;
  *  @version Milestone1
  */
 public class Game {
+
+
     /** The allowable game statuses */
-    public enum Status {RUNNING, OVER} // used as a way to have a named boolean for readability
+    public enum Status {RUNNING, OVER;} // used as a way to have a named boolean for readability
     /** The maximum number of players in a game */
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
@@ -18,16 +20,19 @@ public class Game {
     private List<Player> players; // if we don't want players to be able to join once a game has started this can be final
     /** The index corresponding to the player who is currently playing their turn */
     private int playerTurn; // index in the player list
+    private List<GameView> views;
+    private Board board;
+    private Bag bag;
 
     /**
      * Creates a new game with the specifed number of players and selects a random player to go first.
      * @param numPlayers the number of players of the game
      */
     public Game(int numPlayers) {
-        Board board = new Board();
-        BoardView boardView = new BoardView(board);
-        RackView rackView = new RackView(board);
-        Bag bag = new Bag();
+        views = new ArrayList<>();
+        board = new Board();
+        bag = new Bag();
+
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
@@ -35,9 +40,7 @@ public class Game {
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, i + 1));
         }
-        for (Player player : players){
-            player.getRack().addView(rackView);
-        }
+
         Random random = new Random();
         this.playerTurn = random.nextInt(numPlayers); // pick who goes first
 
@@ -71,6 +74,30 @@ public class Game {
 
         return players.get(index).takeTurn();
     }
+    private void nextTurn(){
+        Player player = players.get(playerTurn);
+        for (GameView view : views){
+            view.update(player);
+        }
+
+    }
+
+    public Board getBoard(){
+        return board;
+    }
+
+    public Bag getBag() {
+        return bag;
+    }
+
+    public void addRackViewToRacks(RackView rackView){
+        for (Player player : players){
+            player.getRack().addView(rackView);
+        }
+    }
+    public void addBoardViewToBoard(BoardView boardView){
+        board.addView(boardView);
+    }
 
     /**
      * Gets the player with the highest score.
@@ -98,6 +125,9 @@ public class Game {
             leftOverLetterScore += p.getRackScore();
         }
         players.get(playerTurn).addToScore(leftOverLetterScore);
+    }
+    public void addView(GameView view){
+        views.add(view);
     }
 
     /**
