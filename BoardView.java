@@ -7,11 +7,12 @@ public class BoardView extends JPanel {
 
     private JButton boardGrid[][];
     private Board boardModel;
+
     private BoardController boardController;
 
     public BoardView(Board board){
         super();
-        Board boardModel = board;
+        boardModel = board;
         boardController = new BoardController(boardModel);
         this.setLayout(new GridLayout(15,15));
         this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
@@ -25,6 +26,7 @@ public class BoardView extends JPanel {
                 button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 boardGrid[i][j] = button;
                 button.addActionListener(boardController);
+                //button.addActionListener(rackController);
                 this.add(button);
             }
         }

@@ -118,6 +118,10 @@ public class Rack {
         }
     }
 
+    public void getTileFromBoard(Tile t){
+        tileList.add(t);
+    }
+
     public void updateRackView(Tile t){
         for (RackView view : views){
             view.updateRackView(new RackEvent(this,t));

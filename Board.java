@@ -81,6 +81,11 @@ public class Board {
     public void resetTiletoPlace() {
         tileBeingPlaced = null;
     }
+    public Tile giveTileBackToRack(Tile t){
+        resetTiletoPlace();
+        return t;
+
+    }
     /**
      * Places tile in square if available.
      * @param coordinate of the tile being placed
