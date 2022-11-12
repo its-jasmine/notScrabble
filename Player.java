@@ -85,9 +85,11 @@ public class Player {
         return rack.getRackScore();
     }
     /**
-     * Adds the score of the placed word to score.
+     * Adds to the players score.
+     * @param score The score to add to player's score.
      */
-    public void addToScore(int leftOverLetterScore) {
+    public void addToScore(int score) {
+        this.score += score;
     }
 
     /**
