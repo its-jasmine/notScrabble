@@ -31,10 +31,17 @@ public class BoardView extends JPanel {
 
     }
     public void addTileToBoardView(BoardEvent e){
-
+        getGridButton(e).setText(e.getTile().letter);
     }
 
     public void removeTileFromBoardView(BoardEvent e){
-
+        getGridButton(e).setText(null);
+    }
+    private JButton getGridButton(BoardEvent e){
+        Coordinate c = e.getCoordinate();
+        int column = c.column.ordinal();
+        int row = c.row.ordinal();
+        JButton button = boardGrid[row][column];
+        return button;
     }
 }

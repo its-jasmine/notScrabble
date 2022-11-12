@@ -22,16 +22,8 @@ public class RackController implements ActionListener {
 
     }
     private void getTile(String input){
-        Tile t = Tile.valueOf(input);
-        //System.out.println(t+ " in rack controller");
-        //boardModel.tileToPlace(t);
-        rackModel.removeTileFromRack(t);
+        Tile t = rackModel.removeTileFromRack(Integer.valueOf(input));
         boardModel.tileToPlace(t);
-/*
-        if (rackModel.isTileinRack(t)){//just in case;
-
-        }
-*/
     }
 
 }

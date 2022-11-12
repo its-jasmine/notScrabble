@@ -8,10 +8,9 @@ public class RackView extends JPanel {
     private Rack rackModel;
     private RackController rackController;
     private Board boardModel;
-    public RackView(Board board, Rack rack){
+    public RackView(Board board){
         super();
         this.boardModel = board;
-        this.rackModel = rack;
         rackController = new RackController(rackModel, boardModel);
         this.setLayout(new GridLayout(1,19));
         this.setBackground(Color.BLACK);
@@ -24,7 +23,7 @@ public class RackView extends JPanel {
         rackGrid = new JButton[7];
         for (int i = 0; i < 7; i++) {
             JButton button = new JButton();
-            //button.setActionCommand();
+            button.setActionCommand(i+"");
             button.setBackground(Color.ORANGE);
             button.setOpaque(true);
             button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -34,6 +33,7 @@ public class RackView extends JPanel {
         }
         JButton submitButton = new JButton("Submit");
         submitButton.setBackground(Color.WHITE);
+        submitButton.addActionListener(e -> boardModel.submit(boardModel.getCoordinateList()));
         this.add(submitButton);
     }
 

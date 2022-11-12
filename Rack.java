@@ -100,6 +100,14 @@ public class Rack {
         tileList.remove(t);
         updateRackView(t);
     }
+    public Tile removeTileFromRack(int index){
+        Tile t = tileList.remove(index);
+        if (t!=null){
+            updateRackView(t);
+            return tileList.remove(index);
+        }
+        return null;
+    }
     /**
      * Removes tiles from the rack
      * @param tiles : a list of tiles to be removed from the rack.

@@ -25,6 +25,8 @@ public class Game {
      */
     public Game(int numPlayers) {
         Board board = new Board();
+        BoardView boardView = new BoardView(board);
+        RackView rackView = new RackView(board);
         Bag bag = new Bag();
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
@@ -63,6 +65,7 @@ public class Game {
      * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
     private Status playerTakeTurn(int index) {
+
         return players.get(index).takeTurn();
     }
 

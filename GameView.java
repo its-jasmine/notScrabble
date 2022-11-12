@@ -32,7 +32,7 @@ public class GameView extends JFrame {
         //centerPanel.setHorizontalAlignment(JLabel.CENTER);
         contentpane.add(centerPanel, BorderLayout.CENTER);
 
-        RackView southPanel = new RackView(board, rack);
+        RackView southPanel = new RackView(board);
         //southPanel.setHorizontalAlignment(JLabel.CENTER);
         southPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
         contentpane.add(southPanel, BorderLayout.SOUTH);

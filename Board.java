@@ -16,6 +16,7 @@ public class Board {
 
     private final WordExtractor wordExtractor = new WordExtractor(this);
     private Tile tileBeingPlaced;
+    private List<Coordinate> placedTilesCoordinates;
     private List<BoardView> views;
 
 
@@ -23,6 +24,7 @@ public class Board {
      * Creates a new board with plain squares.
      */
     public Board() {
+        placedTilesCoordinates = new ArrayList<>();
         views = new ArrayList<>();
         squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
         for (Coordinate.Row r : Coordinate.Row.values()) {
@@ -64,6 +66,7 @@ public class Board {
         }
 
         // at this point words are all valid
+        placedTilesCoordinates.removeAll(tilesPlaced);
         int score = Word.scoreWords(words);
         if (tilesPlaced.size() == 7) score += 50;
         return score;
@@ -88,6 +91,7 @@ public class Board {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
+            placedTilesCoordinates.add(coordinate);
             for (BoardView view : views){
                 view.addTileToBoardView(new BoardEvent(this,tile,coordinate));
             }
@@ -121,6 +125,7 @@ public class Board {
         for (BoardView view : views){
             view.removeTileFromBoardView(new BoardEvent(this,coordinate));
         }
+        placedTilesCoordinates.remove(coordinate);
         return  getSquare(coordinate).removeTile();
     }
 
@@ -188,5 +193,7 @@ public class Board {
     }
 
 
-
+    public List<Coordinate> getCoordinateList() {
+        return placedTilesCoordinates;
+    }
 }
