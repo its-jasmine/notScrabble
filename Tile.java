@@ -31,7 +31,8 @@ public enum Tile {
     W("W", 4, 2),
     X("X", 8, 1),
     Y("Y", 4, 2),
-    Z("Z", 10, 1);
+    Z("Z", 10, 1),
+    EMPTY(" ", 0, 0);
     // BLANK(" ", 0, 2); for milestone 2
 
     /** The letter on the tile */
