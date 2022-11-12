@@ -6,15 +6,15 @@ import java.util.*;
  * @author Jasmine Gad El Hak
  * @author Arthur Atangana
  * @author Victoria Malouf
- * @version Milestone1
+ * @version Milestone2
  */
 public class Board {
     /** The list of squares on the board */
     private static Square[][] squares; // [row][column]
     /** The direction of the word currently be validated */
-    private Direction direction;
-    /** The allowable word alignment directions */
-    private enum Direction {HORIZONTAL, VERTICAL, UNKNOWN}
+    private final BoardValidator boardValidator = new BoardValidator(this);
+
+    private final WordExtractor wordExtractor = new WordExtractor(this);
 
     /**
      * Creates a new board with plain squares.
@@ -26,7 +26,6 @@ public class Board {
                 squares[r.ordinal()][c.ordinal()] = new Square();
             }
         }
-        direction = Direction.UNKNOWN;
     }
 
     /**
@@ -34,23 +33,24 @@ public class Board {
      * @param coordinate of the Square to retrieve
      * @return Square at specified coordinate
      */
-    private Square getSquare(Coordinate coordinate) {
+    public Square getSquare(Coordinate coordinate) {
         return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
     }
 
 
     /**
-     * Calls all the functions needed to validated and score words created this turn.
+     * Calls all the methods needed to validated and score words created this turn.
      * @param tilesPlaced the tiles the player has placed this turn
-     * @return -1 if any validation fails (player tries again), otherwise returns the score for the turn
+     * @return -1 if any validation fails (player should try again), otherwise returns the score for the turn
      */
     public int submit(List<Coordinate> tilesPlaced) {
-        if (isValidTileAlignment(tilesPlaced) == null) return -1;
-        // at this point tilesPlaced is now sorted and direction is set
+        BoardValidator.Direction d = boardValidator.isValidTileAlignment(tilesPlaced);
+        if ( d == BoardValidator.Direction.UNKNOWN) return -1;
+        // at this point tilesPlaced is now sorted and direction is HORIZONTAL or VERTICAL
 
-        List<Word> words = getWordsCreated(tilesPlaced);
-        if (words.size() == 0) { // no words at least two letters long, were created
-            System.out.println("Words must be at least two letters long.");
+        List<Word> words = wordExtractor.getWordsCreated(tilesPlaced, d);
+        if (words.size() == 0) { // no words, at least two letters long, were created
+            System.out.println("Words must be at least two letters long."); // only possible at game start
             return -1;
         }
 
@@ -62,145 +62,8 @@ public class Board {
         // at this point words are all valid
         int score = Word.scoreWords(words);
         if (tilesPlaced.size() == 7) score += 50;
-
-        direction = Direction.UNKNOWN; // reset for next turn
         return score;
     }
-
-
-    /**
-    * Determine the direction for this turn if tiles the player is attempting to place are straight.
-    * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
-    * @return direction of the tiles (HORIZONTAL or VERTICAL), UNKNOWN otherwise
-    */
-    private Direction getDirection(List<Coordinate> tilesPlacedCoordinates){
-        // Get the sorted rows
-        Set<Integer> rowSet = new HashSet<>();
-        for (Coordinate c : tilesPlacedCoordinates) rowSet.add(c.getRowIndex());
-        if (rowSet.size()==1) return Direction.HORIZONTAL;
-        else {
-            // Get the sorted columns
-            Set<Integer> columnSet = new HashSet<>();
-            for (Coordinate c : tilesPlacedCoordinates) columnSet.add(c.getColumnIndex());
-            if (columnSet.size()==1) return Direction.VERTICAL;
-            else return Direction.UNKNOWN;
-        }
-    }
-    /**
-     * Determine if the tiles the player is attempting to place are connected to an existing tile.
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
-     * attempting to place this turn, which are confirmed to be in a straight line
-     * @return true if the sorted tiles are attached to another tile, false otherwise
-     */
-    private boolean verifyWordAttachment(List<Coordinate> tilesPlacedCoordinates){
-        Coordinate firstTileCoordinate = tilesPlacedCoordinates.get(0);
-        Coordinate lastTileCoordinate = tilesPlacedCoordinates.get(tilesPlacedCoordinates.size() - 1);
-        if (direction == Direction.HORIZONTAL) {
-            // Is there a tile to the left of the first tile played?
-            Coordinate toLeft = firstTileCoordinate.getAdjacentCoordinate(Coordinate.Adjacent.LEFT);
-            if (toLeft != null && !isSquareEmpty(toLeft)) {return true;}
-            // For each tile played is there a letter above or below?
-            for (Coordinate c: tilesPlacedCoordinates){
-                Coordinate above = c.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-                if (above != null && !isSquareEmpty(above)) {return true;}
-                Coordinate below = c.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-                if (below != null && !isSquareEmpty(below)) {return true;}
-            }
-            // Is there a tile to the right of the last tile played?
-            Coordinate toRight = lastTileCoordinate.getAdjacentCoordinate(Coordinate.Adjacent.RIGHT);
-            return toRight != null && !isSquareEmpty(toRight);
-        }
-        else {
-            // Is there a tile above the first tile played?
-            Coordinate above = firstTileCoordinate.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-            if (above != null && !isSquareEmpty(above)) {return true;}
-            // For each tile played is there a letter right or left?
-            for (Coordinate c: tilesPlacedCoordinates){
-                Coordinate left = c.getAdjacentCoordinate(Coordinate.Adjacent.LEFT);
-                if (left != null && !isSquareEmpty(left)) {return true;}
-                Coordinate right = c.getAdjacentCoordinate(Coordinate.Adjacent.RIGHT);
-                if (right != null && !isSquareEmpty(right)) {return true;}
-            }
-            // Is there a tile to below the last tile played?
-            Coordinate below = lastTileCoordinate.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-            return below != null && !isSquareEmpty(below);
-        }
-    }
-
-    /**
-     * Determine if each square between the first and last tile played is NOT empty.
-     * @param tilesPlacedCoordinates the sorted coordinates of the tiles the player is
-     * attempting to place this turn, which are confirmed to be in a straight line
-     * @return true if the sorted tiles placement do no have gaps, false otherwise
-     */
-    private boolean verifyNoGaps(List<Coordinate> tilesPlacedCoordinates){
-        Coordinate coordinate = tilesPlacedCoordinates.get(0); // first coordinate at this point
-        Coordinate lastCoordinate = tilesPlacedCoordinates.get(tilesPlacedCoordinates.size() - 1);
-        if (direction == Direction.HORIZONTAL){
-            for (int i = coordinate.getColumnIndex(); i < lastCoordinate.getColumnIndex(); i++){ // first and last coordinates are not checked because we know they are not empty
-                coordinate = coordinate.getAdjacentCoordinate(Coordinate.Adjacent.RIGHT); // we are only checking square that we know are on the board so null check is not required
-                if (isSquareEmpty(coordinate)) return false;
-            }
-        }
-        else {
-            for (int i = coordinate.getRowIndex(); i < lastCoordinate.getRowIndex(); i++){
-                coordinate = coordinate.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-                if (isSquareEmpty(coordinate)) return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Determine if one of the coordinates attempting to be placed is the start square coordinate.
-     * @param tileCoordinates the sorted coordinates of the tiles the player is
-     * attempting to place this turn, which are confirmed to be in a straight line
-     * @return true if one of the tilesPlacedCoordinates land on the start square, false otherwise
-     */
-    private boolean isOnStart(List<Coordinate> tileCoordinates){
-        for (Coordinate c: tileCoordinates){
-            // Start square is at Coordinate(7,7)
-            if ((c.getRowIndex() == 7) && (c.getColumnIndex() == 7)) return true; // for milestone2 "if (getSquare(c).getType() == Square.Type.START)"
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the tiles placed this turn are straight, leave no gaps, and touch a word that was already played
-     * sets the direction field for this turn if tiles are straight.
-     * @param tilesPlacedCoordinates the coordinates of the tiles the player is attempting to place this turn
-     * @return a sorted list of tiles played if the alignment is valid, null otherwise
-     */
-    private List<Coordinate> isValidTileAlignment(List<Coordinate> tilesPlacedCoordinates) {
-        // Determine direction
-        Direction d = getDirection(tilesPlacedCoordinates);
-        if (d == Direction.UNKNOWN) return null;
-        else direction = d;
-
-        // Sort tiles
-        if (direction == Direction.HORIZONTAL) Coordinate.sortByColumn(tilesPlacedCoordinates);
-        else Coordinate.sortByRow(tilesPlacedCoordinates);
-
-        // Check if there are any gaps between tiles placed
-        // We have confirmed that the tiles placed are straight, therefore the sorted tiles can be horizontal OR vertical
-        if ((tilesPlacedCoordinates.size() == (tilesPlacedCoordinates.get(tilesPlacedCoordinates.size() - 1).getColumnIndex() - tilesPlacedCoordinates.get(0).getColumnIndex() + 1))
-                || (tilesPlacedCoordinates.size() == (tilesPlacedCoordinates.get(tilesPlacedCoordinates.size() - 1).getRowIndex() - tilesPlacedCoordinates.get(0).getRowIndex() + 1))) {
-            // verify word attachment
-            if (verifyWordAttachment(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
-        }
-
-        // If there are gaps between tiles, check if each square between the first and last tile played NOT empty
-        else if (verifyNoGaps(tilesPlacedCoordinates)) {
-            return tilesPlacedCoordinates;
-        }
-
-        // Check if this is the first word being played
-        if (isOnStart(tilesPlacedCoordinates)) return tilesPlacedCoordinates;
-
-        // At this point, the Coordinate placements are invalid
-        return null;
-    }
-
 
     /**
      * Places tile in square if available.
@@ -268,7 +131,7 @@ public class Board {
      * @param coordinate of the square being checked
      * @return the Tile or null if square has no tile
      */
-    private Tile getSquareTile(Coordinate coordinate) {
+    public Tile getSquareTile(Coordinate coordinate) {
         return getSquare(coordinate).getTile();
     }
 
@@ -277,92 +140,11 @@ public class Board {
      * @param coordinate of the square being checked
      * @return the squares type
      */
-    private Square.Type getSquareType(Coordinate coordinate) {
+    public Square.Type getSquareType(Coordinate coordinate) {
         return getSquare(coordinate).getType();
     }
 
-    /**
-     * Gets all the words that were created this turn.
-     * @param tilesPlayed a sorted list of the tile coordinates played this turn, coordinates are confirmed in a line
-     * @return list of words created this turn
-     */
-    private List<Word> getWordsCreated(List<Coordinate> tilesPlayed) {
-        List<Word> words = new ArrayList<>();
 
-        if (direction == Direction.HORIZONTAL) {
-            // get word played, possibly extending previously played word
-            Word word = getHorizontalWord(tilesPlayed.get(0));
-            if (word.size() > 1) words.add(word); // to be counted as a word it must be at least two letters long
-
-            // get any newly formed vertical words
-            for (Coordinate c : tilesPlayed) {
-                word = getVerticalWord(c);
-                if (word.size() > 1) words.add(word);
-            }
-
-        } else if (direction == Direction.VERTICAL) {
-            // get word played, possibly extending previously played word
-            Word word = getVerticalWord(tilesPlayed.get(0));
-            if (word.size() > 1) words.add(word);
-
-            // get any newly formed horizontal words
-            for (Coordinate c : tilesPlayed) {
-                word = getHorizontalWord(c);
-                if (word.size() > 1) words.add(word);
-            }
-        }
-        return words; // this can be an empty ArrayList in the scenario a player plays one Tile to start the game
-    }
-
-    /**
-     * Gets any horizontal word, can be one letter long at this point.
-     * @param startSearch the location on the board to search from
-     * @return word that was created
-     */
-    private Word getHorizontalWord(Coordinate startSearch) {
-        Word word = new Word();
-        Coordinate coordinateToLeft = startSearch.getAdjacentCoordinate(Coordinate.Adjacent.LEFT);
-
-        // adds letter to the front of the word
-        while (coordinateToLeft != null && !getSquare(coordinateToLeft).isEmpty()) { // if coordinateToLeft is null we are at the left edge of the board
-            word.addFirst(getSquareTile(coordinateToLeft), getSquareType(coordinateToLeft));
-            coordinateToLeft = coordinateToLeft.getAdjacentCoordinate(Coordinate.Adjacent.LEFT);
-        }
-
-        Coordinate coordinateToRight = startSearch;
-        //adds letters to the end of the word
-        while (coordinateToRight != null && !getSquare(coordinateToRight).isEmpty()) {  // if coordinateToRight is null we are at the Right edge of the board
-            word.addLast(getSquareTile(coordinateToRight), getSquareType(coordinateToRight));
-            coordinateToRight = coordinateToRight.getAdjacentCoordinate(Coordinate.Adjacent.RIGHT);
-        }
-
-        return word;
-    }
-
-    /**
-     * Gets any vertical word, can be one letter long at this point.
-     * @param startSearch the location on the board to search from
-     * @return word that was created
-     */
-    private Word getVerticalWord(Coordinate startSearch) {
-        Word word = new Word();
-        Coordinate coordinateAbove = startSearch.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-
-        // adds letter to the front of the word
-        while (coordinateAbove != null && !getSquare(coordinateAbove).isEmpty()) { // if coordinateAbove is null we are at the top of the board
-            word.addFirst(getSquareTile(coordinateAbove), getSquareType(coordinateAbove));
-            coordinateAbove = coordinateAbove.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-        }
-
-        Coordinate coordinateBelow = startSearch;
-        //adds letters to the end of the word
-        while (coordinateBelow != null && !getSquare(coordinateBelow).isEmpty()) { // if coordinateBelow is null we are at the bottom of the board
-            word.addLast(getSquareTile(coordinateBelow), getSquareType(coordinateBelow));
-            coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-        }
-
-        return word;
-    }
 
     /**
      * Returns string representation of board.
