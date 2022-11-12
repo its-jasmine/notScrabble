@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Models the letter crossing game.
@@ -38,22 +39,23 @@ public class Game {
     /**
      * Determine the player who draws the tile closest to A.
      * @param bag of this Game
+     * @param numPlayers of this Game
      * @return index of the Player that will go first
      */
     private int firstPlayer(Bag bag, int numPlayers) {
-        int playerIndex = -1;
-        ArrayList<Tile> tilesDrawn = new ArrayList<>(); // Need to return all tiles drawn back to bag
+        int playerIndex;
+        ArrayList<Tile> tilesDrawn = new ArrayList<>();
         int lowestOrdinal, lowestOrdinalCount;
         do {
-            ArrayList<Tile> tilesDrawnThisRound = new ArrayList<>();
-            lowestOrdinal = 26; // Highest ordinal is 25 so ordinal of first tile will start as the lowestOrdinal
+            ArrayList<Tile> tilesDrawnThisRound = bag.drawTiles(numPlayers);
+            tilesDrawn.addAll(tilesDrawnThisRound);
+            List<Integer> tileOrdinals = tilesDrawnThisRound.stream().map(tile -> tile.ordinal()).collect(Collectors.toList());
+            lowestOrdinal = tileOrdinals.get(0);
             lowestOrdinalCount = 0;
-            for (int i = 0; i < numPlayers; i++) {
-                ArrayList<Tile> tile = bag.drawTiles(1);
-                tilesDrawn.add(tile.get(0));
-                tilesDrawnThisRound.add(tile.get(0));
-                if (tile.get(0).ordinal() < lowestOrdinal) {
-                    lowestOrdinal = tile.get(0).ordinal();
+            playerIndex = 0;
+            for (int i=0; i<numPlayers; i++){
+                if (tileOrdinals.get(i) < lowestOrdinal) {
+                    lowestOrdinal = tileOrdinals.get(i);
                     playerIndex = i;
                 }
             }
