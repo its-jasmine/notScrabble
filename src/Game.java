@@ -35,6 +35,9 @@ public class Game {
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, i + 1));
         }
+        for (Player player : players){
+            player.getRack().addView(rackView);
+        }
         Random random = new Random();
         this.playerTurn = random.nextInt(numPlayers); // pick who goes first
 

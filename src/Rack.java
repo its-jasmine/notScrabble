@@ -20,12 +20,10 @@ public class Rack {
      * Creates a new full rack (has 7 tiles, drawn from given bag).
      * @param bag where the tiles are drawn from
      */
-    public Rack(Bag bag, RackView rackView){
+    public Rack(Bag bag){
         tileList = new ArrayList<>();
         this.bag = bag;
         drawTiles(); // draw tiles at beginning of game
-        views.add(rackView);
-        //this.rackView = new RackView(board,this);
     }
 
     /**
@@ -126,5 +124,9 @@ public class Rack {
         for (RackView view : views){
             view.updateRackView(new RackEvent(this,t));
         }
+    }
+
+    public void addView(RackView rackView) {
+        views.add(rackView);
     }
 }

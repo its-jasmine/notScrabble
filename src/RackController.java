@@ -15,9 +15,9 @@ public class RackController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
-        button.setBorder(BorderFactory.createLineBorder(Color.green, 5));
+        button.setBorder(BorderFactory.createLineBorder(Color.green, 5)); // highlights clicked button
         String input = e.getActionCommand();
-        getTile(input);
+        getTile(input); //give tile to board and remove it from rack
 
 
     }

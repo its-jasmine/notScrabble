@@ -4,8 +4,11 @@ import java.awt.*;
 
 public class GameView extends JFrame {
 
-    public GameView(Board board, Rack rack) throws HeadlessException { //this is bad rack and board shouldnt be there??
+    private Game game;
+
+    public GameView() throws HeadlessException {
         super("notScrabble");
+        game = new Game(2);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //this.setLocationRelativeTo(null);
         Container contentpane = this.getContentPane();

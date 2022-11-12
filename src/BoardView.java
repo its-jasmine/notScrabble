@@ -32,13 +32,28 @@ public class BoardView extends JPanel {
         }
 
     }
+
+    /**
+     * sets the text of the board button to the tile to be placed there
+     * @param e board event (clicked to add a tile
+     */
     public void addTileToBoardView(BoardEvent e){
         getGridButton(e).setText(e.getTile().letter);
     }
 
+    /**
+     * deletes the text from the button since the tile there was removed
+     * @param e board event (removed tile)
+     */
     public void removeTileFromBoardView(BoardEvent e){
         getGridButton(e).setText(null);
     }
+
+    /**
+     * get the button from the specific coordinate
+     * @param e event with the information on the button that was pressed
+     * @return JButton with specific coordinates.
+     */
     private JButton getGridButton(BoardEvent e){
         Coordinate c = e.getCoordinate();
         int column = c.column.ordinal();
