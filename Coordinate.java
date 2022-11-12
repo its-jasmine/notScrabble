@@ -31,9 +31,12 @@ public class Coordinate {
             Column c;
             try {
                 c = values()[ordinal() - 1];
-            } catch (IndexOutOfBoundsException err) {return null;}
+            } catch (IndexOutOfBoundsException err) {
+                return null;
+            }
             return c;
         }
+
     }
     /** The allowable rows on the board */
     public enum Row {
@@ -141,5 +144,13 @@ public class Coordinate {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Coordinate)) return false;
+        Coordinate c = (Coordinate)obj;
+        return c.column == this.column && c.row == this.row;
     }
 }
