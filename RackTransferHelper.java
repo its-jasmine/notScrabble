@@ -86,7 +86,7 @@ public class RackTransferHelper extends TransferHandler {
                 }
 
                 // Get the data from the "dropped" table
-                Tile exportValue = target.swapTileAt(dropRow, dropCol);
+                Tile exportValue = target.removeTileAt(dropRow, dropCol);
 
                 // Get the data from the "dragged" table
                 Tile importValue = cd.getValue().removeTile();
@@ -94,20 +94,20 @@ public class RackTransferHelper extends TransferHandler {
                 // This is where we swap the values...
                 // Set the target/dropped tables value
                 //((SquareTrial) target.getValueAt(dropRow, dropCol)).setTile(importValue);
-//                SquareTrial ts = new SquareTrial();
-//                ts.setTile(importValue);
-//                target.setValueAt(ts, dropRow, dropCol);
-                target.setTileAt(importValue, dropRow, dropCol);
+                SquareTrial ts = new SquareTrial();
+                ts.setTile(importValue);
+                target.setValueAt(ts, dropRow, dropCol);
+                //target.setTileAt(importValue, dropRow, dropCol);
 
                 // Set the source/dragged tables values
                 BoardJTable source = cd.getTable();
                 int row = source.getSelectedRow();
                 int col = source.getSelectedColumn();
                 //((SquareTrial) source.getValueAt(row, col)).setTile(exportValue);
-//                SquareTrial es = new SquareTrial();
-//                es.setTile(exportValue);
-//                source.setValueAt(es, row, col);
-                source.setTileAt(exportValue, row, col);
+                SquareTrial es = new SquareTrial();
+                es.setTile(exportValue);
+                source.setValueAt(es, row, col);
+                //source.setTileAt(exportValue, row, col);
 
                 imported = true;
 
