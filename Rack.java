@@ -89,16 +89,19 @@ public class Rack {
      * Removes a specific tile from the rack
      * @param t : the tile to be removed from the rack.
      */
-    private void removeTileFromRack(Tile t){
+    private Tile removeTileFromRack(Tile t){
         tileList.remove(t);
+        return t;
     }
     /**
      * Removes tiles from the rack
      * @param tiles : a list of tiles to be removed from the rack.
      */
-    public void removeTiles(ArrayList<Tile> tiles){
+    public ArrayList<Tile> removeTiles(ArrayList<Tile> tiles){
+        ArrayList<Tile> removedTiles = new ArrayList<>();
         for (Tile t: tiles){
-            removeTileFromRack(t);
+            removedTiles.add(removeTileFromRack(t));
         }
+        return removedTiles;
     }
 }
