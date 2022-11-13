@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +31,7 @@ public class WelcomeFrame extends JFrame {
         setLayout(new GridLayout(2, 1));
         setTitle("notScrabble");
         setSize(900, 400);
-        ImageIcon logo = new ImageIcon("notScrabble_logo.png");
+        ImageIcon logo = new ImageIcon("src/notScrabble_logo.png");
 
         JPanel panel = new JPanel();
         panel.setBorder(new BevelBorder(BevelBorder.RAISED));

@@ -5,8 +5,8 @@ import java.util.Scanner;
 /**
  * This class is part of the "Scrabble" application.
  *
- * This class stores words from "validWords.txt", which contains a list
- * of 10 000 valid English words from https://www.mit.edu/~ecprice/wordlist.10000.
+ * This class stores words from "dictionary.txt", which contains a list
+ * of Scrabble words from https://github.com/redbo/scrabble/blob/master/dictionary.txt.
  * This class can confirm if an input String is a valid word.
  *
  * @author Victoria Malouf
