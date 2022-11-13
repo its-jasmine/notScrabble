@@ -1,19 +1,31 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameView extends JFrame {
 
     private Game game;
+    private List<PlayerView> playerViews;
     private Container contentpane;
-    private BoardView boardPanel;
-    private RackView rackView;
+    private BoardView boardView;
+    private int currentView;
 
     public GameView(int numPlayers) throws HeadlessException {
         super("notScrabble");
         game = new Game(numPlayers);
         game.addView(this);
-        Board board = new Board();
+        boardView = new BoardView(game.getBoard());
+        game.addBoardViewToBoard(boardView);
+        currentView = 0;
+        playerViews = new ArrayList<>();
+        for (int i = 0; i<numPlayers; i++){
+            playerViews.add(new PlayerView());
+            game.addPlayerViewToPlayer(playerViews.get(i),i);
+
+        }
+
+
 
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,17 +49,7 @@ public class GameView extends JFrame {
         menu.add(seeRules);
 
 
-
-        boardPanel = new BoardView(game.getBoard());
-        game.addBoardViewToBoard(boardPanel);
-        //centerPanel.setHorizontalAlignment(JLabel.CENTER);
-        contentpane.add(boardPanel, BorderLayout.CENTER);
-
-        rackView = new RackView(game.getBoard());
-        game.addRackViewToRacks(rackView);
-        //southPanel.setHorizontalAlignment(JLabel.CENTER);
-        rackView.setBorder(new BevelBorder(BevelBorder.RAISED));
-        contentpane.add(rackView, BorderLayout.SOUTH);
+        contentpane.add(boardView, BorderLayout.CENTER);
 
         JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -78,9 +80,11 @@ public class GameView extends JFrame {
         new GameView(2);
     }
 
-    public void update(Player player) {
-        contentpane.remove(rackView);
-        contentpane.add(player.getRack().)
+    public void update(int playerTurn) {
+        //remove contentpane south
+        this.getContentPane().remove(playerViews.get(currentView));
+        // add new player view
+        this.getContentPane().add(playerViews.get(playerTurn), BorderLayout.SOUTH);
 
     }
 }

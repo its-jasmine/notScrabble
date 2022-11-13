@@ -46,6 +46,14 @@ public class Game {
 
     }
 
+    public Board getBoard(){
+        return board;
+    }
+
+    public Bag getBag() {
+        return bag;
+    }
+
     /**
      * Starts the game and continues to tell players to take turns until the game is over.
      */
@@ -64,7 +72,6 @@ public class Game {
 
         System.out.println("The winner is " + (winner.getName()) + " with a score of" + winner.getScore() + "!\n" );
     }
-
     /**
      * Tells the player to take its turn
      * @param index of the player to take its turn
@@ -75,25 +82,28 @@ public class Game {
         return players.get(index).takeTurn();
     }
     private void nextTurn(){
-        Player player = players.get(playerTurn);
+        playerTurn = ++playerTurn % players.size();
+    }
+
+    private void updateGameView(){
         for (GameView view : views){
-            view.update(player);
+            view.update(playerTurn);
         }
-
     }
-
-    public Board getBoard(){
-        return board;
+    public void passTurn(){
+        nextTurn();
+        updateGameView();
     }
-
-    public Bag getBag() {
-        return bag;
-    }
-
-    public void addRackViewToRacks(RackView rackView){
-        for (Player player : players){
-            player.getRack().addView(rackView);
+    public void submit(){
+        Player player = players.get(playerTurn);
+        if (player.submit()){
+            nextTurn();
+            updateGameView();
         }
+    }
+
+    public void addPlayerViewToPlayer(PlayerView playerView,int i){
+        players.get(i).addView(playerView);
     }
     public void addBoardViewToBoard(BoardView boardView){
         board.addView(boardView);

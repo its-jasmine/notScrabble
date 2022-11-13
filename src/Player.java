@@ -109,7 +109,7 @@ public class Player {
         }
         return areAllEmpty;
     }
-    public addView(PlayerView view){
+    public void addView(PlayerView view){
         views.add(view);
     }
     public boolean submit(){
