@@ -10,11 +10,11 @@ public class BoardView extends JTable {
     private HashSet<Location> playedThisTurn;
 
     private HashSet<Location> previouslyPlayed;
-    public BoardView() {
+    public BoardView(Board board) {
         super();
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
-        this.board = new Board();
+        this.board = board;
         setModel(board.getModel());
 
         setBorder(new BevelBorder(BevelBorder.RAISED));

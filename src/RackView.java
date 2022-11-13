@@ -8,9 +8,9 @@ import javax.swing.border.BevelBorder;
 public class RackView extends JTable {
     private final Rack rack;
 
-    public RackView() {
+    public RackView(Rack rack) {
         super();
-        rack = new Rack(new Bag());
+        this.rack = rack;
         setModel(rack.getModel());
 
         setBorder(new BevelBorder(BevelBorder.RAISED));
