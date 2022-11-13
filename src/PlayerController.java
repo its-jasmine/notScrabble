@@ -10,10 +10,10 @@ public class PlayerController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand() == "Submit"){
+        if (e.getActionCommand().equals("Submit")){
             game.submit();
         }
-        if (e.getActionCommand() == "Pass"){
+        if (e.getActionCommand().equals("Pass")){
             game.passTurn();
         }
     }
