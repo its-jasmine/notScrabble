@@ -21,7 +21,7 @@ public class WelcomeFrame extends JFrame {
             if (source.getActionCommand().equals(INSTRUCTIONS_CMD)){
                 JOptionPane.showMessageDialog(view, "Instructions blah blah blah");
             }else if (source.getActionCommand().equals(NEW_GAME_CMD)){
-                new GameView();
+                new GameView(2);//default 2 players for now
                 view.dispose();
 
             }
