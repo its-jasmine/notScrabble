@@ -17,26 +17,24 @@ public class RackTransferHelper extends TransferHandler {
 
     @Override
     protected Transferable createTransferable(JComponent source) {
-        // Create the transferable
-        // Because I'm hacking a little, I've included the source table...
-        JTable table = (JTable) source;
-        return new RackDataTransferable(new RackCellData(table));
+        return new RackDataTransferable(new RackCellData((JTable) source));
     }
 
     @Override
     protected void exportDone(JComponent source, Transferable data, int action) {
+
     }
 
     @Override
     public boolean canImport(TransferSupport support) {
-        // Reject the import by default...
+        // Reject the import by default
         boolean canImport = false;
 
         // Can only import into another JTable
         Component comp = support.getComponent();
         if (comp instanceof JTable) {
             JTable table = (JTable) comp;
-            // Need the location where the drop might occur
+            // get location where the drop might occur
             DropLocation dl = support.getDropLocation();
             Point dp = dl.getDropPoint();
             // Get the column at the drop point
@@ -45,14 +43,14 @@ public class RackTransferHelper extends TransferHandler {
                 // Get the Transferable, we need to check
                 // the constraints
                 Transferable t = support.getTransferable();
-                CellData cd = null;
+                BoardCellData cd = null;
                 RackCellData rackCellData = null;
                 JTable source;
                 try {
-                    cd = (CellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    cd = (BoardCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = cd.getTable();
                 } catch (Exception e) {
-                    rackCellData = (RackCellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    rackCellData = (RackCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = rackCellData.getTable();
                 }
 
@@ -94,14 +92,14 @@ public class RackTransferHelper extends TransferHandler {
                 // Get the Transferable at the heart of it all
                 Transferable t = support.getTransferable();
 
-                CellData cd = null;
+                BoardCellData cd = null;
                 RackCellData rackCellData = null;
                 JTable source;
                 try {
-                    cd = (CellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    cd = (BoardCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = cd.getTable();
                 } catch (Exception e) {
-                    rackCellData = (RackCellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    rackCellData = (RackCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = rackCellData.getTable();
                 }
 

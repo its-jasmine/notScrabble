@@ -3,12 +3,12 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
 
-public class CellDataTransferable implements Transferable{
-    public static final DataFlavor CELL_DATA_FLAVOR = new DataFlavor(CellData.class, "tile");
-    private CellData cellData;
+public class BoardDataTransferable implements Transferable{
+    public static final DataFlavor CELL_DATA_FLAVOR = new DataFlavor(BoardCellData.class, "Board Tiles");
+    private BoardCellData boardCellData;
 
-    public CellDataTransferable(CellData cellData) {
-        this.cellData = cellData;
+    public BoardDataTransferable(BoardCellData boardCellData) {
+        this.boardCellData = boardCellData;
     }
 
 
@@ -24,7 +24,7 @@ public class CellDataTransferable implements Transferable{
 
     @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-        return cellData;
+        return boardCellData;
     }
 
 }

@@ -21,7 +21,7 @@ public class TableSwap {
                 }
 
                 BoardJTable board = createBoard();
-                JTable rack = createRack();
+                JTable rack = new RackView();//createRack();
 
                 JFrame frame = new JFrame("Testing");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

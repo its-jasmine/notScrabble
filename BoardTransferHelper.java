@@ -20,7 +20,7 @@ public class BoardTransferHelper extends TransferHandler {
         // Create the transferable
         // Because I'm hacking a little, I've included the source table...
         BoardJTable table = (BoardJTable) source;
-        return new CellDataTransferable(new CellData(table));
+        return new BoardDataTransferable(new BoardCellData(table));
     }
 
     @Override
@@ -45,14 +45,14 @@ public class BoardTransferHelper extends TransferHandler {
                 // Get the Transferable, we need to check
                 // the constraints
                 Transferable t = support.getTransferable();
-                CellData cd = null;
+                BoardCellData cd = null;
                 RackCellData rackCellData = null;
                 JTable source;
                 try {
-                    cd = (CellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    cd = (BoardCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = cd.getTable();
                 } catch (Exception e) {
-                    rackCellData = (RackCellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    rackCellData = (RackCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = rackCellData.getTable();
                 }
 
@@ -94,15 +94,15 @@ public class BoardTransferHelper extends TransferHandler {
                 // Get the Transferable at the heart of it all
                 Transferable t = support.getTransferable();
 
-                CellData boardCellData = null;
+                BoardCellData boardCellData = null;
                 RackCellData rackCellData = null;
                 JTable source;
 
                 try {
-                    boardCellData = (CellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    boardCellData = (BoardCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = boardCellData.getTable();
                 } catch (Exception e) {
-                    rackCellData = (RackCellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                    rackCellData = (RackCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = rackCellData.getTable();
                 }
 

@@ -1,9 +1,7 @@
-import javax.swing.*;
-
-public class CellData {
+public class BoardCellData {
     private BoardJTable table;
 
-    public CellData(BoardJTable table) {
+    public BoardCellData(BoardJTable table) {
         this.table = table;
     }
 
