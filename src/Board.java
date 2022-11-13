@@ -15,11 +15,18 @@ public class Board {
     private final BoardValidator boardValidator = new BoardValidator(this);
 
     private final WordExtractor wordExtractor = new WordExtractor(this);
+    private Tile tileBeingPlaced;
+    private List<Coordinate> placedTilesCoordinates;
+    private List<BoardView> views;
+
 
     /**
      * Creates a new board with plain squares.
      */
     public Board() {
+        placedTilesCoordinates = new ArrayList<>();
+        views = new ArrayList<>();
+        views.add(new BoardView(this));
         squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
@@ -60,25 +67,45 @@ public class Board {
         }
 
         // at this point words are all valid
+        placedTilesCoordinates.removeAll(tilesPlaced);
         int score = Word.scoreWords(words);
         if (tilesPlaced.size() == 7) score += 50;
         return score;
     }
+    public void tileToPlace(Tile t){
+        tileBeingPlaced = t;
+        System.out.println(tileBeingPlaced+ " in board class");
+    }
+    public Tile getTileToPlace() {
+        return tileBeingPlaced;
+    }
+    public void resetTiletoPlace() {
+        tileBeingPlaced = null;
+    }
+    public Tile giveTileBackToRack(Tile t){
+        resetTiletoPlace();
+        return t;
 
+    }
     /**
      * Places tile in square if available.
      * @param coordinate of the tile being placed
      * @param tile to be placed
      * @return true if letter was placed, false otherwise
      */
-    private boolean placeTile(Coordinate coordinate, Tile tile) {
+    public boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.placeTile(tile);
+            placedTilesCoordinates.add(coordinate);
+            for (BoardView view : views){
+                view.addTileToBoardView(new BoardEvent(this,tile,coordinate));
+            }
             return true;
         }
         return false;
     }
+
 
     /**
      * Places all the tiles at the specified coordinates.
@@ -101,6 +128,10 @@ public class Board {
      * @return the tile if it was removed, null otherwise
      */
     private Tile removeTile(Coordinate coordinate) {
+        for (BoardView view : views){
+            view.removeTileFromBoardView(new BoardEvent(this,coordinate));
+        }
+        placedTilesCoordinates.remove(coordinate);
         return  getSquare(coordinate).removeTile();
     }
 
@@ -165,5 +196,14 @@ public class Board {
             s += "\n";
         }
         return s;
+    }
+
+
+    public List<Coordinate> getCoordinateList() {
+        return placedTilesCoordinates;
+    }
+
+    public void addView(BoardView boardView) {
+        views.add(boardView);
     }
 }
