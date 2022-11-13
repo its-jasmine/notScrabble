@@ -1,5 +1,4 @@
 //import java.util.Scanner;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -272,7 +271,7 @@ public class Player {
     private boolean isTileInRack(ArrayList<Tile> lettersList){//gets the tileString "A A2"
         boolean isInRack = false;
         for (Tile letter: lettersList){
-            isInRack = rack.isTileinRack(letter);
+            isInRack = rack.isTileInRack(letter);
         }
         return isInRack;
     }

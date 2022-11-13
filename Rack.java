@@ -22,11 +22,13 @@ public class Rack implements Iterable<Tile>{
      */
     public Rack(Bag bag){
         rackModel = new DefaultTableModel(1, 7){
-            //  Returning the Class of each column will allow different
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
             {
-                return getValueAt(0, column).getClass();
+
+                try {
+                    return getValueAt(0, column).getClass();
+                } catch (NullPointerException e) {return Tile.class;}
             }
         };
         this.bag = bag;
@@ -40,19 +42,15 @@ public class Rack implements Iterable<Tile>{
     public int getNumTiles() {
         int numTiles = 0;
         for (Tile t : this) {
-            if (t == null ||  t.equals(Tile.EMPTY) ) continue;
+            if (t == null) continue;
             numTiles++;
         }
-
-        //for (int i = 0; i < MAXTILES; i++) {
-        //    if (!rackModel.getValueAt(0, i).equals(Tile.EMPTY)) numTiles++;
-        //}
         return numTiles;
-    } // I don't think anything outside of Rack needs this so it could be removed
+    }
 
 
     /**
-     * Returns the list of tiles in the rack.
+     * Returns an ArrayList of tiles in the rack.
      * @return list of tiles in the rack
      */
     public ArrayList<Tile> getTilesList() {
@@ -63,6 +61,10 @@ public class Rack implements Iterable<Tile>{
         return tiles;
     }
 
+    /**
+     * Gets the DefaultJTableModel that the tiles are stored in
+     * @return rack tiles
+     */
     public TableModel getModel() {
         return rackModel;
     }
@@ -77,13 +79,13 @@ public class Rack implements Iterable<Tile>{
         for (Tile t: newTiles) {
             for (int i = 0; i < MAXTILES; i++) {
                 Tile r = (Tile) rackModel.getValueAt(0, i);
-                if (r == null || r.equals(Tile.EMPTY)) {
+                if (r == null) {
                     rackModel.setValueAt(t, 0, i);
                     break;
                 }
             }
         }
-        if (newTiles.size() !=0 ) System.out.println("drawTiles had leftover tiles"); //error
+        if (newTiles.size() !=0 ) System.out.println("drawTiles had leftover tiles"); //TODO error
         if (getNumTiles() == 0) return Game.Status.OVER; // no Tiles left, signal for Game that the game is over
         return Game.Status.RUNNING;
     }
@@ -115,7 +117,7 @@ public class Rack implements Iterable<Tile>{
      * @param t : the tile to check if it is in the rack.
      * @return true if the tile is in the rack, false otherwise.
      */
-    public boolean isTileinRack(Tile t){
+    public boolean isTileInRack(Tile t){
         for (Tile tile: this){
             if (tile == t){
                 return true;
@@ -161,12 +163,12 @@ public class Rack implements Iterable<Tile>{
             public boolean hasNext() {
                 if (currentIndex >= MAXTILES) return false;
                 Tile tile = (Tile) rackModel.getValueAt(0, currentIndex);
-                while ((tile == null || tile.equals(Tile.EMPTY)) && currentIndex < MAXTILES - 1) {
+                while (tile == null && currentIndex < MAXTILES - 1) { //skip over empty tiles
                     currentIndex++;
                     tile = (Tile) rackModel.getValueAt(0, currentIndex);
                 }
 
-                return tile == null || tile.equals(Tile.EMPTY);
+                return !(tile == null);
             }
 
             @Override

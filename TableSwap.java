@@ -80,6 +80,7 @@ public class TableSwap {
 
 
         Rack rack = new Rack(new Bag());
+        rack.getModel().setValueAt(null, 0, 0);
         /*
         DefaultTableModel model = new DefaultTableModel(0, 7){
             //  Returning the Class of each column will allow different
