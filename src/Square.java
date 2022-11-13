@@ -6,6 +6,8 @@
  */
 
 public class Square {
+
+
     /** The allowable square type on game board */
     public enum Type {
         START, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
@@ -59,7 +61,7 @@ public class Square {
      * Places given tile on the square.
      * @param tile the tile to be placed on the square
      */
-    public void placeTile(Tile tile) {
+    public void setTile(Tile tile) {
         this.tile = tile;
     }
     /**
@@ -71,13 +73,18 @@ public class Square {
         this.tile = null;
         return temp;
     }
+    public Tile swapTile(Tile t) {
+        Tile temp = tile;
+        tile = t;
+        return temp;
+    }
 
     /**
      * Returns string representation of square.
      * @return if square is empty, string shortform of square type, otherwise letter of tile on square
      */
     public String toString(){
-        if (isEmpty()) return "_";
+        if (isEmpty()) return " ";
         return tile.toString();
     }
 }
