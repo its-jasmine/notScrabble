@@ -1,7 +1,11 @@
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
+/**
+ * Test class for WordBank.
+ * @author Jasmine Gad El Hak
+ * @version Milestone2
+ */
 public class WordBankTest {
 
     @Test
