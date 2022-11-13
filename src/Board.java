@@ -11,6 +11,11 @@ import java.util.*;
  */
 public class Board {
 
+    private HashSet<BoardView.Location> playedThisTurn;
+
+    private HashSet<BoardView.Location> previouslyPlayed;
+
+
     /** The direction of the word currently be validated */
     private final BoardValidator boardValidator = new BoardValidator(this);
 
@@ -36,6 +41,8 @@ public class Board {
                 boardModel.setValueAt(new Square(), row, col);
             }
         }
+        this.playedThisTurn = new HashSet<>();
+        this.previouslyPlayed = new HashSet<>();
 
     }
 
@@ -45,6 +52,18 @@ public class Board {
      */
     public DefaultTableModel getModel() {
         return boardModel;
+    }
+
+    public HashSet<BoardView.Location> getPlayedThisTurn() {
+        return playedThisTurn;
+    }
+
+    public HashSet<BoardView.Location> getPreviouslyPlayed() {
+        return previouslyPlayed;
+    }
+
+    public void resetPlayedThisTurn() {
+        playedThisTurn = new HashSet<>();
     }
 
     /**

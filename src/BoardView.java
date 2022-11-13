@@ -1,19 +1,13 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class BoardView extends JTable {
 
     private final Board board;
-    private HashSet<Location> playedThisTurn;
-
-    private HashSet<Location> previouslyPlayed;
     public BoardView(Board board) {
         super();
-        this.playedThisTurn = new HashSet<>();
-        this.previouslyPlayed = new HashSet<>();
         this.board = board;
         setModel(board.getModel());
 
@@ -32,40 +26,44 @@ public class BoardView extends JTable {
     }
 
     public HashSet<Location> getPreviouslyPlayed() {
-        return previouslyPlayed;
+        return board.getPreviouslyPlayed();
     }
 
     public void addLocationPlayedThisTurn(Location location) {
-        playedThisTurn.add(location);
+        board.getPlayedThisTurn().add(location);
     }
 
     //TODO
     public void removeLocationPlayedThisTurn(Location location) {
-        playedThisTurn.remove(location);
+        board.getPlayedThisTurn().remove(location);
     }
 
     public HashSet<Location> getPlayedThisTurn() {
-        return playedThisTurn;
+        return board.getPlayedThisTurn();
     }
 
     private ArrayList<Coordinate> playedHashToList() {
         ArrayList<Coordinate> played = new ArrayList<>();
-        for (Location l : playedThisTurn) {
+        for (Location l : board.getPlayedThisTurn()) {
             played.add(new Coordinate(Coordinate.Column.values()[l.col], Coordinate.Row.values()[l.row])); //this is shit I need to remove Location class
         }
         return played;
     }
 
-    public void submit() {
+    public void submit() { // for testing
         System.out.println(board.submit(playedHashToList()));
+        addThisTurnToPreviously();
+    }
+
+    public void addThisTurnToPreviously() {
+        for (Location l: board.getPlayedThisTurn()) {
+            board.getPreviouslyPlayed().add(l);
+        }
         resetPlayedThisTurn();
     }
 
     public void resetPlayedThisTurn() {
-        for (Location l: playedThisTurn) {
-            previouslyPlayed.add(l);
-        }
-        playedThisTurn = new HashSet<>();
+        board.resetPlayedThisTurn();
     }
 
     public void setTileAt(Tile tile, int row, int col) {
