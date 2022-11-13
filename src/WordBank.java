@@ -23,7 +23,7 @@ public class WordBank {
         this.validWords = new HashSet<>();
         Scanner sc;
         try {
-            sc = new Scanner(new File("dictionary.txt"));
+            sc = new Scanner(new File("src/dictionary.txt"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

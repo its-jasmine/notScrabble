@@ -17,8 +17,8 @@ public class DnDTrial {
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
 
-                BoardView board =new BoardView(); //createBoard();
-                RackView rack = new RackView();//createRack();
+                BoardView board =new BoardView(new Board()); //createBoard();
+                RackView rack = new RackView(new Rack(new Bag()));//createRack();
 
                 JFrame frame = new JFrame("Testing");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
