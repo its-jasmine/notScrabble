@@ -133,9 +133,6 @@ public class Game {
         System.out.println("The winner is " + (winner.getName()) + " with a score of" + winner.getScore() + "!\n" );
     }
 
-    public void addPlayerViewToPlayer(PlayerView playerView,int i){
-        players.get(i).addView(playerView);
-    }
     private void updateGameView(boolean firstTurn){
         for (GameView view : views){
             view.update(playerTurn, firstTurn);
