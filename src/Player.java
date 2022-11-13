@@ -78,6 +78,7 @@ public class Player {
      */
     public void addToScore(int score) {
         this.score += score;
+        views.get(0).update(this.score);
     }
     /**
      * Ends the player's turn.
