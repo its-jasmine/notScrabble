@@ -30,7 +30,7 @@ public class BoardValidator {
         resetDirection();
         // Determine direction
         direction = getDirection(tilesPlacedCoordinates);
-        if (direction == Direction.UNKNOWN) return null;
+        if (direction == Direction.UNKNOWN) return direction;
 
         // Sort tiles
         if (direction == Direction.HORIZONTAL) Coordinate.sortByColumn(tilesPlacedCoordinates);
@@ -139,13 +139,13 @@ public class BoardValidator {
         Coordinate coordinate = tilesPlacedCoordinates.get(0); // first coordinate at this point
         Coordinate lastCoordinate = tilesPlacedCoordinates.get(tilesPlacedCoordinates.size() - 1);
         if (direction == Direction.HORIZONTAL){
-            for (int i = coordinate.getColumnIndex(); i < lastCoordinate.getColumnIndex(); i++){ // first and last coordinates are not checked because we know they are not empty
+            for (int i = coordinate.getColumnIndex(); i < lastCoordinate.getColumnIndex() - 1; i++){ // first and last coordinates are not checked because we know they are not empty
                 coordinate = coordinate.getAdjacentCoordinate(Coordinate.Adjacent.RIGHT); // we are only checking square that we know are on the board so null check is not required
                 if (board.isSquareEmpty(coordinate)) return false;
             }
         }
         else {
-            for (int i = coordinate.getRowIndex(); i < lastCoordinate.getRowIndex(); i++){
+            for (int i = coordinate.getRowIndex(); i < lastCoordinate.getRowIndex() - 1; i++){
                 coordinate = coordinate.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
                 if (board.isSquareEmpty(coordinate)) return false;
             }
