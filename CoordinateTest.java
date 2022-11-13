@@ -4,6 +4,11 @@ import org.junit.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Test class for Coordinates. Verifies the sorting and indexing and adjacency of Coordinates behaves as expected.
+ * @author Jasmine Gad El Hak
+ * @version Milestone2
+ */
 public class CoordinateTest {
 
     @Test
