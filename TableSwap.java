@@ -21,7 +21,7 @@ public class TableSwap {
                 }
 
                 BoardJTable board = createBoard();
-                BoardJTable rack = createRack();
+                JTable rack = createRack();
 
                 JFrame frame = new JFrame("Testing");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +64,7 @@ public class TableSwap {
         }
 
 
-        BoardJTable table = new BoardJTable(model, "B");
+        BoardJTable table = new BoardJTable(model);
         table.setBorder(new BevelBorder(BevelBorder.RAISED));
         table.setRowHeight(50);
         table.setDragEnabled(true);
@@ -76,7 +76,7 @@ public class TableSwap {
         return table;
     }
 
-    protected BoardJTable createRack() {
+    protected JTable createRack() {
 
 
         Rack rack = new Rack(new Bag());
@@ -90,18 +90,19 @@ public class TableSwap {
         };
 
         ArrayList<Tile> test = (ArrayList<Tile>) rack.getTilesList();
-        ArrayList r = new ArrayList();
+//
+//        ArrayList r = new ArrayList();
+//
+//        for (int i = 0; i < test.size(); i++) {
+//            SquareTrial s = new SquareTrial();
+//            s.setTile(test.get(i));
+//            r.add(s);
+//        }
 
-        for (int i = 0; i < test.size(); i++) {
-            SquareTrial s = new SquareTrial();
-            s.setTile(test.get(i));
-            r.add(s);
-        }
-
-        model.addRow(r.toArray());
+        model.addRow(test.toArray());
 
 
-        BoardJTable table = new BoardJTable(model, "R");
+        JTable table = new JTable(model);
         table.setBorder(new BevelBorder(BevelBorder.RAISED));
         table.setRowHeight(50);
         table.setDragEnabled(true);

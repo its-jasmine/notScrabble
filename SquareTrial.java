@@ -88,7 +88,7 @@ public class SquareTrial {
      * @return if square is empty, string shortform of square type, otherwise letter of tile on square
      */
     public String toString(){
-        if (isEmpty()) return "_";
+        if (isEmpty()) return " ";
         return tile.toString();
     }
 }

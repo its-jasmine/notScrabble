@@ -8,16 +8,10 @@ public class BoardJTable extends JTable {
 
     private HashSet<Location> playedThisTurn;
 
-    private String type;
-
     private HashSet<Location> previouslyPlayed;
-    public BoardJTable(TableModel dm, String type) {
+    public BoardJTable(TableModel dm) {
         super(dm);
-        this.type = type;
         this.previouslyPlayed = new HashSet<>();
-    }
-    public String getType() {
-        return type;
     }
 
     public HashSet<Location> getPreviouslyPlayed() {
