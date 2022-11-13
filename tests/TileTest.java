@@ -1,5 +1,11 @@
 import static org.junit.Assert.*;
 
+/**
+ * Test class for Tiles.
+ * @author Rebecca Elliott
+ * @version Milestone2
+ */
+
 public class TileTest {
 
     @org.junit.Test

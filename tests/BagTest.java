@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test class for Bags.
+ * @author Rebecca Elliott
+ * @version Milestone2
+ */
+
 public class BagTest {
     Bag b;
 
