@@ -7,7 +7,7 @@ public class GameView extends JFrame {
 
     private Game game;
     private List<PlayerView> playerViews;
-    private Container contentpane;
+    private Container contentPane;
     private BoardView boardView;
     private int currentView;
 
@@ -15,6 +15,7 @@ public class GameView extends JFrame {
         super("notScrabble");
         game = new Game(numPlayers);
         game.addView(this);
+        GameController gameController = new GameController(game);
         boardView = new BoardView(game.getBoard());
         game.addBoardViewToBoard(boardView);
         currentView = 0;
@@ -25,16 +26,13 @@ public class GameView extends JFrame {
 
         }
 
-
-
-
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //this.setLocationRelativeTo(null);
-        contentpane = this.getContentPane();
-        contentpane.setLayout(new BorderLayout());
+        contentPane = this.getContentPane();
+        contentPane.setLayout(new BorderLayout());
         Container northContainer = new Container();
         northContainer.setLayout(new GridLayout(1,3));
-        contentpane.add(northContainer, BorderLayout.NORTH);
+        contentPane.add(northContainer, BorderLayout.NORTH);
         JMenuBar menuBar = new JMenuBar();
         this.add(menuBar);
         JMenu menu = new JMenu("Options");
@@ -48,8 +46,14 @@ public class GameView extends JFrame {
         menu.add(restart);
         menu.add(seeRules);
 
+        JButton submitButton = new JButton("Submit");
 
-        contentpane.add(boardView, BorderLayout.CENTER);
+        submitButton
+        JButton passButton = new JButton("Pass");
+
+
+
+        contentPane.add(boardView, BorderLayout.CENTER);
 
         JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -66,11 +70,11 @@ public class GameView extends JFrame {
 
         JLabel eastLabel = new JLabel("maybe another rack");
         eastLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        contentpane.add(eastLabel, BorderLayout.EAST);
+        contentPane.add(eastLabel, BorderLayout.EAST);
 
         JLabel westLabel = new JLabel("maybe another rack");
         westLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        contentpane.add(westLabel, BorderLayout.WEST);
+        contentPane.add(westLabel, BorderLayout.WEST);
 
         this.setSize(800,800);
         this.setVisible(true);

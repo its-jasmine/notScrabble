@@ -1,10 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerController implements ActionListener {
+public class GameController implements ActionListener {
     private Game game;
 
-    public PlayerController(Game g) {
+    public GameController(Game g) {
         game = g;
     }
 
