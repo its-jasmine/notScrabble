@@ -16,10 +16,13 @@ public class Game {
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
     private final static int MINPLAYERS = 2;
+
     /** The list of players in the game */
     private List<Player> players; // if we don't want players to be able to join once a game has started this can be final
+
     /** The index corresponding to the player who is currently playing their turn */
     private int playerTurn; // index in the player list
+
     private List<GameView> views;
     private Board board;
     private Bag bag;
@@ -54,59 +57,57 @@ public class Game {
         return bag;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     /**
      * Starts the game and continues to tell players to take turns until the game is over.
      */
     public void playGame() {
-        Status status = Status.RUNNING; // this is the only place this is needed currently, if other things
-        // need it later it can be turned into an instance field
+        updateGameView(true);
 
-        while (status == Status.RUNNING) {
-            status = playerTakeTurn(playerTurn);
-            playerTurn = ++playerTurn % players.size();
+    }
+
+    private void nextTurn(){
+        playerTurn = ++playerTurn % players.size();
+    }
+
+    public void passTurn(){
+        nextTurn();
+        updateGameView(false);
+    }
+    public void submit(){
+        Player player = players.get(playerTurn);
+        if (player.submit() == Status.RUNNING){
+            nextTurn();
+            updateGameView(false);
         }
+        else{
+            endGame();
+            System.out.println("game done");
 
+        }
+    }
+    private void endGame() {
         // game is now over
         setFinalScores();
         Player winner = getWinner();
 
         System.out.println("The winner is " + (winner.getName()) + " with a score of" + winner.getScore() + "!\n" );
     }
-    /**
-     * Tells the player to take its turn
-     * @param index of the player to take its turn
-     * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
-     */
-    private Status playerTakeTurn(int index) {
-
-        return players.get(index).takeTurn();
-    }
-    private void nextTurn(){
-        playerTurn = ++playerTurn % players.size();
-    }
-
-    private void updateGameView(){
-        for (GameView view : views){
-            view.update(playerTurn);
-        }
-    }
-    public void passTurn(){
-        nextTurn();
-        updateGameView();
-    }
-    public void submit(){
-        Player player = players.get(playerTurn);
-        if (player.submit()){
-            nextTurn();
-            updateGameView();
-        }
-    }
 
     public void addPlayerViewToPlayer(PlayerView playerView,int i){
         players.get(i).addView(playerView);
     }
+
     public void addBoardViewToBoard(BoardView boardView){
         board.addView(boardView);
+    }
+    private void updateGameView(boolean firstTurn){
+        for (GameView view : views){
+            view.update(playerTurn, firstTurn);
+        }
     }
 
     /**

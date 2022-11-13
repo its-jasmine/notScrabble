@@ -1,13 +1,14 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameView extends JFrame {
 
     private Game game;
-    private List<PlayerView> playerViews;
-    private Container contentPane;
+    private ArrayList<PlayerView> playerViews;
+    private Container southContainer;
     private BoardView boardView;
     private int currentView;
 
@@ -17,19 +18,18 @@ public class GameView extends JFrame {
         game.addView(this);
         GameController gameController = new GameController(game);
         boardView = new BoardView(game.getBoard());
-        game.addBoardViewToBoard(boardView);
         currentView = 0;
         playerViews = new ArrayList<>();
-        for (int i = 0; i<numPlayers; i++){
-            playerViews.add(new PlayerView());
-            game.addPlayerViewToPlayer(playerViews.get(i),i);
-
+        ArrayList<Player> players = (ArrayList) game.getPlayers();
+        for (Player player : players){
+            playerViews.add(new PlayerView(player));
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //this.setLocationRelativeTo(null);
-        contentPane = this.getContentPane();
+        Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
+        Container southContainer = new Container();
         Container northContainer = new Container();
         northContainer.setLayout(new GridLayout(1,3));
         contentPane.add(northContainer, BorderLayout.NORTH);
@@ -47,11 +47,12 @@ public class GameView extends JFrame {
         menu.add(seeRules);
 
         JButton submitButton = new JButton("Submit");
-
-        submitButton
+        submitButton.addActionListener(e -> game.submit());
         JButton passButton = new JButton("Pass");
+        passButton.addActionListener(e -> game.passTurn());
 
-
+        southContainer.add(passButton,0);
+        southContainer.add(passButton,2);
 
         contentPane.add(boardView, BorderLayout.CENTER);
 
@@ -84,11 +85,14 @@ public class GameView extends JFrame {
         new GameView(2);
     }
 
-    public void update(int playerTurn) {
-        //remove contentpane south
-        this.getContentPane().remove(playerViews.get(currentView));
+    public void update(int playerTurn, boolean firstTurn) {
+        if (!firstTurn){
+            //remove contentpane south
+            southContainer.remove(1);
+        }
         // add new player view
-        this.getContentPane().add(playerViews.get(playerTurn), BorderLayout.SOUTH);
-
+        southContainer.add(playerViews.get(playerTurn), 1);
+        southContainer.revalidate();
+        southContainer.repaint();
     }
 }

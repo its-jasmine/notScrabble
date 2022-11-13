@@ -13,6 +13,7 @@ public class BoardView extends JPanel {
     public BoardView(Board board){
         super();
         boardModel = board;
+        boardModel.addView(this);
         boardController = new BoardController(boardModel);
         this.setLayout(new GridLayout(15,15));
         this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));

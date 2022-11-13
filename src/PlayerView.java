@@ -1,20 +1,21 @@
 import javax.swing.*;
 
-public class PlayerView {
+public class PlayerView extends JPanel{
     private Player player;
-    private Game game;
     private RackView rackView;
+    private JLabel scoreLabel;
 
-    public PlayerView(Player p, Game g){
+    public PlayerView(Player p){
+        super();
         this.player = p;
-        this.game = g;
+        player.addView(this);
         rackView = new RackView(player.getRack());
-
-
+        scoreLabel = new JLabel(String.valueOf(player.getScore()));
+        JLabel nameLabel = new JLabel(player.getName());
     }
 
-    public void update(){
-        System.out.println("hi");
+    public void update(int score){
+        scoreLabel.setText(String.valueOf(score));
     }
 
 }
