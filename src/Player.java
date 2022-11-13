@@ -98,8 +98,9 @@ public class Player {
     public void addView(PlayerView view){
         views.add(view);
     }
+
     public Game.Status submit(){
-        int turnScore = board.submit(); // we will update board to have internal list of tiles, no need for arg
+        int turnScore = 0;//TODO board.submit(); // we will update board to have internal list of tiles, no need for arg
         if (turnScore > 0){
             this.addToScore(turnScore);
             return this.endTurn();

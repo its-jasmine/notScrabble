@@ -9,7 +9,7 @@ public class SquareTest {
     @Test
     public void placeTile() {
         square = new Square();
-        square.placeTile(Tile.A);
+        square.setTile(Tile.A);
         assertEquals(Tile.A,square.getTile());
         assertNotEquals(Tile.B,square.getTile());
     }
@@ -18,7 +18,7 @@ public class SquareTest {
     public void isEmpty() {
         square = new Square();
         assertTrue(square.isEmpty()); // empty square
-        square.placeTile(Tile.A);
+        square.setTile(Tile.A);
         assertFalse(square.isEmpty()); // non-empty square
     }
 
@@ -28,7 +28,7 @@ public class SquareTest {
         //remove from square with no tile
         assertNull(square.removeTile());
         //remove from square with tile A
-        square.placeTile(Tile.A);
+        square.setTile(Tile.A);
         assertEquals(square.removeTile(),Tile.A);
         assertNull(square.getTile());
     }

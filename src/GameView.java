@@ -15,26 +15,18 @@ public class GameView extends JFrame {
     public GameView(int numPlayers) throws HeadlessException {
         super("notScrabble");
         game = new Game(numPlayers);
-        game.addView(this);
-        GameController gameController = new GameController(game);
-        boardView = new BoardView(game.getBoard());
         currentView = 0;
+        boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
-        ArrayList<Player> players = (ArrayList) game.getPlayers();
+        ArrayList<Player> players =  game.getPlayers();
         for (Player player : players){
             playerViews.add(new PlayerView(player));
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //this.setLocationRelativeTo(null);
-        Container contentPane = this.getContentPane();
-        contentPane.setLayout(new BorderLayout());
-        Container southContainer = new Container();
-        Container northContainer = new Container();
-        northContainer.setLayout(new GridLayout(1,3));
-        contentPane.add(northContainer, BorderLayout.NORTH);
         JMenuBar menuBar = new JMenuBar();
-        this.add(menuBar);
+        this.setJMenuBar(menuBar);
         JMenu menu = new JMenu("Options");
         menuBar.add(menu);
 
@@ -46,21 +38,37 @@ public class GameView extends JFrame {
         menu.add(restart);
         menu.add(seeRules);
 
+        Container contentPane = this.getContentPane();
+        contentPane.setLayout(new BorderLayout());
+
+        southContainer = new Container();
+        southContainer.setLayout(new GridLayout(1,3));
+
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(e -> game.submit());
         JButton passButton = new JButton("Pass");
         passButton.addActionListener(e -> game.passTurn());
 
-        southContainer.add(passButton,0);
-        southContainer.add(passButton,2);
+        southContainer.add(passButton, 0);
+        southContainer.add(new JLabel("Rack goes here"), 1);
+        southContainer.add(submitButton, 2);
+
+        contentPane.add(southContainer, BorderLayout.SOUTH);
+
+
 
         contentPane.add(boardView, BorderLayout.CENTER);
+
+
+        Container northContainer = new Container();
+        northContainer.setLayout(new GridLayout(1, 3));
+        contentPane.add(northContainer, BorderLayout.NORTH);
 
         JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(timeLabel, 0);
 
-        JLabel northLabel = new JLabel("opponent rack GOES HERE");
+        JLabel northLabel = new JLabel("NotScrabble");
         northLabel.setHorizontalAlignment(JLabel.CENTER);
         northLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(northLabel, 1);
@@ -69,16 +77,12 @@ public class GameView extends JFrame {
         scoreLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(scoreLabel, 2);
 
-        JLabel eastLabel = new JLabel("maybe another rack");
-        eastLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        contentPane.add(eastLabel, BorderLayout.EAST);
-
-        JLabel westLabel = new JLabel("maybe another rack");
-        westLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        contentPane.add(westLabel, BorderLayout.WEST);
 
         this.setSize(800,800);
         this.setVisible(true);
+
+        game.addView(this);
+        game.playGame();
     }
 
     public static void main(String[] args) {
@@ -86,11 +90,10 @@ public class GameView extends JFrame {
     }
 
     public void update(int playerTurn, boolean firstTurn) {
-        if (!firstTurn){
-            //remove contentpane south
-            southContainer.remove(1);
-        }
+
         // add new player view
+
+        southContainer.remove(1);
         southContainer.add(playerViews.get(playerTurn), 1);
         southContainer.revalidate();
         southContainer.repaint();

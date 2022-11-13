@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 public class Game {
 
 
+
+
     /** The allowable game statuses */
     public enum Status {RUNNING, OVER;} // used as a way to have a named boolean for readability
     /** The maximum number of players in a game */
@@ -91,8 +93,8 @@ public class Game {
         return bag;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public ArrayList<Player> getPlayers() {
+        return (ArrayList<Player>) players;
     }
 
     /**
@@ -134,10 +136,6 @@ public class Game {
     public void addPlayerViewToPlayer(PlayerView playerView,int i){
         players.get(i).addView(playerView);
     }
-
-    public void addBoardViewToBoard(BoardView boardView){
-        board.addView(boardView);
-    }
     private void updateGameView(boolean firstTurn){
         for (GameView view : views){
             view.update(playerTurn, firstTurn);
@@ -170,6 +168,9 @@ public class Game {
             leftOverLetterScore += p.getRackScore();
         }
         players.get(playerTurn).addToScore(leftOverLetterScore);
+    }
+    public void addView(GameView gameView) {
+        views.add(gameView);
     }
 
     /**
