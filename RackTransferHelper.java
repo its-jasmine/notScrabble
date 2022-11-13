@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.HashSet;
 
 public class RackTransferHelper extends TransferHandler {
-    private static final long serialVersionUID = 1L;
 
     public RackTransferHelper() {
     }
@@ -144,6 +143,8 @@ public class RackTransferHelper extends TransferHandler {
                     SquareTrial es = new SquareTrial();
                     es.setTile(exportValue);
                     source.setValueAt(es, row, col);
+
+                    ((BoardJTable)source).addLocation(sourceLocation);
                     //source.setTileAt(exportValue, row, col);
                 } else source.setValueAt(exportValue,row, col);
 

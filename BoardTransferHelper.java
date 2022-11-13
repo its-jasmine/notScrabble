@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.HashSet;
 
 public class BoardTransferHelper extends TransferHandler {
-    private static final long serialVersionUID = 1L;
 
     public BoardTransferHelper() {
     }
