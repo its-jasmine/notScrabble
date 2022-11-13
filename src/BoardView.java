@@ -33,37 +33,19 @@ public class BoardView extends JTable {
         board.getPlayedThisTurn().add(location);
     }
 
-    //TODO
+
     public void removeLocationPlayedThisTurn(Location location) {
         board.getPlayedThisTurn().remove(location);
     }
 
-    public HashSet<Location> getPlayedThisTurn() {
-        return board.getPlayedThisTurn();
-    }
-
-    private ArrayList<Coordinate> playedHashToList() {
-        ArrayList<Coordinate> played = new ArrayList<>();
-        for (Location l : board.getPlayedThisTurn()) {
-            played.add(new Coordinate(Coordinate.Column.values()[l.col], Coordinate.Row.values()[l.row])); //this is shit I need to remove Location class
-        }
-        return played;
-    }
 
     public void submit() { // for testing
-        System.out.println(board.submit(playedHashToList()));
+        System.out.println(board.submit());
         addThisTurnToPreviously();
     }
 
-    public void addThisTurnToPreviously() {
-        for (Location l: board.getPlayedThisTurn()) {
-            board.getPreviouslyPlayed().add(l);
-        }
-        resetPlayedThisTurn();
-    }
-
-    public void resetPlayedThisTurn() {
-        board.resetPlayedThisTurn();
+    public void addThisTurnToPreviously() { // for testing
+        board.addThisTurnToPreviously();
     }
 
     public void setTileAt(Tile tile, int row, int col) {
@@ -74,11 +56,6 @@ public class BoardView extends JTable {
     public Tile removeTileAt(int row, int col) {
         Square square = (Square) dataModel.getValueAt(row, col);
         return square.removeTile();
-    }
-
-    public Tile swapTileAt(Tile t, int row, int col) {
-        Square square = (Square) dataModel.getValueAt(row, col);
-        return square.swapTile(t);
     }
 
     public Board getBoard() {

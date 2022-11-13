@@ -62,8 +62,22 @@ public class Board {
         return previouslyPlayed;
     }
 
+    public void addThisTurnToPreviously() {
+        for (BoardView.Location l: playedThisTurn) {
+            previouslyPlayed.add(l);
+        }
+        resetPlayedThisTurn();
+    }
+
     public void resetPlayedThisTurn() {
         playedThisTurn = new HashSet<>();
+    }
+    private ArrayList<Coordinate> playedHashToList() {
+        ArrayList<Coordinate> played = new ArrayList<>();
+        for (BoardView.Location l : playedThisTurn) {
+            played.add(new Coordinate(Coordinate.Column.values()[l.col], Coordinate.Row.values()[l.row])); //this is shit I need to remove Location class
+        }
+        return played;
     }
 
     /**
@@ -78,10 +92,10 @@ public class Board {
 
     /**
      * Calls all the methods needed to validated and score words created this turn.
-     * @param tilesPlaced the tiles the player has placed this turn
      * @return -1 if any validation fails (player should try again), otherwise returns the score for the turn
      */
-    public int submit(List<Coordinate> tilesPlaced) {
+    public int submit() {
+        ArrayList<Coordinate> tilesPlaced = playedHashToList();
         BoardValidator.Direction d = boardValidator.isValidTileAlignment(tilesPlaced);
         if ( d == BoardValidator.Direction.UNKNOWN) return -1;
         // at this point tilesPlaced is now sorted and direction is HORIZONTAL or VERTICAL
@@ -100,6 +114,7 @@ public class Board {
 
         // at this point words are all valid
         int score = Word.scoreWords(words);
+        System.out.println("words score: " + score);
         if (tilesPlaced.size() == 7) score += 50;
         return score;
     }
