@@ -1,65 +1,113 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.TableModel;
+import java.util.ArrayList;
+import java.util.HashSet;
 
-public class BoardView extends JPanel {
+public class BoardView extends JTable {
 
-    private JButton boardGrid[][];
-    private Board boardModel;
+    private final Board board;
+    private HashSet<Location> playedThisTurn;
 
-    private BoardController boardController;
-
-    public BoardView(Board board){
+    private HashSet<Location> previouslyPlayed;
+    public BoardView() {
         super();
-        boardModel = board;
-        boardModel.addView(this);
-        boardController = new BoardController(boardModel);
-        this.setLayout(new GridLayout(15,15));
-        this.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+        this.playedThisTurn = new HashSet<>();
+        this.previouslyPlayed = new HashSet<>();
+        this.board = new Board();
+        setModel(board.getModel());
 
-        boardGrid = new JButton[15][15];
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
-                JButton button = new JButton();
-                button.setActionCommand(i+" "+j);
-                button.setOpaque(false);
-                button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                boardGrid[i][j] = button;
-                button.addActionListener(boardController);
-                //button.addActionListener(rackController);
-                this.add(button);
-            }
+        setBorder(new BevelBorder(BevelBorder.RAISED));
+        setRowHeight(50);
+        setDragEnabled(true);
+        setDropMode(DropMode.ON);
+        setTransferHandler(new BoardTransferHelper());
+        setRowSelectionAllowed(false);
+        setCellSelectionEnabled(true);
+    }
+
+    @Override
+    public Square getValueAt(int row, int col) {
+        return (Square) getModel().getValueAt(row, col);
+    }
+
+    public HashSet<Location> getPreviouslyPlayed() {
+        return previouslyPlayed;
+    }
+
+    public void addLocationPlayedThisTurn(Location location) {
+        playedThisTurn.add(location);
+    }
+
+    //TODO
+    public void removeLocationPlayedThisTurn(Location location) {
+        playedThisTurn.remove(location);
+    }
+
+    public HashSet<Location> getPlayedThisTurn() {
+        return playedThisTurn;
+    }
+
+    private ArrayList<Coordinate> playedHashToList() {
+        ArrayList<Coordinate> played = new ArrayList<>();
+        for (Location l : playedThisTurn) {
+            played.add(new Coordinate(Coordinate.Column.values()[l.col], Coordinate.Row.values()[l.row])); //this is shit I need to remove Location class
+        }
+        return played;
+    }
+
+    public void submit() {
+        System.out.println(board.submit(playedHashToList()));
+        resetPlayedThisTurn();
+    }
+
+    public void resetPlayedThisTurn() {
+        for (Location l: playedThisTurn) {
+            previouslyPlayed.add(l);
+        }
+        playedThisTurn = new HashSet<>();
+    }
+
+    public void setTileAt(Tile tile, int row, int col) {
+        Square squareTrial = (Square) dataModel.getValueAt(row, col);
+        squareTrial.setTile(tile);
+    }
+
+    public Tile removeTileAt(int row, int col) {
+        Square square = (Square) dataModel.getValueAt(row, col);
+        return square.removeTile();
+    }
+
+    public Tile swapTileAt(Tile t, int row, int col) {
+        Square square = (Square) dataModel.getValueAt(row, col);
+        return square.swapTile(t);
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+
+    public static class Location {
+        public final int row;
+        public final int col;
+
+        public Location(int row, int col) {
+            this.row = row;
+            this.col = col;
         }
 
-    }
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof Location)) return false;
+            if (obj == this) return true;
+            Location l = (Location) obj;
+            return (this.row == l.row) && (this.col == l.col);
+        }
 
-    /**
-     * sets the text of the board button to the tile to be placed there
-     * @param e board event (clicked to add a tile
-     */
-    public void addTileToBoardView(BoardEvent e){
-        getGridButton(e).setText(e.getTile().letter);
-    }
-
-    /**
-     * deletes the text from the button since the tile there was removed
-     * @param e board event (removed tile)
-     */
-    public void removeTileFromBoardView(BoardEvent e){
-        getGridButton(e).setText(null);
-    }
-
-    /**
-     * get the button from the specific coordinate
-     * @param e event with the information on the button that was pressed
-     * @return JButton with specific coordinates.
-     */
-    private JButton getGridButton(BoardEvent e){
-        Coordinate c = e.getCoordinate();
-        int column = c.column.ordinal();
-        int row = c.row.ordinal();
-        JButton button = boardGrid[row][column];
-        return button;
+        @Override
+        public int hashCode() {
+            return (37 * row) + col;
+        }
     }
 }

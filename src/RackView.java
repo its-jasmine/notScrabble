@@ -1,27 +1,28 @@
 import javax.swing.*;
-import java.awt.*;
-import java.util.List;
+import javax.swing.border.BevelBorder;
 
-public class RackView extends JPanel {
+/**
+ * Represents the rack in the GUI.
+ */
 
-    private JTable rackJTable;
-    private Rack rackModel;
+public class RackView extends JTable {
+    private final Rack rack;
 
-    public RackView(Rack rack){
+    public RackView() {
         super();
-        rackJTable = new JTable(rack.getDefaultTableModel());
-        this.add(rackJTable);
+        rack = new Rack(new Bag());
+        setModel(rack.getModel());
+
+        setBorder(new BevelBorder(BevelBorder.RAISED));
+        setRowHeight(50);
+        setDragEnabled(true);
+        setDropMode(DropMode.ON);
+        setTransferHandler(new RackTransferHelper());
+        setRowSelectionAllowed(false);
+        setCellSelectionEnabled(true);
     }
 
-
-    public void updateRackView(RackEvent e) {
-        for (JButton button : rackGrid){
-            if (button.getText() != null){
-                continue;
-            }
-            else{
-                button.setText(e.getTile().letter);
-            }
-        }
+    public Rack getRack() {
+        return rack;
     }
 }

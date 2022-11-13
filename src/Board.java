@@ -1,3 +1,4 @@
+import javax.swing.table.DefaultTableModel;
 import java.util.*;
 
 /**
@@ -9,30 +10,41 @@ import java.util.*;
  * @version Milestone2
  */
 public class Board {
-    /** The list of squares on the board */
-    private static Square[][] squares; // [row][column]
+
     /** The direction of the word currently be validated */
     private final BoardValidator boardValidator = new BoardValidator(this);
 
     private final WordExtractor wordExtractor = new WordExtractor(this);
-    private Tile tileBeingPlaced;
-    private List<Coordinate> placedTilesCoordinates;
-    private List<BoardView> views;
-
+    /** The list of boardModel on the board */
+    private final DefaultTableModel boardModel;
 
     /**
-     * Creates a new board with plain squares.
+     * Creates a new board with plain boardModel.
      */
     public Board() {
-        placedTilesCoordinates = new ArrayList<>();
-        views = new ArrayList<>();
-        views.add(new BoardView(this));
-        squares = new Square[Coordinate.Row.values().length][Coordinate.Column.values().length];
+        boardModel = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length){
+            //  renderers to be used based on Class
+            public Class getColumnClass(int column)
+            {
+                return Square.class;
+            }
+        };
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
-                squares[r.ordinal()][c.ordinal()] = new Square();
+                int row = r.ordinal();
+                int col = c.ordinal();
+                boardModel.setValueAt(new Square(), row, col);
             }
         }
+
+    }
+
+    /**
+     * Gets the DefaultTableModel of the board
+     * @return boardModel
+     */
+    public DefaultTableModel getModel() {
+        return boardModel;
     }
 
     /**
@@ -41,7 +53,7 @@ public class Board {
      * @return Square at specified coordinate
      */
     public Square getSquare(Coordinate coordinate) {
-        return squares[coordinate.getRowIndex()][coordinate.getColumnIndex()];
+        return (Square) boardModel.getValueAt(coordinate.getRowIndex(), coordinate.getColumnIndex());
     }
 
 
@@ -56,6 +68,7 @@ public class Board {
         // at this point tilesPlaced is now sorted and direction is HORIZONTAL or VERTICAL
 
         List<Word> words = wordExtractor.getWordsCreated(tilesPlaced, d);
+        System.out.println(words.size() + d.toString());
         if (words.size() == 0) { // no words, at least two letters long, were created
             System.out.println("Words must be at least two letters long."); // only possible at game start
             return -1;
@@ -67,45 +80,25 @@ public class Board {
         }
 
         // at this point words are all valid
-        placedTilesCoordinates.removeAll(tilesPlaced);
         int score = Word.scoreWords(words);
         if (tilesPlaced.size() == 7) score += 50;
         return score;
     }
-    public void tileToPlace(Tile t){
-        tileBeingPlaced = t;
-        System.out.println(tileBeingPlaced+ " in board class");
-    }
-    public Tile getTileToPlace() {
-        return tileBeingPlaced;
-    }
-    public void resetTiletoPlace() {
-        tileBeingPlaced = null;
-    }
-    public Tile giveTileBackToRack(Tile t){
-        resetTiletoPlace();
-        return t;
 
-    }
     /**
      * Places tile in square if available.
      * @param coordinate of the tile being placed
      * @param tile to be placed
      * @return true if letter was placed, false otherwise
      */
-    public boolean placeTile(Coordinate coordinate, Tile tile) {
+    private boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
-            square.placeTile(tile);
-            placedTilesCoordinates.add(coordinate);
-            for (BoardView view : views){
-                view.addTileToBoardView(new BoardEvent(this,tile,coordinate));
-            }
+            square.setTile(tile);
             return true;
         }
         return false;
     }
-
 
     /**
      * Places all the tiles at the specified coordinates.
@@ -128,10 +121,6 @@ public class Board {
      * @return the tile if it was removed, null otherwise
      */
     private Tile removeTile(Coordinate coordinate) {
-        for (BoardView view : views){
-            view.removeTileFromBoardView(new BoardEvent(this,coordinate));
-        }
-        placedTilesCoordinates.remove(coordinate);
         return  getSquare(coordinate).removeTile();
     }
 
@@ -169,7 +158,7 @@ public class Board {
     /**
      * Gets the type of square at a give coordinate.
      * @param coordinate of the square being checked
-     * @return the squares type
+     * @return the boardModel type
      */
     public Square.Type getSquareType(Coordinate coordinate) {
         return getSquare(coordinate).getType();
@@ -191,19 +180,10 @@ public class Board {
             int row = r.ordinal() + 1;
             if(row < 10) s += row + "  "; else s += row + " "; // keeps columns straight
             for (Coordinate.Column c : Coordinate.Column.values()) {
-                s += squares[r.ordinal()][c.ordinal()] + "  "; // Each square will be separated by two spaces.
+                s += boardModel.getValueAt(r.ordinal(), c.ordinal()) + "  "; // Each square will be separated by two spaces.
             }
             s += "\n";
         }
         return s;
-    }
-
-
-    public List<Coordinate> getCoordinateList() {
-        return placedTilesCoordinates;
-    }
-
-    public void addView(BoardView boardView) {
-        views.add(boardView);
     }
 }
