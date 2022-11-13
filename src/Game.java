@@ -12,7 +12,7 @@ public class Game {
 
 
     /** The allowable game statuses */
-    public enum Status {RUNNING, OVER;} // used as a way to have a named boolean for readability
+    public enum Status {RUNNING, OVER, RETRY;} // used as a way to have a named boolean for readability
     /** The maximum number of players in a game */
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
@@ -115,9 +115,13 @@ public class Game {
     }
     public void submit(){
         Player player = players.get(playerTurn);
-        if (player.submit() == Status.RUNNING){
+        Status status = player.submit();
+        if (status == Status.RUNNING){
             nextTurn();
             updateGameView(false);
+        }
+        else if (status == Status.RETRY){
+            player.resetTurn();
         }
         else{
             endGame();
@@ -130,7 +134,7 @@ public class Game {
         setFinalScores();
         Player winner = getWinner();
 
-        System.out.println("The winner is " + (winner.getName()) + " with a score of" + winner.getScore() + "!\n" );
+        System.out.println("The winner is " + (winner.getName()) + " with a score of " + winner.getScore() + "!\n" );
     }
 
     public void addPlayerViewToPlayer(PlayerView playerView,int i){

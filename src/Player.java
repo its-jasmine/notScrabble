@@ -77,13 +77,14 @@ public class Player {
      * @param score The score to add.
      */
     public void addToScore(int score) {
-        score += score;
+        this.score += score;
     }
     /**
      * Ends the player's turn.
      * @return RUNNING if turn is over but not the game, OVER if game is now over(last letter played)
      */
     public Game.Status endTurn(){
+        board.addThisTurnToPreviously();// also resets playedThisTurn
         return rack.drawTiles();// draws tiles from bag onto the rack
     }
 
@@ -100,14 +101,25 @@ public class Player {
     }
 
     public Game.Status submit(){
-        int turnScore = 0;//TODO board.submit(); // we will update board to have internal list of tiles, no need for arg
-        if (turnScore > 0){
-            this.addToScore(turnScore);
-            return this.endTurn();
-        }
-        return null;
+        int turnScore = board.submit(); // we will update board to have internal list of tiles, no need for arg
+        if (turnScore < 0) return Game.Status.RETRY;
+
+        this.addToScore(turnScore);
+        return this.endTurn();
     }
 
+    public void resetTurn() {
+        ArrayList<Tile> returnTiles = new ArrayList<>();
+        for (BoardView.Location l: board.getPlayedThisTurn()) {
+            Square s = (Square) board.getModel().getValueAt(l.row, l.col);
+            Tile temp = s.getTile();
+            returnTiles.add(temp);
+            s.setTile(null);
+        }
+        rack.putTilesOnRack(returnTiles);
+        board.resetPlayedThisTurn();
+        board.getModel().fireTableDataChanged();
+    }
 
 
 }
