@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Models the letter crossing game.
@@ -29,13 +28,46 @@ public class Game {
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
 
+        this.playerTurn = firstPlayer(bag, numPlayers);
+
         this.players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, i + 1));
         }
-        Random random = new Random();
-        this.playerTurn = random.nextInt(numPlayers); // pick who goes first
+    }
 
+    /**
+     * Determine the player who draws the tile closest to A.
+     * @param bag of this Game
+     * @param numPlayers of this Game
+     * @return index of the Player that will go first
+     */
+    private int firstPlayer(Bag bag, int numPlayers) {
+        int playerIndex;
+        ArrayList<Tile> tilesDrawn = new ArrayList<>();
+        int lowestOrdinal, lowestOrdinalCount;
+        do {
+            ArrayList<Tile> tilesDrawnThisRound = bag.drawTiles(numPlayers);
+            tilesDrawn.addAll(tilesDrawnThisRound);
+            List<Integer> tileOrdinals = tilesDrawnThisRound.stream().map(tile -> tile.ordinal()).collect(Collectors.toList());
+            lowestOrdinal = tileOrdinals.get(0);
+            lowestOrdinalCount = 0;
+            playerIndex = 0;
+            for (int i=0; i<numPlayers; i++){
+                if (tileOrdinals.get(i) < lowestOrdinal) {
+                    lowestOrdinal = tileOrdinals.get(i);
+                    playerIndex = i;
+                }
+            }
+            for (Tile t : tilesDrawnThisRound) { // Check if 2 players picked the same highest tile
+                if (t.ordinal() == lowestOrdinal) {
+                    lowestOrdinalCount++;
+                }
+            }
+        }
+        while (lowestOrdinalCount > 1);
+        bag.returnTiles(tilesDrawn);
+        return playerIndex;
     }
 
     /**
@@ -99,7 +131,7 @@ public class Game {
      * @param args N/A
      */
     public static void main(String[] args) {
-        Game game = new Game(2);
+        Game game = new Game(4);
         game.playGame();
     }
 }
