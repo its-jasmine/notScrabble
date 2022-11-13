@@ -32,7 +32,7 @@ public class WelcomeFrame extends JFrame {
         container.setBackground(Color.WHITE);
         setTitle("notScrabble");
         setSize(920, 400);
-        String imagePath = "src/notScrabble_logo.png";
+        String imagePath = "images/notScrabble_logo.png";
         ImageIcon logo = new ImageIcon(imagePath);
 
 
