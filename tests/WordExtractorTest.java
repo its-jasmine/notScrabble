@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test class for WordExtractor.
+ * @author Rebecca Elliott
+ * @version Milestone2
+ */
 public class WordExtractorTest {
     private WordExtractor wordExtractor;
     private ArrayList<Coordinate> newCoordinateList;
