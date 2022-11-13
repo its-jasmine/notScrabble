@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ public class Rack {
     private final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
+    private ArrayList<RackView> views;
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).
@@ -47,6 +49,9 @@ public class Rack {
     public Game.Status drawTiles(){
         tileList.addAll(bag.drawTiles(MAXTILES - tileList.size()));
         if (tileList.size() == 0) return Game.Status.OVER; // no Tiles left, signal for Game that the game is over
+        for (Tile t : tileList){
+            updateRackView(t);
+        }
         return Game.Status.RUNNING;
     }
 
@@ -89,8 +94,17 @@ public class Rack {
      * Removes a specific tile from the rack
      * @param t : the tile to be removed from the rack.
      */
-    private void removeTileFromRack(Tile t){
+    public void removeTileFromRack(Tile t){
         tileList.remove(t);
+        updateRackView(t);
+    }
+    public Tile removeTileFromRack(int index){
+        Tile t = tileList.remove(index);
+        if (t!=null){
+            updateRackView(t);
+            return tileList.remove(index);
+        }
+        return null;
     }
     /**
      * Removes tiles from the rack
@@ -100,5 +114,19 @@ public class Rack {
         for (Tile t: tiles){
             removeTileFromRack(t);
         }
+    }
+
+    public void getTileFromBoard(Tile t){
+        tileList.add(t);
+    }
+
+    public void updateRackView(Tile t){
+        for (RackView view : views){
+            view.updateRackView(new RackEvent(this,t));
+        }
+    }
+
+    public void addView(RackView rackView) {
+        views.add(rackView);
     }
 }
