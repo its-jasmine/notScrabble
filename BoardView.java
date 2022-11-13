@@ -1,29 +1,46 @@
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.util.HashSet;
-import java.util.Set;
 
-public class BoardJTable extends JTable {
+public class BoardView extends JTable {
 
 
     private HashSet<Location> playedThisTurn;
 
     private HashSet<Location> previouslyPlayed;
-    public BoardJTable(TableModel dm) {
+    public BoardView(TableModel dm) {
         super(dm);
+        this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
+    }
+
+    @Override
+    public SquareTrial getValueAt(int row, int col) {
+        return (SquareTrial) getModel().getValueAt(row, col);
     }
 
     public HashSet<Location> getPreviouslyPlayed() {
         return previouslyPlayed;
     }
 
-    public void addLocation(Location location) {
-        previouslyPlayed.add(location);
+    public void addLocationPlayedThisTurn(Location location) {
+        playedThisTurn.add(location);
+    }
+
+    //TODO
+    public void removeLocationPlayedThisTurn(Location location) {
+        playedThisTurn.remove(location);
     }
 
     public HashSet<Location> getPlayedThisTurn() {
         return playedThisTurn;
+    }
+
+    public void resetPlayedThisTurn() {
+        for (Location l: playedThisTurn) {
+            previouslyPlayed.add(l);
+        }
+        playedThisTurn = new HashSet<>();
     }
 
     public void setTileAt(Tile tile, int row, int col) {

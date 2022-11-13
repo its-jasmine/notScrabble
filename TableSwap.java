@@ -20,7 +20,7 @@ public class TableSwap {
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
 
-                BoardJTable board = createBoard();
+                BoardView board = createBoard();
                 JTable rack = new RackView();//createRack();
 
                 JFrame frame = new JFrame("Testing");
@@ -29,6 +29,10 @@ public class TableSwap {
                 contentpane.setLayout(new BorderLayout());
                 contentpane.add(board, BorderLayout.CENTER);
                 contentpane.add(rack, BorderLayout.SOUTH);
+
+                JButton submit = new JButton("Submit");
+                submit.addActionListener(e -> board.resetPlayedThisTurn());
+                contentpane.add(submit, BorderLayout.NORTH);
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
@@ -36,7 +40,7 @@ public class TableSwap {
         });
     }
 
-    protected BoardJTable createBoard() {
+    protected BoardView createBoard() {
 
 
         DefaultTableModel model = new DefaultTableModel(0, 3){
@@ -64,7 +68,7 @@ public class TableSwap {
         }
 
 
-        BoardJTable table = new BoardJTable(model);
+        BoardView table = new BoardView(model);
         table.setBorder(new BevelBorder(BevelBorder.RAISED));
         table.setRowHeight(50);
         table.setDragEnabled(true);

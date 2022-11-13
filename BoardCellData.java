@@ -1,7 +1,7 @@
 public class BoardCellData {
-    private BoardJTable table;
+    private BoardView table;
 
-    public BoardCellData(BoardJTable table) {
+    public BoardCellData(BoardView table) {
         this.table = table;
     }
 
@@ -15,7 +15,7 @@ public class BoardCellData {
         return (SquareTrial) table.getValueAt(row, col);
     }
 
-    public BoardJTable getTable() {
+    public BoardView getTable() {
         return table;
     }
 

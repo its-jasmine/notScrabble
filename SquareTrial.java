@@ -53,7 +53,7 @@ public class SquareTrial {
      * @return true if square does not have a tile placed on it, false otherwise.
      */
     public boolean isEmpty() {
-        return tile.equals(Tile.EMPTY);
+        return tile == null || tile.equals(Tile.EMPTY);
     }
 
     /**

@@ -76,16 +76,18 @@ public class Rack implements Iterable<Tile>{
     public Game.Status drawTiles(){
         ArrayList<Tile> newTiles = new ArrayList<>();
         newTiles.addAll(bag.drawTiles(MAXTILES - getNumTiles()));
+        int leftOverTiles = newTiles.size();
         for (Tile t: newTiles) {
             for (int i = 0; i < MAXTILES; i++) {
                 Tile r = (Tile) rackModel.getValueAt(0, i);
                 if (r == null) {
                     rackModel.setValueAt(t, 0, i);
+                    leftOverTiles--;
                     break;
                 }
             }
         }
-        if (newTiles.size() !=0 ) System.out.println("drawTiles had leftover tiles"); //TODO error
+        if (leftOverTiles !=0 ) System.out.println("drawTiles had leftover tiles"); //TODO error
         if (getNumTiles() == 0) return Game.Status.OVER; // no Tiles left, signal for Game that the game is over
         return Game.Status.RUNNING;
     }

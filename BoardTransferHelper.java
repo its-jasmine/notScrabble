@@ -19,7 +19,7 @@ public class BoardTransferHelper extends TransferHandler {
     protected Transferable createTransferable(JComponent source) {
         // Create the transferable
         // Because I'm hacking a little, I've included the source table...
-        BoardJTable table = (BoardJTable) source;
+        BoardView table = (BoardView) source;
         return new BoardDataTransferable(new BoardCellData(table));
     }
 
@@ -29,75 +29,80 @@ public class BoardTransferHelper extends TransferHandler {
 
     @Override
     public boolean canImport(TransferSupport support) {
-        // Reject the import by default...
+        // Reject the import by default
         boolean canImport = false;
 
-        // Can only import into another JTable
         Component comp = support.getComponent();
-        if (comp instanceof JTable) {
-            JTable table = (JTable) comp;
-            // Need the location where the drop might occur
-            DropLocation dl = support.getDropLocation();
-            Point dp = dl.getDropPoint();
-            // Get the column at the drop point
-            int dragColumn = table.columnAtPoint(dp);
-            try {
-                // Get the Transferable, we need to check
-                // the constraints
-                Transferable t = support.getTransferable();
-                BoardCellData cd = null;
-                RackCellData rackCellData = null;
-                JTable source;
-                try {
-                    cd = (BoardCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
-                    source = cd.getTable();
-                } catch (Exception e) {
-                    rackCellData = (RackCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
-                    source = rackCellData.getTable();
-                }
+        BoardView board = (BoardView) comp;
+        // get location where the drop might occur
+        DropLocation dropLocation = support.getDropLocation();
+        Point dropPoint = dropLocation.getDropPoint();
+        int dropRow = board.rowAtPoint(dropPoint);
+        int dropColumn = board.columnAtPoint(dropPoint);
+        try {
+            // Get the Transferable
+            Transferable t = support.getTransferable();
 
-                if (cd == null && rackCellData == null) {
-                    System.out.println("something went wrong with source data\n");
-                    return false;
-                }
-                canImport = true;
-//                // Make sure we're not dropping onto ourselves...
-//                if (cd.getTable() != table) {
-//                    // Do the columns match...?
-//                    if (dragColumn == cd.getColumn()) {
-//                        canImport = true;
-//                    }
-//                }
-            } catch (UnsupportedFlavorException | IOException ex) {
-                ex.printStackTrace();
+            BoardCellData boardCellData = null;
+            RackCellData rackCellData = null;
+            JTable source;
+            try {
+                boardCellData = (BoardCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
+                source = boardCellData.getTable();
+            } catch (Exception e) {
+                rackCellData = (RackCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
+                source = rackCellData.getTable();
             }
+
+            if (boardCellData == null && rackCellData == null) {
+                System.out.println("something went wrong with source data\n");
+                return false;
+            }
+
+            boolean sourceIsBoard = source instanceof BoardView;
+            int draggedFromRow = source.getSelectedRow();
+            int draggedFromCol = source.getSelectedColumn();
+            BoardView.Location sourceLocation = new BoardView.Location(draggedFromRow, draggedFromCol);
+            BoardView.Location targetLocation = new BoardView.Location(dropRow, dropColumn);
+
+
+            if(sourceIsBoard) {
+                BoardView sourceBoard = (BoardView) source;
+                HashSet disabled = sourceBoard.getPreviouslyPlayed();
+                if (disabled.contains(sourceLocation)) return false; // tried to move a previously played tile
+                Tile sourceTile = sourceBoard.getValueAt(draggedFromRow, draggedFromCol).getTile();
+                if (sourceTile == null || sourceTile.equals(Tile.EMPTY)) return false; // can't drag from empty squares
+            } else {
+                Tile sourceTile = (Tile) source.getValueAt(draggedFromRow, draggedFromCol);
+                if (sourceTile == null) return false; // can't drag null tile from rack
+            }
+            if (board.getPreviouslyPlayed().contains(targetLocation)) return false; // tried to play on a previously played tile
+            canImport = true;
+
+        } catch (UnsupportedFlavorException | IOException ex) {
+            ex.printStackTrace();
         }
         return canImport;
     }
 
     @Override
     public boolean importData(TransferSupport support) {
-        // Import failed for some reason...
         boolean imported = false;
-        // Only import into JTables...
+
         Component comp = support.getComponent();
-        if (comp instanceof BoardJTable) {
-            BoardJTable target = (BoardJTable) comp; // is always the board
-            // Need to know where we are importing to...
-            DropLocation dl = support.getDropLocation();
-            Point dp = dl.getDropPoint();
-            int dropCol = target.columnAtPoint(dp);
-            int dropRow = target.rowAtPoint(dp);
-
+        if (comp instanceof BoardView) {
+            BoardView target = (BoardView) comp; // is always the board
+            DropLocation dropLocation = support.getDropLocation();
+            Point dropPoint = dropLocation.getDropPoint();
+            int dropCol = target.columnAtPoint(dropPoint);
+            int dropRow = target.rowAtPoint(dropPoint);
             try {
-
-                // Get the Transferable at the heart of it all
+                // Get the Transferable
                 Transferable t = support.getTransferable();
 
                 BoardCellData boardCellData = null;
                 RackCellData rackCellData = null;
                 JTable source;
-
                 try {
                     boardCellData = (BoardCellData) t.getTransferData(BoardDataTransferable.CELL_DATA_FLAVOR);
                     source = boardCellData.getTable();
@@ -111,21 +116,13 @@ public class BoardTransferHelper extends TransferHandler {
                     return false;
                 }
 
-                boolean sourceIsBoard = source instanceof BoardJTable;
-                int row = source.getSelectedRow();
-                int col = source.getSelectedColumn();
-                BoardJTable.Location sourceLocation = new BoardJTable.Location(row, col);
-                BoardJTable.Location targetLocation = new BoardJTable.Location(dropRow, dropCol);
-                HashSet disabled = target.getPreviouslyPlayed();
+                boolean sourceIsBoard = source instanceof BoardView;
+                int draggedFromRow = source.getSelectedRow();
+                int draggedFromCol = source.getSelectedColumn();
+                BoardView.Location targetLocation = new BoardView.Location(dropRow, dropCol);
+                BoardView.Location sourceLocation = new BoardView.Location(draggedFromRow, draggedFromCol);
+
                 Tile importValue;
-
-                // check if source is disabled
-                if(sourceIsBoard) {
-                    if (disabled.contains(sourceLocation)) return false;// tried to move a previously played tile
-                }
-                // check if target is disabled (is the board)
-                if (disabled.contains(targetLocation)) return false; // tried to place on a square that has a previously placed tile
-
 
                 if(sourceIsBoard) {
                     importValue = boardCellData.getValue().removeTile();
@@ -134,50 +131,27 @@ public class BoardTransferHelper extends TransferHandler {
                     importValue = rackCellData.getValue();
                 }
 
-                Tile exportValue = ((SquareTrial) target.getValueAt(dropRow, dropCol)).removeTile();
+                Tile exportValue = target.getValueAt(dropRow, dropCol).removeTile();
 
-                // This is where we swap the values...
-                // Set the target/dropped tables value
-                //((SquareTrial) target.getValueAt(dropRow, dropCol)).setTile(importValue);
+                // swap the values
                 SquareTrial ts = new SquareTrial();
                 ts.setTile(importValue);
                 target.setValueAt(ts, dropRow, dropCol);
-                //target.setTileAt(importValue, dropRow, dropCol);
 
-                // Set the source/dragged tables values
-                //((SquareTrial) source.getValueAt(row, col)).setTile(exportValue);
                 if (sourceIsBoard) {
                     SquareTrial es = new SquareTrial();
                     es.setTile(exportValue);
-                    source.setValueAt(es, row, col);
-                    //source.setTileAt(exportValue, row, col);
-                } else source.setValueAt(exportValue,row, col);
+                    source.setValueAt(es, draggedFromRow, draggedFromCol);
+                } else {
+                    if (exportValue.equals(Tile.EMPTY)) source.setValueAt(null, draggedFromRow, draggedFromCol); //dropped value is set
+                    else source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
+                }
 
-                target.addLocation(targetLocation);
+                target.addLocationPlayedThisTurn(targetLocation);
+                if (exportValue == null || exportValue.equals(Tile.EMPTY)) target.removeLocationPlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
 
                 imported = true;
 
-                /*
-                if (cd.getTable() != target) {
-                    // Make sure the columns match
-                    if (dropCol == cd.getColumn()) {
-                        // Get the data from the "dropped" table
-                        ImageIcon exportValue = (ImageIcon) target.getValueAt(dropRow, dropCol);
-                        // Get the data from the "dragged" table
-                        ImageIcon importValue = cd.getValue();
-                        // This is where we swap the values...
-                        // Set the target/dropped tables value
-                        target.setValueAt(importValue, dropRow, dropCol);
-
-                        // Set the source/dragged tables values
-                        JTable source = cd.getTable();
-                        int row = source.getSelectedRow();
-                        int col = source.getSelectedColumn();
-                        source.setValueAt(exportValue, row, col);
-
-                        imported = true;
-                    }
-                }*/
             } catch (UnsupportedFlavorException | IOException ex) {
                 ex.printStackTrace();
             }
