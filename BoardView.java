@@ -1,10 +1,10 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableModel;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class BoardView extends JTable {
-
 
     private final Board board;
     private HashSet<Location> playedThisTurn;
@@ -48,6 +48,19 @@ public class BoardView extends JTable {
         return playedThisTurn;
     }
 
+    private ArrayList<Coordinate> playedHashToList() {
+        ArrayList<Coordinate> played = new ArrayList<>();
+        for (Location l : playedThisTurn) {
+            played.add(new Coordinate(Coordinate.Column.values()[l.col], Coordinate.Row.values()[l.row])); //this is shit I need to remove Location class
+        }
+        return played;
+    }
+
+    public void submit() {
+        System.out.println(board.submit(playedHashToList()));
+        resetPlayedThisTurn();
+    }
+
     public void resetPlayedThisTurn() {
         for (Location l: playedThisTurn) {
             previouslyPlayed.add(l);
@@ -70,9 +83,14 @@ public class BoardView extends JTable {
         return square.swapTile(t);
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+
     public static class Location {
-        final int row;
-        final int col;
+        public final int row;
+        public final int col;
 
         public Location(int row, int col) {
             this.row = row;

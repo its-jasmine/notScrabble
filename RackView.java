@@ -6,10 +6,11 @@ import javax.swing.border.BevelBorder;
  */
 
 public class RackView extends JTable {
+    private final Rack rack;
 
     public RackView() {
         super();
-        Rack rack = new Rack(new Bag());
+        rack = new Rack(new Bag());
         setModel(rack.getModel());
 
         setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -19,5 +20,9 @@ public class RackView extends JTable {
         setTransferHandler(new RackTransferHelper());
         setRowSelectionAllowed(false);
         setCellSelectionEnabled(true);
+    }
+
+    public Rack getRack() {
+        return rack;
     }
 }
