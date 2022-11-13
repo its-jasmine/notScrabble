@@ -80,6 +80,7 @@ public class TableSwap {
 
 
         Rack rack = new Rack(new Bag());
+        /*
         DefaultTableModel model = new DefaultTableModel(0, 7){
             //  Returning the Class of each column will allow different
             //  renderers to be used based on Class
@@ -90,19 +91,21 @@ public class TableSwap {
         };
 
         ArrayList<Tile> test = (ArrayList<Tile>) rack.getTilesList();
-//
-//        ArrayList r = new ArrayList();
-//
-//        for (int i = 0; i < test.size(); i++) {
-//            SquareTrial s = new SquareTrial();
-//            s.setTile(test.get(i));
-//            r.add(s);
-//        }
+
+        ArrayList r = new ArrayList();
+
+        for (int i = 0; i < test.size(); i++) {
+            SquareTrial s = new SquareTrial();
+            s.setTile(test.get(i));
+            r.add(s);
+        }
 
         model.addRow(test.toArray());
+        */
 
 
-        JTable table = new JTable(model);
+
+        JTable table = new JTable(rack.getModel());
         table.setBorder(new BevelBorder(BevelBorder.RAISED));
         table.setRowHeight(50);
         table.setDragEnabled(true);
