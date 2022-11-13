@@ -25,10 +25,7 @@ public class Rack implements Iterable<Tile>{
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
             {
-
-                try {
-                    return getValueAt(0, column).getClass();
-                } catch (NullPointerException e) {return Tile.class;}
+                return Tile.class;
             }
         };
         this.bag = bag;
@@ -136,11 +133,11 @@ public class Rack implements Iterable<Tile>{
         for (int i = 0; i < MAXTILES; i++) {
             Tile r = (Tile) rackModel.getValueAt(0, i);
             if (r == tile) {
-                rackModel.setValueAt(Tile.EMPTY, 0, i);
+                rackModel.setValueAt(null, 0, i);
                 return r;
             }
         }
-        return Tile.EMPTY;
+        return null;
     }
     /**
      * Removes tiles from the rack
@@ -150,7 +147,7 @@ public class Rack implements Iterable<Tile>{
         ArrayList<Tile> removedTiles = new ArrayList<>();
         for (Tile t: tiles){
             Tile r = removeTileFromRack(t);
-            if (r == null || r.equals(Tile.EMPTY)) removedTiles.add(r);
+            if (r != null) removedTiles.add(r);
         }
         return removedTiles;
     }

@@ -25,6 +25,8 @@ public class BoardTransferHelper extends TransferHandler {
 
     @Override
     protected void exportDone(JComponent source, Transferable data, int action) {
+        JTable sourceTable = (JTable) source;
+        sourceTable.updateUI();
     }
 
     @Override
@@ -71,7 +73,7 @@ public class BoardTransferHelper extends TransferHandler {
                 HashSet disabled = sourceBoard.getPreviouslyPlayed();
                 if (disabled.contains(sourceLocation)) return false; // tried to move a previously played tile
                 Tile sourceTile = sourceBoard.getValueAt(draggedFromRow, draggedFromCol).getTile();
-                if (sourceTile == null || sourceTile.equals(Tile.EMPTY)) return false; // can't drag from empty squares
+                if (sourceTile == null) return false; // can't drag from empty squares
             } else {
                 Tile sourceTile = (Tile) source.getValueAt(draggedFromRow, draggedFromCol);
                 if (sourceTile == null) return false; // can't drag null tile from rack
@@ -122,6 +124,8 @@ public class BoardTransferHelper extends TransferHandler {
                 BoardView.Location targetLocation = new BoardView.Location(dropRow, dropCol);
                 BoardView.Location sourceLocation = new BoardView.Location(draggedFromRow, draggedFromCol);
 
+                Tile exportValue = target.removeTileAt(dropRow, dropCol);
+//                Tile exportValue = target.getValueAt(dropRow, dropCol).removeTile();
                 Tile importValue;
 
                 if(sourceIsBoard) {
@@ -131,24 +135,24 @@ public class BoardTransferHelper extends TransferHandler {
                     importValue = rackCellData.getValue();
                 }
 
-                Tile exportValue = target.getValueAt(dropRow, dropCol).removeTile();
-
                 // swap the values
-                SquareTrial ts = new SquareTrial();
-                ts.setTile(importValue);
-                target.setValueAt(ts, dropRow, dropCol);
+                target.setTileAt(importValue, dropRow, dropCol);
+//                Square ts = new Square();
+//                ts.setTile(importValue);
+//                target.setValueAt(ts, dropRow, dropCol);
 
                 if (sourceIsBoard) {
-                    SquareTrial es = new SquareTrial();
-                    es.setTile(exportValue);
-                    source.setValueAt(es, draggedFromRow, draggedFromCol);
+                    BoardView boardView = (BoardView) source;
+                    boardView.setTileAt(exportValue, draggedFromRow, draggedFromCol);
+//                    Square es = new Square();
+//                    es.setTile(exportValue);
+//                    source.setValueAt(es, draggedFromRow, draggedFromCol);
                 } else {
-                    if (exportValue.equals(Tile.EMPTY)) source.setValueAt(null, draggedFromRow, draggedFromCol); //dropped value is set
-                    else source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
+                    source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
                 }
 
                 target.addLocationPlayedThisTurn(targetLocation);
-                if (exportValue == null || exportValue.equals(Tile.EMPTY)) target.removeLocationPlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
+                if (exportValue == null) target.removeLocationPlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
 
                 imported = true;
 

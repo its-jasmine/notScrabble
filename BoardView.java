@@ -1,22 +1,34 @@
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.TableModel;
 import java.util.HashSet;
 
 public class BoardView extends JTable {
 
 
+    private final Board board;
     private HashSet<Location> playedThisTurn;
 
     private HashSet<Location> previouslyPlayed;
-    public BoardView(TableModel dm) {
-        super(dm);
+    public BoardView() {
+        super();
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
+        this.board = new Board();
+        setModel(board.getModel());
+
+        setBorder(new BevelBorder(BevelBorder.RAISED));
+        setRowHeight(50);
+        setDragEnabled(true);
+        setDropMode(DropMode.ON);
+        setTransferHandler(new BoardTransferHelper());
+        setRowSelectionAllowed(false);
+        setCellSelectionEnabled(true);
     }
 
     @Override
-    public SquareTrial getValueAt(int row, int col) {
-        return (SquareTrial) getModel().getValueAt(row, col);
+    public Square getValueAt(int row, int col) {
+        return (Square) getModel().getValueAt(row, col);
     }
 
     public HashSet<Location> getPreviouslyPlayed() {
@@ -44,18 +56,18 @@ public class BoardView extends JTable {
     }
 
     public void setTileAt(Tile tile, int row, int col) {
-        SquareTrial squareTrial = (SquareTrial) dataModel.getValueAt(row, col);
+        Square squareTrial = (Square) dataModel.getValueAt(row, col);
         squareTrial.setTile(tile);
     }
 
     public Tile removeTileAt(int row, int col) {
-        SquareTrial squareTrial = (SquareTrial) dataModel.getValueAt(row, col);
-        return squareTrial.removeTile();
+        Square square = (Square) dataModel.getValueAt(row, col);
+        return square.removeTile();
     }
 
     public Tile swapTileAt(Tile t, int row, int col) {
-        SquareTrial squareTrial = (SquareTrial) dataModel.getValueAt(row, col);
-        return squareTrial.swapTile(t);
+        Square square = (Square) dataModel.getValueAt(row, col);
+        return square.swapTile(t);
     }
 
     public static class Location {

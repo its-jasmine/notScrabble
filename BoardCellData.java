@@ -9,10 +9,10 @@ public class BoardCellData {
         return table.getSelectedColumn();
     }
 
-    public SquareTrial getValue() {
+    public Square getValue() {
         int row = table.getSelectedRow();
         int col = table.getSelectedColumn();
-        return (SquareTrial) table.getValueAt(row, col);
+        return (Square) table.getValueAt(row, col);
     }
 
     public BoardView getTable() {

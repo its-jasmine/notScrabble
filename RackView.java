@@ -11,6 +11,7 @@ public class RackView extends JTable {
         super();
         Rack rack = new Rack(new Bag());
         setModel(rack.getModel());
+
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(50);
         setDragEnabled(true);

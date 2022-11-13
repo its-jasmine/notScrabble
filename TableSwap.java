@@ -20,7 +20,7 @@ public class TableSwap {
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 }
 
-                BoardView board = createBoard();
+                BoardView board =new BoardView(); //createBoard();
                 JTable rack = new RackView();//createRack();
 
                 JFrame frame = new JFrame("Testing");
@@ -52,7 +52,7 @@ public class TableSwap {
             }
         };
 
-        SquareTrial e = new SquareTrial(SquareTrial.Type.PLAIN);
+        Square e = new Square(Square.Type.PLAIN);
         for (int index = 0; index < 3; index++) {
             ArrayList test = new ArrayList();
             test.add(e);
@@ -68,7 +68,7 @@ public class TableSwap {
         }
 
 
-        BoardView table = new BoardView(model);
+        BoardView table = new BoardView();
         table.setBorder(new BevelBorder(BevelBorder.RAISED));
         table.setRowHeight(50);
         table.setDragEnabled(true);

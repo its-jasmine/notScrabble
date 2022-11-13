@@ -60,7 +60,7 @@ public class RackTransferHelper extends TransferHandler {
                 HashSet disabled = sourceBoard.getPreviouslyPlayed();
                 if (disabled.contains(sourceLocation)) return false; // tried to move a previously played tile
                 Tile sourceTile = sourceBoard.getValueAt(draggedFromRow, draggedFromCol).getTile();
-                if (sourceTile == null || sourceTile.equals(Tile.EMPTY)) return false; // can't drag from empty squares
+                if (sourceTile == null) return false; // can't drag from empty squares
             }else {
                 Tile sourceTile = (Tile) source.getValueAt(draggedFromRow, draggedFromCol);
                 if (sourceTile == null) return false; // can't drag null tile from rack
@@ -118,15 +118,15 @@ public class RackTransferHelper extends TransferHandler {
                 } else {
                     importValue = rackCellData.getValue();
                 }
-                if (importValue.equals(Tile.EMPTY)) target.setValueAt(null, dropRow, dropCol); //dropped value is set
-                else target.setValueAt(importValue, dropRow, dropCol); //dropped value is set
+                target.setValueAt(importValue, dropRow, dropCol); //dropped value is set
 
                 // set the new value at the source where we got the import data from
                 if (sourceIsBoard) {
                     BoardView boardView = (BoardView) source;
-                    SquareTrial es = new SquareTrial();
-                    es.setTile(exportValue);
-                    boardView.setValueAt(es, draggedFromRow, draggedFromCol);
+                    boardView.setTileAt(exportValue, draggedFromRow, draggedFromCol);
+//                    Square es = new Square();
+//                    es.setTile(exportValue);
+//                    boardView.setValueAt(es, draggedFromRow, draggedFromCol);
 
                     boardView.addLocationPlayedThisTurn(sourceLocation);
                     if (exportValue == null) boardView.removeLocationPlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
