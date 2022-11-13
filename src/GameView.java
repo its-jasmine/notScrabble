@@ -14,6 +14,7 @@ public class GameView extends JFrame {
 
     public GameView(int numPlayers) throws HeadlessException {
         super("notScrabble");
+
         game = new Game(numPlayers);
         currentView = 0;
         boardView = new BoardView(game.getBoard());
@@ -42,20 +43,30 @@ public class GameView extends JFrame {
         contentPane.setLayout(new BorderLayout());
 
         southContainer = new Container();
-        southContainer.setLayout(new GridLayout(1,3));
+        southContainer.setLayout(new BorderLayout());
+        //southContainer.setLayout(new GridLayout(1,3));
 
         JButton submitButton = new JButton("Submit");
+        submitButton.setFocusPainted(false);
+        submitButton.setBackground(Color.RED);
+        submitButton.setForeground(Color.WHITE);
+        submitButton.setFont(new Font("Tahoma",Font.BOLD, 18));
+        submitButton.setPreferredSize(new Dimension(100,50));
         submitButton.addActionListener(e -> game.submit());
+
         JButton passButton = new JButton("Pass");
+        passButton.setFocusPainted(false);
+        passButton.setBackground(Color.RED);
+        passButton.setForeground(Color.WHITE);
+        passButton.setFont(new Font("Tahoma",Font.BOLD, 18));
+        passButton.setPreferredSize(new Dimension(100,50));
         passButton.addActionListener(e -> game.passTurn());
 
-        southContainer.add(passButton, 0);
-        southContainer.add(new JLabel("Rack goes here"), 1);
-        southContainer.add(submitButton, 2);
+        southContainer.add(passButton, BorderLayout.WEST);
+        southContainer.add(new JLabel("Rack goes here"), BorderLayout.CENTER);
+        southContainer.add(submitButton, BorderLayout.EAST);
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
-
-
 
         contentPane.add(boardView, BorderLayout.CENTER);
 
@@ -64,7 +75,7 @@ public class GameView extends JFrame {
         northContainer.setLayout(new GridLayout(1, 3));
         contentPane.add(northContainer, BorderLayout.NORTH);
 
-        JLabel timeLabel = new JLabel("game time GOES HERE");
+        /*JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(timeLabel, 0);
 
@@ -75,10 +86,10 @@ public class GameView extends JFrame {
 
         JLabel scoreLabel = new JLabel("game score GOES HERE");
         scoreLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        northContainer.add(scoreLabel, 2);
+        northContainer.add(scoreLabel, 2);*/
 
 
-        this.setSize(800,800);
+        this.setSize(1000, 910);
         this.setVisible(true);
 
         game.addView(this);
