@@ -6,6 +6,8 @@ import java.util.Set;
 public class BoardJTable extends JTable {
 
 
+    private HashSet<Location> playedThisTurn;
+
     private String type;
 
     private HashSet<Location> previouslyPlayed;
@@ -24,6 +26,10 @@ public class BoardJTable extends JTable {
 
     public void addLocation(Location location) {
         previouslyPlayed.add(location);
+    }
+
+    public HashSet<Location> getPlayedThisTurn() {
+        return playedThisTurn;
     }
 
     public void setTileAt(Tile tile, int row, int col) {

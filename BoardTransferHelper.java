@@ -68,7 +68,7 @@ public class BoardTransferHelper extends TransferHandler {
         // Only import into JTables...
         Component comp = support.getComponent();
         if (comp instanceof BoardJTable) {
-            BoardJTable target = (BoardJTable) comp;
+            BoardJTable target = (BoardJTable) comp; // is always the board
             // Need to know where we are importing to...
             DropLocation dl = support.getDropLocation();
             Point dp = dl.getDropPoint();
@@ -76,22 +76,26 @@ public class BoardTransferHelper extends TransferHandler {
             int dropRow = target.rowAtPoint(dp);
 
             try {
-                BoardJTable.Location targetLocation = new BoardJTable.Location(dropRow, dropCol);
-                if(target.getType().equals("B")) {
-                    HashSet disabled = target.getPreviouslyPlayed();
-                    if (disabled.contains(targetLocation)) return false;
-                }
 
                 // Get the Transferable at the heart of it all
                 Transferable t = support.getTransferable();
                 CellData cd = (CellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
-                BoardJTable source = cd.getTable();
+                BoardJTable source = cd.getTable(); // could be board or rack
+
+                BoardJTable.Location targetLocation = new BoardJTable.Location(dropRow, dropCol);
+                HashSet disabled = target.getPreviouslyPlayed();
                 int row = source.getSelectedRow();
                 int col = source.getSelectedColumn();
+
+                // check if target is disabled (is the board)
+                if (disabled.contains(targetLocation)) return false;
+
+                // check if source is disabled
                 if(source.getType().equals("B")) {
-                    HashSet disabled = target.getPreviouslyPlayed();
                     if (disabled.contains(new BoardJTable.Location(row, col))) return false;
                 }
+
+
 
 
                 // Get the data from the "dropped" table
@@ -114,7 +118,7 @@ public class BoardTransferHelper extends TransferHandler {
                 source.setValueAt(es, row, col);
                 //source.setTileAt(exportValue, row, col);
 
-                if(target.getType().equals("B")) target.addLocation(targetLocation);
+                target.addLocation(targetLocation);
 
                 imported = true;
 

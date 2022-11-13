@@ -65,6 +65,7 @@ public class RackTransferHelper extends TransferHandler {
     public boolean importData(TransferSupport support) {
         // Import failed for some reason...
         boolean imported = false;
+
         // Only import into JTables...
         Component comp = support.getComponent();
         if (comp instanceof BoardJTable) {
@@ -75,15 +76,20 @@ public class RackTransferHelper extends TransferHandler {
             int dropCol = target.columnAtPoint(dp);
             int dropRow = target.rowAtPoint(dp);
             try {
+
                 // Get the Transferable at the heart of it all
                 Transferable t = support.getTransferable();
                 CellData cd = (CellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                BoardJTable source = cd.getTable();
+                int row = source.getSelectedRow();
+                int col = source.getSelectedColumn();
 
-                if(target.getType().equals("B")) {
-                    BoardJTable.Location targetLocation = new BoardJTable.Location(target.getSelectedRow(), target.getSelectedColumn());
-                    HashSet disabled = target.getPreviouslyPlayed();
-                    if (disabled.contains(targetLocation)) return false;
+                BoardJTable.Location sourceLocation = new BoardJTable.Location(row, col);
+                if(source.getType().equals("B")) {
+                    HashSet disabled = source.getPreviouslyPlayed();
+                    if (disabled.contains(sourceLocation)) return false;
                 }
+
 
                 // Get the data from the "dropped" table
                 Tile exportValue = target.removeTileAt(dropRow, dropCol);
@@ -100,14 +106,13 @@ public class RackTransferHelper extends TransferHandler {
                 //target.setTileAt(importValue, dropRow, dropCol);
 
                 // Set the source/dragged tables values
-                BoardJTable source = cd.getTable();
-                int row = source.getSelectedRow();
-                int col = source.getSelectedColumn();
+
                 //((SquareTrial) source.getValueAt(row, col)).setTile(exportValue);
                 SquareTrial es = new SquareTrial();
                 es.setTile(exportValue);
                 source.setValueAt(es, row, col);
                 //source.setTileAt(exportValue, row, col);
+
 
                 imported = true;
 
