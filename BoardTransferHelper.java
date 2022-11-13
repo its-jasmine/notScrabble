@@ -75,11 +75,9 @@ public class BoardTransferHelper extends TransferHandler {
             int dropCol = target.columnAtPoint(dp);
             int dropRow = target.rowAtPoint(dp);
 
-            int sourceRow = target.getSelectedRow();
-            int targetCol = target.getSelectedColumn();
             try {
+                BoardJTable.Location targetLocation = new BoardJTable.Location(dropRow, dropCol);
                 if(target.getType().equals("B")) {
-                    BoardJTable.Location targetLocation = new BoardJTable.Location(dropRow, dropCol);
                     HashSet disabled = target.getPreviouslyPlayed();
                     if (disabled.contains(targetLocation)) return false;
                 }
@@ -87,6 +85,13 @@ public class BoardTransferHelper extends TransferHandler {
                 // Get the Transferable at the heart of it all
                 Transferable t = support.getTransferable();
                 CellData cd = (CellData) t.getTransferData(CellDataTransferable.CELL_DATA_FLAVOR);
+                BoardJTable source = cd.getTable();
+                int row = source.getSelectedRow();
+                int col = source.getSelectedColumn();
+                if(source.getType().equals("B")) {
+                    HashSet disabled = target.getPreviouslyPlayed();
+                    if (disabled.contains(new BoardJTable.Location(row, col))) return false;
+                }
 
 
                 // Get the data from the "dropped" table
@@ -103,14 +108,13 @@ public class BoardTransferHelper extends TransferHandler {
                 //target.setTileAt(importValue, dropRow, dropCol);
 
                 // Set the source/dragged tables values
-                BoardJTable source = cd.getTable();
-                int row = source.getSelectedRow();
-                int col = source.getSelectedColumn();
                 //((SquareTrial) source.getValueAt(row, col)).setTile(exportValue);
                 SquareTrial es = new SquareTrial();
                 es.setTile(exportValue);
                 source.setValueAt(es, row, col);
                 //source.setTileAt(exportValue, row, col);
+
+                if(target.getType().equals("B")) target.addLocation(targetLocation);
 
                 imported = true;
 

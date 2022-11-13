@@ -22,6 +22,10 @@ public class BoardJTable extends JTable {
         return previouslyPlayed;
     }
 
+    public void addLocation(Location location) {
+        previouslyPlayed.add(location);
+    }
+
     public void setTileAt(Tile tile, int row, int col) {
         SquareTrial squareTrial = (SquareTrial) dataModel.getValueAt(row, col);
         squareTrial.setTile(tile);
