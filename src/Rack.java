@@ -152,6 +152,34 @@ public class Rack implements Iterable<Tile>{
         return removedTiles;
     }
 
+
+    /**
+     * Removes tiles from the rack
+     * @param tiles : a list of tiles to be removed from the rack.
+     */
+    public void putTilesOnRack(ArrayList<Tile> tiles){
+        for (Tile t: tiles){
+            if (!putTileOnRack(t)) System.out.println("couldn't add tile"); //TODO error
+        }
+    }
+    /**
+     * Removes tiles from the rack
+     * @param tile : a list of tiles to be removed from the rack.
+     */
+    public boolean putTileOnRack(Tile tile){
+
+        for (int i = 0; i < MAXTILES; i++) {
+            Tile r = (Tile) rackModel.getValueAt(0, i);
+            if (r == null) {
+                rackModel.setValueAt(tile, 0, i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     @Override
     public Iterator<Tile> iterator() {
         Iterator<Tile> it = new Iterator<Tile>() {

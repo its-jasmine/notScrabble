@@ -73,11 +73,6 @@ public class Square {
         this.tile = null;
         return temp;
     }
-    public Tile swapTile(Tile t) {
-        Tile temp = tile;
-        tile = t;
-        return temp;
-    }
 
     /**
      * Returns string representation of square.
