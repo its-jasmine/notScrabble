@@ -1,18 +1,20 @@
 # notScrabble
+[Logo1](https://raw.githubusercontent.com/VictoriaMalouf/SYSC3110Project/main/images/notScrabble_logo.png)
+[Logo2](images/notScrabble_log.png)
 
 notScrabble is a simplified version of the classic board game Scrabble! 
 
 This project is being produced for SYSC 3110 taught by Dr. Babak Esfandiari. The TA assigned to this group is Mr. Mohamed Zalat. 
 
-This project is divided into 4 milestones with this README file corresponding to milestone 1.
+This project is divided into 4 milestones with this README file corresponding to milestone 2.
 
-**Milestone 1:** Text-based version of the game
-- Users play the game via the console
-- Users may place a word, pass their turn, see their rack, and see the resulting state of the board
-- Word placements are validated and scores are calculated accordingly
+**Milestone 2:** Initial GUI for notScrabble
+- User plays the game through the User Interface
+- User may place tiles on the board from their rack, see their score, pass their turn and submit their placed tiles
 - There is no support for blank tiles and premium squares at this time
-- UML class diagrams and sequence diagrams are provided
-- Design choices such as data structures and relevant operations are discussed
+- UML class diagram adn sequence diagram are provided
+- Design choices such as data structure and relevant operations are discussed
+
 
 ## Table of contents
 
@@ -37,51 +39,51 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 
 ### Version 
 
-10/25/2022 - Milestone 1 
+11/13/2022 - Milestone 2 
 
 ### Usage 
 
 To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4.
-After a Game is created, the playGame method is invoked. Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined. 
+Currently the game starts with a default 2 player setup, player1 and player2.
+The game Welcome View is initiated, which prompts the user to select either instructions or New Game, which starts a notScrabble game of two players.
 
-When prompted, a player may pass or play their turn by entering a string of letters and coordinates into the terminal. Entering "pass" will pass the turn.
+Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined. 
 
-The order and formatting of user input is **important**. Letters must be capitalized, columns must be labeled A-O, and rows must be labeled ONE-FIFT. With coordinate "A ONE" corresponding to the top left square and coordinate "O FIFT" corresponding to the bottom right square. 
+When prompted, a player may pass or play their turn by clicking the submit or pass button.
+The player needs to drag and drop their tiles from their rack to the board.
+The player can swap the order of tiles in their rack by dragging and dropping to reorder their rack.
+The player can place unsubmited tiles from the board back to their rack.
+when submitting their word after placement, if it is determined to be invalid, the player's tiles are returned to the rack.
 
-NOTE: All tiles the user is attempting to place during their turn must be included in the same input, so be careful!.
-
-The input formatting is as follows: 
-> LETTER COLUMN ROW,LETTER COLUMN ROW,...                           
-
-    "A H EIGHT,N I EIGHT,D J EIGHT"
     
- **First turn** reminder: The player who places the first word onto the board must place a tile on the start square. (coordinate H EIGHT) 
+ **First turn** reminder: The player who places the first word onto the board must place a tile on the start square. This will later be color coded to be easier to see. 
 
 <img width="639" alt="Screen Shot 2022-10-25 at 10 04 24 AM" src="https://user-images.githubusercontent.com/84146479/197795120-00438956-c3fc-4f35-a596-05640f70e335.png">
 
 ### Rest of Deliverables
 
-| Milestone | Due Date | Main Deliverables |
-|:-------:|----------|-------------------------------------------------------|
-| 2 | 11/11/2022 | **GUI-based version:** The display will be in a JFrame where user input occurs via the mouse. Unit tests for the Model with failing unit tests for incomplete functionality implementations will be provided. Changes to UML and data structures from Milestone 1 will be documented.|
-| 3 | 11/21/2022 | **Fully functioning game with AI capabilities:** Tile placement validation, scoring, blank tile and premium square functionalities are included. AI players with the ability to play the highest scoring word will be implemented. Changes from Milestone 2 will be documented. (The code will smell like fresh flowers) 🌻 
-| 4 | 12/05/2022 | **Undo, saving and customization features:** Ability to undo or redo moves at multiple levels. Ability to save and load the game using Java Serialization. Ability to customize boards by alternating the placement of premium squares. |
+| Milestone | Due Date   | Main Deliverables                                                                                                                                                                                                                                                                                                           |
+|:---------:|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     3     | 11/21/2022 | **Fully functioning game with AI capabilities:** Tile placement validation, scoring, blank tile and premium square functionalities are included. AI players with the ability to play the highest scoring word will be implemented. Changes from Milestone 2 will be documented. (The code will smell like fresh flowers) 🌻 |
+|     4     | 12/05/2022 | **Undo, saving and customization features:** Ability to undo or redo moves at multiple levels. Ability to save and load the game using Java Serialization. Ability to customize boards by alternating the placement of premium squares.                                                                                     |
 
 ### Known issues
 
-The UI is hard to use. 
-Since this UI will be almost completely replaced in Milestone 2 we made the decision not to fix it.
+It is hard to see where the starting square (H8) is currently. This will later be color coded for ease of use.
+
+In rare instances, a tile can not be returned to the rack when an invalid word or placement is detected upon pressing the submit button.
+For now, the user can drag it back onto their rack or move it around the board to input a valid word
 
 Extra points for special squares are not implemented at this time.
 
 
 ### Roadmap ahead
 
-For milestone 2 and onwards, the team will try to use JIRA, GitHub's Projects, or GitHub's ZenHub extension for task management. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
+For milestone 3 and onwards, the team will try to use JIRA, GitHub's Projects. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
 
-Milestone 1 provides an initial design and implementation of the Model part of the **M**VC pattern. The roadmap ahead is concerned with the design and implementation of the View and Controller part of the M**VC** pattern. Unit tests of Model logic will be implemented with all parts of the missing or incomplete implementation of the placement and scoring of words having corresponding failing unit tests. 
+Milestone 2 provides an initial design and implementation of the MVC pattern. The roadmap ahead is concerned with the design and implementation of the AI, blank tiles, and premium squares. 
 
-**Goal** for milestone 2:
-- Delegate the responsibilities of the Board class by creating a wordAnalyzer class which is responsible for verifying valid tile placement and possible words created
+**Goal** for milestone 3:
+- Fix the edge case bug where one tile is not placed back in rack.
+- set a background board picture for the board to make the UI more user friendly.
 
-Accomplishing this goal will help with cohesion!
