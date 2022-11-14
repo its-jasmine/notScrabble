@@ -97,7 +97,6 @@ public class Board {
         // at this point tilesPlaced is now sorted and direction is HORIZONTAL or VERTICAL
 
         List<Word> words = wordExtractor.getWordsCreated(tilesPlaced, d);
-        System.out.println(words.size() + d.toString());
         if (words.size() == 0) { // no words, at least two letters long, were created
             System.out.println("Words must be at least two letters long."); // only possible at game start
             return -1;
@@ -110,7 +109,6 @@ public class Board {
 
         // at this point words are all valid
         int score = Word.scoreWords(words);
-        System.out.println("words score: " + score);
         if (tilesPlaced.size() == 7) score += 50;
         return score;
     }
