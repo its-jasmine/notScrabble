@@ -93,7 +93,7 @@ public class Rack implements Iterable<Tile>{
      * gets the score of the Tiles currently on the rack
      * @return int of the score.
      */
-    public int getRackScore(){
+    public int tallyRackScore(){
         int rackScore = 0;
         for (Tile tile : this){
             rackScore += tile.value;
@@ -154,7 +154,7 @@ public class Rack implements Iterable<Tile>{
 
 
     /**
-     * Removes tiles from the rack
+     * Puts tiles on the rack
      * @param tiles : a list of tiles to be removed from the rack.
      */
     public void putTilesOnRack(ArrayList<Tile> tiles){
@@ -163,7 +163,7 @@ public class Rack implements Iterable<Tile>{
         }
     }
     /**
-     * Removes tiles from the rack
+     * Put tile on the rack
      * @param tile : a list of tiles to be removed from the rack.
      */
     public boolean putTileOnRack(Tile tile){

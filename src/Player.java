@@ -94,7 +94,7 @@ public class Player {
      * @return int
      */
     public int getRackScore() {
-        return rack.getRackScore();
+        return rack.tallyRackScore();
     }
 
     public void addView(PlayerView view){

@@ -25,4 +25,6 @@ public class RackView extends JTable {
     public Rack getRack() {
         return rack;
     }
+
+
 }
