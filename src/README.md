@@ -1,6 +1,6 @@
 # notScrabble
-[Logo1](https://raw.githubusercontent.com/VictoriaMalouf/SYSC3110Project/main/images/notScrabble_logo.png)
-[Logo2](images/notScrabble_log.png)
+[Logo1](https://raw.githubusercontent.com/VictoriaMalouf/SYSC3110Project/main/SYSC3110Project/images/notScrabble_logo.png)
+[Logo2](SYSC3110/images/notScrabble_log.png)
 
 notScrabble is a simplified version of the classic board game Scrabble! 
 
