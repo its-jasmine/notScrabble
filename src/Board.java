@@ -11,14 +11,17 @@ import java.util.*;
  */
 public class Board {
 
+    /** the tiles being played during the turn */
     private HashSet<Coordinate> playedThisTurn;
 
+    /** the tiles that were played until now */
     private HashSet<Coordinate> previouslyPlayed;
 
 
     /** The direction of the word currently be validated */
     private final BoardValidator boardValidator = new BoardValidator(this);
 
+    /** the word extractor */
     private final WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
@@ -54,6 +57,9 @@ public class Board {
         return boardModel;
     }
 
+    /**
+     * @return
+     */
     public HashSet<Coordinate> getPlayedThisTurn() {
         return playedThisTurn;
     }

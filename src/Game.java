@@ -80,10 +80,18 @@ public class Game {
         return playerIndex;
     }
 
+    /**
+     * gets the game's board
+     * @return a board object
+     */
     public Board getBoard(){
         return board;
     }
 
+    /**
+     * gets the game's bag
+     * @return a bag object
+     */
     public Bag getBag() {
         return bag;
     }
@@ -103,6 +111,9 @@ public class Game {
         return views;
     }
 
+    /**
+     * @return an arraylist of players
+     */
     public ArrayList<Player> getPlayers() {
         return (ArrayList<Player>) players;
     }
@@ -114,16 +125,26 @@ public class Game {
         updateGameView(true);
     }
 
+    /**
+     * Increments the turn
+     */
     private void nextTurn(){
         playerTurn = ++playerTurn % players.size();
     }
 
+    /**
+     * Passes the turn of the player
+     */
     public void passTurn(){
         Player player = players.get(playerTurn);
         player.resetTurn();
         nextTurn();
         updateGameView(false);
     }
+
+    /**
+     * Submits the player's word
+     */
     public void submit(){
         Player player = players.get(playerTurn);
         Status status = player.submit();
@@ -140,6 +161,10 @@ public class Game {
 
         }
     }
+
+    /**
+     * Ends the game
+     */
     private void endGame() {
         // game is now over
         setFinalScores();
@@ -148,6 +173,10 @@ public class Game {
         System.out.println("The winner is " + (winner.getName()) + " with a score of " + winner.getScore() + "!\n" );
     }
 
+    /**
+     * updates the views of the game.
+     * @param firstTurn if it is the first turn, true, else, false
+     */
     private void updateGameView(boolean firstTurn){
         for (GameView view : views){
             view.update(playerTurn, firstTurn);
@@ -181,6 +210,11 @@ public class Game {
         }
         players.get(playerTurn).addToScore(leftOverLetterScore);
     }
+
+    /**
+     * adds a view to the game
+     * @param gameView the view to be added
+     */
     public void addView(GameView gameView) {
         views.add(gameView);
     }
