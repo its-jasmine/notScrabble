@@ -3,6 +3,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
@@ -131,12 +133,58 @@ public class GameTest {
 
     @Test
     public void submit() {
+        int firstPlayerIndex = game2.getPlayerTurn();
+        Player firstPlayer = game2.getPlayers().get(firstPlayerIndex);
 
-    }
+        /* Test 1: Submitting when no tiles have been placed */
+        game2.submit();
+        assertEquals(firstPlayerIndex, game2.getPlayerTurn()); // player did not place any tiles, same player should be playing
 
-    @Test
-    public void addView() {
+        /* Test 2: Submitting when INVALID word has been placed */
+        firstPlayerIndex = game3.getPlayerTurn();
+        firstPlayer = game3.getPlayers().get(firstPlayerIndex);
+
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        HashSet<Coordinate> coordsHash = new HashSet<>();
+        coords.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
+        coords.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.NINE));
+        coords.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.TEN));
+        coords.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.ELEVEN));
+        coordsHash.addAll(coords);
+
+        // invalid word
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(Tile.A);
+        tiles.add(Tile.A);
+        tiles.add(Tile.A);
+        tiles.add(Tile.A);
+
+        game3.getBoard().placeTiles(coords, tiles);
+        game3.getBoard().setPlayedThisTurn(coordsHash);
+        game3.submit();
+        assertEquals(game3.getPlayerTurn(), firstPlayerIndex); // game should keep the same player
+        assertEquals(0,firstPlayer.getScore()); // player should not recieve any points
 
 
+        /* Test 3: Submitting when valid word has been placed */
+        firstPlayerIndex = game4.getPlayerTurn();
+        firstPlayer = game4.getPlayers().get(firstPlayerIndex);
+
+        // using same coords as before
+
+        // valid word
+        tiles = new ArrayList<>();
+        tiles.add(Tile.B);
+        tiles.add(Tile.A);
+        tiles.add(Tile.T);
+        tiles.add(Tile.H);
+
+        game4.getBoard().placeTiles(coords, tiles);
+        game4.getBoard().setPlayedThisTurn(coordsHash);
+        game4.submit();
+
+        int currentPlayerIndex = game4.getPlayerTurn();
+        assertNotEquals(currentPlayerIndex, firstPlayerIndex); // game should move on to next player
+        assertEquals(9,firstPlayer.getScore()); // first player should recieve score update for their played word
     }
 }
