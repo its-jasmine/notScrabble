@@ -38,7 +38,6 @@ public class GameTest {
         // Changes to the Rack model will not be reflected in this ArrayList, which is why we can use it for our expected comparison
 
 
-
         //Verifies that passing a turn twice on a two player game goes back to the first player.
         int firstPlayer = game2.getPlayerTurn();
         game2.passTurn();
@@ -75,7 +74,7 @@ public class GameTest {
                 expectedValues = new ArrayList<>(Arrays.asList(3,0,1, 2));
                 break;
             default:
-                expectedValues = new ArrayList<>(Arrays.asList(3,0,1,2));
+                expectedValues = new ArrayList<>(Arrays.asList(0,1,2,3));
         }
         for (Integer expectedValue : expectedValues){
             game4.passTurn();
