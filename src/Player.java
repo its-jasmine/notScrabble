@@ -1,5 +1,4 @@
 //import java.util.Scanner;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -93,7 +92,7 @@ public class Player {
      * @return int
      */
     public int getRackScore() {
-        return rack.getRackScore();
+        return rack.tallyRackScore();
     }
 
     public void addView(PlayerView view){
