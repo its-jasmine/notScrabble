@@ -42,8 +42,7 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 
 ### Usage 
 
-To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4.
-Currently the game starts with a default 2 player setup, player1 and player2.
+To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4. The user will be prompted.
 The game Welcome View is initiated, which prompts the user to select either instructions or New Game, which starts a notScrabble game of two players.
 
 Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined. 
@@ -85,4 +84,5 @@ Milestone 2 provides an initial design and implementation of the MVC pattern. Th
 **Goal** for milestone 3:
 - Fix the edge case bug where one tile is not placed back in rack.
 - set a background board picture for the board to make the UI more user friendly.
+- Implement the AI
 
