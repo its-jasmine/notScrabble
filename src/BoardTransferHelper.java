@@ -18,7 +18,6 @@ public class BoardTransferHelper extends TransferHandler {
     @Override
     protected Transferable createTransferable(JComponent source) {
         // Create the transferable
-        // Because I'm hacking a little, I've included the source table...
         BoardView table = (BoardView) source;
         return new BoardDataTransferable(new BoardCellData(table));
     }
@@ -39,8 +38,10 @@ public class BoardTransferHelper extends TransferHandler {
         // get location where the drop might occur
         DropLocation dropLocation = support.getDropLocation();
         Point dropPoint = dropLocation.getDropPoint();
+
         int dropRow = board.rowAtPoint(dropPoint);
         int dropColumn = board.columnAtPoint(dropPoint);
+        if (dropColumn == -1 || dropRow == -1) return false;
         try {
             // Get the Transferable
             Transferable t = support.getTransferable();
@@ -64,13 +65,13 @@ public class BoardTransferHelper extends TransferHandler {
             boolean sourceIsBoard = source instanceof BoardView;
             int draggedFromRow = source.getSelectedRow();
             int draggedFromCol = source.getSelectedColumn();
-            BoardView.Location sourceLocation = new BoardView.Location(draggedFromRow, draggedFromCol);
-            BoardView.Location targetLocation = new BoardView.Location(dropRow, dropColumn);
+            Coordinate sourceLocation = new Coordinate(Coordinate.Column.values()[draggedFromCol], Coordinate.Row.values()[draggedFromRow]);
+            Coordinate targetLocation = new Coordinate(Coordinate.Column.values()[dropColumn], Coordinate.Row.values()[dropRow]);
 
 
             if(sourceIsBoard) {
                 BoardView sourceBoard = (BoardView) source;
-                HashSet disabled = sourceBoard.getPreviouslyPlayed();
+                HashSet<Coordinate> disabled = sourceBoard.getPreviouslyPlayed();
                 if (disabled.contains(sourceLocation)) return false; // tried to move a previously played tile
                 Tile sourceTile = sourceBoard.getValueAt(draggedFromRow, draggedFromCol).getTile();
                 if (sourceTile == null) return false; // can't drag from empty squares
@@ -121,11 +122,10 @@ public class BoardTransferHelper extends TransferHandler {
                 boolean sourceIsBoard = source instanceof BoardView;
                 int draggedFromRow = source.getSelectedRow();
                 int draggedFromCol = source.getSelectedColumn();
-                BoardView.Location targetLocation = new BoardView.Location(dropRow, dropCol);
-                BoardView.Location sourceLocation = new BoardView.Location(draggedFromRow, draggedFromCol);
+                Coordinate targetLocation = new Coordinate(Coordinate.Column.values()[dropCol], Coordinate.Row.values()[dropRow]);
+                Coordinate sourceLocation = new Coordinate(Coordinate.Column.values()[draggedFromCol], Coordinate.Row.values()[draggedFromRow]);
 
                 Tile exportValue = target.removeTileAt(dropRow, dropCol);
-//                Tile exportValue = target.getValueAt(dropRow, dropCol).removeTile();
                 Tile importValue;
 
                 if(sourceIsBoard) {
@@ -137,22 +137,16 @@ public class BoardTransferHelper extends TransferHandler {
 
                 // swap the values
                 target.setTileAt(importValue, dropRow, dropCol);
-//                Square ts = new Square();
-//                ts.setTile(importValue);
-//                target.setValueAt(ts, dropRow, dropCol);
 
                 if (sourceIsBoard) {
                     BoardView boardView = (BoardView) source;
                     boardView.setTileAt(exportValue, draggedFromRow, draggedFromCol);
-//                    Square es = new Square();
-//                    es.setTile(exportValue);
-//                    source.setValueAt(es, draggedFromRow, draggedFromCol);
                 } else {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
                 }
 
-                target.addLocationPlayedThisTurn(targetLocation);
-                if (exportValue == null) target.removeLocationPlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
+                target.addCoordinatePlayedThisTurn(targetLocation);
+                if (exportValue == null) target.removeCoordinatePlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
 
                 imported = true;
 
