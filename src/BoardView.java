@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class BoardView extends JTable {
@@ -25,17 +24,17 @@ public class BoardView extends JTable {
         return (Square) getModel().getValueAt(row, col);
     }
 
-    public HashSet<Location> getPreviouslyPlayed() {
+    public HashSet<Coordinate> getPreviouslyPlayed() {
         return board.getPreviouslyPlayed();
     }
 
-    public void addLocationPlayedThisTurn(Location location) {
-        board.getPlayedThisTurn().add(location);
+    public void addCoordinatePlayedThisTurn(Coordinate coordinate) {
+        board.getPlayedThisTurn().add(coordinate);
     }
 
 
-    public void removeLocationPlayedThisTurn(Location location) {
-        board.getPlayedThisTurn().remove(location);
+    public void removeCoordinatePlayedThisTurn(Coordinate coordinate) {
+        board.getPlayedThisTurn().remove(coordinate);
     }
 
 
@@ -60,29 +59,5 @@ public class BoardView extends JTable {
 
     public Board getBoard() {
         return board;
-    }
-
-
-    public static class Location {
-        public final int row;
-        public final int col;
-
-        public Location(int row, int col) {
-            this.row = row;
-            this.col = col;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Location)) return false;
-            if (obj == this) return true;
-            Location l = (Location) obj;
-            return (this.row == l.row) && (this.col == l.col);
-        }
-
-        @Override
-        public int hashCode() {
-            return (37 * row) + col;
-        }
     }
 }

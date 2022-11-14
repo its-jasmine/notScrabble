@@ -11,9 +11,9 @@ import java.util.*;
  */
 public class Board {
 
-    private HashSet<BoardView.Location> playedThisTurn;
+    private HashSet<Coordinate> playedThisTurn;
 
-    private HashSet<BoardView.Location> previouslyPlayed;
+    private HashSet<Coordinate> previouslyPlayed;
 
 
     /** The direction of the word currently be validated */
@@ -54,18 +54,16 @@ public class Board {
         return boardModel;
     }
 
-    public HashSet<BoardView.Location> getPlayedThisTurn() {
+    public HashSet<Coordinate> getPlayedThisTurn() {
         return playedThisTurn;
     }
 
-    public HashSet<BoardView.Location> getPreviouslyPlayed() {
+    public HashSet<Coordinate> getPreviouslyPlayed() {
         return previouslyPlayed;
     }
 
     public void addThisTurnToPreviously() {
-        for (BoardView.Location l: playedThisTurn) {
-            previouslyPlayed.add(l);
-        }
+        previouslyPlayed.addAll(playedThisTurn);
         resetPlayedThisTurn();
     }
 
@@ -74,9 +72,7 @@ public class Board {
     }
     private ArrayList<Coordinate> playedHashToList() {
         ArrayList<Coordinate> played = new ArrayList<>();
-        for (BoardView.Location l : playedThisTurn) {
-            played.add(new Coordinate(Coordinate.Column.values()[l.col], Coordinate.Row.values()[l.row])); //this is shit I need to remove Location class
-        }
+        played.addAll(playedThisTurn);
         return played;
     }
 
@@ -219,5 +215,21 @@ public class Board {
             s += "\n";
         }
         return s;
+    }
+
+    /**
+     * testing only
+     * @param playedThisTurn
+     */
+    public void setPlayedThisTurn(HashSet<Coordinate> playedThisTurn) {
+        this.playedThisTurn = playedThisTurn;
+    }
+
+    /**
+     * testing only
+     * @param previouslyPlayed
+     */
+    public void setPreviouslyPlayed(HashSet<Coordinate> previouslyPlayed) {
+        this.previouslyPlayed = previouslyPlayed;
     }
 }

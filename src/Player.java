@@ -1,5 +1,3 @@
-//import java.util.Scanner;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -9,9 +7,9 @@ import java.util.*;
  */
 public class Player {
     /** The board of the game the player is participating in */
-    private Board board;
+    private final Board board;
     /** The player's rack */
-    private Rack rack;
+    private final Rack rack;
     /** The player's current score */
     private int score;
     
@@ -113,8 +111,8 @@ public class Player {
 
     public void resetTurn() {
         ArrayList<Tile> returnTiles = new ArrayList<>();
-        for (BoardView.Location l: board.getPlayedThisTurn()) {
-            Square s = (Square) board.getModel().getValueAt(l.row, l.col);
+        for (Coordinate c: board.getPlayedThisTurn()) {
+            Square s = (Square) board.getModel().getValueAt(c.getRowIndex(), c.getColumnIndex());
             Tile temp = s.getTile();
             returnTiles.add(temp);
             s.setTile(null);

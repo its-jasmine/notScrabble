@@ -52,12 +52,12 @@ public class RackTransferHelper extends TransferHandler {
             boolean sourceIsBoard = source instanceof BoardView;
             int draggedFromRow = source.getSelectedRow();
             int draggedFromCol = source.getSelectedColumn();
-            BoardView.Location sourceLocation = new BoardView.Location(draggedFromRow, draggedFromCol);
+            Coordinate sourceLocation = new Coordinate(Coordinate.Column.values()[draggedFromCol], Coordinate.Row.values()[draggedFromRow]);
 
 
             if(sourceIsBoard) {
                 BoardView sourceBoard = (BoardView) source;
-                HashSet disabled = sourceBoard.getPreviouslyPlayed();
+                HashSet<Coordinate> disabled = sourceBoard.getPreviouslyPlayed();
                 if (disabled.contains(sourceLocation)) return false; // tried to move a previously played tile
                 Tile sourceTile = sourceBoard.getValueAt(draggedFromRow, draggedFromCol).getTile();
                 if (sourceTile == null) return false; // can't drag from empty squares
@@ -109,7 +109,7 @@ public class RackTransferHelper extends TransferHandler {
                 boolean sourceIsBoard = source instanceof BoardView;
                 int draggedFromRow = source.getSelectedRow();
                 int draggedFromCol = source.getSelectedColumn();
-                BoardView.Location sourceLocation = new BoardView.Location(draggedFromRow, draggedFromCol);
+                Coordinate sourceLocation = new Coordinate(Coordinate.Column.values()[draggedFromCol], Coordinate.Row.values()[draggedFromRow]);
 
                 Tile exportValue = (Tile) target.getValueAt(dropRow, dropCol); // export is from rack
                 Tile importValue; // could be from rack or board
@@ -124,12 +124,9 @@ public class RackTransferHelper extends TransferHandler {
                 if (sourceIsBoard) {
                     BoardView boardView = (BoardView) source;
                     boardView.setTileAt(exportValue, draggedFromRow, draggedFromCol);
-//                    Square es = new Square();
-//                    es.setTile(exportValue);
-//                    boardView.setValueAt(es, draggedFromRow, draggedFromCol);
 
-                    boardView.addLocationPlayedThisTurn(sourceLocation);
-                    if (exportValue == null) boardView.removeLocationPlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
+                    boardView.addCoordinatePlayedThisTurn(sourceLocation);
+                    if (exportValue == null) boardView.removeCoordinatePlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
 
                 } else source.setValueAt(exportValue,draggedFromRow, draggedFromCol);
 
