@@ -153,4 +153,9 @@ public class Coordinate {
         Coordinate c = (Coordinate)obj;
         return c.column == this.column && c.row == this.row;
     }
+
+    @Override
+    public int hashCode() {
+        return (37 * getRowIndex()) + getColumnIndex();
+    }
 }

@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,44 +27,52 @@ public class WelcomeFrame extends JFrame {
     }
     public WelcomeFrame() {
         WelcomeController c = new WelcomeController(this);
-        setLayout(new GridLayout(2, 1));
+        Container container = this.getContentPane();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.setBackground(Color.WHITE);
         setTitle("notScrabble");
-        setSize(900, 400);
-        ImageIcon logo = new ImageIcon("src/notScrabble_logo.png");
+        setSize(920, 400);
+        String imagePath = "images/notScrabble_logo.png";
+        ImageIcon logo = new ImageIcon(imagePath);
 
-        JPanel panel = new JPanel();
-        panel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        //panel.setLayout(new BorderLayout());
-        //panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.setLayout(new GridLayout(2,1,10,10));
 
-        //setIconImage(logo.getImage());
-        JLabel welcome = new JLabel(logo);
-        welcome.setBorder(new BevelBorder(BevelBorder.RAISED));
-
-        add(welcome);
+        setIconImage(logo.getImage());
+        JLabel image = new JLabel(logo);
+        //image.setBorder(new BevelBorder(BevelBorder.RAISED));
 
 
 
         JButton instructions = new JButton("Instructions");
-        //panel.add(instructions, BorderLayout.NORTH);
-        panel.add(instructions);
-
+        instructions.setFocusPainted(false);
+        instructions.setFont(new Font("Tahoma",Font.BOLD, 15));
+        instructions.setBackground(Color.RED);
+        instructions.setForeground(Color.WHITE);
         instructions.setActionCommand(INSTRUCTIONS_CMD);
         instructions.addActionListener(c);
 
-        JButton newGame = new JButton("New Game");
-        //panel.add(newGame, BorderLayout.CENTER);
-        panel.add(newGame);
-
+        JButton newGame = new JButton("  New Game ");
+        newGame.setFocusPainted(false);
+        newGame.setBackground(Color.RED);
+        newGame.setForeground(Color.WHITE);
+        newGame.setFont(new Font("Tahoma",Font.BOLD, 15));
         newGame.setActionCommand(NEW_GAME_CMD);
         newGame.addActionListener(c);
+
+        container.add(image);
+        container.add(Box.createRigidArea(new Dimension(0,10)));
+        container.add(instructions);
+        container.add(Box.createRigidArea(new Dimension(0,30)));
+        container.add(newGame);
+
+        image.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
-        add(panel);
+        //add(panel);
 
 
     }
