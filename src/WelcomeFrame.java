@@ -19,7 +19,8 @@ public class WelcomeFrame extends JFrame {
             if (source.getActionCommand().equals(INSTRUCTIONS_CMD)){
                 JOptionPane.showMessageDialog(view, "Instructions blah blah blah");
             }else if (source.getActionCommand().equals(NEW_GAME_CMD)){
-                new GameView(2);//default 2 players for now
+                int numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
+                new GameView(numPlayers); // default 2 players for now
                 view.dispose();
 
             }
@@ -68,12 +69,8 @@ public class WelcomeFrame extends JFrame {
         newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
         instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
-
-        //add(panel);
-
 
     }
 
