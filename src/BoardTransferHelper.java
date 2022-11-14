@@ -137,16 +137,17 @@ public class BoardTransferHelper extends TransferHandler {
 
                 // swap the values
                 target.setTileAt(importValue, dropRow, dropCol);
-
+                target.addCoordinatePlayedThisTurn(targetLocation);
                 if (sourceIsBoard) {
                     BoardView boardView = (BoardView) source;
                     boardView.setTileAt(exportValue, draggedFromRow, draggedFromCol);
+                    if (exportValue == null) target.removeCoordinatePlayedThisTurn(sourceLocation);// moved a tile on the board to an empty space on the board
                 } else {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
                 }
 
-                target.addCoordinatePlayedThisTurn(targetLocation);
-                if (exportValue == null) target.removeCoordinatePlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
+
+
 
                 imported = true;
 
