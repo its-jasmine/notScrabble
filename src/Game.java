@@ -110,6 +110,8 @@ public class Game {
     }
 
     public void passTurn(){
+        Player player = players.get(playerTurn);
+        player.resetTurn();
         nextTurn();
         updateGameView(false);
     }
