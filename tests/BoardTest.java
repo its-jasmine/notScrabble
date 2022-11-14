@@ -2,12 +2,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
 public class BoardTest {
     Board board;
     ArrayList<Coordinate> coordinates;
+    HashSet<Coordinate> thisTurnHashSet;
+
+    HashSet<Coordinate> previouslyHashSet;
     ArrayList<Tile> tiles;
 
     @Before
@@ -237,14 +241,12 @@ public class BoardTest {
 
     /**
      * Tests that the submit method works as expected
-     *
-     *  FAILURES
-     *  Placement 1: Expected: 14, Actual 7
-     *  Placement 3: Expected: 25, Actual 17
-     *  Placement 4: Expected: 16, Actual 11
      */
     @Test
     public void testSubmit(){
+        thisTurnHashSet = new HashSet<>();
+        previouslyHashSet = new HashSet<>();
+
         // Placement 1: HORN
         Coordinate c1 = new Coordinate(Coordinate.Column.F, Coordinate.Row.EIGHT);
         Coordinate c2 = new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT);
@@ -259,7 +261,11 @@ public class BoardTest {
         tiles.add(Tile.R);
         tiles.add(Tile.N);
         board.placeTiles(coordinates, tiles);
-        //assertEquals(14,board.submit(coordinates));
+        thisTurnHashSet.addAll(coordinates);
+        board.setPlayedThisTurn(thisTurnHashSet);
+        assertEquals(7,board.submit());
+        previouslyHashSet.addAll(thisTurnHashSet);
+        thisTurnHashSet = new HashSet<>();
 
         // Placement 2: FARM
         ArrayList<Coordinate> coordinates2 = new ArrayList<>();
@@ -274,7 +280,12 @@ public class BoardTest {
         tiles2.add(Tile.A);
         tiles2.add(Tile.M);
         board.placeTiles(coordinates2, tiles2);
-        //assertEquals(9,board.submit(coordinates2));
+        thisTurnHashSet.addAll(coordinates2);
+        board.setPlayedThisTurn(thisTurnHashSet);
+        board.setPreviouslyPlayed(previouslyHashSet);
+        assertEquals(9,board.submit());
+        previouslyHashSet.addAll(thisTurnHashSet);
+        thisTurnHashSet = new HashSet<>();
 
         // Placement 3: PASTE
         ArrayList<Coordinate> coordinates3 = new ArrayList<>();
@@ -295,7 +306,12 @@ public class BoardTest {
         tiles3.add(Tile.T);
         tiles3.add(Tile.E);
         board.placeTiles(coordinates3, tiles3);
-        //assertEquals(25,board.submit(coordinates3));
+        thisTurnHashSet.addAll(coordinates3);
+        board.setPlayedThisTurn(thisTurnHashSet);
+        board.setPreviouslyPlayed(previouslyHashSet);
+        assertEquals(17,board.submit());
+        previouslyHashSet.addAll(thisTurnHashSet);
+        thisTurnHashSet = new HashSet<>();
 
         // Placement 4: BIT
         ArrayList<Coordinate> coordinates4 = new ArrayList<>();
@@ -310,7 +326,10 @@ public class BoardTest {
         tiles4.add(Tile.I);
         tiles4.add(Tile.T);
         board.placeTiles(coordinates4, tiles4);
-        //assertEquals(16,board.submit(coordinates4));
+        thisTurnHashSet.addAll(coordinates4);
+        board.setPlayedThisTurn(thisTurnHashSet);
+        board.setPreviouslyPlayed(previouslyHashSet);
+        assertEquals(11,board.submit());
     }
 
 }
