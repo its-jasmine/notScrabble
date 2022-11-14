@@ -8,9 +8,6 @@ import java.util.stream.Collectors;
  */
 public class Game {
 
-
-
-
     /** The allowable game statuses */
     public enum Status {RUNNING, OVER, RETRY;} // used as a way to have a named boolean for readability
     /** The maximum number of players in a game */
@@ -20,6 +17,7 @@ public class Game {
 
     /** The list of players in the game */
     private List<Player> players; // if we don't want players to be able to join once a game has started this can be final
+
 
     /** The index corresponding to the player who is currently playing their turn */
     private int playerTurn; // index in the player list
@@ -46,9 +44,6 @@ public class Game {
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, i + 1));
         }
-
-        Random random = new Random();
-        this.playerTurn = random.nextInt(numPlayers); // pick who goes first
     }
 
     /**
@@ -93,6 +88,21 @@ public class Game {
         return bag;
     }
 
+    /**
+     * Getter for the player of the current turn (for testing purposes only)
+     * @return index of the current player
+     */
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+    /**
+     * Getter for the views list (for testing purposes only)
+     * @return list of the GameViews observing this game
+     */
+    public List<GameView> getViews() {
+        return views;
+    }
+
     public ArrayList<Player> getPlayers() {
         return (ArrayList<Player>) players;
     }
@@ -102,7 +112,6 @@ public class Game {
      */
     public void playGame() {
         updateGameView(true);
-
     }
 
     private void nextTurn(){
@@ -137,9 +146,6 @@ public class Game {
         System.out.println("The winner is " + (winner.getName()) + " with a score of " + winner.getScore() + "!\n" );
     }
 
-    public void addPlayerViewToPlayer(PlayerView playerView,int i){
-        players.get(i).addView(playerView);
-    }
     private void updateGameView(boolean firstTurn){
         for (GameView view : views){
             view.update(playerTurn, firstTurn);
