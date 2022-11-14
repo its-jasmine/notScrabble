@@ -77,7 +77,6 @@ public class RackTest {
         ArrayList<Tile> tile = new ArrayList<>();
         tile.add(rack.getTilesList().get(0));
         rack.removeTiles(tile);
-        System.out.println(rack);
         assertTrue(rack.putTileOnRack(Tile.A));
         assertFalse(rack.putTileOnRack(Tile.Z));
     }
