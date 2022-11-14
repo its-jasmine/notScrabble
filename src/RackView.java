@@ -26,14 +26,5 @@ public class RackView extends JTable {
         return rack;
     }
 
-    public static void main(String[] args){
-        JFrame frame = new JFrame();
-        JPanel panel = new JPanel();
-        Rack r = new Rack(new Bag());
-        frame.add(panel);
-        frame.add(new RackView(r));
-        frame.setVisible(true);
-        frame.setSize(100,10);
-    }
 
 }
