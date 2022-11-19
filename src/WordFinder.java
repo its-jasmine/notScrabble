@@ -59,7 +59,7 @@ public class WordFinder {
             }
             // letter is in wordMap more times than in the lettermap, sameVal = false
             for (Character key : wordMap.keySet()){
-                if (wordMap.get(key) != null && letterMap.get(key) != null && wordMap.get(key) > letterMap.get(key)){
+                if (letterMap.get(key) == null | (letterMap.get(key) != null && wordMap.get(key) > letterMap.get(key))){
                     sameVal = false;
                 }
             }
@@ -86,7 +86,7 @@ public class WordFinder {
         WordFinder wf = new WordFinder();
         //wf.addLettersToMap(tileArrayList);
         ArrayList<String> words = new ArrayList<>();
-        words = wf.findWord(tileArrayList,"A.");
+        words = wf.findWord(tileArrayList,"a.");
         System.out.println(words);
         System.out.println(words.size());
     }
