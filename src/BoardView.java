@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.util.HashSet;
 
 public class BoardView extends JTable {
@@ -9,6 +10,8 @@ public class BoardView extends JTable {
         super();
         this.board = board;
         setModel(board.getModel());
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) this.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(50);

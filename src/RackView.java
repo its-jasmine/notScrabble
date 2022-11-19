@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Represents the rack in the GUI.
@@ -12,7 +13,8 @@ public class RackView extends JTable {
         super();
         this.rack = rack;
         setModel(rack.getModel());
-
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) this.getDefaultRenderer(Object.class);
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(50);
         setDragEnabled(true);
