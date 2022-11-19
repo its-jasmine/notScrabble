@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.regex.*;
 
 /**
- * Finds words for the AI to place on the board
+ * Finds words for the AI to place on the board using tiles and a format
  */
 public class WordFinder {
 
@@ -19,6 +19,10 @@ public class WordFinder {
         possibleWords = new ArrayList<>();
     }
 
+    /**
+     * Gets the letterMap hashmap
+     * @return a hashmap of characters keys with their occurrence value
+     */
     public HashMap<Character, Integer> getLetterMap() {
         return letterMap;
     }
@@ -67,37 +71,5 @@ public class WordFinder {
             }
         }
         return possibleWords;
-    }
-
-    public static void main(String[] args) {
-
-        ArrayList<Tile> tileArrayList = new ArrayList<>();
-        tileArrayList.add(Tile.R);
-        tileArrayList.add(Tile.A);
-        tileArrayList.add(Tile.I);
-        tileArrayList.add(Tile.S);
-        tileArrayList.add(Tile.E);
-        tileArrayList.add(Tile.C);
-        tileArrayList.add(Tile.N);
-        tileArrayList.add(Tile.N);
-        tileArrayList.add(Tile.N);
-        System.out.println(tileArrayList);
-
-        WordFinder wf = new WordFinder();
-        ArrayList<String> words;
-        words = wf.findWord(tileArrayList,"......");
-        System.out.println(words);
-        System.out.println(words.size());
-
-        ArrayList<Tile> tileList = new ArrayList<>();
-        tileList.add(Tile.D);
-        tileList.add(Tile.O);
-        tileList.add(Tile.O);
-        tileList.add(Tile.M);
-        System.out.println(tileList);
-        words = wf.findWord(tileList,"....");
-        System.out.println(words);
-        System.out.println(words.size());
-
     }
 }
