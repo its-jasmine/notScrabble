@@ -24,10 +24,11 @@ public class WordFinder {
     }
 
     /**
-     * adds letters to the hashmap and their occurrences
+     * clears the letterMap and adds new letters to the hashmap and their occurrences
      * @param tileList the list of tiles to add to the map
      */
     public void addLettersToMap(List<Tile> tileList) { //public for testing findWord()
+        letterMap.clear();
         for (Tile t : tileList){
             letterMap.merge(t.letter.toUpperCase().charAt(0), 1,Integer::sum);
         }
@@ -40,25 +41,23 @@ public class WordFinder {
      * @return a list of possible words
      */
     public ArrayList<String> findWord(ArrayList<Tile> tileArrayList, String format){
-        addLettersToMap(tileArrayList);
-        Pattern wordPattern = Pattern.compile(format.toUpperCase());
-        Matcher matcher;
+        possibleWords.clear(); //reset the list of possible words
+        addLettersToMap(tileArrayList); //reset and add the new letters
+        Pattern wordPattern = Pattern.compile(format.toUpperCase()); //gets a regex pattern using the format
+        //Matcher matcher;
         for (String word : wordBank.getValidWords()){
             boolean sameVal = true;
-            HashMap<Character, Integer> wordMap = new HashMap();
-            if (word.length() != format.length()){
+            HashMap<Character, Integer> wordMap = new HashMap<>();
+            if (word.length() != format.length()){ //checks if the word is the same length as the format
                 continue;
             }
-            // if letter at format place is not there go next
-            if (!wordPattern.matcher(word).find()){
+            if (!wordPattern.matcher(word).find()){ // checks if letter at format place is not there go next
                 continue;
             }
-            // put word in a hashmap with frequency
-            for (int i = 0; i < word.length(); i++){
+            for (int i = 0; i < word.length(); i++){ // put word in a hashmap with frequency
                 wordMap.merge(word.toUpperCase().charAt(i), 1,Integer::sum);
             }
-            // letter is in wordMap more times than in the lettermap, sameVal = false
-            for (Character key : wordMap.keySet()){
+            for (Character key : wordMap.keySet()){ // checks if the letterMap has every letter from the word.
                 if (letterMap.get(key) == null | (letterMap.get(key) != null && wordMap.get(key) > letterMap.get(key))){
                     sameVal = false;
                 }
@@ -82,12 +81,23 @@ public class WordFinder {
         tileArrayList.add(Tile.N);
         tileArrayList.add(Tile.N);
         tileArrayList.add(Tile.N);
+        System.out.println(tileArrayList);
 
         WordFinder wf = new WordFinder();
-        //wf.addLettersToMap(tileArrayList);
-        ArrayList<String> words = new ArrayList<>();
-        words = wf.findWord(tileArrayList,"a.");
+        ArrayList<String> words;
+        words = wf.findWord(tileArrayList,"......");
         System.out.println(words);
         System.out.println(words.size());
+
+        ArrayList<Tile> tileList = new ArrayList<>();
+        tileList.add(Tile.D);
+        tileList.add(Tile.O);
+        tileList.add(Tile.O);
+        tileList.add(Tile.M);
+        System.out.println(tileList);
+        words = wf.findWord(tileList,"....");
+        System.out.println(words);
+        System.out.println(words.size());
+
     }
 }
