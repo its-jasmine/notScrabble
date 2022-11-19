@@ -79,12 +79,14 @@ public class WordFinder {
         tileArrayList.add(Tile.E);
         tileArrayList.add(Tile.C);
         tileArrayList.add(Tile.N);
+        tileArrayList.add(Tile.N);
+        tileArrayList.add(Tile.N);
 
         WordFinder wf = new WordFinder();
         wf.addLettersToMap(tileArrayList);
         System.out.println(wf.getLetterMap());
-        ArrayList<String> words = new ArrayList<>();
-        words = wf.findWord(tileArrayList,"..");
+        ArrayList<String> words;
+        words = wf.findWord(tileArrayList,"A.");
         System.out.println(words);
         System.out.println(words.size());
     }

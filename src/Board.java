@@ -10,6 +10,8 @@ import java.util.*;
  * @version Milestone2
  */
 public class Board {
+    private final Coordinate.Row START_ROW = Coordinate.Row.EIGHT;
+    private final Coordinate.Column START_COLUMN = Coordinate.Column.H;
 
     private HashSet<Coordinate> playedThisTurn;
 
@@ -173,6 +175,11 @@ public class Board {
      * @return true if the square has no Tile yet, false otherwise
      */
     public boolean isSquareEmpty(Coordinate coordinate) {
+        return getSquare(coordinate).isEmpty();
+    }
+
+    public boolean isStartSquareEmpty() {
+        Coordinate coordinate = new Coordinate(START_COLUMN,START_ROW);
         return getSquare(coordinate).isEmpty();
     }
 

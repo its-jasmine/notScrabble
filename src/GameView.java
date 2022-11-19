@@ -12,10 +12,10 @@ public class GameView extends JFrame {
     private BoardView boardView;
     private int currentView;
 
-    public GameView(int numPlayers) throws HeadlessException {
+    public GameView(int numPlayers, int numAI) throws HeadlessException {
         super("notScrabble");
 
-        game = new Game(numPlayers);
+        game = new Game(numPlayers, numAI);
         currentView = 0;
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
@@ -97,15 +97,18 @@ public class GameView extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameView(2);
+        new GameView(1, 1);
     }
 
     public void update(int playerTurn, boolean firstTurn) {
-
-        // add new player view
-
         southContainer.remove(1);
-        southContainer.add(playerViews.get(playerTurn), 1);
+        Player player = game.getPlayers().get(playerTurn);
+        if (player instanceof AIPlayer) {
+            game.submitAI();
+            playerTurn = ++playerTurn % game.getPlayers().size();
+            southContainer.add(playerViews.get(playerTurn), 1);
+        } else southContainer.add(playerViews.get(playerTurn), 1);
+
         southContainer.revalidate();
         southContainer.repaint();
     }
