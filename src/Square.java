@@ -6,11 +6,28 @@
  */
 
 public class Square {
-
-
     /** The allowable square type on game board */
     public enum Type {
-        START, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
+        START("*", 1,1),
+        PLAIN("", 1,1),
+        DOUBLE_LETTER("DL", 2,1),
+        TRIPLE_LETTER("TL", 3,1),
+        DOUBLE_WORD("DW",1,2),
+        TRIPLE_WORD("TW",1,3);
+
+        public final String stringDisplay;
+        public final int letterMultiplier;
+        public final int wordMultiplier;
+
+        // public final Image squareImage... //TODO
+        Type(String stringDisplay, int letterMultiplier, int wordMultiplier) {
+            this.stringDisplay = stringDisplay;
+            this.letterMultiplier = letterMultiplier;
+            this.wordMultiplier = wordMultiplier;
+        }
+        public String toString(){
+            return stringDisplay;
+        }
     }
     /** The tile currently placed on the square, or null */
     private Tile tile;
@@ -79,7 +96,7 @@ public class Square {
      * @return if square is empty, string shortform of square type, otherwise letter of tile on square
      */
     public String toString(){
-        if (isEmpty()) return " ";
+        if (isEmpty()) return type.toString();
         return tile.toString();
     }
 }
