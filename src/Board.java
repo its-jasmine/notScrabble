@@ -119,10 +119,11 @@ public class Board {
      * @param tile to be placed
      * @return true if letter was placed, false otherwise
      */
-    private boolean placeTile(Coordinate coordinate, Tile tile) {
+    protected boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.setTile(tile);
+            playedThisTurn.add(coordinate);
             return true;
         }
         return false;
@@ -161,6 +162,7 @@ public class Board {
         ArrayList<Tile> tilesLst = new ArrayList<>();
         for (Coordinate c : tileCoordinates){
             tilesLst.add(removeTile(c));
+            playedThisTurn.remove(c);
         }
         return tilesLst;
     }
