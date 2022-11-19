@@ -19,7 +19,7 @@ public class WordFinderTest {
         tileArrayList.add(Tile.H);
 
         WordFinder wf = new WordFinder();
-        wf.addletter(tileArrayList);
+        wf.addLettersToMap(tileArrayList);
         assertEquals(2, (int) wf.getLetterMap().get('E'));
         assertEquals(1, (int) wf.getLetterMap().get('R'));
         assertEquals(1, (int) wf.getLetterMap().get('A'));
@@ -41,8 +41,8 @@ public class WordFinderTest {
         tileArrayList.add(Tile.H);
 
         WordFinder wf = new WordFinder();
-        wf.addletter(tileArrayList);
-        System.out.println(wf.findWord(tileArrayList, "**a**R"));
+        wf.addLettersToMap(tileArrayList);
+        System.out.println(wf.findWord(tileArrayList, "..a..r"));
 
 
         ArrayList<Tile> arrayList2 = new ArrayList<>();
@@ -56,7 +56,7 @@ public class WordFinderTest {
         arrayList2.add(Tile.E);
 
         WordFinder wf2 = new WordFinder();
-        wf2.addletter(arrayList2);
+        wf2.addLettersToMap(arrayList2);
 
         assertTrue(wf.getLetterMap().equals(wf2.getLetterMap()));
     }
