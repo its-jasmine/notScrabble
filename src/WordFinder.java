@@ -57,9 +57,9 @@ public class WordFinder {
             for (int i = 0; i < word.length(); i++){
                 wordMap.merge(word.toUpperCase().charAt(i), 1,Integer::sum);
             }
-            //if both hashmaps are equal, add to the possible words list.
+            // letter is in wordMap more times than in the lettermap, sameVal = false
             for (Character key : wordMap.keySet()){
-                if (wordMap.get(key) != letterMap.get(key)){
+                if (wordMap.get(key) != null && letterMap.get(key) != null && wordMap.get(key) > letterMap.get(key)){
                     sameVal = false;
                 }
             }
@@ -80,12 +80,13 @@ public class WordFinder {
         tileArrayList.add(Tile.E);
         tileArrayList.add(Tile.C);
         tileArrayList.add(Tile.N);
+        tileArrayList.add(Tile.N);
+        tileArrayList.add(Tile.N);
 
         WordFinder wf = new WordFinder();
-        wf.addLettersToMap(tileArrayList);
-        System.out.println(wf.getLetterMap());
+        //wf.addLettersToMap(tileArrayList);
         ArrayList<String> words = new ArrayList<>();
-        words = wf.findWord(tileArrayList,"..");
+        words = wf.findWord(tileArrayList,"A.");
         System.out.println(words);
         System.out.println(words.size());
     }
