@@ -13,6 +13,9 @@ public class WordFinder {
 
     /** Bank of playable words */
     private WordBank wordBank;
+    /** count of how many blanks in the letterMap */
+    private int blankCount;
+
     public WordFinder() {
         letterMap = new HashMap<>();
         wordBank = new WordBank();
@@ -23,7 +26,7 @@ public class WordFinder {
      * Gets the letterMap hashmap
      * @return a hashmap of characters keys with their occurrence value
      */
-    public HashMap<Character, Integer> getLetterMap() {
+    private HashMap<Character, Integer> getLetterMap() {
         return letterMap;
     }
 
@@ -31,9 +34,13 @@ public class WordFinder {
      * clears the letterMap and adds new letters to the hashmap and their occurrences
      * @param tileList the list of tiles to add to the map
      */
-    public void addLettersToMap(List<Tile> tileList) { //public for testing findWord()
+    private void addLettersToMap(List<Tile> tileList) { //public for testing findWord()
+        blankCount = 0;
         letterMap.clear();
         for (Tile t : tileList){
+            if (t == Tile.BLANK){
+                blankCount++;
+            }
             letterMap.merge(t.letter.toUpperCase().charAt(0), 1,Integer::sum);
         }
     }
@@ -49,20 +56,38 @@ public class WordFinder {
         addLettersToMap(tileArrayList); //reset and add the new letters
         Pattern wordPattern = Pattern.compile(format.toUpperCase()); //gets a regex pattern using the format
         //Matcher matcher;
-        for (String word : wordBank.getValidWords()){
+        for (String word : wordBank.getValidWords()) {
+            int blanks = blankCount;
             boolean sameVal = true;
             HashMap<Character, Integer> wordMap = new HashMap<>();
-            if (word.length() != format.length()){ //checks if the word is the same length as the format
+            if (word.length() != format.length()) { //checks if the word is the same length as the format
                 continue;
             }
-            if (!wordPattern.matcher(word).find()){ // checks if letter at format place is not there go next
+            if (!wordPattern.matcher(word).find()) { // checks if letter at format place is not there go next
                 continue;
             }
-            for (int i = 0; i < word.length(); i++){ // put word in a hashmap with frequency
-                wordMap.merge(word.toUpperCase().charAt(i), 1,Integer::sum);
+            for (int i = 0; i < word.length(); i++) { // put word in a hashmap with frequency
+                wordMap.merge(word.toUpperCase().charAt(i), 1, Integer::sum);
             }
-            for (Character key : wordMap.keySet()){ // checks if the letterMap has every letter from the word.
-                if (letterMap.get(key) == null | (letterMap.get(key) != null && wordMap.get(key) > letterMap.get(key))){
+            for (Character key : wordMap.keySet()) { // checks if the letterMap has every letter from the word.
+                if (letterMap.get(key) == null) {
+                    if (wordMap.get(key) == blanks) {
+                        blanks = 0;
+                        //continue;
+                    } else if (wordMap.get(key) < blanks) {
+                        blanks--;
+                        //continue;
+                    } else {
+                        sameVal = false;
+                    }
+                } else if (wordMap.get(key) > letterMap.get(key)) {
+                    if (wordMap.get(key) - letterMap.get(key) - blanks == 0) {
+                        blanks = 0;
+                        continue;
+                    } else if (wordMap.get(key) - letterMap.get(key) - blanks < 0) {
+                        blanks--;
+                        continue;
+                    }
                     sameVal = false;
                 }
             }
@@ -71,5 +96,17 @@ public class WordFinder {
             }
         }
         return possibleWords;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Tile> tileArrayList = new ArrayList<>();
+        /*tileArrayList.add(Tile.D);
+        tileArrayList.add(Tile.E);
+        tileArrayList.add(Tile.D);*/
+        tileArrayList.add(Tile.BLANK);
+        tileArrayList.add(Tile.BLANK);
+
+        WordFinder wf = new WordFinder();
+        System.out.println(wf.findWord(tileArrayList,".."));
     }
 }

@@ -1,42 +1,21 @@
 import org.junit.Test;
-
-import java.util.ArrayList;
+import java.util.*;
+/*import java.util.ArrayList;
+import java.util.HashSet;*/
 
 import static org.junit.Assert.*;
 
 public class WordFinderTest {
     ArrayList<Tile> tileArrayList;
     WordFinder wf;
-    ArrayList<String> expectedWords;
+    Set<String> expectedWords;
     String format;
-
-    @Test
-    public void getLetterMap() {
-        tileArrayList = new ArrayList<>();
-        tileArrayList.add(Tile.E);
-        tileArrayList.add(Tile.R);
-        tileArrayList.add(Tile.A);
-        tileArrayList.add(Tile.E);
-        tileArrayList.add(Tile.T);
-        tileArrayList.add(Tile.S);
-        tileArrayList.add(Tile.H);
-
-        WordFinder wf = new WordFinder();
-        wf.addLettersToMap(tileArrayList);
-        assertEquals(2, (int) wf.getLetterMap().get('E'));
-        assertEquals(1, (int) wf.getLetterMap().get('R'));
-        assertEquals(1, (int) wf.getLetterMap().get('A'));
-        assertEquals(1, (int) wf.getLetterMap().get('T'));
-        assertEquals(1, (int) wf.getLetterMap().get('S'));
-        assertEquals(1, (int) wf.getLetterMap().get('H'));
-
-    }
 
     @Test
     public void findWord() {
         wf = new WordFinder();
         tileArrayList = new ArrayList<>();
-        expectedWords = new ArrayList<>();
+        expectedWords = new HashSet<>();
         format = ".a";
         tileArrayList.add(Tile.E);
         tileArrayList.add(Tile.R);
@@ -48,7 +27,7 @@ public class WordFinderTest {
 
         expectedWords.add("HA");
         expectedWords.add("TA");
-        assertEquals(wf.findWord(tileArrayList,format), expectedWords);
+        assertEquals(new HashSet<>(wf.findWord(tileArrayList,format)), expectedWords);
 
         /*
         test multiple letters
@@ -65,7 +44,7 @@ public class WordFinderTest {
 
         expectedWords.add("DOOM");
         expectedWords.add("MOOD");
-
+        assertEquals(new HashSet<>(wf.findWord(tileArrayList,format)), expectedWords);
         /*
         Test format
         letters = D, O, O, M.
@@ -74,6 +53,28 @@ public class WordFinderTest {
         expectedWords.clear();
         format = "A...";
         expectedWords.clear();
-        assertEquals(wf.findWord(tileArrayList,format), expectedWords);
+        assertEquals(new HashSet<>(wf.findWord(tileArrayList,format)), expectedWords);
+
+        /*
+        find words with a blank tile
+         */
+        tileArrayList.clear();
+        expectedWords.clear();
+        format = "....";
+        tileArrayList.add(Tile.D);
+        tileArrayList.add(Tile.E);
+        tileArrayList.add(Tile.D);
+        tileArrayList.add(Tile.BLANK);
+
+        expectedWords.add("DIED");
+        expectedWords.add("DUDE");
+        expectedWords.add("DYED");
+        expectedWords.add("EDDO");
+        expectedWords.add("EDDY");
+        expectedWords.add("DEAD");
+        expectedWords.add("REDD");
+        expectedWords.add("DEED");
+        assertEquals(new HashSet<>(wf.findWord(tileArrayList,format)),expectedWords);
+
     }
 }
