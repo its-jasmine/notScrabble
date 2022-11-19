@@ -76,7 +76,7 @@ public class BoardTest {
         // Coordinate (B2)
         Coordinate c = new Coordinate(Coordinate.Column.B, Coordinate.Row.TWO);
         Square s = board.getSquare(c);
-        assertEquals(Square.Type.TRIPLE_WORD, s.getType());
+        assertEquals(Square.Type.DOUBLE_WORD, s.getType());
     }
 
     /**
@@ -99,9 +99,9 @@ public class BoardTest {
         Coordinate c1 = new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT);
         Coordinate c2 = new Coordinate(Coordinate.Column.I, Coordinate.Row.EIGHT);
         Coordinate c3 = new Coordinate(Coordinate.Column.J, Coordinate.Row.EIGHT);
-        tiles.add(Tile.A);
-        tiles.add(Tile.N);
-        tiles.add(Tile.D);
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.N);
+        tiles.add(LetterTile.D);
         coordinates.add(c1);
         coordinates.add(c2);
         coordinates.add(c3);
@@ -114,8 +114,8 @@ public class BoardTest {
     @Test
     public void testPlaceTilesOnNonEmptySquares(){
         Coordinate c1 = new Coordinate(Coordinate.Column.A, Coordinate.Row.EIGHT);
-        tiles.add(Tile.O);
-        tiles.add(Tile.R);
+        tiles.add(LetterTile.O);
+        tiles.add(LetterTile.R);
         coordinates.add(c1);
         coordinates.add(c1);
         assertFalse(board.placeTiles(coordinates, tiles));
@@ -129,9 +129,9 @@ public class BoardTest {
         Coordinate c1 = new Coordinate(Coordinate.Column.A, Coordinate.Row.ONE);
         Coordinate c2 = new Coordinate(Coordinate.Column.B, Coordinate.Row.TWO);
         Coordinate c3 = new Coordinate(Coordinate.Column.C, Coordinate.Row.THREE);
-        tiles.add(Tile.P);
-        tiles.add(Tile.O);
-        tiles.add(Tile.P);
+        tiles.add(LetterTile.P);
+        tiles.add(LetterTile.O);
+        tiles.add(LetterTile.P);
         coordinates.add(c1);
         coordinates.add(c2);
         coordinates.add(c3);
@@ -176,9 +176,9 @@ public class BoardTest {
         coordinates.add(c1);
         coordinates.add(c2);
         coordinates.add(c3);
-        tiles.add(Tile.H);
-        tiles.add(Tile.E);
-        tiles.add(Tile.Y);
+        tiles.add(LetterTile.H);
+        tiles.add(LetterTile.E);
+        tiles.add(LetterTile.Y);
         board.placeTiles(coordinates, tiles);
         for (Coordinate c: coordinates) {
             assertFalse(board.isSquareEmpty(c));
@@ -196,13 +196,13 @@ public class BoardTest {
         coordinates.add(c1);
         coordinates.add(c2);
         coordinates.add(c3);
-        tiles.add(Tile.A);
-        tiles.add(Tile.B);
-        tiles.add(Tile.C);
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.B);
+        tiles.add(LetterTile.C);
         board.placeTiles(coordinates, tiles);
-        assertEquals(Tile.A, board.getSquareTile(c1));
-        assertEquals(Tile.B, board.getSquareTile(c2));
-        assertEquals(Tile.C, board.getSquareTile(c3));
+        assertEquals(LetterTile.A, board.getSquareTile(c1));
+        assertEquals(LetterTile.B, board.getSquareTile(c2));
+        assertEquals(LetterTile.C, board.getSquareTile(c3));
     }
 
     /**
@@ -224,12 +224,12 @@ public class BoardTest {
         coordinates.add(c4);
         coordinates.add(c5);
         coordinates.add(c6);
-        tiles.add(Tile.H);
-        tiles.add(Tile.I);
-        tiles.add(Tile.J);
-        tiles.add(Tile.K);
-        tiles.add(Tile.L);
-        tiles.add(Tile.M);
+        tiles.add(LetterTile.H);
+        tiles.add(LetterTile.I);
+        tiles.add(LetterTile.J);
+        tiles.add(LetterTile.K);
+        tiles.add(LetterTile.L);
+        tiles.add(LetterTile.M);
         board.placeTiles(coordinates, tiles);
         assertEquals(Square.Type.START, board.getSquareType(c1));
         assertEquals(Square.Type.PLAIN, board.getSquareType(c2));
@@ -256,10 +256,10 @@ public class BoardTest {
         coordinates.add(c2);
         coordinates.add(c3);
         coordinates.add(c4);
-        tiles.add(Tile.H);
-        tiles.add(Tile.O);
-        tiles.add(Tile.R);
-        tiles.add(Tile.N);
+        tiles.add(LetterTile.H);
+        tiles.add(LetterTile.O);
+        tiles.add(LetterTile.R);
+        tiles.add(LetterTile.N);
         board.placeTiles(coordinates, tiles);
         thisTurnHashSet.addAll(coordinates);
         board.setPlayedThisTurn(thisTurnHashSet);
@@ -276,9 +276,9 @@ public class BoardTest {
         coordinates2.add(c5);
         coordinates2.add(c6);
         coordinates2.add(c7);
-        tiles2.add(Tile.F);
-        tiles2.add(Tile.A);
-        tiles2.add(Tile.M);
+        tiles2.add(LetterTile.F);
+        tiles2.add(LetterTile.A);
+        tiles2.add(LetterTile.M);
         board.placeTiles(coordinates2, tiles2);
         thisTurnHashSet.addAll(coordinates2);
         board.setPlayedThisTurn(thisTurnHashSet);
@@ -300,11 +300,11 @@ public class BoardTest {
         coordinates3.add(c10);
         coordinates3.add(c11);
         coordinates3.add(c12);
-        tiles3.add(Tile.P);
-        tiles3.add(Tile.A);
-        tiles3.add(Tile.S);
-        tiles3.add(Tile.T);
-        tiles3.add(Tile.E);
+        tiles3.add(LetterTile.P);
+        tiles3.add(LetterTile.A);
+        tiles3.add(LetterTile.S);
+        tiles3.add(LetterTile.T);
+        tiles3.add(LetterTile.E);
         board.placeTiles(coordinates3, tiles3);
         thisTurnHashSet.addAll(coordinates3);
         board.setPlayedThisTurn(thisTurnHashSet);
@@ -322,9 +322,9 @@ public class BoardTest {
         coordinates4.add(c13);
         coordinates4.add(c14);
         coordinates4.add(c15);
-        tiles4.add(Tile.B);
-        tiles4.add(Tile.I);
-        tiles4.add(Tile.T);
+        tiles4.add(LetterTile.B);
+        tiles4.add(LetterTile.I);
+        tiles4.add(LetterTile.T);
         board.placeTiles(coordinates4, tiles4);
         thisTurnHashSet.addAll(coordinates4);
         board.setPlayedThisTurn(thisTurnHashSet);

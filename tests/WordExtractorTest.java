@@ -32,9 +32,9 @@ public class WordExtractorTest {
         newCoordinateList.add(new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT));
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
         newCoordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.E);
-        newTileList.add(Tile.N);
-        newTileList.add(Tile.D);
+        newTileList.add(LetterTile.E);
+        newTileList.add(LetterTile.N);
+        newTileList.add(LetterTile.D);
         b.placeTiles(newCoordinateList, newTileList);
         wordExtractor = new WordExtractor(b);
         words = wordExtractor.getWordsCreated(newCoordinateList, BoardValidator.Direction.HORIZONTAL);
@@ -48,8 +48,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.J, Coordinate.Row.EIGHT));
         newCoordinateList.add(new Coordinate(Coordinate.Column.K, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -63,8 +63,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.TEN));
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.ELEVEN));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -79,8 +79,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.E, Coordinate.Row.EIGHT));
         newCoordinateList.add(new Coordinate(Coordinate.Column.F, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -94,8 +94,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.FIVE));
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SIX));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -109,8 +109,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SEVEN));
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.NINE));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -124,8 +124,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT));
         newCoordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -139,8 +139,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.EIGHT));
         newCoordinateList.add(new Coordinate(Coordinate.Column.J, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -154,8 +154,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.F, Coordinate.Row.EIGHT));
         newCoordinateList.add(new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -169,8 +169,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SIX));
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SEVEN));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -184,8 +184,8 @@ public class WordExtractorTest {
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.NINE));
         newCoordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.TEN));
-        newTileList.add(Tile.I);
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.I);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
 
         wordExtractor = new WordExtractor(board);
@@ -198,13 +198,13 @@ public class WordExtractorTest {
         newCoordinateList = new ArrayList<>();
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.S);
         newCoordinateList.add(new Coordinate(Coordinate.Column.J, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.H);
+        newTileList.add(LetterTile.H);
         newCoordinateList.add(new Coordinate(Coordinate.Column.K, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.I);
+        newTileList.add(LetterTile.I);
         newCoordinateList.add(new Coordinate(Coordinate.Column.M, Coordinate.Row.EIGHT));
-        newTileList.add(Tile.S);
+        newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
         System.out.println(board);
 
@@ -223,9 +223,9 @@ public class WordExtractorTest {
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
         coordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.EIGHT));
         ArrayList<Tile> tileList = new ArrayList<>();
-        tileList.add(Tile.E);
-        tileList.add(Tile.N);
-        tileList.add(Tile.D);
+        tileList.add(LetterTile.E);
+        tileList.add(LetterTile.N);
+        tileList.add(LetterTile.D);
         b.placeTiles(coordinateList, tileList);
         return b;
     }
@@ -237,9 +237,9 @@ public class WordExtractorTest {
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.NINE));
         ArrayList<Tile> tileList = new ArrayList<>();
-        tileList.add(Tile.E);
-        tileList.add(Tile.N);
-        tileList.add(Tile.D);
+        tileList.add(LetterTile.E);
+        tileList.add(LetterTile.N);
+        tileList.add(LetterTile.D);
         b.placeTiles(coordinateList, tileList);
         return b;
     }
@@ -249,39 +249,39 @@ public class WordExtractorTest {
         ArrayList<Coordinate> coordinateList = new ArrayList<>();
         ArrayList<Tile> tileList = new ArrayList<>();
         coordinateList.add(new Coordinate(Coordinate.Column.D, Coordinate.Row.EIGHT));
-        tileList.add(Tile.S);
+        tileList.add(LetterTile.S);
         coordinateList.add(new Coordinate(Coordinate.Column.E, Coordinate.Row.EIGHT));
-        tileList.add(Tile.P);
+        tileList.add(LetterTile.P);
         coordinateList.add(new Coordinate(Coordinate.Column.F, Coordinate.Row.EIGHT));
-        tileList.add(Tile.A);
+        tileList.add(LetterTile.A);
         coordinateList.add(new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT));
-        tileList.add(Tile.C);
+        tileList.add(LetterTile.C);
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
-        tileList.add(Tile.E);
+        tileList.add(LetterTile.E);
 
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SEVEN));
-        tileList.add(Tile.N);
+        tileList.add(LetterTile.N);
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.NINE));
-        tileList.add(Tile.T);
+        tileList.add(LetterTile.T);
 
         coordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.SEVEN));
-        tileList.add(Tile.O);
+        tileList.add(LetterTile.O);
         coordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.SIX));
-        tileList.add(Tile.O);
+        tileList.add(LetterTile.O);
         coordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.FIVE));
-        tileList.add(Tile.Z);
+        tileList.add(LetterTile.Z);
 
         coordinateList.add(new Coordinate(Coordinate.Column.J, Coordinate.Row.SIX));
-        tileList.add(Tile.D);
+        tileList.add(LetterTile.D);
         coordinateList.add(new Coordinate(Coordinate.Column.K, Coordinate.Row.SIX));
-        tileList.add(Tile.D);
+        tileList.add(LetterTile.D);
         coordinateList.add(new Coordinate(Coordinate.Column.L, Coordinate.Row.SIX));
-        tileList.add(Tile.S);
+        tileList.add(LetterTile.S);
 
         coordinateList.add(new Coordinate(Coordinate.Column.L, Coordinate.Row.SEVEN));
-        tileList.add(Tile.A);
+        tileList.add(LetterTile.A);
         coordinateList.add(new Coordinate(Coordinate.Column.L, Coordinate.Row.EIGHT));
-        tileList.add(Tile.P);
+        tileList.add(LetterTile.P);
 
         b.placeTiles(coordinateList, tileList);
         System.out.println(b);
