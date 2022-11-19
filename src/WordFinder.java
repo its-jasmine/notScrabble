@@ -40,6 +40,7 @@ public class WordFinder {
      * @return a list of possible words
      */
     public ArrayList<String> findWord(ArrayList<Tile> tileArrayList, String format){
+        addLettersToMap(tileArrayList);
         Pattern wordPattern = Pattern.compile(format.toUpperCase());
         Matcher matcher;
         for (String word : wordBank.getValidWords()){
