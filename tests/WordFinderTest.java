@@ -17,16 +17,17 @@ public class WordFinderTest {
         tileArrayList = new ArrayList<>();
         expectedWords = new HashSet<>();
         format = ".a";
-        tileArrayList.add(Tile.E);
-        tileArrayList.add(Tile.R);
-        tileArrayList.add(Tile.A);
-        tileArrayList.add(Tile.E);
-        tileArrayList.add(Tile.T);
-        tileArrayList.add(Tile.S);
-        tileArrayList.add(Tile.H);
+        tileArrayList.add(LetterTile.E);
+        tileArrayList.add(LetterTile.R);
+        tileArrayList.add(LetterTile.A);
+        tileArrayList.add(LetterTile.E);
+        tileArrayList.add(LetterTile.T);
+        tileArrayList.add(LetterTile.S);
+        tileArrayList.add(LetterTile.H);
 
         expectedWords.add("HA");
         expectedWords.add("TA");
+
         assertEquals(new HashSet<>(wf.findWord(tileArrayList,format)), expectedWords);
 
         /*
@@ -37,10 +38,10 @@ public class WordFinderTest {
         tileArrayList.clear();
         expectedWords.clear();
         format = "....";
-        tileArrayList.add(Tile.D);
-        tileArrayList.add(Tile.O);
-        tileArrayList.add(Tile.O);
-        tileArrayList.add(Tile.M);
+        tileArrayList.add(LetterTile.D);
+        tileArrayList.add(LetterTile.O);
+        tileArrayList.add(LetterTile.O);
+        tileArrayList.add(LetterTile.M);
 
         expectedWords.add("DOOM");
         expectedWords.add("MOOD");
@@ -52,7 +53,6 @@ public class WordFinderTest {
         */
         expectedWords.clear();
         format = "A...";
-        expectedWords.clear();
         assertEquals(new HashSet<>(wf.findWord(tileArrayList,format)), expectedWords);
 
         /*
@@ -61,10 +61,11 @@ public class WordFinderTest {
         tileArrayList.clear();
         expectedWords.clear();
         format = "....";
-        tileArrayList.add(Tile.D);
-        tileArrayList.add(Tile.E);
-        tileArrayList.add(Tile.D);
-        tileArrayList.add(Tile.BLANK);
+        tileArrayList.add(LetterTile.D);
+        tileArrayList.add(LetterTile.E);
+        tileArrayList.add(LetterTile.D);
+        BlankTile b = new BlankTile();
+        tileArrayList.add(b);
 
         expectedWords.add("DIED");
         expectedWords.add("DUDE");

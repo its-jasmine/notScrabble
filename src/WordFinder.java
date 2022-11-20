@@ -38,10 +38,10 @@ public class WordFinder {
         blankCount = 0;
         letterMap.clear();
         for (Tile t : tileList){
-            if (t == Tile.BLANK){
+            if ( t.toString().equals("'")){
                 blankCount++;
             }
-            letterMap.merge(t.letter.toUpperCase().charAt(0), 1,Integer::sum);
+            letterMap.merge(t.toString().toUpperCase().charAt(0), 1,Integer::sum);
         }
     }
 
@@ -100,13 +100,15 @@ public class WordFinder {
 
     public static void main(String[] args) {
         ArrayList<Tile> tileArrayList = new ArrayList<>();
-        /*tileArrayList.add(Tile.D);
-        tileArrayList.add(Tile.E);
-        tileArrayList.add(Tile.D);*/
-        tileArrayList.add(Tile.BLANK);
-        tileArrayList.add(Tile.BLANK);
+        BlankTile b1 = new BlankTile();
+        BlankTile b2 = new BlankTile();
+        tileArrayList.add(LetterTile.D);
+        tileArrayList.add(LetterTile.E);
+        tileArrayList.add(LetterTile.D);
+        tileArrayList.add(b1);
+        tileArrayList.add(b2);
 
         WordFinder wf = new WordFinder();
-        System.out.println(wf.findWord(tileArrayList,".."));
+        System.out.println(wf.findWord(tileArrayList,"D."));
     }
 }
