@@ -84,6 +84,10 @@ public class Square {
     public boolean tileWasPlacedPreviously() {
         return tilePlacedPreviously;
     }
+
+    /**
+     * Sets square to be considered "previously played on" from a previous turn.
+     */
     public void setSquareAsPlayedPreviously() {
          tilePlacedPreviously = true;
     }

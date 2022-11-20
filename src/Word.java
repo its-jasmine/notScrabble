@@ -100,7 +100,7 @@ public class Word {
         int score = 0;
         int wordMultiplier = 1;
         for (Square s : llWord) {
-            if (s.tileWasPlacedPreviously()) score += s.getTile().getValue();
+            if (s.tileWasPlacedPreviously()) score += s.getTile().getValue(); // we don't want multipliers to apply for previously played tiles
             else{
                 score += s.getTile().getValue() * s.getType().letterMultiplier;
                 wordMultiplier *= s.getType().wordMultiplier;
