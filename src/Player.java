@@ -14,6 +14,7 @@ public class Player {
     private int score;
     
     private String name;
+    private Bag bag;
     private List<PlayerView> views;
 
 
@@ -27,6 +28,7 @@ public class Player {
         this.board = board;
         this.name = "";
         this.score = 0;
+        this.bag = bag;
         this.rack = new Rack(bag);
     }
     /**
@@ -123,4 +125,17 @@ public class Player {
     }
 
 
+    /*
+  Attempts to exchange tiles from player's Rack for new tiles from the bag.
+  @param tilesToExchange The tiles the player wishes to exchange.
+  @return true, if the exchange is successful, false, if there are not enough tiles in the bag to perform the exchange.
+   */
+    public boolean exchangeTiles() {
+        ArrayList<Tile> tilesToExchange = rack.getTilesToExchange();
+        if (bag.getNumTilesLeft() < tilesToExchange.size()) return false;
+        rack.removeTiles(tilesToExchange);
+        rack.drawTiles();
+        bag.returnTiles(tilesToExchange);
+        return true;
+    }
 }

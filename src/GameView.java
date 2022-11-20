@@ -50,7 +50,7 @@ public class GameView extends JFrame {
         submitButton.setFocusPainted(false);
         submitButton.setBackground(Color.RED);
         submitButton.setForeground(Color.WHITE);
-        submitButton.setFont(new Font("Tahoma",Font.BOLD, 18));
+        submitButton.setFont(new Font("Tahoma",Font.BOLD, 14));
         submitButton.setPreferredSize(new Dimension(100,50));
         submitButton.addActionListener(e -> game.submit());
 
@@ -58,13 +58,27 @@ public class GameView extends JFrame {
         passButton.setFocusPainted(false);
         passButton.setBackground(Color.RED);
         passButton.setForeground(Color.WHITE);
-        passButton.setFont(new Font("Tahoma",Font.BOLD, 18));
+        passButton.setFont(new Font("Tahoma",Font.BOLD, 14));
         passButton.setPreferredSize(new Dimension(100,50));
         passButton.addActionListener(e -> game.passTurn());
 
-        southContainer.add(passButton, BorderLayout.WEST);
+        JButton exchangeButton = new JButton("Exchange");
+        exchangeButton.setFocusPainted(false);
+        exchangeButton.setBackground(Color.RED);
+        exchangeButton.setForeground(Color.WHITE);
+        exchangeButton.setFont(new Font("Tahoma",Font.BOLD, 13));
+        exchangeButton.setPreferredSize(new Dimension(100,50));
+
+        Container rightSouth = new Container();
+        rightSouth.setLayout(new GridLayout(1,3));
+        rightSouth.add(submitButton);
+        rightSouth.add(exchangeButton);
+        rightSouth.add(passButton);
+        southContainer.add(rightSouth, BorderLayout.EAST);
         southContainer.add(new JLabel("Rack goes here"), BorderLayout.CENTER);
-        southContainer.add(submitButton, BorderLayout.EAST);
+
+        exchangeButton.addActionListener(e -> game.exchangeTiles());
+        southContainer.getComponent(1);
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 

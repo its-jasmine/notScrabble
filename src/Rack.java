@@ -15,12 +15,14 @@ public class Rack implements Iterable<Tile>{
     private final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
+    private ArrayList<Tile> tilesToExchange;
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).
      * @param bag where the tiles are drawn from
      */
     public Rack(Bag bag){
+        tilesToExchange = new ArrayList<>();
         rackModel = new DefaultTableModel(1, 7){
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
@@ -179,6 +181,10 @@ public class Rack implements Iterable<Tile>{
     }
 
 
+    public ArrayList<Tile> getTilesToExchange() {
+        return tilesToExchange;
+    }
+
 
     @Override
     public Iterator<Tile> iterator() {
@@ -212,6 +218,5 @@ public class Rack implements Iterable<Tile>{
         };
         return it;
     }
-
 
 }

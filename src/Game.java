@@ -10,11 +10,11 @@ public class Game {
 
     /** The allowable game statuses */
     public enum Status {RUNNING, OVER, RETRY;} // used as a way to have a named boolean for readability
+
     /** The maximum number of players in a game */
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
     private final static int MINPLAYERS = 2;
-
     /** The list of players in the game */
     private List<Player> players; // if we don't want players to be able to join once a game has started this can be final
 
@@ -23,9 +23,9 @@ public class Game {
     private int playerTurn; // index in the player list
 
     private List<GameView> views;
+
     private Board board;
     private Bag bag;
-
     /**
      * Creates a new game with the specifed number of players and selects a random player to go first.
      * @param numPlayers the number of players of the game
@@ -95,6 +95,7 @@ public class Game {
     public int getPlayerTurn() {
         return playerTurn;
     }
+
     /**
      * Getter for the views list (for testing purposes only)
      * @return list of the GameViews observing this game
@@ -102,7 +103,6 @@ public class Game {
     public List<GameView> getViews() {
         return views;
     }
-
     public ArrayList<Player> getPlayers() {
         return (ArrayList<Player>) players;
     }
@@ -124,6 +124,7 @@ public class Game {
         nextTurn();
         updateGameView(false);
     }
+
     public void submit(){
         Player player = players.get(playerTurn);
         Status status = player.submit();
@@ -139,6 +140,10 @@ public class Game {
             System.out.println("game done");
 
         }
+    }
+    public void exchangeTiles() {
+        boolean successfulExchange = players.get(playerTurn).exchangeTiles();
+        if (successfulExchange) passTurn();
     }
     private void endGame() {
         // game is now over
