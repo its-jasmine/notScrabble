@@ -8,7 +8,7 @@ import static java.util.Collections.shuffle;
  * @version Milestone1
  */
 public class Bag {
-    public static final int MAX_TILES = 98; // will be 100 when blanks are added
+    public static final int MAX_TILES = 100; // will be 100 when blanks are added
     /** The list of tiles in the bag */
     private List<Tile> tiles;
 
@@ -17,11 +17,14 @@ public class Bag {
      */
     public Bag() {
         this.tiles = new ArrayList<>();
-        for (Tile t : Tile.values()) {
+        for (LetterTile t : LetterTile.values()) {
             for (int i = t.getTotalNum();i > 0; i--) {
                 tiles.add(t);
             }
         }
+        for (int i = 0; i < BlankTile.TOTAL_NUM; i++){
+                tiles.add(new BlankTile());
+            }
         shuffle(tiles); // randomizes the order tiles will be drawn in
     }
 

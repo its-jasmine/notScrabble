@@ -43,11 +43,11 @@ public class PlayerTest {
         //place AND on the starting tile
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
-        tiles.add(Tile.A);
+        tiles.add(LetterTile.A);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.EIGHT));
-        tiles.add(Tile.N);
+        tiles.add(LetterTile.N);
         coordinates.add(new Coordinate(Coordinate.Column.G,Coordinate.Row.EIGHT));
-        tiles.add(Tile.D);
+        tiles.add(LetterTile.D);
         coordinates.add(new Coordinate(Coordinate.Column.H,Coordinate.Row.EIGHT));
         HashSet<Coordinate> coordinateHashSet = new HashSet<>();
         coordinateHashSet.addAll(coordinates);
@@ -59,11 +59,11 @@ public class PlayerTest {
         // place AND but not connected to another word
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
-        tiles.add(Tile.A);
+        tiles.add(LetterTile.A);
         coordinates.add(new Coordinate(Coordinate.Column.A,Coordinate.Row.EIGHT));
-        tiles.add(Tile.N);
+        tiles.add(LetterTile.N);
         coordinates.add(new Coordinate(Coordinate.Column.B,Coordinate.Row.EIGHT));
-        tiles.add(Tile.D);
+        tiles.add(LetterTile.D);
         coordinates.add(new Coordinate(Coordinate.Column.C,Coordinate.Row.EIGHT));
         coordinateHashSet = new HashSet<>();
         coordinateHashSet.addAll(coordinates);
@@ -77,11 +77,11 @@ public class PlayerTest {
         // place invalid word
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
-        tiles.add(Tile.L);
+        tiles.add(LetterTile.L);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.NINE));
-        tiles.add(Tile.D);
+        tiles.add(LetterTile.D);
         coordinates.add(new Coordinate(Coordinate.Column.G,Coordinate.Row.TEN));
-        tiles.add(Tile.S);
+        tiles.add(LetterTile.S);
         coordinates.add(new Coordinate(Coordinate.Column.H,Coordinate.Row.ELEVEN));
         coordinateHashSet = new HashSet<>();
         coordinateHashSet.addAll(coordinates);
@@ -100,11 +100,11 @@ public class PlayerTest {
         // no more tiles in bag
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
-        tiles.add(Tile.A);
+        tiles.add(LetterTile.A);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.EIGHT));
-        tiles.add(Tile.N);
+        tiles.add(LetterTile.N);
         coordinates.add(new Coordinate(Coordinate.Column.G,Coordinate.Row.EIGHT));
-        tiles.add(Tile.D);
+        tiles.add(LetterTile.D);
         coordinates.add(new Coordinate(Coordinate.Column.H,Coordinate.Row.EIGHT));
         coordinateHashSet = new HashSet<>();
         coordinateHashSet.addAll(coordinates);
@@ -114,11 +114,11 @@ public class PlayerTest {
         assertTrue(player.submit()== Game.Status.RUNNING);
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
-        tiles.add(Tile.L);
+        tiles.add(LetterTile.L);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.SEVEN));
-        tiles.add(Tile.P);
+        tiles.add(LetterTile.P);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.NINE));
-        tiles.add(Tile.S);
+        tiles.add(LetterTile.S);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.TEN));
         coordinateHashSet = new HashSet<>();
         coordinateHashSet.addAll(coordinates);
@@ -147,11 +147,11 @@ public class PlayerTest {
         //place AND on the starting tile
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
-        tiles.add(Tile.A);
+        tiles.add(LetterTile.A);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.EIGHT));
-        tiles.add(Tile.N);
+        tiles.add(LetterTile.N);
         coordinates.add(new Coordinate(Coordinate.Column.G,Coordinate.Row.EIGHT));
-        tiles.add(Tile.D);
+        tiles.add(LetterTile.D);
         coordinates.add(new Coordinate(Coordinate.Column.H,Coordinate.Row.EIGHT));
         HashSet<Coordinate> coordinateHashSet = new HashSet<>();
         coordinateHashSet.addAll(coordinates);
