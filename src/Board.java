@@ -138,6 +138,9 @@ public class Board {
      * @return true if all tiles are successfully placed on the board, false otherwise
      */
     public boolean placeTiles(ArrayList<Coordinate> coordinates, ArrayList<Tile> tiles){
+        if (coordinates.size() != tiles.size()) {
+            System.out.println("error");
+        }
         for (int i = 0; i < coordinates.size(); i++){
             if (!placeTile(coordinates.get(i),tiles.get(i))){
                 return false;

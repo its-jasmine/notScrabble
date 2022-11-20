@@ -10,8 +10,8 @@ public class ValidTry implements Comparable<ValidTry>{
 
     public ValidTry(int score, ArrayList<Tile> tilesToPlay, ArrayList<Coordinate> whereToPlayTiles) {
         this.score = score;
-        this.tilesToPlay = tilesToPlay;
-        this.whereToPlayTiles = whereToPlayTiles;
+        this.tilesToPlay = new ArrayList<>(tilesToPlay);
+        this.whereToPlayTiles = new ArrayList<>(whereToPlayTiles);
     }
 
 
