@@ -18,6 +18,5 @@ public interface Tile {
      * @return the letter as a String
      */
     String toString();
-    ImageIcon getImage();
     String getName();
 }

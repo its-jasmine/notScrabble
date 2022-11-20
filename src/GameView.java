@@ -95,14 +95,6 @@ public class GameView extends JFrame {
         }
         contentPane.add(leftContainer,BorderLayout.WEST);
 
-        Container rightContainer = new Container();
-        rightContainer.setLayout(new BorderLayout());
-        JLabel label = new JLabel();
-        //ImageIcon image = new ImageIcon("images/A_tile.jpg");
-        label.setIcon(LetterTile.B.image);
-        rightContainer.add(label, BorderLayout.CENTER);
-        contentPane.add(rightContainer, BorderLayout.EAST);
-
         /*JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(timeLabel, 0);
