@@ -8,7 +8,7 @@
 public class Square {
     /** The allowable square type on game board */
     public enum Type {
-        START("*", 1,1),
+        START("*", 1,2),
         PLAIN("", 1,1),
         DOUBLE_LETTER("DL", 2,1),
         TRIPLE_LETTER("TL", 3,1),

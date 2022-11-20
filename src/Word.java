@@ -27,7 +27,7 @@ public class Word {
     /** The word bank for the game */
     public static final WordBank wordBank = new WordBank(); // used for word validation
     /** The linked list containing the sequence of tiles in the word */
-    private LinkedList<Node> llWord;
+    private LinkedList<Square> llWord;
 
     /**
      * Creates new empty word.
@@ -38,20 +38,18 @@ public class Word {
 
     /**
      * Adds new node to the front of the word.
-     * @param tile the tile to be added to the word
-     * @param type the type of Square the tile is placed on
+     * @param s the square containing the tile to be added to the word
      */
-    public void addFirst(Tile tile, Square.Type type){
-        llWord.addFirst(new Node(tile, type));
+    public void addFirst(Square s){
+        llWord.addFirst(s);
     }
 
     /**
      * Adds new node to the end of the word.
-     * @param tile the tile to be added to the word
-     * @param type the type of Square the tile is placed on
+     * @param s the square containing the tile to be added to the word
      */
-    public void addLast(Tile tile, Square.Type type){
-        llWord.addLast(new Node(tile, type));
+    public void addLast(Square s){
+        llWord.addLast(s);
     }
 
     /**
@@ -100,10 +98,12 @@ public class Word {
      */
     private int scoreWord(){
         int score = 0;
-        for (Node n : llWord) {
-            score += n.tile.getValue();
+        int wordMultiplier = 1;
+        for (Square s : llWord) {
+            score += s.getTile().getValue() * s.getType().letterMultiplier;
+            wordMultiplier *= s.getType().wordMultiplier;
         }
-        return score;
+        return score * wordMultiplier;
     }
 
     /**
@@ -112,6 +112,6 @@ public class Word {
      */
     public String toString(){
         // Each tile letter is collected into a single lowercase string
-        return llWord.stream().map(node -> node.tile.toString()).collect(Collectors.joining());
+        return llWord.stream().map(square -> square.getTile().toString()).collect(Collectors.joining());
     }
 }
