@@ -44,7 +44,6 @@ public class GameView extends JFrame {
 
         southContainer = new Container();
         southContainer.setLayout(new BorderLayout());
-        //southContainer.setLayout(new GridLayout(1,3));
 
         JButton submitButton = new JButton("Submit");
         submitButton.setFocusPainted(false);
@@ -70,8 +69,8 @@ public class GameView extends JFrame {
 
         Container centerContainer = new Container();
         centerContainer.setLayout(new BorderLayout());
-        centerContainer.add(boardView.getTableHeader(), BorderLayout.NORTH);
         centerContainer.add(boardView, BorderLayout.CENTER);
+        centerContainer.add(boardView.getTableHeader(), BorderLayout.NORTH);
         boardView.getTableHeader().setReorderingAllowed(false);
         contentPane.add(centerContainer);
 
@@ -83,9 +82,6 @@ public class GameView extends JFrame {
             }
             leftContainer.add(new JLabel((i+1)+""));
             leftContainer.add(Box.createRigidArea(new Dimension(20,32)));
-
-            if (i !=14) {
-            }
         }
         contentPane.add(leftContainer,BorderLayout.WEST);
 

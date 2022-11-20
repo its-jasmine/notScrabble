@@ -3,6 +3,7 @@ import org.w3c.dom.css.RGBColor;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.util.HashSet;
 
