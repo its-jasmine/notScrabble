@@ -105,6 +105,7 @@ public class GameView extends JFrame {
 
 
         this.setSize(1000, 845);
+        setLocationRelativeTo(null);
         this.setVisible(true);
 
         game.addView(this);
