@@ -101,7 +101,7 @@ public class Word {
     private int scoreWord(){
         int score = 0;
         for (Node n : llWord) {
-            score += n.tile.value;
+            score += n.tile.getValue();
         }
         return score;
     }
