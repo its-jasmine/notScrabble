@@ -51,7 +51,7 @@ public class GameView extends JFrame {
         submitButton.setBackground(Color.RED);
         submitButton.setForeground(Color.WHITE);
         submitButton.setFont(new Font("Tahoma",Font.BOLD, 18));
-        submitButton.setPreferredSize(new Dimension(100,50));
+        submitButton.setPreferredSize(new Dimension(100,45));
         submitButton.addActionListener(e -> game.submit());
 
         JButton passButton = new JButton("Pass");
@@ -59,7 +59,7 @@ public class GameView extends JFrame {
         passButton.setBackground(Color.RED);
         passButton.setForeground(Color.WHITE);
         passButton.setFont(new Font("Tahoma",Font.BOLD, 18));
-        passButton.setPreferredSize(new Dimension(100,50));
+        passButton.setPreferredSize(new Dimension(100,45));
         passButton.addActionListener(e -> game.passTurn());
 
         southContainer.add(passButton, BorderLayout.WEST);
@@ -75,6 +75,21 @@ public class GameView extends JFrame {
         northContainer.setLayout(new GridLayout(1, 3));
         contentPane.add(northContainer, BorderLayout.NORTH);
 
+        Container leftContainer = new Container();
+        leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
+        for (int i = 0; i<15; i++){
+            if (i == 0){
+                leftContainer.add(Box.createRigidArea(new Dimension(20, 15)));
+            }
+            leftContainer.add(new JLabel((i+1)+""));
+            leftContainer.add(Box.createRigidArea(new Dimension(20,32)));
+
+            if (i !=14) {
+            }
+        }
+        contentPane.add(leftContainer,BorderLayout.WEST);
+
+
         /*JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(timeLabel, 0);
@@ -89,7 +104,7 @@ public class GameView extends JFrame {
         northContainer.add(scoreLabel, 2);*/
 
 
-        this.setSize(1000, 910);
+        this.setSize(1000, 845);
         this.setVisible(true);
 
         game.addView(this);
