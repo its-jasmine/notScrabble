@@ -100,8 +100,11 @@ public class Word {
         int score = 0;
         int wordMultiplier = 1;
         for (Square s : llWord) {
-            score += s.getTile().getValue() * s.getType().letterMultiplier;
-            wordMultiplier *= s.getType().wordMultiplier;
+            if (s.tileWasPlacedPreviously()) score += s.getTile().getValue();
+            else{
+                score += s.getTile().getValue() * s.getType().letterMultiplier;
+                wordMultiplier *= s.getType().wordMultiplier;
+            }
         }
         return score * wordMultiplier;
     }

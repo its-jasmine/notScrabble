@@ -317,7 +317,6 @@ public class WordTest {
 
     /**
      * Tests that scoreWords for a combination of Square Types work as expected
-     * FAIL: Expected: 96, Actual: 5
      */
     @Test
     public void testScoreAllTileTypes() {
@@ -335,6 +334,31 @@ public class WordTest {
 
         words.add(w);
         assertEquals(96, w.scoreWords(words));
+    }
+    /**
+     * Tests that scoreWords for a combination of Square Types work as expected
+     */
+    @Test
+    public void testScorePremiumTypesFromPreviousTurns() {
+        // Word: "NOTE" N=1, O=1, T=1, E=1, S=1 --> score = 1+1+1+1+1 = 5
+        Square s = newPremiumSquareWithTile(LetterTile.N, Square.Type.DOUBLE_LETTER);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.O, Square.Type.TRIPLE_LETTER);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.T, Square.Type.DOUBLE_WORD);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.E, Square.Type.TRIPLE_WORD);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.S, Square.Type.START);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+
+        words.add(w);
+        assertEquals(5, w.scoreWords(words));
     }
 
     /**

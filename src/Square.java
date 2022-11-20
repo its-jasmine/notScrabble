@@ -15,7 +15,7 @@ public class Square {
         DOUBLE_WORD("DW",1,2),
         TRIPLE_WORD("TW",1,3);
 
-        public final String stringDisplay;
+        private final String stringDisplay;
         public final int letterMultiplier;
         public final int wordMultiplier;
 
@@ -33,6 +33,8 @@ public class Square {
     private Tile tile;
     /** The square type */
     private final Type type;
+    /** Whether tile was placed this turn.*/
+    private boolean tilePlacedPreviously;
 
     /**
      * Creates a new empty square (i.e., with no tile placed on it) of the given type.
@@ -41,6 +43,7 @@ public class Square {
     public Square(Type type){
         this.tile = null;
         this.type = type;
+        tilePlacedPreviously = false;
     }
 
     /**
@@ -73,6 +76,18 @@ public class Square {
     public boolean isEmpty() {
         return tile == null;
     }
+
+    /**
+     *  Indicates whether a tile has been placed on this square from a previous turn.
+     * @return true if square had a tile placed on it prior to current turn, false otherwise.
+     */
+    public boolean tileWasPlacedPreviously() {
+        return tilePlacedPreviously;
+    }
+    public void setSquareAsPlayedPreviously() {
+         tilePlacedPreviously = true;
+    }
+
 
     /**
      * Places given tile on the square.
