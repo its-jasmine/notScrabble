@@ -31,7 +31,7 @@ public class Board {
     public Board() {
         boardModel = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length){
             //  renderers to be used based on Class
-            public Class getColumnClass(int column)
+            public Class<Square> getColumnClass(int column)
             {
                 return Square.class;
             }
@@ -73,8 +73,7 @@ public class Board {
         playedThisTurn = new HashSet<>();
     }
     private ArrayList<Coordinate> playedHashToList() {
-        ArrayList<Coordinate> played = new ArrayList<>();
-        played.addAll(playedThisTurn);
+        ArrayList<Coordinate> played = new ArrayList<>(playedThisTurn);
         return played;
     }
 

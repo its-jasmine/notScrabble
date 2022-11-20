@@ -6,7 +6,7 @@ import static java.util.Collections.shuffle;
 
 public class AIPlayer extends Player{
     private static final int NUMBER_TILES_TO_TRY = 10; // to help limit how long the AI's turn is
-    private WordFinder wordFinder;
+    private final WordFinder wordFinder;
 
     public AIPlayer(Board board, Bag bag, int playerNumber) {
         super(board, bag, playerNumber);
@@ -17,12 +17,10 @@ public class AIPlayer extends Player{
     public Game.Status submit() {
         if (board.isStartSquareEmpty()) return Game.Status.RUNNING; //TODO handle AI goes first
 
-        ArrayList<ValidTry> validTries = new ArrayList<>();
-        ArrayList<Coordinate> prevPlayed = new ArrayList<>();
-        prevPlayed.addAll(board.getPreviouslyPlayed());
+        ArrayList<Coordinate> prevPlayed = new ArrayList<>(board.getPreviouslyPlayed());
         shuffle(prevPlayed); // some systems will return hash sets in the same order every time
 
-        validTries.addAll(findLocationToTry(prevPlayed));
+        ArrayList<ValidTry> validTries = new ArrayList<>(findLocationToTry(prevPlayed));
 
         if (validTries.size() == 0) return Game.Status.RUNNING; // couldn't make any valid word, passing
 
@@ -95,7 +93,7 @@ public class AIPlayer extends Player{
                 emptySquares++;
                 emptySquareCoordinates.add(coordinateBelow);
                 coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-                if (coordinateBelow == null) break searching; // check for edge of board
+                if (coordinateBelow == null) break; // check for edge of board
                 tileBelow = board.getSquareTile(coordinateBelow);
                 if (tileBelow != null) {
                     while (tileBelow != null) {
