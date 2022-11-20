@@ -71,10 +71,6 @@ public class GameView extends JFrame {
         contentPane.add(boardView, BorderLayout.CENTER);
 
 
-        Container northContainer = new Container();
-        northContainer.setLayout(new GridLayout(1, 3));
-        contentPane.add(northContainer, BorderLayout.NORTH);
-
         Container leftContainer = new Container();
         leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
         for (int i = 0; i<15; i++){
@@ -88,6 +84,23 @@ public class GameView extends JFrame {
             }
         }
         contentPane.add(leftContainer,BorderLayout.WEST);
+
+        /*Container northContainer = new Container();
+        northContainer.setLayout(new GridLayout(1, 3));
+        contentPane.add(northContainer, BorderLayout.NORTH);*/
+        Container rightContainer = new Container();
+        rightContainer.setLayout(new BoxLayout(rightContainer, BoxLayout.X_AXIS));
+        for (int i = 0; i<15; i++){
+            if (i == 0){
+                rightContainer.add(Box.createRigidArea(new Dimension(52,20)));
+            }
+            rightContainer.add(new JLabel((char)('A'+i)+""));
+            rightContainer.add(Box.createRigidArea(new Dimension(56,20)));
+
+            if (i !=14) {
+            }
+        }
+        contentPane.add(rightContainer,BorderLayout.NORTH);
 
 
         /*JLabel timeLabel = new JLabel("game time GOES HERE");
@@ -104,7 +117,7 @@ public class GameView extends JFrame {
         northContainer.add(scoreLabel, 2);*/
 
 
-        this.setSize(1000, 845);
+        this.setSize(1000, 865);
         setLocationRelativeTo(null);
         this.setVisible(true);
 
