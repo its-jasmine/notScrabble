@@ -1,3 +1,4 @@
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.util.*;
@@ -25,6 +26,7 @@ public class Rack implements Iterable<Tile>{
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
             {
+                //return ImageIcon.class;
                 return Tile.class;
             }
         };

@@ -14,8 +14,9 @@ public class RackView extends JTable {
         super();
         this.rack = rack;
         setModel(rack.getModel());
-        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) this.getDefaultRenderer(Object.class);
-        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        setDefaultRenderer(Tile.class,new RackRenderer());
+        //DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) this.getDefaultRenderer(Object.class);
+        //renderer.setHorizontalAlignment(SwingConstants.CENTER);
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(48);
         setOpaque(true);

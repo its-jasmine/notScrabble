@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Models the blank tiles in the game.
  * @author Victoria Malouf
@@ -13,9 +15,11 @@ public class BlankTile implements Tile {
 
     /** The total quantity of blank tiles in the bag */
     public static final int TOTAL_NUM = 2; // total number of blank tiles in the game
+    private ImageIcon image;
 
     public BlankTile(){
         this.letter = "'";
+        this.image = new ImageIcon("BLANK_tile.jpg");
     }
 
     /**
@@ -56,6 +60,7 @@ public class BlankTile implements Tile {
     public int getTotalNum(){
         return TOTAL_NUM;
     }
+    public ImageIcon getImage(){ return image;}
 
     /**
      * Converts Letter to a String.
@@ -65,5 +70,7 @@ public class BlankTile implements Tile {
     public String toString() {
         return letter;
     }
+
+    public String getName() {return "BLANK";}
 
 }

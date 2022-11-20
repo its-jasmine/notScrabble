@@ -53,6 +53,15 @@ public class GameView extends JFrame {
         submitButton.setPreferredSize(new Dimension(100,45));
         submitButton.addActionListener(e -> game.submit());
 
+        JButton exchangeButton = new JButton("Exchange");
+        exchangeButton.setFocusPainted(false);
+        exchangeButton.setBackground(Color.RED);
+        exchangeButton.setForeground(Color.WHITE);
+        exchangeButton.setFont(new Font("Tahoma",Font.BOLD, 18));
+        exchangeButton.setPreferredSize(new Dimension(100,45));
+        //exchangeButton.addActionListener(e -> game.exchangeTiles());
+
+
         JButton passButton = new JButton("Pass");
         passButton.setFocusPainted(false);
         passButton.setBackground(Color.RED);
@@ -64,6 +73,7 @@ public class GameView extends JFrame {
         southContainer.add(passButton, BorderLayout.WEST);
         southContainer.add(new JLabel("Rack goes here"), BorderLayout.CENTER);
         southContainer.add(submitButton, BorderLayout.EAST);
+        //southContainer.add(exchangeButton, BorderLayout.EAST);
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 
@@ -84,6 +94,14 @@ public class GameView extends JFrame {
             leftContainer.add(Box.createRigidArea(new Dimension(20,32)));
         }
         contentPane.add(leftContainer,BorderLayout.WEST);
+
+        Container rightContainer = new Container();
+        rightContainer.setLayout(new BorderLayout());
+        JLabel label = new JLabel();
+        //ImageIcon image = new ImageIcon("images/A_tile.jpg");
+        label.setIcon(LetterTile.B.image);
+        rightContainer.add(label, BorderLayout.CENTER);
+        contentPane.add(rightContainer, BorderLayout.EAST);
 
         /*JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
