@@ -73,8 +73,7 @@ public class Board {
         playedThisTurn = new HashSet<>();
     }
     private ArrayList<Coordinate> playedHashToList() {
-        ArrayList<Coordinate> played = new ArrayList<>(playedThisTurn);
-        return played;
+        return new ArrayList<>(playedThisTurn);
     }
 
     /**
