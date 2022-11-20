@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 /**
  * Represents a sequence of consecutive tiles on the game board.
  * @author Jasmine Gad El Hak
- * @version Milestone1
+ * @version Milestone3
  */
 public class Word {
     /* Represents a placed tile in the sequence of consecutive tiles of a word.*/
