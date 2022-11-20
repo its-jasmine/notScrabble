@@ -68,7 +68,11 @@ public class GameView extends JFrame {
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 
-        contentPane.add(boardView, BorderLayout.CENTER);
+        Container centerContainer = new Container();
+        centerContainer.setLayout(new BorderLayout());
+        centerContainer.add(boardView.getTableHeader(), BorderLayout.NORTH);
+        centerContainer.add(boardView, BorderLayout.CENTER);
+        contentPane.add(centerContainer);
 
 
         Container leftContainer = new Container();
@@ -88,7 +92,9 @@ public class GameView extends JFrame {
         /*Container northContainer = new Container();
         northContainer.setLayout(new GridLayout(1, 3));
         contentPane.add(northContainer, BorderLayout.NORTH);*/
-        Container rightContainer = new Container();
+
+/*
+         Container rightContainer = new Container();
         rightContainer.setLayout(new BoxLayout(rightContainer, BoxLayout.X_AXIS));
         for (int i = 0; i<15; i++){
             if (i == 0){
@@ -101,7 +107,7 @@ public class GameView extends JFrame {
             }
         }
         contentPane.add(rightContainer,BorderLayout.NORTH);
-
+*/
 
         /*JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
