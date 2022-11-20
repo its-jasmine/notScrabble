@@ -2,7 +2,7 @@
  * Represents a square on the game board.
  * @author Jasmine Gad El Hak
  * @author Rebecca Elliott
- * @version Milestone1
+ * @version Milestone3
  */
 
 public class Square {
