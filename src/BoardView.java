@@ -14,7 +14,7 @@ public class BoardView extends JTable {
         super();
         this.board = board;
         setModel(board.getModel());
-        setDefaultRenderer(Tile.class,new BoardRenderer());
+        setDefaultRenderer(Square.class,new BoardRenderer());
         //DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) this.getDefaultRenderer(Object.class);
         //renderer.setHorizontalAlignment(SwingConstants.CENTER);
         setBorder(new BevelBorder(BevelBorder.RAISED));
