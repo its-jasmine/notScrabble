@@ -7,7 +7,7 @@ public class BoardRenderer  extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if (((Square) value).getType() == Square.Type.PLAIN){
-            c.setBackground(new Color(227,207,170));
+            //c.setBackground(new Color(227,207,170)); // a bit too close to tile color.
             c.setBackground(new Color(216,213,194));
         }
         else if (((Square) value).getType() == Square.Type.START){
