@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 /**
  * Represents a rack that contains the tiles that a player can use during their turn.
  * @author Arthur Atangana
- * @version Milestone1
+ * @author Jasmine Gad El Hak
+ * @version Milestone3
  */
 public class Rack implements Iterable<Tile>{
     /** The list of tiles in the rack */
@@ -15,14 +16,20 @@ public class Rack implements Iterable<Tile>{
     private final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
-    private ArrayList<Tile> tilesToExchange;
+    private DefaultTableModel tilesToExchange;
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).
      * @param bag where the tiles are drawn from
      */
     public Rack(Bag bag){
-        tilesToExchange = new ArrayList<>();
+        tilesToExchange = new DefaultTableModel(1, 7){
+            //  renderers to be used based on Class
+            public Class getColumnClass(int column)
+            {
+                return Tile.class;
+            }
+        };
         rackModel = new DefaultTableModel(1, 7){
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
@@ -182,7 +189,15 @@ public class Rack implements Iterable<Tile>{
 
 
     public ArrayList<Tile> getTilesToExchange() {
-        return tilesToExchange;
+        ArrayList<Tile> tileList = new ArrayList<>();
+        for(int i = 0; i < 7; i++){
+            Tile tileToExchange = (Tile)tilesToExchange.getValueAt(0,i);
+            if (tileToExchange != null) {
+                tileList.add(tileToExchange);
+                tilesToExchange.setValueAt(null,0,i);
+            }
+        }
+        return tileList;
     }
 
 
@@ -219,4 +234,7 @@ public class Rack implements Iterable<Tile>{
         return it;
     }
 
+    public TableModel getExchangeModel() {
+        return tilesToExchange;
+    }
 }

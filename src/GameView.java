@@ -1,7 +1,5 @@
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameView extends JFrame {
@@ -11,6 +9,8 @@ public class GameView extends JFrame {
     private Container southContainer;
     private BoardView boardView;
     private int currentView;
+    private JButton exchangeButton;
+    private JButton doneExchangeButton;
 
     public GameView(int numPlayers) throws HeadlessException {
         super("notScrabble");
@@ -62,33 +62,42 @@ public class GameView extends JFrame {
         passButton.setPreferredSize(new Dimension(100,50));
         passButton.addActionListener(e -> game.passTurn());
 
-        JButton exchangeButton = new JButton("Exchange");
+        exchangeButton = new JButton("Exchange");
         exchangeButton.setFocusPainted(false);
         exchangeButton.setBackground(Color.RED);
         exchangeButton.setForeground(Color.WHITE);
         exchangeButton.setFont(new Font("Tahoma",Font.BOLD, 13));
         exchangeButton.setPreferredSize(new Dimension(100,50));
+        exchangeButton.addActionListener(e -> displayExchangeView());
 
         Container rightSouth = new Container();
-        rightSouth.setLayout(new GridLayout(1,3));
-        rightSouth.add(submitButton);
-        rightSouth.add(exchangeButton);
-        rightSouth.add(passButton);
+        rightSouth.setLayout(new BorderLayout());
+        rightSouth.add(submitButton, BorderLayout.WEST);
+        rightSouth.add(passButton, BorderLayout.CENTER);
+        rightSouth.add(exchangeButton, BorderLayout.EAST);
+
         southContainer.add(rightSouth, BorderLayout.EAST);
         southContainer.add(new JLabel("Rack goes here"), BorderLayout.CENTER);
-
-        exchangeButton.addActionListener(e -> game.exchangeTiles());
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 
         contentPane.add(boardView, BorderLayout.CENTER);
 
+        doneExchangeButton = new JButton("Done");
+        doneExchangeButton.setFocusPainted(false);
+        doneExchangeButton.setBackground(Color.RED);
+        doneExchangeButton.setForeground(Color.WHITE);
+        doneExchangeButton.setFont(new Font("Tahoma",Font.BOLD, 13));
+        doneExchangeButton.setPreferredSize(new Dimension(100,50));
+        doneExchangeButton.addActionListener(e -> game.exchangeTiles());
 
-        Container northContainer = new Container();
+
+
+        /*Container northContainer = new Container();
         northContainer.setLayout(new GridLayout(1, 3));
         contentPane.add(northContainer, BorderLayout.NORTH);
 
-        /*JLabel timeLabel = new JLabel("game time GOES HERE");
+        JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(timeLabel, 0);
 
@@ -108,6 +117,19 @@ public class GameView extends JFrame {
         game.playGame();
     }
 
+    private void displayExchangeView() {
+        BorderLayout layout =  (BorderLayout)southContainer.getLayout();
+        PlayerView currentPlayerView = (PlayerView) layout.getLayoutComponent(BorderLayout.CENTER);
+        Container rightSouth = (Container) layout.getLayoutComponent(BorderLayout.EAST);
+
+        currentPlayerView.displayExchangeView();
+        rightSouth.remove(exchangeButton);
+
+        rightSouth.add(doneExchangeButton, BorderLayout.EAST);
+        southContainer.revalidate();
+        southContainer.repaint();
+    }
+
     public static void main(String[] args) {
         new GameView(2);
     }
@@ -118,6 +140,15 @@ public class GameView extends JFrame {
 
         southContainer.remove(1);
         southContainer.add(playerViews.get(playerTurn), 1);
+
+        BorderLayout layout =  (BorderLayout)southContainer.getLayout();
+        Container rightSouth = (Container) layout.getLayoutComponent(BorderLayout.EAST);
+        BorderLayout layout2 =  (BorderLayout) rightSouth.getLayout();
+        Component c = layout2.getLayoutComponent(BorderLayout.EAST);
+        if (c == doneExchangeButton) {
+            rightSouth.remove(c);
+            rightSouth.add(exchangeButton, BorderLayout.EAST);
+        }
         southContainer.revalidate();
         southContainer.repaint();
     }

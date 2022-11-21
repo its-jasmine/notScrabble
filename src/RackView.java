@@ -1,8 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.util.Arrays;
 
 /**
  * Represents the rack in the GUI.
@@ -14,7 +11,6 @@ public class RackView extends JTable {
     public RackView(Rack rack) {
         super();
         this.rack = rack;
-        setModel(rack.getModel());
 
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(50);
@@ -23,10 +19,14 @@ public class RackView extends JTable {
         setTransferHandler(new RackTransferHelper());
         setRowSelectionAllowed(false);
         setCellSelectionEnabled(true);
+        setModel();
     }
 
     public Rack getRack() {
         return rack;
+    }
+    public void setModel(){
+        setModel(rack.getModel());
     }
 
 }
