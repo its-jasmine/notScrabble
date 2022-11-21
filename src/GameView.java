@@ -77,6 +77,11 @@ public class GameView extends JFrame {
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 
+        Container rightContainer = new Container();
+        rightContainer.setLayout(new BorderLayout());
+        rightContainer.add(exchangeButton,BorderLayout.SOUTH);
+        //contentPane.add(rightContainer, BorderLayout.EAST);
+
         Container centerContainer = new Container();
         centerContainer.setLayout(new BorderLayout());
         centerContainer.add(boardView, BorderLayout.CENTER);
