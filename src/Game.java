@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,6 @@ public class Game {
 
     /** The allowable game statuses */
     public enum Status {RUNNING, OVER, RETRY;} // used as a way to have a named boolean for readability
-
     /** The maximum number of players in a game */
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
@@ -24,11 +22,11 @@ public class Game {
     private int playerTurn; // index in the player list
 
     private List<GameView> views;
-
     private Board board;
     private Bag bag;
+
     /**
-     * Creates a new game with the specifed number of players and selects a random player to go first.
+     * Creates a new game with the specifed number of players.
      * @param numPlayers the number of players of the game
      */
     public Game(int numPlayers) {
@@ -44,6 +42,30 @@ public class Game {
         this.players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, i + 1));
+        }
+    }
+
+
+    /**
+     * Creates a new game with the specifed number of players and AI.
+     * @param numPlayers the number of players of the game
+     */
+    public Game(int numPlayers, int numAI) {
+        views = new ArrayList<>();
+        board = new Board();
+        bag = new Bag();
+
+        if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change
+        else if (numPlayers > MAXPLAYERS) numPlayers= 4;
+
+        this.playerTurn = firstPlayer(bag, numPlayers + numAI);
+
+        this.players = new ArrayList<>();
+        for (int i = 0; i < numPlayers; i++) {
+            players.add(new Player(board, bag, i + 1));
+        }
+        for (int i = 0; i < numAI; i++) {
+            players.add(new AIPlayer(board, bag, i + 1));
         }
     }
 
@@ -120,6 +142,7 @@ public class Game {
     public List<GameView> getViews() {
         return views;
     }
+
     public ArrayList<Player> getPlayers() {
         return (ArrayList<Player>) players;
     }
@@ -151,6 +174,19 @@ public class Game {
         }
         else if (status == Status.RETRY){
             player.resetTurn();
+        }
+        else{
+            endGame();
+            System.out.println("game done");
+
+        }
+    }
+
+    public void submitAI(){
+        Player player = players.get(playerTurn);
+        Status status = player.submit();
+        if (status == Status.RUNNING){
+            nextTurn();
         }
         else{
             endGame();
@@ -214,6 +250,7 @@ public class Game {
      */
     public static void main(String[] args) {
         Game game = new Game(2);
+        //Game game = new Game(1, 1);
         game.playGame();
     }
 }

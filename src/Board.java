@@ -10,6 +10,8 @@ import java.util.*;
  * @version Milestone2
  */
 public class Board {
+    private final Coordinate.Row START_ROW = Coordinate.Row.EIGHT;
+    private final Coordinate.Column START_COLUMN = Coordinate.Column.H;
 
     private HashSet<Coordinate> playedThisTurn;
 
@@ -29,11 +31,12 @@ public class Board {
     public Board() {
         boardModel = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length){
             //  renderers to be used based on Class
-            public Class getColumnClass(int column)
+            public Class<Square> getColumnClass(int column)
             {
                 return Square.class;
             }
         };
+
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
                 int row = r.ordinal();
@@ -41,6 +44,30 @@ public class Board {
                 boardModel.setValueAt(new Square(), row, col);
             }
         }
+        String[][] squarePlacement =
+        {{"TRIPLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","TRIPLE_WORD"},
+        {"PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN"},
+        {"PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN"},
+        {"DOUBLE_LETTER","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER"},
+        {"PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN"},
+        {"PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER", "PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN"},
+        {"PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN"},
+        {"TRIPLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","START","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","TRIPLE_WORD"},
+        {"PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN"},
+        {"PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER", "PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN"},
+        {"PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN"},
+        {"DOUBLE_LETTER","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER"},
+        {"PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN"},
+        {"PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN"},
+        {"TRIPLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","TRIPLE_WORD"}};
+
+        for (int r = 0; r < squarePlacement.length; r++){
+            for (int c = 0; c < squarePlacement[r].length; c++){
+                Square.Type type = Square.Type.valueOf(squarePlacement[r][c]);
+                boardModel.setValueAt(new Square(type), r, c);
+            }
+        }
+
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
 
@@ -71,9 +98,7 @@ public class Board {
         playedThisTurn = new HashSet<>();
     }
     private ArrayList<Coordinate> playedHashToList() {
-        ArrayList<Coordinate> played = new ArrayList<>();
-        played.addAll(playedThisTurn);
-        return played;
+        return new ArrayList<>(playedThisTurn);
     }
 
     /**
@@ -119,10 +144,11 @@ public class Board {
      * @param tile to be placed
      * @return true if letter was placed, false otherwise
      */
-    private boolean placeTile(Coordinate coordinate, Tile tile) {
+    protected boolean placeTile(Coordinate coordinate, Tile tile) {
         Square square = getSquare(coordinate);
         if (square.isEmpty()) {
             square.setTile(tile);
+            playedThisTurn.add(coordinate);
             return true;
         }
         return false;
@@ -135,6 +161,9 @@ public class Board {
      * @return true if all tiles are successfully placed on the board, false otherwise
      */
     public boolean placeTiles(ArrayList<Coordinate> coordinates, ArrayList<Tile> tiles){
+        if (coordinates.size() != tiles.size()) {
+            System.out.println("error");
+        }
         for (int i = 0; i < coordinates.size(); i++){
             if (!placeTile(coordinates.get(i),tiles.get(i))){
                 return false;
@@ -161,6 +190,7 @@ public class Board {
         ArrayList<Tile> tilesLst = new ArrayList<>();
         for (Coordinate c : tileCoordinates){
             tilesLst.add(removeTile(c));
+            playedThisTurn.remove(c);
         }
         return tilesLst;
     }
@@ -171,6 +201,11 @@ public class Board {
      * @return true if the square has no Tile yet, false otherwise
      */
     public boolean isSquareEmpty(Coordinate coordinate) {
+        return getSquare(coordinate).isEmpty();
+    }
+
+    public boolean isStartSquareEmpty() {
+        Coordinate coordinate = new Coordinate(START_COLUMN,START_ROW);
         return getSquare(coordinate).isEmpty();
     }
 

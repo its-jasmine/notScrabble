@@ -5,29 +5,16 @@ import java.util.stream.Collectors;
 /**
  * Represents a sequence of consecutive tiles on the game board.
  * @author Jasmine Gad El Hak
- * @version Milestone1
+ * @version Milestone3
  */
 public class Word {
     /* Represents a placed tile in the sequence of consecutive tiles of a word.*/
-    private class Node {
-        /** The tile in the word */
-        public Tile tile;
-        /** The type of Square the tile is placed on */
-        public Square.Type type;
 
-        /** Creates new node.
-         * @param tile the tile in the word
-         * @param type the type of Square the tile is placed on
-         */
-        public Node(Tile tile, Square.Type type) {
-            this.tile = tile;
-            this.type = type;
-        }
-    }
+
     /** The word bank for the game */
     public static final WordBank wordBank = new WordBank(); // used for word validation
     /** The linked list containing the sequence of tiles in the word */
-    private LinkedList<Node> llWord;
+    private LinkedList<Square> llWord;
 
     /**
      * Creates new empty word.
@@ -38,20 +25,18 @@ public class Word {
 
     /**
      * Adds new node to the front of the word.
-     * @param tile the tile to be added to the word
-     * @param type the type of Square the tile is placed on
+     * @param s the square containing the tile to be added to the word
      */
-    public void addFirst(Tile tile, Square.Type type){
-        llWord.addFirst(new Node(tile, type));
+    public void addFirst(Square s){
+        llWord.addFirst(s);
     }
 
     /**
      * Adds new node to the end of the word.
-     * @param tile the tile to be added to the word
-     * @param type the type of Square the tile is placed on
+     * @param s the square containing the tile to be added to the word
      */
-    public void addLast(Tile tile, Square.Type type){
-        llWord.addLast(new Node(tile, type));
+    public void addLast(Square s){
+        llWord.addLast(s);
     }
 
     /**
@@ -102,20 +87,25 @@ public class Word {
      */
     private int scoreWord(){
         int score = 0;
-        for (Node n : llWord) {
-            score += n.tile.getValue();
+        int wordMultiplier = 1;
+        for (Square s : llWord) {
+            if (s.tileWasPlacedPreviously()) score += s.getTile().getValue(); // we don't want multipliers to apply for previously played tiles
+            else{
+                score += s.getTile().getValue() * s.getType().letterMultiplier;
+                wordMultiplier *= s.getType().wordMultiplier;
+            }
         }
-        return score;
+        return score * wordMultiplier;
     }
 
     /**
      * Resets blank tiles in a word if blank tile was placed this turn.
      */
     public void resetBlankTiles() {
-        for (Node n: llWord) {
-            if (n.tile instanceof BlankTile){
-                if (!n.tile.tileWasPlacedPreviously()) {  // Will reset the tile if it was played this turn
-                    ((BlankTile) n.tile).resetLetter();
+        for (Square s: llWord) {
+            if (s.getTile() instanceof BlankTile){
+                if (!s.tileWasPlacedPreviously()) {  // Will reset the tile if it was played this turn
+                    ((BlankTile) s.getTile()).resetLetter();
                 }
             }
         }
@@ -127,6 +117,6 @@ public class Word {
      */
     public String toString(){
         // Each tile letter is collected into a single lowercase string
-        return llWord.stream().map(node -> node.tile.toString()).collect(Collectors.joining());
+        return llWord.stream().map(square -> square.getTile().toString()).collect(Collectors.joining());
     }
 }

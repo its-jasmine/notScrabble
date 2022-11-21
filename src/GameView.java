@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class GameView extends JFrame {
 
+    public Game getGame() { // for testing
+        return game;
+    }
+
     private Game game;
     private ArrayList<PlayerView> playerViews;
     private Container southContainer;
@@ -14,10 +18,10 @@ public class GameView extends JFrame {
     private JButton exchangeButton;
     private JButton doneExchangeButton;
 
-    public GameView(int numPlayers) throws HeadlessException {
+    public GameView(int numPlayers, int numAI) throws HeadlessException {
         super("notScrabble");
 
-        game = new Game(numPlayers);
+        game = new Game(numPlayers, numAI);
         currentView = 0;
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
@@ -154,7 +158,8 @@ public class GameView extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameView(4);
+        new GameView(2,0);
+        //new GameView(1, 1);
     }
 
     public void update(int playerTurn, boolean firstTurn) {
@@ -172,6 +177,14 @@ public class GameView extends JFrame {
             rightSouth.remove(c);
             rightSouth.add(exchangeButton, BorderLayout.EAST);
         }
+
+        Player player = game.getPlayers().get(playerTurn);
+        if (player instanceof AIPlayer) {
+            game.submitAI();
+            playerTurn = ++playerTurn % game.getPlayers().size();
+            southContainer.add(playerViews.get(playerTurn), 1);
+        } else southContainer.add(playerViews.get(playerTurn), 1);
+
         southContainer.revalidate();
         southContainer.repaint();
     }

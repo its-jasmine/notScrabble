@@ -140,10 +140,12 @@ public class Rack implements Iterable<Tile>{
      * Removes a specific tile from the rack
      * @param tile : the tile to be removed from the rack.
      */
-    private Tile removeTileFromRack(Tile tile){
+    public Tile removeTileFromRack(Tile tile){
         for (int i = 0; i < MAXTILES; i++) {
             Tile r = (Tile) rackModel.getValueAt(0, i);
-            if (r == tile) {
+            if (r == null) continue;
+
+            if (r.equals(tile)) {
                 rackModel.setValueAt(null, 0, i);
                 return r;
             }
