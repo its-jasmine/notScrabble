@@ -52,6 +52,22 @@ public class RackTest {
     }
 
     /**
+     * Tests that removeTiles removes Blank Tile
+     */
+    @Test
+    public void testRemoveBlankTiles(){
+        for (Tile t: rackTiles){
+            rack.removeTileFromRack(t);
+        }
+        assertEquals(0, rack.getNumTiles());
+
+        BlankTile tile = new BlankTile();
+        rack.putTileOnRack(tile);
+        assertEquals(tile, rack.removeTileFromRack(new BlankTile()));
+        assertEquals(0, rack.getNumTiles());
+    }
+
+    /**
      * Tests that removeTiles does not remove a Tile if it is not present in the rack
      */
     @Test
