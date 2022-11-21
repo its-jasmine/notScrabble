@@ -7,9 +7,9 @@ import java.util.*;
  */
 public class Player {
     /** The board of the game the player is participating in */
-    private final Board board;
+    protected final Board board;
     /** The player's rack */
-    private final Rack rack;
+    protected final Rack rack;
     /** The player's current score */
     private int score;
     

@@ -31,7 +31,6 @@ public class WordBank {
             validWords.add(sc.nextLine());
         }
     }
-
     public HashSet<String> getValidWords() {
         return validWords;
     }
@@ -43,6 +42,5 @@ public class WordBank {
     public boolean isValidWord(String word){
         return validWords.contains(word);
     }
-
 
 }
