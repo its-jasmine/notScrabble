@@ -45,8 +45,7 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4. The user will be prompted.
 The game Welcome View is initiated, which prompts the user to select either instructions or New Game, which starts a notScrabble game of two players.
 
-Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined. 
-
+Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined.
 When prompted, a player may pass or play their turn by clicking the submit or pass button.
 The player needs to drag and drop their tiles from their rack to the board.
 The player can swap the order of tiles in their rack by dragging and dropping to reorder their rack.
@@ -68,8 +67,9 @@ when submitting their word after placement, if it is determined to be invalid, t
 
 ### Known issues
 
-The AI can only place words in a downward manner. This will later be fixed to place words in all directions
-Currently, to see the AI in action, GameView.java must be run instead of the default welcomeFrame.
+The AI can only place words in a downward manner. This will later be fixed to place words in all directions.
+
+In some instances, the AI places blank tiles that it does not have.
 
 ### Roadmap ahead
 
@@ -79,5 +79,6 @@ The roadmap ahead is concerned with the refinement of the AI, UI, and added feat
 
 **Goal** for milestone 4:
 - Refine the AI
+- Winner screen
 - Add saving and loading functionalities.
 
