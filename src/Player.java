@@ -118,6 +118,9 @@ public class Player {
         for (Coordinate c: board.getPlayedThisTurn()) {
             Square s = (Square) board.getModel().getValueAt(c.getRowIndex(), c.getColumnIndex());
             Tile temp = s.getTile();
+            if (temp instanceof BlankTile){
+                ((BlankTile) temp).resetLetter();
+            }
             returnTiles.add(temp);
             s.setTile(null);
         }
