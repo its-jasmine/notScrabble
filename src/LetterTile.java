@@ -1,8 +1,16 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.BufferUnderflowException;
+
 /**
  * Models the non-blank letters in the game. Each value has an associated character, letter point value, and the total number of that
  * letter in the game.
  * @author Rebecca Elliott
- * @version Milestone1
+ * @version Milestone3
  */
 
 public enum LetterTile implements Tile{
@@ -40,12 +48,14 @@ public enum LetterTile implements Tile{
 
     /**
      * Creates a new tile with the specified letter, value and quantity.
-     * @param value of the tile
-     * @param totalNum the quantity of that tile in the bag
+     *
+     * @param value         of the tile
+     * @param totalNum      the quantity of that tile in the bag
      */
     LetterTile(int value, int totalNum) {
         this.value = value;
         this.totalNum = totalNum;
+
     }
 
     /**
@@ -64,6 +74,7 @@ public enum LetterTile implements Tile{
         return totalNum;
     }
 
+
     /**
      * Converts Letter to a String.
      * @return the letter as a String
@@ -72,4 +83,6 @@ public enum LetterTile implements Tile{
     public String toString() {
         return this.name();
     }
+    public String getName(){return this.name();}
+
 }

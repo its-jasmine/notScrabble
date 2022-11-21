@@ -1,8 +1,6 @@
 import org.junit.Test;
 import java.util.*;
-/*import java.util.ArrayList;
-import java.util.HashSet;*/
-
+//
 import static org.junit.Assert.*;
 
 public class WordFinderTest {

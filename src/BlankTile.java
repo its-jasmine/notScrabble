@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Models the blank tiles in the game.
  * @author Victoria Malouf
@@ -13,6 +15,7 @@ public class BlankTile implements Tile {
 
     /** The total quantity of blank tiles in the bag */
     public static final int TOTAL_NUM = 2; // total number of blank tiles in the game
+
 
     public BlankTile(){
         this.letter = "'";
@@ -67,6 +70,19 @@ public class BlankTile implements Tile {
     }
 
     /**
+     * Determines if this instance of BlankTile has the same letter as obj
+     * @param obj
+     * @return true if obj is equal to this BlankTile
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof BlankTile)) return false;
+        BlankTile c = (BlankTile) obj;
+        return c.letter == this.letter;
+    }
+
+    /**
      * Converts Letter to a String.
      * @return the letter as a String
      */
@@ -75,12 +91,6 @@ public class BlankTile implements Tile {
         return letter;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof BlankTile)) return false;
-        BlankTile c = (BlankTile) obj;
-        return c.letter == this.letter;
-    }
+    public String getName() {return "BLANK";}
 
 }

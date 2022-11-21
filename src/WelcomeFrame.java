@@ -70,6 +70,7 @@ public class WelcomeFrame extends JFrame {
         instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
 
     }

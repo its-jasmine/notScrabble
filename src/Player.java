@@ -104,7 +104,11 @@ public class Player {
     public Game.Status submit(){
         int turnScore = board.submit(); // we will update board to have internal list of tiles, no need for arg
         if (turnScore < 0) return Game.Status.RETRY;
-
+        Square s;
+        for (Coordinate c : board.getPlayedThisTurn()){
+            s = board.getSquare(c);
+            s.setSquareAsPlayedPreviously();
+        }
         this.addToScore(turnScore);
         return this.endTurn();
     }
@@ -114,6 +118,9 @@ public class Player {
         for (Coordinate c: board.getPlayedThisTurn()) {
             Square s = (Square) board.getModel().getValueAt(c.getRowIndex(), c.getColumnIndex());
             Tile temp = s.getTile();
+            if (temp instanceof BlankTile){
+                ((BlankTile) temp).resetLetter();
+            }
             returnTiles.add(temp);
             s.setTile(null);
         }

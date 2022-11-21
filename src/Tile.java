@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public interface Tile {
     /**
      * Gets the total number of that letter to be included in the game.
@@ -16,4 +18,5 @@ public interface Tile {
      * @return the letter as a String
      */
     String toString();
+    String getName();
 }
