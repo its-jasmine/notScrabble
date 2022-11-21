@@ -78,7 +78,6 @@ public class GameView extends JFrame {
         southContainer.add(new JLabel("Rack goes here"), BorderLayout.CENTER);
 
         exchangeButton.addActionListener(e -> game.exchangeTiles());
-        southContainer.getComponent(1);
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 
@@ -101,7 +100,6 @@ public class GameView extends JFrame {
         JLabel scoreLabel = new JLabel("game score GOES HERE");
         scoreLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(scoreLabel, 2);*/
-
 
         this.setSize(1000, 910);
         this.setVisible(true);
