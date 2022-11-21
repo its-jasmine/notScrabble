@@ -51,30 +51,23 @@ public class AIPlayer extends Player{
 
     private ArrayList<ValidTry> lookForTileSpaceBelowWords(int numTilesOnRack, Coordinate coordinate) {
         ArrayList<ValidTry> validTries = new ArrayList<>();
+        StringBuilder wordFormat = new StringBuilder();
+        ArrayList<Coordinate> emptySquareCoordinates = new ArrayList<>();
+        ArrayList<Tile> boardTilesAboveAndCenter = new ArrayList<>();
+        ArrayList<Tile> boardTilesBelow = new ArrayList<>();
 
-        AboveXorBelowInfo aboveInfo = findTilesAboveAndCenter(coordinate);
-        String wordFormat = aboveInfo.wordFormat;
-        ArrayList<Tile> boardTilesAboveAndCenter = new ArrayList<>(aboveInfo.boardTilesAboveXorBelowAndCenter);
-
+        findTilesAboveAndCenter(coordinate,boardTilesAboveAndCenter, wordFormat);
 
         Coordinate coordinateBelow = coordinate.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
         if (coordinateBelow == null) return validTries; // if true found edge of board
 
-        ArrayList<Coordinate> emptySquareCoordinates = new ArrayList<>();
-        ArrayList<Tile> boardTilesBelow = new ArrayList<>();
-
         for (int j = 1; j <= numTilesOnRack; j++) {
-            SearchingBelowInfo searchingBelowInfo = findAnEmptyAndTilesBelow(coordinateBelow);
+            coordinateBelow = findAnEmptyAndTilesBelow(coordinateBelow, emptySquareCoordinates, wordFormat,boardTilesBelow);
 
-            coordinateBelow = searchingBelowInfo.coordinateBelow; // can be null
-            if (searchingBelowInfo.emptySquareCoordinate != null) emptySquareCoordinates.add(searchingBelowInfo.emptySquareCoordinate);
-            if (searchingBelowInfo.boardTilesBelow != null) boardTilesBelow.addAll(searchingBelowInfo.boardTilesBelow);
-            wordFormat += searchingBelowInfo.wordFormat;
+            String sWordFormat = wordFormat.toString();
+            ArrayList<String> words = new ArrayList<>(wordFinder.findWord(allNeededTiles(boardTilesBelow, boardTilesAboveAndCenter), sWordFormat));
 
-
-            ArrayList<String> words = new ArrayList<>(wordFinder.findWord(allNeededTiles(boardTilesBelow, boardTilesAboveAndCenter), wordFormat));
-
-            validTries.addAll(findValidTries(words, wordFormat, emptySquareCoordinates));
+            validTries.addAll(findValidTries(words, sWordFormat, emptySquareCoordinates));
             if (coordinateBelow == null) break; // edge of board was found
         }
 
@@ -88,86 +81,70 @@ public class AIPlayer extends Player{
         return allTiles;
     }
 
-    private SearchingBelowInfo findTilesBelow(Coordinate startSearchingCoordinate) {
-        Tile tile = board.getSquareTile(startSearchingCoordinate);
-        String wordFormat = "";
-        if (startSearchingCoordinate == null || tile == null) {
-            return new SearchingBelowInfo(wordFormat,null, null, null);
-        }
-        ArrayList<Tile> boardTilesBelowAndCenter = new ArrayList<>();
-        boardTilesBelowAndCenter.add(board.getSquareTile(startSearchingCoordinate));
+    private void findTilesAboveAndCenter(Coordinate centerCoordinate, ArrayList<Tile> boardTilesAboveAndCenter, StringBuilder wordFormat) {
+        if (centerCoordinate == null || board.getSquareTile(centerCoordinate) == null) return;
 
-
-
-        Tile tileBelow;
-        Coordinate coordinateBelow = startSearchingCoordinate; // just for naming
-        tileBelow = board.getSquareTile(coordinateBelow);
-        while (tileBelow != null) {
-            wordFormat += tileBelow;
-            boardTilesBelowAndCenter.add(tileBelow);
-            coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-            if (coordinateBelow == null) return new SearchingBelowInfo(wordFormat,null, boardTilesBelowAndCenter, null); // the edge of board was found after previously played tiles but before an empty square was found
-            tileBelow = board.getSquareTile(coordinateBelow);
-        }
-        return new SearchingBelowInfo(wordFormat,null, boardTilesBelowAndCenter, coordinateBelow);
-    }
-
-    private AboveXorBelowInfo findTilesAboveAndCenter(Coordinate centerCoordinate) {
-        String wordFormat = board.getSquareTile(centerCoordinate).toString();
-        ArrayList<Tile> boardTilesAboveAndCenter = new ArrayList<>();
+        wordFormat.append(board.getSquareTile(centerCoordinate).toString());
         boardTilesAboveAndCenter.add(board.getSquareTile(centerCoordinate));
 
         Coordinate coordinateAbove = centerCoordinate.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-        if (coordinateAbove == null) return new AboveXorBelowInfo(wordFormat, boardTilesAboveAndCenter);// check for edge of board
+        if (coordinateAbove == null) return;// check for edge of board
         Tile tileAbove = board.getSquareTile(coordinateAbove);
         while (tileAbove != null) {
-            wordFormat = tileAbove + wordFormat;
+            wordFormat.append(tileAbove);
             boardTilesAboveAndCenter.add(tileAbove);
             coordinateAbove = coordinateAbove.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-            if (coordinateAbove == null) return new AboveXorBelowInfo(wordFormat, boardTilesAboveAndCenter); // check for edge of board
+            if (coordinateAbove == null) {
+                wordFormat.reverse(); // so letters will be appended to front
+                return; // check for edge of board
+            }
             tileAbove = board.getSquareTile(coordinateAbove);
 
         }
-        return new AboveXorBelowInfo(wordFormat, boardTilesAboveAndCenter);
+        wordFormat.reverse(); // so letters will be appended to front
+    }
+
+    private Coordinate findTilesBelow(Coordinate startSearchingCoordinate, ArrayList<Tile> boardTilesBelowAndCenter, StringBuilder wordFormat) {
+        if (startSearchingCoordinate == null)  return null;
+        if (board.getSquareTile(startSearchingCoordinate) == null) return startSearchingCoordinate;
+
+        Coordinate coordinateBelow = startSearchingCoordinate; // just for naming
+        Tile tileBelow = board.getSquareTile(coordinateBelow);
+        while (tileBelow != null) {
+            wordFormat.append(tileBelow);
+            boardTilesBelowAndCenter.add(tileBelow);
+            coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
+            if (coordinateBelow == null) return null; // the edge of board was found after previously played tiles but before an empty square was found
+            tileBelow = board.getSquareTile(coordinateBelow);
+        }
+        return coordinateBelow;
     }
 
 
+    private Coordinate findAnEmptyAndTilesBelow(Coordinate startSearchingCoordinate, ArrayList<Coordinate> emptySquareCoordinates, StringBuilder wordFormat, ArrayList<Tile> boardTilesBelow) {
+        if (startSearchingCoordinate == null) return null;
 
-    private SearchingBelowInfo findAnEmptyAndTilesBelow(Coordinate startSearchingCoordinate) {
-        String wordFormat = "";
-        ArrayList<Tile> boardTilesBelow = new ArrayList<>();
-
-        Coordinate coordinateBelow = startSearchingCoordinate; // just for naming
-        if (coordinateBelow == null) return new SearchingBelowInfo(wordFormat,null,null, null); // the edge of board was found
-        Tile tileBelow = board.getSquareTile(coordinateBelow);
-        if (tileBelow != null) {
-            SearchingBelowInfo foundTilesBelow = findTilesBelow(coordinateBelow);
-            wordFormat += foundTilesBelow.wordFormat;
-            coordinateBelow = foundTilesBelow.coordinateBelow;
-        }
+        Coordinate coordinateBelow = findTilesBelow(startSearchingCoordinate, boardTilesBelow, wordFormat); // gets consecutive tiles, no empties
 
         if (coordinateBelow == null) {
             // the edge of board was found after previously played tiles but before an empty square was found
-            return new SearchingBelowInfo(wordFormat,null,boardTilesBelow, null);
+            return null;
         }
 
-        wordFormat += ".";
-        Coordinate emptySquareCoordinate = coordinateBelow;
+        wordFormat.append(".");
+        emptySquareCoordinates.add(coordinateBelow);
         coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
 
         if (coordinateBelow == null) {
             // the edge of board was found after the empty square was found
-            return new SearchingBelowInfo(wordFormat,emptySquareCoordinate,boardTilesBelow, null);
+            return null;
         }
 
-        tileBelow = board.getSquareTile(coordinateBelow);
+        Tile tileBelow = board.getSquareTile(coordinateBelow);
         if (tileBelow != null) {
-            SearchingBelowInfo foundTilesBelowAfterEmpty = findTilesBelow(coordinateBelow);
-            boardTilesBelow.addAll(foundTilesBelowAfterEmpty.boardTilesBelow);
-            wordFormat += foundTilesBelowAfterEmpty.wordFormat;
-            coordinateBelow = foundTilesBelowAfterEmpty.coordinateBelow;
+            coordinateBelow = findTilesBelow(coordinateBelow, boardTilesBelow, wordFormat);
         }
-        return new SearchingBelowInfo(wordFormat,emptySquareCoordinate,boardTilesBelow, coordinateBelow);
+        return coordinateBelow;
     }
 
 
@@ -191,29 +168,5 @@ public class AIPlayer extends Player{
             if (validTry != null) validTries.add(validTry);
         }
         return validTries;
-    }
-
-    private class AboveXorBelowInfo {
-        private final String wordFormat;
-        private final ArrayList<Tile> boardTilesAboveXorBelowAndCenter;
-
-        public AboveXorBelowInfo(String wordFormat, ArrayList<Tile> boardTilesAboveXorBelowAndCenter) {
-            this.wordFormat = wordFormat;
-            this.boardTilesAboveXorBelowAndCenter = boardTilesAboveXorBelowAndCenter;
-        }
-    }
-
-    private class SearchingBelowInfo {
-        private final String wordFormat;
-        private final Coordinate emptySquareCoordinate;
-        private final ArrayList<Tile> boardTilesBelow;
-        private final Coordinate coordinateBelow;
-
-        public SearchingBelowInfo(String wordFormat, Coordinate emptySquareCoordinate, ArrayList<Tile> boardTilesBelow, Coordinate coordinateBelow) {
-            this.wordFormat = wordFormat;
-            this.emptySquareCoordinate = emptySquareCoordinate;
-            this.boardTilesBelow = boardTilesBelow;
-            this.coordinateBelow = coordinateBelow;
-        }
     }
 }
