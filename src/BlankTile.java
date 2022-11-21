@@ -14,8 +14,18 @@ public class BlankTile implements Tile {
     /** The total quantity of blank tiles in the bag */
     public static final int TOTAL_NUM = 2; // total number of blank tiles in the game
 
+
     public BlankTile(){
         this.letter = "'";
+    }
+
+    public BlankTile(String letter){
+        if (letter.length() == 1 && Character.isLetter(letter.charAt(0)) && Character.isUpperCase(letter.charAt(0))) {
+            this.letter = letter;
+        } else {
+            System.out.println("invalid character");
+            this.letter = "'";
+        }
     }
 
     /**
@@ -55,6 +65,19 @@ public class BlankTile implements Tile {
      */
     public int getTotalNum(){
         return TOTAL_NUM;
+    }
+
+    /**
+     * Determines if this instance of BlankTile has the same letter as obj
+     * @param obj
+     * @return true if obj is equal to this BlankTile
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof BlankTile)) return false;
+        BlankTile c = (BlankTile) obj;
+        return c.letter == this.letter;
     }
 
     /**
