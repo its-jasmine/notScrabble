@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Models the blank tiles in the game.
  * @author Victoria Malouf
@@ -88,5 +90,7 @@ public class BlankTile implements Tile {
     public String toString() {
         return letter;
     }
+
+    public String getName() {return "BLANK";}
 
 }

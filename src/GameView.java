@@ -44,36 +44,61 @@ public class GameView extends JFrame {
 
         southContainer = new Container();
         southContainer.setLayout(new BorderLayout());
-        //southContainer.setLayout(new GridLayout(1,3));
 
         JButton submitButton = new JButton("Submit");
         submitButton.setFocusPainted(false);
         submitButton.setBackground(Color.RED);
         submitButton.setForeground(Color.WHITE);
         submitButton.setFont(new Font("Tahoma",Font.BOLD, 18));
-        submitButton.setPreferredSize(new Dimension(100,50));
+        submitButton.setPreferredSize(new Dimension(100,45));
         submitButton.addActionListener(e -> game.submit());
+
+        JButton exchangeButton = new JButton("Exchange");
+        exchangeButton.setFocusPainted(false);
+        exchangeButton.setBackground(Color.RED);
+        exchangeButton.setForeground(Color.WHITE);
+        exchangeButton.setFont(new Font("Tahoma",Font.BOLD, 18));
+        exchangeButton.setPreferredSize(new Dimension(100,45));
+        //exchangeButton.addActionListener(e -> game.exchangeTiles());
+
 
         JButton passButton = new JButton("Pass");
         passButton.setFocusPainted(false);
         passButton.setBackground(Color.RED);
         passButton.setForeground(Color.WHITE);
         passButton.setFont(new Font("Tahoma",Font.BOLD, 18));
-        passButton.setPreferredSize(new Dimension(100,50));
+        passButton.setPreferredSize(new Dimension(100,45));
         passButton.addActionListener(e -> game.passTurn());
 
         southContainer.add(passButton, BorderLayout.WEST);
         southContainer.add(new JLabel("Rack goes here"), BorderLayout.CENTER);
         southContainer.add(submitButton, BorderLayout.EAST);
+        //southContainer.add(exchangeButton, BorderLayout.EAST);
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 
-        contentPane.add(boardView, BorderLayout.CENTER);
+        Container rightContainer = new Container();
+        rightContainer.setLayout(new BorderLayout());
+        rightContainer.add(exchangeButton,BorderLayout.SOUTH);
+        //contentPane.add(rightContainer, BorderLayout.EAST);
 
+        Container centerContainer = new Container();
+        centerContainer.setLayout(new BorderLayout());
+        centerContainer.add(boardView, BorderLayout.CENTER);
+        centerContainer.add(boardView.getTableHeader(), BorderLayout.NORTH);
+        boardView.getTableHeader().setReorderingAllowed(false);
+        contentPane.add(centerContainer);
 
-        Container northContainer = new Container();
-        northContainer.setLayout(new GridLayout(1, 3));
-        contentPane.add(northContainer, BorderLayout.NORTH);
+        Container leftContainer = new Container();
+        leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
+        for (int i = 0; i<15; i++){
+            if (i == 0){
+                leftContainer.add(Box.createRigidArea(new Dimension(20, 37)));
+            }
+            leftContainer.add(new JLabel((i+1)+""));
+            leftContainer.add(Box.createRigidArea(new Dimension(20,32)));
+        }
+        contentPane.add(leftContainer,BorderLayout.WEST);
 
         /*JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -89,7 +114,8 @@ public class GameView extends JFrame {
         northContainer.add(scoreLabel, 2);*/
 
 
-        this.setSize(1000, 910);
+        this.setSize(1000, 865);
+        setLocationRelativeTo(null);
         this.setVisible(true);
 
         game.addView(this);
