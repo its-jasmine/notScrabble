@@ -2,20 +2,39 @@
  * Represents a square on the game board.
  * @author Jasmine Gad El Hak
  * @author Rebecca Elliott
- * @version Milestone1
+ * @version Milestone3
  */
 
 public class Square {
-
-
     /** The allowable square type on game board */
     public enum Type {
-        START, PLAIN, DOUBLE_LETTER, TRIPLE_LETTER, DOUBLE_WORD, TRIPLE_WORD
+        START("*", 1,2),
+        PLAIN("", 1,1),
+        DOUBLE_LETTER("DL", 2,1),
+        TRIPLE_LETTER("TL", 3,1),
+        DOUBLE_WORD("DW",1,2),
+        TRIPLE_WORD("TW",1,3);
+
+        private final String stringDisplay;
+        public final int letterMultiplier;
+        public final int wordMultiplier;
+
+        // public final Image squareImage... //TODO
+        Type(String stringDisplay, int letterMultiplier, int wordMultiplier) {
+            this.stringDisplay = stringDisplay;
+            this.letterMultiplier = letterMultiplier;
+            this.wordMultiplier = wordMultiplier;
+        }
+        public String toString(){
+            return stringDisplay;
+        }
     }
     /** The tile currently placed on the square, or null */
     private Tile tile;
     /** The square type */
     private final Type type;
+    /** Whether tile was placed this turn.*/
+    private boolean tilePlacedPreviously;
 
     /**
      * Creates a new empty square (i.e., with no tile placed on it) of the given type.
@@ -24,6 +43,7 @@ public class Square {
     public Square(Type type){
         this.tile = null;
         this.type = type;
+        tilePlacedPreviously = false;
     }
 
     /**
@@ -58,6 +78,22 @@ public class Square {
     }
 
     /**
+     *  Indicates whether a tile has been placed on this square from a previous turn.
+     * @return true if square had a tile placed on it prior to current turn, false otherwise.
+     */
+    public boolean tileWasPlacedPreviously() {
+        return tilePlacedPreviously;
+    }
+
+    /**
+     * Sets square to be considered "previously played on" from a previous turn.
+     */
+    public void setSquareAsPlayedPreviously() {
+         tilePlacedPreviously = true;
+    }
+
+
+    /**
      * Places given tile on the square.
      * @param tile the tile to be placed on the square
      */
@@ -79,7 +115,7 @@ public class Square {
      * @return if square is empty, string shortform of square type, otherwise letter of tile on square
      */
     public String toString(){
-        if (isEmpty()) return " ";
+        if (isEmpty()) return type.toString();
         return tile.toString();
     }
 }

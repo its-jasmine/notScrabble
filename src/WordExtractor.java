@@ -58,14 +58,14 @@ public class WordExtractor {
 
         // adds letter to the front of the word
         while (coordinateToLeft != null && !board.getSquare(coordinateToLeft).isEmpty()) { // if coordinateToLeft is null we are at the left edge of the board
-            word.addFirst(board.getSquareTile(coordinateToLeft), board.getSquareType(coordinateToLeft));
+            word.addFirst(board.getSquare(coordinateToLeft));
             coordinateToLeft = coordinateToLeft.getAdjacentCoordinate(Coordinate.Adjacent.LEFT);
         }
 
         Coordinate coordinateToRight = startSearch;
         //adds letters to the end of the word
         while (coordinateToRight != null && !board.getSquare(coordinateToRight).isEmpty()) {  // if coordinateToRight is null we are at the Right edge of the board
-            word.addLast(board.getSquareTile(coordinateToRight), board.getSquareType(coordinateToRight));
+            word.addLast(board.getSquare(coordinateToRight));
             coordinateToRight = coordinateToRight.getAdjacentCoordinate(Coordinate.Adjacent.RIGHT);
         }
 
@@ -83,14 +83,14 @@ public class WordExtractor {
 
         // adds letter to the front of the word
         while (coordinateAbove != null && !board.getSquare(coordinateAbove).isEmpty()) { // if coordinateAbove is null we are at the top of the board
-            word.addFirst(board.getSquareTile(coordinateAbove), board.getSquareType(coordinateAbove));
+            word.addFirst(board.getSquare(coordinateAbove));
             coordinateAbove = coordinateAbove.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
         }
 
         Coordinate coordinateBelow = startSearch;
         //adds letters to the end of the word
         while (coordinateBelow != null && !board.getSquare(coordinateBelow).isEmpty()) { // if coordinateBelow is null we are at the bottom of the board
-            word.addLast(board.getSquareTile(coordinateBelow), board.getSquareType(coordinateBelow));
+            word.addLast(board.getSquare(coordinateBelow));
             coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
         }
 
