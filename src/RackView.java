@@ -21,8 +21,9 @@ public class RackView extends JTable {
         setRowHeight(48);
         setOpaque(true);
         setFillsViewportHeight(true);
-        setBackground(new Color(226,187,123));
-        setGridColor(Color.BLACK);
+        setBackground(new Color(137,66,0));
+        setShowGrid(false);
+        //setGridColor(Color.BLACK);
         setDragEnabled(true);
         setDropMode(DropMode.ON);
         setTransferHandler(new RackTransferHelper());
