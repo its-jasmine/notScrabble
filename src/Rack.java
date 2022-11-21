@@ -96,7 +96,7 @@ public class Rack implements Iterable<Tile>{
     public int tallyRackScore(){
         int rackScore = 0;
         for (Tile tile : this){
-            rackScore += tile.value;
+            rackScore += tile.getValue();
         }
         return rackScore;
     }

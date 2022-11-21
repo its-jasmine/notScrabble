@@ -154,10 +154,10 @@ public class GameTest {
 
         // invalid word
         ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(Tile.A);
-        tiles.add(Tile.A);
-        tiles.add(Tile.A);
-        tiles.add(Tile.A);
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.A);
 
         game3.getBoard().placeTiles(coords, tiles);
         game3.getBoard().setPlayedThisTurn(coordsHash);
@@ -174,10 +174,10 @@ public class GameTest {
 
         // valid word
         tiles = new ArrayList<>();
-        tiles.add(Tile.B);
-        tiles.add(Tile.A);
-        tiles.add(Tile.T);
-        tiles.add(Tile.H);
+        tiles.add(LetterTile.B);
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.T);
+        tiles.add(LetterTile.H);
 
         game4.getBoard().placeTiles(coords, tiles);
         game4.getBoard().setPlayedThisTurn(coordsHash);
