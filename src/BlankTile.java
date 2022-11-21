@@ -58,6 +58,19 @@ public class BlankTile implements Tile {
     }
 
     /**
+     * Determines if this instance of BlankTile has the same letter as obj
+     * @param obj
+     * @return true if obj is equal to this BlankTile
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof BlankTile)) return false;
+        BlankTile c = (BlankTile) obj;
+        return c.letter == this.letter;
+    }
+
+    /**
      * Converts Letter to a String.
      * @return the letter as a String
      */
