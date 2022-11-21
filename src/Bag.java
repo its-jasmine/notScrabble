@@ -23,7 +23,7 @@ public class Bag {
             }
         }
         for (int i = 0; i < BlankTile.TOTAL_NUM; i++){
-                tiles.add(new BlankTile("'"));
+                tiles.add(new BlankTile());
             }
         shuffle(tiles); // randomizes the order tiles will be drawn in
     }

@@ -14,11 +14,11 @@ public class BlankTile implements Tile {
     /** The total quantity of blank tiles in the bag */
     public static final int TOTAL_NUM = 2; // total number of blank tiles in the game
 
-    /**
+
     public BlankTile(){
         this.letter = "'";
     }
-     */
+
     public BlankTile(String letter){
         if (letter.length() == 1 && Character.isLetter(letter.charAt(0)) && Character.isUpperCase(letter.charAt(0))) {
             this.letter = letter;

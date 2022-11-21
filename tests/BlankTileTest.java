@@ -11,7 +11,7 @@ public class BlankTileTest {
      */
     @Before
     public void setUp() throws Exception {
-        b = new BlankTile("'");
+        b = new BlankTile();
     }
 
     /**
@@ -68,7 +68,7 @@ public class BlankTileTest {
     @Test
     public void testEquals() {
         b.setLetter(LetterTile.A);
-        BlankTile b2 = new BlankTile("'");
+        BlankTile b2 = new BlankTile();
         assertFalse(b.equals(b2));
         b2.setLetter(LetterTile.A);
         assertTrue(b.equals(b2));
