@@ -62,4 +62,16 @@ public class BlankTileTest {
         assertEquals(0, b.getValue());
     }
 
+    /**
+     * Tests that equals method returns true if both blank tiles have the same letter
+     */
+    @Test
+    public void testEquals() {
+        b.setLetter(LetterTile.A);
+        BlankTile b2 = new BlankTile();
+        assertFalse(b.equals(b2));
+        b2.setLetter(LetterTile.A);
+        assertTrue(b.equals(b2));
+    }
+
 }
