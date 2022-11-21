@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class GameView extends JFrame {
 
+    public Game getGame() { // for testing
+        return game;
+    }
+
     private Game game;
     private ArrayList<PlayerView> playerViews;
     private Container southContainer;

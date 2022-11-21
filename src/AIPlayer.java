@@ -50,10 +50,12 @@ public class AIPlayer extends Player{
      */
     private ValidTry submitAndReset(ArrayList<Coordinate> emptySquareCoordinates, ArrayList<Tile> tilesToPlay) {
         int score = board.submit();
-        resetTurn();
         if (score >= 0) {
-            return new ValidTry(score, tilesToPlay,emptySquareCoordinates);
+            ValidTry validTry = new ValidTry(score, tilesToPlay, emptySquareCoordinates);
+            resetTurn(); // must reset after ValidTry creation in case a blank was used
+            return validTry;
         }
+        resetTurn();
         return null;
     }
 
@@ -215,13 +217,22 @@ public class AIPlayer extends Player{
             }
 
             ArrayList<Tile> tilesToPlay = new ArrayList<>();
-            for (int index = 0; index < indexes.size(); index++) {//TODO this makes tiles which is bad, should get them off rack
+            for (int index = 0; index < indexes.size(); index++) {
                 String letter = String.valueOf(w.charAt(indexes.get(index)));
-                tilesToPlay.add(Tile.valueOf(letter));
+                Tile tile = rack.removeTileFromRack(LetterTile.valueOf(letter));
+                if (tile == null) {
+                    Tile blankTile = rack.removeTileFromRack(new BlankTile());
+                    if (blankTile == null) {
+                        System.out.println("couldn't get blank from rack");
+                        return;
+                    }
+                    System.out.println("USED BLANK");
+                    ((BlankTile)blankTile).setLetter(LetterTile.valueOf(letter));
+                    tilesToPlay.add(blankTile);
+                } else tilesToPlay.add(tile);
             }
 
             board.placeTiles(emptySquareCoordinates, tilesToPlay);
-            rack.removeTiles(tilesToPlay); // tried tiles will be returned in a call to the turnRest method
             ValidTry validTry = submitAndReset(emptySquareCoordinates, tilesToPlay);
             if (validTry != null) validTries.add(validTry);
         }

@@ -18,6 +18,15 @@ public class BlankTile implements Tile {
         this.letter = "'";
     }
 
+    public BlankTile(String letter){
+        if (letter.length() == 1 && Character.isLetter(letter.charAt(0)) && Character.isUpperCase(letter.charAt(0))) {
+            this.letter = letter;
+        } else {
+            System.out.println("invalid character");
+            this.letter = "'";
+        }
+    }
+
     /**
      * Sets the blank tile letter
      * @param tile the blank tile will be set to
@@ -64,6 +73,14 @@ public class BlankTile implements Tile {
     @Override
     public String toString() {
         return letter;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof BlankTile)) return false;
+        BlankTile c = (BlankTile) obj;
+        return c.letter == this.letter;
     }
 
 }
