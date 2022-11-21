@@ -196,7 +196,6 @@ public class Rack implements Iterable<Tile>{
             Tile tileToExchange = (Tile)tilesToExchange.getValueAt(0,i);
             if (tileToExchange != null) {
                 tileList.add(tileToExchange);
-                tilesToExchange.setValueAt(null,0,i);
             }
         }
         return tileList;
@@ -238,5 +237,9 @@ public class Rack implements Iterable<Tile>{
 
     public TableModel getExchangeModel() {
         return tilesToExchange;
+    }
+
+    public void resetTilesToExchange() {
+        for (int i = 0; i < MAXTILES; i++) tilesToExchange.setValueAt(null,0,i);
     }
 }

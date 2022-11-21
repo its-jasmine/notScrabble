@@ -134,6 +134,7 @@ public class Player {
         ArrayList<Tile> tilesToExchange = rack.getTilesToExchange();
         if (bag.getNumTilesLeft() < tilesToExchange.size()) return false;
         //rack.removeTiles(tilesToExchange);
+        rack.resetTilesToExchange();
         rack.drawTiles();
         bag.returnTiles(tilesToExchange);
         for (PlayerView v : views) v.update(this.score);

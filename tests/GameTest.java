@@ -134,7 +134,6 @@ public class GameTest {
     @Test
     public void submit() {
         int firstPlayerIndex = game2.getPlayerTurn();
-        Player firstPlayer = game2.getPlayers().get(firstPlayerIndex);
 
         /* Test 1: Submitting when no tiles have been placed */
         game2.submit();
@@ -142,7 +141,7 @@ public class GameTest {
 
         /* Test 2: Submitting when INVALID word has been placed */
         firstPlayerIndex = game3.getPlayerTurn();
-        firstPlayer = game3.getPlayers().get(firstPlayerIndex);
+        Player firstPlayer = game3.getPlayers().get(firstPlayerIndex);
 
         ArrayList<Coordinate> coords = new ArrayList<>();
         HashSet<Coordinate> coordsHash = new HashSet<>();
@@ -186,5 +185,139 @@ public class GameTest {
         int currentPlayerIndex = game4.getPlayerTurn();
         assertNotEquals(currentPlayerIndex, firstPlayerIndex); // game should move on to next player
         assertEquals(9,firstPlayer.getScore()); // first player should recieve score update for their played word
+    }
+    @Test
+    public void exchangeOneTile() {
+        int numTilesInBag = game2.getBag().getNumTilesLeft();
+
+        int firstPlayerIndex = game2.getPlayerTurn();
+        Player firstPlayer = game2.getPlayers().get(firstPlayerIndex);
+        int firstPlayerScore = firstPlayer.getScore();
+
+        Rack firstPlayerRack = firstPlayer.getRack();
+        ArrayList<Tile> rackTiles = firstPlayerRack.getTilesList();
+
+        ArrayList<Tile> firstTile = new ArrayList<>();
+        firstTile.add(rackTiles.get(0));
+        firstPlayerRack.removeTiles(firstTile);
+
+        firstPlayer.getRack().getExchangeModel().setValueAt(rackTiles.get(0),0,0);
+
+        game2.exchangeTiles();
+
+        ArrayList<Tile> rackTilesActual = firstPlayerRack.getTilesList();
+        assertEquals(7, rackTilesActual.size()); // should have a full rack
+        assertNotEquals(rackTiles.get(0), rackTilesActual.get(0)); // first tile should be different (exchanged)
+        for (int i = 1; i < rackTiles.size(); i++){
+            assertEquals(rackTiles.get(i), rackTilesActual.get(i)); // rest of tiles should be the same
+        }
+        // exchange rack should not have the tile anymore
+        assertNull(firstPlayer.getRack().getExchangeModel().getValueAt(0,0));
+        // after an exchange, the number of tiles in the bag should be the same
+        assertEquals(numTilesInBag, game2.getBag().getNumTilesLeft());
+
+        assertEquals(firstPlayerScore,firstPlayer.getScore()); // player should not gain any points
+        assertNotEquals(firstPlayerIndex,game2.getPlayerTurn()); // game should move on to the next player
+    }
+
+    @Test
+    public void exchangeAllTiles() {
+        int numTilesInBag = game2.getBag().getNumTilesLeft();
+
+        int firstPlayerIndex = game2.getPlayerTurn();
+        Player firstPlayer = game2.getPlayers().get(firstPlayerIndex);
+        int firstPlayerScore = firstPlayer.getScore();
+
+        Rack firstPlayerRack = firstPlayer.getRack();
+        ArrayList<Tile> rackTiles = firstPlayerRack.getTilesList();
+
+        firstPlayerRack.removeTiles(rackTiles);
+
+        for (int i = 0; i < rackTiles.size(); i++) {
+            firstPlayer.getRack().getExchangeModel().setValueAt(rackTiles.get(i), 0, i);
+        }
+
+        game2.exchangeTiles();
+
+        ArrayList<Tile> rackTilesActual = firstPlayerRack.getTilesList();
+        assertEquals(7, rackTilesActual.size()); // should have a full rack
+        for (int i = 0; i < rackTiles.size(); i++){
+            assertNotEquals(rackTiles.get(i), rackTilesActual.get(i)); // all tiles should be different
+            assertNull(firstPlayer.getRack().getExchangeModel().getValueAt(0,i)); // exchange rack should not have the tiles anymore
+        }
+
+        // after an exchange, the number of tiles in the bag should be the same
+        assertEquals(numTilesInBag, game2.getBag().getNumTilesLeft());
+
+
+        assertEquals(firstPlayerScore,firstPlayer.getScore()); // player should not gain any points
+        assertNotEquals(firstPlayerIndex,game2.getPlayerTurn()); // game should move on to the next player
+    }
+
+
+
+    @Test
+    public void exchangeNoTiles() {
+        // Verifies that exchanging 0 tiles behaves just like a pass
+        int numTilesInBag = game2.getBag().getNumTilesLeft();
+
+        int firstPlayerIndex = game2.getPlayerTurn();
+        Player firstPlayer = game2.getPlayers().get(firstPlayerIndex);
+        int firstPlayerScore = firstPlayer.getScore();
+
+        Rack firstPlayerRack = firstPlayer.getRack();
+        ArrayList<Tile> rackTiles = firstPlayerRack.getTilesList();
+
+        game2.exchangeTiles();
+
+        ArrayList<Tile> rackTilesActual = firstPlayerRack.getTilesList();
+        assertEquals(7, rackTilesActual.size()); // should have a full rack
+        for (int i = 0; i < rackTiles.size(); i++){
+            assertEquals(rackTiles.get(i), rackTilesActual.get(i)); // all tiles should be the same
+            assertNull(firstPlayer.getRack().getExchangeModel().getValueAt(0,i)); // exchange rack should not have any tiles
+        }
+
+        // the number of tiles in the bag should be the same
+        assertEquals(numTilesInBag, game2.getBag().getNumTilesLeft());
+
+        assertEquals(firstPlayerScore,firstPlayer.getScore()); // player should not gain any points
+        assertNotEquals(firstPlayerIndex,game2.getPlayerTurn()); // game should move on to the next player
+
+    }
+    @Test
+    public void exchangeUnsuccessful(){
+        // Verfies behaviour when there are not enough tiles in the bag to perform the exchange
+        Bag bag = game2.getBag();
+        bag.drawTiles(100); // draws all tiles from the bag
+
+        assertEquals(0, bag.getNumTilesLeft());
+
+        int firstPlayerIndex = game2.getPlayerTurn();
+        Player firstPlayer = game2.getPlayers().get(firstPlayerIndex);
+        int firstPlayerScore = firstPlayer.getScore();
+
+        Rack firstPlayerRack = firstPlayer.getRack();
+        ArrayList<Tile> rackTiles = firstPlayerRack.getTilesList();
+
+        // Moving first tile on the rack to be exchanged
+        ArrayList<Tile> firstTile = new ArrayList<>();
+        firstTile.add(rackTiles.get(0));
+        firstPlayerRack.removeTiles(firstTile);
+        firstPlayer.getRack().getExchangeModel().setValueAt(rackTiles.get(0),0,0);
+
+        game2.exchangeTiles();
+
+        ArrayList<Tile> rackTilesActual = firstPlayerRack.getTilesList();
+        assertEquals(6, rackTilesActual.size()); // should still have one removed tile
+        for (int i = 0; i < rackTilesActual.size(); i++){
+            assertEquals(rackTiles.get(i+1), rackTilesActual.get(i)); // rest of tiles should be the same
+        }
+        // exchange rack should still have the tile
+        assertEquals(firstTile.get(0), firstPlayer.getRack().getExchangeModel().getValueAt(0,0));
+
+        assertEquals(0, game2.getBag().getNumTilesLeft()); // bag should still be empty
+
+        assertEquals(firstPlayerScore,firstPlayer.getScore()); // player should not gain any points
+        assertEquals(firstPlayerIndex,game2.getPlayerTurn()); // should still be the same players turn
     }
 }

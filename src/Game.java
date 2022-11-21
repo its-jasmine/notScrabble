@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -157,9 +158,10 @@ public class Game {
 
         }
     }
-    public void exchangeTiles() {
+    public boolean exchangeTiles() {
         boolean successfulExchange = players.get(playerTurn).exchangeTiles();
-        if (successfulExchange) passTurn();
+        if (successfulExchange) {passTurn(); return true;}
+        return false;
     }
     private void endGame() {
         // game is now over

@@ -95,7 +95,11 @@ public class GameView extends JFrame {
         doneExchangeButton.setForeground(Color.WHITE);
         doneExchangeButton.setFont(new Font("Tahoma",Font.BOLD, 13));
         doneExchangeButton.setPreferredSize(new Dimension(100,50));
-        doneExchangeButton.addActionListener(e -> game.exchangeTiles());
+        doneExchangeButton.addActionListener(
+                e -> { boolean success = game.exchangeTiles();
+                    if (!success) JOptionPane.showMessageDialog(this,
+                            "There are not enough tiles in the bag to exchange these tiles. Try exchanging less tiles, or pass instead.");
+                } );
 
         Container leftContainer = new Container();
         leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
@@ -150,7 +154,7 @@ public class GameView extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameView(2);
+        new GameView(4);
     }
 
     public void update(int playerTurn, boolean firstTurn) {
