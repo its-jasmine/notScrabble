@@ -1,5 +1,7 @@
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GameView extends JFrame {
@@ -44,7 +46,6 @@ public class GameView extends JFrame {
 
         southContainer = new Container();
         southContainer.setLayout(new BorderLayout());
-        //southContainer.setLayout(new GridLayout(1,3));
 
         JButton submitButton = new JButton("Submit");
         submitButton.setFocusPainted(false);
@@ -81,7 +82,12 @@ public class GameView extends JFrame {
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
 
-        contentPane.add(boardView, BorderLayout.CENTER);
+        Container centerContainer = new Container();
+        centerContainer.setLayout(new BorderLayout());
+        centerContainer.add(boardView, BorderLayout.CENTER);
+        centerContainer.add(boardView.getTableHeader(), BorderLayout.NORTH);
+        boardView.getTableHeader().setReorderingAllowed(false);
+        contentPane.add(centerContainer);
 
         doneExchangeButton = new JButton("Done");
         doneExchangeButton.setFocusPainted(false);
@@ -90,6 +96,17 @@ public class GameView extends JFrame {
         doneExchangeButton.setFont(new Font("Tahoma",Font.BOLD, 13));
         doneExchangeButton.setPreferredSize(new Dimension(100,50));
         doneExchangeButton.addActionListener(e -> game.exchangeTiles());
+
+        Container leftContainer = new Container();
+        leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
+        for (int i = 0; i<15; i++){
+            if (i == 0){
+                leftContainer.add(Box.createRigidArea(new Dimension(20, 37)));
+            }
+            leftContainer.add(new JLabel((i+1)+""));
+            leftContainer.add(Box.createRigidArea(new Dimension(20,32)));
+        }
+        contentPane.add(leftContainer,BorderLayout.WEST);
 
 
 
@@ -110,7 +127,9 @@ public class GameView extends JFrame {
         scoreLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
         northContainer.add(scoreLabel, 2);*/
 
-        this.setSize(1000, 910);
+
+        this.setSize(1000, 865);
+        setLocationRelativeTo(null);
         this.setVisible(true);
 
         game.addView(this);
