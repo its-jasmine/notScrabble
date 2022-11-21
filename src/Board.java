@@ -34,6 +34,7 @@ public class Board {
                 return Square.class;
             }
         };
+
         for (Coordinate.Row r : Coordinate.Row.values()) {
             for (Coordinate.Column c : Coordinate.Column.values()) {
                 int row = r.ordinal();
@@ -41,6 +42,30 @@ public class Board {
                 boardModel.setValueAt(new Square(), row, col);
             }
         }
+        String[][] squarePlacement =
+        {{"TRIPLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","TRIPLE_WORD"},
+        {"PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN"},
+        {"PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN"},
+        {"DOUBLE_LETTER","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER"},
+        {"PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN"},
+        {"PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER", "PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN"},
+        {"PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN"},
+        {"TRIPLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","START","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","TRIPLE_WORD"},
+        {"PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN"},
+        {"PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER", "PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN"},
+        {"PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","PLAIN"},
+        {"DOUBLE_LETTER","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER"},
+        {"PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN","PLAIN"},
+        {"PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN"},
+        {"TRIPLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","TRIPLE_WORD"}};
+
+        for (int r = 0; r < squarePlacement.length; r++){
+            for (int c = 0; c < squarePlacement[r].length; c++){
+                Square.Type type = Square.Type.valueOf(squarePlacement[r][c]);
+                boardModel.setValueAt(new Square(type), r, c);
+            }
+        }
+
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
 

@@ -2,7 +2,7 @@
  * Models the non-blank letters in the game. Each value has an associated character, letter point value, and the total number of that
  * letter in the game.
  * @author Rebecca Elliott
- * @version Milestone1
+ * @version Milestone3
  */
 
 public enum LetterTile implements Tile{

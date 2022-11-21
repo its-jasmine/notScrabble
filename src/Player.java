@@ -104,7 +104,11 @@ public class Player {
     public Game.Status submit(){
         int turnScore = board.submit(); // we will update board to have internal list of tiles, no need for arg
         if (turnScore < 0) return Game.Status.RETRY;
-
+        Square s;
+        for (Coordinate c : board.getPlayedThisTurn()){
+            s = board.getSquare(c);
+            s.setSquareAsPlayedPreviously();
+        }
         this.addToScore(turnScore);
         return this.endTurn();
     }
