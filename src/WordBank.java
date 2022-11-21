@@ -31,8 +31,6 @@ public class WordBank {
             validWords.add(sc.nextLine());
         }
     }
-
-
     /**
      * Checks the validity of a word.
      * @param word to be validated
