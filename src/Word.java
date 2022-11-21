@@ -9,21 +9,8 @@ import java.util.stream.Collectors;
  */
 public class Word {
     /* Represents a placed tile in the sequence of consecutive tiles of a word.*/
-    private class Node {
-        /** The tile in the word */
-        public Tile tile;
-        /** The type of Square the tile is placed on */
-        public Square.Type type;
 
-        /** Creates new node.
-         * @param tile the tile in the word
-         * @param type the type of Square the tile is placed on
-         */
-        public Node(Tile tile, Square.Type type) {
-            this.tile = tile;
-            this.type = type;
-        }
-    }
+
     /** The word bank for the game */
     public static final WordBank wordBank = new WordBank(); // used for word validation
     /** The linked list containing the sequence of tiles in the word */
@@ -115,10 +102,10 @@ public class Word {
      * Resets blank tiles in a word if blank tile was placed this turn.
      */
     public void resetBlankTiles() {
-        for (Node n: llWord) {
-            if (n.tile instanceof BlankTile){
-                if (!n.tile.tileWasPlacedPreviously()) {  // Will reset the tile if it was played this turn
-                    ((BlankTile) n.tile).resetLetter();
+        for (Square s: llWord) {
+            if (s.getTile() instanceof BlankTile){
+                if (!s.tileWasPlacedPreviously()) {  // Will reset the tile if it was played this turn
+                    ((BlankTile) s.getTile()).resetLetter();
                 }
             }
         }
