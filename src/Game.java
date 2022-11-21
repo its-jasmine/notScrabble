@@ -71,7 +71,7 @@ public class Game {
     }
 
     /**
-     * Determine the player who draws the tile closest to A.
+     * Determine the player who draws the tile closest to A or the blank tile.
      * @param bag of this Game
      * @param numPlayers of this Game
      * @return index of the Player that will go first
@@ -79,27 +79,43 @@ public class Game {
     private int firstPlayer(Bag bag, int numPlayers) {
         int playerIndex;
         ArrayList<Tile> tilesDrawn = new ArrayList<>();
-        int lowestOrdinal, lowestOrdinalCount;
+        int lowestOrdinal, lowestOrdinalCount, blankTileCount;
         do {
             ArrayList<Tile> tilesDrawnThisRound = bag.drawTiles(numPlayers);
+            ArrayList<LetterTile> letterTilesDrawnThisRound = new ArrayList<>();
             tilesDrawn.addAll(tilesDrawnThisRound);
-            List<Integer> tileOrdinals = tilesDrawnThisRound.stream().map(tile -> tile.ordinal()).collect(Collectors.toList());
-            lowestOrdinal = tileOrdinals.get(0);
-            lowestOrdinalCount = 0;
             playerIndex = 0;
-            for (int i=0; i<numPlayers; i++){
-                if (tileOrdinals.get(i) < lowestOrdinal) {
-                    lowestOrdinal = tileOrdinals.get(i);
+            lowestOrdinalCount = 0;
+            blankTileCount = 0;
+            for (int i = 0; i < numPlayers; i++) {
+                Tile t = tilesDrawnThisRound.get(i);
+                if (t instanceof BlankTile) {
                     playerIndex = i;
+                    blankTileCount++;
+                } else {
+                    LetterTile l = (LetterTile) t;
+                    letterTilesDrawnThisRound.add(l);
                 }
             }
-            for (Tile t : tilesDrawnThisRound) { // Check if 2 players picked the same highest tile
-                if (t.ordinal() == lowestOrdinal) {
-                    lowestOrdinalCount++;
+
+            if (blankTileCount == 0) {
+                playerIndex = 0;
+                List<Integer> tileOrdinals = letterTilesDrawnThisRound.stream().map(tile -> tile.ordinal()).collect(Collectors.toList());
+                lowestOrdinal = tileOrdinals.get(0);
+                for (int i = 0; i < numPlayers; i++) {
+                    if (tileOrdinals.get(i) < lowestOrdinal) {
+                        lowestOrdinal = tileOrdinals.get(i);
+                        playerIndex = i;
+                    }
+                }
+                for (LetterTile t : letterTilesDrawnThisRound) { // Check if 2 players picked the same highest tile
+                    if (t.ordinal() == lowestOrdinal) {
+                        lowestOrdinalCount++;
+                    }
                 }
             }
         }
-        while (lowestOrdinalCount > 1);
+        while (lowestOrdinalCount > 1 || blankTileCount > 1);
         bag.returnTiles(tilesDrawn);
         return playerIndex;
     }

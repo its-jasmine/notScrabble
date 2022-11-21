@@ -115,6 +115,10 @@ public class RackTransferHelper extends TransferHandler {
                 Tile importValue; // could be from rack or board
                 if(sourceIsBoard) {
                     importValue = boardCellData.getValue().removeTile();
+                    System.out.println("BOARD to RACK");
+                    if (importValue instanceof BlankTile){
+                        ((BlankTile) importValue).resetLetter();
+                    }
                 } else {
                     importValue = rackCellData.getValue();
                 }
@@ -128,7 +132,9 @@ public class RackTransferHelper extends TransferHandler {
                     boardView.addCoordinatePlayedThisTurn(sourceLocation);
                     if (exportValue == null) boardView.removeCoordinatePlayedThisTurn(sourceLocation);// took a tile off board and returned it to rack
 
-                } else source.setValueAt(exportValue,draggedFromRow, draggedFromCol);
+                } else {
+                    source.setValueAt(exportValue, draggedFromRow, draggedFromCol);
+                }
 
                 imported = true;
 

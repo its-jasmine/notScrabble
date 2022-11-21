@@ -128,11 +128,22 @@ public class BoardTransferHelper extends TransferHandler {
                 Tile exportValue = target.removeTileAt(dropRow, dropCol);
                 Tile importValue;
 
+
                 if(sourceIsBoard) {
                     importValue = boardCellData.getValue().removeTile();
+                    if (importValue instanceof BlankTile){
+                        System.out.println("BOARD TO BOARD");
+                        String letter = JOptionPane.showInputDialog("Provide letter the blank tile will represent:" );
+                        ((BlankTile) importValue).setLetter(LetterTile.valueOf(letter.toUpperCase()));
+                    }
 
                 } else {
                     importValue = rackCellData.getValue();
+                    if (importValue instanceof BlankTile){
+                        System.out.println("RACK TO BOARD");
+                        String letter = JOptionPane.showInputDialog("Provide letter the blank tile will represent:" );
+                        ((BlankTile) importValue).setLetter(LetterTile.valueOf(letter.toUpperCase()));
+                    }
                 }
 
                 // swap the values
@@ -141,7 +152,9 @@ public class BoardTransferHelper extends TransferHandler {
                 if (sourceIsBoard) {
                     BoardView boardView = (BoardView) source;
                     boardView.setTileAt(exportValue, draggedFromRow, draggedFromCol);
-                    if (exportValue == null) target.removeCoordinatePlayedThisTurn(sourceLocation);// moved a tile on the board to an empty space on the board
+                    if (exportValue == null) {
+                        target.removeCoordinatePlayedThisTurn(sourceLocation);// moved a tile on the board to an empty space on the board
+                    }
                 } else {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
                 }

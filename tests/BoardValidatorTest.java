@@ -92,9 +92,9 @@ public class BoardValidatorTest {
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
         coordinateList.add(new Coordinate(Coordinate.Column.I, Coordinate.Row.EIGHT));
         tileList = new ArrayList<>();
-        tileList.add(Tile.E);
-        tileList.add(Tile.N);
-        tileList.add(Tile.D);
+        tileList.add(LetterTile.E);
+        tileList.add(LetterTile.N);
+        tileList.add(LetterTile.D);
         b.placeTiles(coordinateList, tileList);
         return b;
     }
@@ -106,9 +106,9 @@ public class BoardValidatorTest {
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.NINE));
         tileList = new ArrayList<>();
-        tileList.add(Tile.E);
-        tileList.add(Tile.N);
-        tileList.add(Tile.D);
+        tileList.add(LetterTile.E);
+        tileList.add(LetterTile.N);
+        tileList.add(LetterTile.D);
         b.placeTiles(coordinateList, tileList);
         return b;
     }

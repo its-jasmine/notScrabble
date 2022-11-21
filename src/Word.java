@@ -79,7 +79,9 @@ public class Word {
      * @return true if word is valid, false otherwise
      */
     private boolean isValidWord() {
-        return wordBank.isValidWord(this.toString());
+        boolean valid = wordBank.isValidWord(this.toString());
+        if (!valid) resetBlankTiles();
+        return valid;
     }
 
     /**
@@ -101,9 +103,22 @@ public class Word {
     private int scoreWord(){
         int score = 0;
         for (Node n : llWord) {
-            score += n.tile.value;
+            score += n.tile.getValue();
         }
         return score;
+    }
+
+    /**
+     * Resets blank tiles in a word if blank tile was placed this turn.
+     */
+    public void resetBlankTiles() {
+        for (Node n: llWord) {
+            if (n.tile instanceof BlankTile){
+                if (!n.tile.tileWasPlacedPreviously()) {  // Will reset the tile if it was played this turn
+                    ((BlankTile) n.tile).resetLetter();
+                }
+            }
+        }
     }
 
     /**
