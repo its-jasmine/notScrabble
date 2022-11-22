@@ -18,5 +18,10 @@ public interface Tile {
      * @return the letter as a String
      */
     String toString();
+
+    /**
+     * Gets the original name of the tile
+     * @return the name of the tile
+     */
     String getName();
 }

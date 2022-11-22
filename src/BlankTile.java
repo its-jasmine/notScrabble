@@ -91,6 +91,11 @@ public class BlankTile implements Tile {
         return letter;
     }
 
+    /**
+     * returns the original name of a blank tile
+     * @return BLANK
+     */
+    @Override
     public String getName() {return "BLANK";}
 
 }

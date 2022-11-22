@@ -13,14 +13,17 @@ public class Board {
     private final Coordinate.Row START_ROW = Coordinate.Row.EIGHT;
     private final Coordinate.Column START_COLUMN = Coordinate.Column.H;
 
+    /** the tiles being played during the turn */
     private HashSet<Coordinate> playedThisTurn;
 
+    /** the tiles that were played until now */
     private HashSet<Coordinate> previouslyPlayed;
 
 
     /** The direction of the word currently be validated */
     private final BoardValidator boardValidator = new BoardValidator(this);
 
+    /** the word extractor */
     private final WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
@@ -81,22 +84,41 @@ public class Board {
         return boardModel;
     }
 
+    /**
+     * Gets the coordinates of tiles played for the current turn
+     * @return a hashset of coordinate objects
+     */
     public HashSet<Coordinate> getPlayedThisTurn() {
         return playedThisTurn;
     }
 
+    /**
+     * gets the coordinates of previously played tiles on the board
+     * @return a hashset of coordinate objects
+     */
     public HashSet<Coordinate> getPreviouslyPlayed() {
         return previouslyPlayed;
     }
 
+    /**
+     * adds the turn's placed tile to the previously played tiles
+     */
     public void addThisTurnToPreviously() {
         previouslyPlayed.addAll(playedThisTurn);
         resetPlayedThisTurn();
     }
 
+    /**
+     * reset which tiles where played this turn
+     */
     public void resetPlayedThisTurn() {
         playedThisTurn = new HashSet<>();
     }
+
+    /**
+     * converts the hashset of coordinates to an arraylist
+     * @return an arraylist of coordinate objects
+     */
     private ArrayList<Coordinate> playedHashToList() {
         return new ArrayList<>(playedThisTurn);
     }
@@ -204,6 +226,10 @@ public class Board {
         return getSquare(coordinate).isEmpty();
     }
 
+    /**
+     * Check if the start square is empty
+     * @return true if square is empty, false otherwise
+     */
     public boolean isStartSquareEmpty() {
         Coordinate coordinate = new Coordinate(START_COLUMN,START_ROW);
         return getSquare(coordinate).isEmpty();

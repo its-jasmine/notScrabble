@@ -83,6 +83,12 @@ public enum LetterTile implements Tile{
     public String toString() {
         return this.name();
     }
+
+    /**
+     * Gets the original name of the tile
+     * @return the original name of the tile
+     */
+    @Override
     public String getName(){return this.name();}
 
 }

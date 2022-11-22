@@ -12,8 +12,9 @@ public class Player {
     protected final Rack rack;
     /** The player's current score */
     private int score;
-    
+    /** The player's name */
     private String name;
+    /** the views of the player */
     private List<PlayerView> views;
 
 
@@ -97,10 +98,18 @@ public class Player {
         return rack.tallyRackScore();
     }
 
+    /**
+     * Adds views to the player
+     * @param view the view to be added to the player
+     */
     public void addView(PlayerView view){
         views.add(view);
     }
 
+    /**
+     * submits the currently placed tiles to the board
+     * @return Game.Status the status of the game
+     */
     public Game.Status submit(){
         int turnScore = board.submit(); // we will update board to have internal list of tiles, no need for arg
         if (turnScore < 0) return Game.Status.RETRY;
@@ -113,6 +122,9 @@ public class Player {
         return this.endTurn();
     }
 
+    /**
+     * resets the turn
+     */
     public void resetTurn() {
         ArrayList<Tile> returnTiles = new ArrayList<>();
         for (Coordinate c: board.getPlayedThisTurn()) {

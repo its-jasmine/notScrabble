@@ -28,10 +28,18 @@ public class PlayerView extends JPanel{
         this.setVisible(true);
     }
 
+    /**
+     * updates the score
+     * @param score the score of the player
+     */
     public void update(int score){
         scoreLabel.setText("Score: "+score+"        ");
     }
 
+    /**
+     * gets the player's rackView
+     * @return the rack's view
+     */
     public Component getRackView() {
         return rackView;
     }

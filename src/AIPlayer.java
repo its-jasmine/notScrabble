@@ -11,6 +11,7 @@ import static java.util.Collections.shuffle;
 
 public class AIPlayer extends Player{
     private static final int NUMBER_TILES_TO_TRY = 20; // to help limit how long the AI's turn is
+    /** A Wordfinder to find words */
     private final WordFinder wordFinder;
 
     public AIPlayer(Board board, Bag bag, int playerNumber) {
@@ -176,7 +177,6 @@ public class AIPlayer extends Player{
      * @param boardTilesBelow list of board tiles to add to
      * @return second found empty square coordinate or null if at edge of board
      */
-
     private Coordinate findAnEmptyAndTilesBelow(Coordinate startSearchingCoordinate, ArrayList<Coordinate> emptySquareCoordinates, StringBuilder wordFormat, ArrayList<Tile> boardTilesBelow) {
         if (startSearchingCoordinate == null) return null;
 
