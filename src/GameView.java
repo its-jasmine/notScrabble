@@ -18,8 +18,12 @@ public class GameView extends JFrame {
 
     public GameView(int numPlayers, int numAI) throws HeadlessException {
         super("notScrabble");
-
-        game = new Game(numPlayers, numAI);
+        if (numAI >0){
+            game = new Game(numPlayers, numAI);
+        }
+        else {
+            game = new Game(numPlayers);
+        }
         currentView = 0;
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
