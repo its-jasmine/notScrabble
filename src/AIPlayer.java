@@ -68,7 +68,8 @@ public class AIPlayer extends Player{
      */
     private void tryToMakeWords(ArrayList<Coordinate> prevPlayed, ArrayList<ValidTry> validTries){
         for (int i = 0; i < min(prevPlayed.size(), NUMBER_TILES_TO_TRY); i++) {
-            tryTileSpacesBelow(rack.getNumTiles(), prevPlayed.get(i), validTries);
+            trySpaces(rack.getNumTiles(), prevPlayed.get(i), validTries, BoardValidator.Direction.VERTICAL);
+            trySpaces(rack.getNumTiles(), prevPlayed.get(i), validTries, BoardValidator.Direction.HORIZONTAL);
         }
     }
 
@@ -77,27 +78,38 @@ public class AIPlayer extends Player{
      *
      * @param numTilesOnRack the number of tiles on the AI's rack
      * @param coordinate     the coordinate to start looking from
-     * @param validTries list of tries that were valid
+     * @param validTries     list of tries that were valid
+     * @param direction the direction to try words in
      */
-    private void tryTileSpacesBelow(int numTilesOnRack, Coordinate coordinate, ArrayList<ValidTry> validTries) {
+    private void trySpaces(int numTilesOnRack, Coordinate coordinate, ArrayList<ValidTry> validTries, BoardValidator.Direction direction) {
+        Coordinate.Adjacent before;
+        Coordinate.Adjacent after;
+        if (direction == BoardValidator.Direction.HORIZONTAL) {
+            before = Coordinate.Adjacent.LEFT;
+            after = Coordinate.Adjacent.RIGHT;
+        } else {
+            before = Coordinate.Adjacent.ABOVE;
+            after = Coordinate.Adjacent.BELOW;
+        }
+
         StringBuilder wordFormat = new StringBuilder();
         ArrayList<Coordinate> emptySquareCoordinates = new ArrayList<>();
         ArrayList<Tile> boardTilesAboveAndCenter = new ArrayList<>();
         ArrayList<Tile> boardTilesBelow = new ArrayList<>();
 
-        findTilesAboveAndCenter(coordinate,boardTilesAboveAndCenter, wordFormat);
+        findTilesBeforeAndCenter(coordinate,boardTilesAboveAndCenter, wordFormat, before);
 
-        Coordinate coordinateBelow = coordinate.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-        if (coordinateBelow == null) return; // if true found edge of board
+        Coordinate coordinateAfter = coordinate.getAdjacentCoordinate(after);
+        if (coordinateAfter == null) return; // if true found edge of board
 
         for (int j = 1; j <= numTilesOnRack; j++) {
-            coordinateBelow = findAnEmptyAndTilesBelow(coordinateBelow, emptySquareCoordinates, wordFormat,boardTilesBelow);
+            coordinateAfter = findAnEmptyAndTilesAfter(coordinateAfter, emptySquareCoordinates, wordFormat,boardTilesBelow, after);
 
             String sWordFormat = wordFormat.toString();
             ArrayList<String> words = new ArrayList<>(wordFinder.findWord(allNeededTiles(boardTilesBelow, boardTilesAboveAndCenter), sWordFormat));
 
             findValidTries(words, sWordFormat, emptySquareCoordinates, validTries);
-            if (coordinateBelow == null) break; // edge of board was found
+            if (coordinateAfter == null) break; // edge of board was found
         }
     }
 
@@ -116,29 +128,31 @@ public class AIPlayer extends Player{
 
     /**
      * Finds the consecutive previously played tiles that are before the given tile as well as the given tile.
-     * @param centerCoordinate start location
-     * @param boardTilesAboveAndCenter list of board tiles to add to
-     * @param wordFormat format that shows where the empties and previously played tiles are
+     *
+     * @param centerCoordinate         start location
+     * @param boardTilesBeforeAndCenter list of board tiles to add to
+     * @param wordFormat               format that shows where the empties and previously played tiles are
+     * @param before    direction to check can be ABOVE or LEFT
      */
-    private void findTilesAboveAndCenter(Coordinate centerCoordinate, ArrayList<Tile> boardTilesAboveAndCenter, StringBuilder wordFormat) {
+    private void findTilesBeforeAndCenter(Coordinate centerCoordinate, ArrayList<Tile> boardTilesBeforeAndCenter, StringBuilder wordFormat, Coordinate.Adjacent before) {
         if (centerCoordinate == null || board.getSquareTile(centerCoordinate) == null) return;
         wordFormat.reverse(); // so we can append to the front, call again before returning
 
         wordFormat.append(board.getSquareTile(centerCoordinate).toString());
-        boardTilesAboveAndCenter.add(board.getSquareTile(centerCoordinate));
+        boardTilesBeforeAndCenter.add(board.getSquareTile(centerCoordinate));
 
-        Coordinate coordinateAbove = centerCoordinate.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-        if (coordinateAbove == null) return;// check for edge of board
-        Tile tileAbove = board.getSquareTile(coordinateAbove);
-        while (tileAbove != null) {
-            wordFormat.append(tileAbove);
-            boardTilesAboveAndCenter.add(tileAbove);
-            coordinateAbove = coordinateAbove.getAdjacentCoordinate(Coordinate.Adjacent.ABOVE);
-            if (coordinateAbove == null) {
+        Coordinate coordinateBefore = centerCoordinate.getAdjacentCoordinate(before);
+        if (coordinateBefore == null) return;// check for edge of board
+        Tile tileBefore = board.getSquareTile(coordinateBefore);
+        while (tileBefore != null) {
+            wordFormat.append(tileBefore);
+            boardTilesBeforeAndCenter.add(tileBefore);
+            coordinateBefore = coordinateBefore.getAdjacentCoordinate(before);
+            if (coordinateBefore == null) {
                 wordFormat.reverse(); // so letters will be appended to front
                 return; // check for edge of board
             }
-            tileAbove = board.getSquareTile(coordinateAbove);
+            tileBefore = board.getSquareTile(coordinateBefore);
 
         }
         wordFormat.reverse(); // so letters will be appended to front
@@ -146,61 +160,65 @@ public class AIPlayer extends Player{
 
     /**
      * Finds the consecutive previously played tiles that are after the given tile as well as the given tile.
+     *
      * @param startSearchingCoordinate start location
-     * @param boardTilesBelowAndCenter list of board tiles to add to
-     * @param wordFormat format that shows where the empties and previously played tiles are
+     * @param boardTilesAfterAndCenter list of board tiles to add to
+     * @param wordFormat               format that shows where the empties and previously played tiles are
+     * @param after direction to check can be BELOW or RIGHT
      * @return first empty square coordinate or null if at edge of board
      */
-    private Coordinate findTilesBelow(Coordinate startSearchingCoordinate, ArrayList<Tile> boardTilesBelowAndCenter, StringBuilder wordFormat) {
+    private Coordinate findTilesAfter(Coordinate startSearchingCoordinate, ArrayList<Tile> boardTilesAfterAndCenter, StringBuilder wordFormat, Coordinate.Adjacent after) {
         if (startSearchingCoordinate == null)  return null;
         if (board.getSquareTile(startSearchingCoordinate) == null) return startSearchingCoordinate;
 
-        Coordinate coordinateBelow = startSearchingCoordinate; // just for naming
-        Tile tileBelow = board.getSquareTile(coordinateBelow);
-        while (tileBelow != null) {
-            wordFormat.append(tileBelow);
-            boardTilesBelowAndCenter.add(tileBelow);
-            coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
-            if (coordinateBelow == null) return null; // the edge of board was found after previously played tiles but before an empty square was found
-            tileBelow = board.getSquareTile(coordinateBelow);
+        Coordinate coordinateAfter = startSearchingCoordinate; // just for naming
+        Tile tileAfter = board.getSquareTile(coordinateAfter);
+        while (tileAfter != null) {
+            wordFormat.append(tileAfter);
+            boardTilesAfterAndCenter.add(tileAfter);
+            coordinateAfter = coordinateAfter.getAdjacentCoordinate(after);
+            if (coordinateAfter == null) return null; // the edge of board was found after previously played tiles but before an empty square was found
+            tileAfter = board.getSquareTile(coordinateAfter);
         }
-        return coordinateBelow;
+        return coordinateAfter;
     }
 
     /**
      * Finds the consecutive previously played tiles that are after the given tile as well as the given tile.
      * Then finds one empty square. If the square after that is not also empty the next set of consecutive tiles is
      * found as well.
+     *
      * @param startSearchingCoordinate start location
-     * @param emptySquareCoordinates keeps track of empty squares that will be used
-     * @param wordFormat format that shows where the empties and previously played tiles are
-     * @param boardTilesBelow list of board tiles to add to
+     * @param emptySquareCoordinates   keeps track of empty squares that will be used
+     * @param wordFormat               format that shows where the empties and previously played tiles are
+     * @param boardTilesBelow          list of board tiles to add to
+     * @param after direction to check can be BELOW or RIGHT
      * @return second found empty square coordinate or null if at edge of board
      */
-    private Coordinate findAnEmptyAndTilesBelow(Coordinate startSearchingCoordinate, ArrayList<Coordinate> emptySquareCoordinates, StringBuilder wordFormat, ArrayList<Tile> boardTilesBelow) {
+    private Coordinate findAnEmptyAndTilesAfter(Coordinate startSearchingCoordinate, ArrayList<Coordinate> emptySquareCoordinates, StringBuilder wordFormat, ArrayList<Tile> boardTilesBelow, Coordinate.Adjacent after) {
         if (startSearchingCoordinate == null) return null;
 
-        Coordinate coordinateBelow = findTilesBelow(startSearchingCoordinate, boardTilesBelow, wordFormat); // gets consecutive tiles, no empties
+        Coordinate coordinateAfter = findTilesAfter(startSearchingCoordinate, boardTilesBelow, wordFormat, after); // gets consecutive tiles, no empties
 
-        if (coordinateBelow == null) {
+        if (coordinateAfter == null) {
             // the edge of board was found after previously played tiles but before an empty square was found
             return null;
         }
 
         wordFormat.append(".");
-        emptySquareCoordinates.add(coordinateBelow);
-        coordinateBelow = coordinateBelow.getAdjacentCoordinate(Coordinate.Adjacent.BELOW);
+        emptySquareCoordinates.add(coordinateAfter);
+        coordinateAfter = coordinateAfter.getAdjacentCoordinate(after);
 
-        if (coordinateBelow == null) {
+        if (coordinateAfter == null) {
             // the edge of board was found after the empty square was found
             return null;
         }
 
-        Tile tileBelow = board.getSquareTile(coordinateBelow);
-        if (tileBelow != null) {
-            coordinateBelow = findTilesBelow(coordinateBelow, boardTilesBelow, wordFormat);
+        Tile tileAfter = board.getSquareTile(coordinateAfter);
+        if (tileAfter != null) {
+            coordinateAfter = findTilesAfter(coordinateAfter, boardTilesBelow, wordFormat, after);
         }
-        return coordinateBelow;
+        return coordinateAfter;
     }
 
     /**
