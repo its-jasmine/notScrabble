@@ -40,11 +40,11 @@ public class PlayerView extends JPanel{
         hideExchangeView();
     }
 
-    public void displayExchangeView() {//TODO
+    public void displayExchangeView() {
         this.add(exchangeView, BorderLayout.SOUTH);
     }
 
-    private void hideExchangeView() { //TODO
+    private void hideExchangeView() {
         BorderLayout layout = (BorderLayout) this.getLayout();
         Component c = layout.getLayoutComponent(BorderLayout.SOUTH);
         if (c == exchangeView) this.remove(c);
