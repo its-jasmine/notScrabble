@@ -188,35 +188,22 @@ public class Game {
     public void submit(){
         Player player = players.get(playerTurn);
         Status status = player.submit();
+
         if (status == Status.RUNNING){
             nextTurn();
-            updateGameView(false);
+            if (!(player instanceof AIPlayer)) {
+                updateGameView(false);
+            }
         }
-        else if (status == Status.RETRY){
+        else if (status == Status.RETRY){ // only happens for non-AI players
             player.resetTurn();
         }
         else{
             endGame();
             System.out.println("game done");
-
         }
     }
 
-    /**
-     * submits the AI's word
-     */
-    public void submitAI(){
-        Player player = players.get(playerTurn);
-        Status status = player.submit();
-        if (status == Status.RUNNING){
-            nextTurn();
-        }
-        else{
-            endGame();
-            System.out.println("game done");
-
-        }
-    }
 
     /**
      * Ends the game

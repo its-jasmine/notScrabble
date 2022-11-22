@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.sound.midi.SysexMessage;
@@ -11,12 +12,21 @@ public class PlayerTest {
 
     Player player;
     Bag bag;
+    Board board;
     ArrayList<Tile> tiles;
     ArrayList<Coordinate> coordinates;
 
+    @Before
+    public void setUp() throws Exception {
+        bag = new Bag();
+        board = new Board();
+        player = new Player(board, bag);
+        tiles = new ArrayList<>();
+        coordinates = new ArrayList<>();
+    }
+
     @Test
     public void addToScore() {
-        player = new Player(new Board(),new Bag());
         player.addToScore(0);
         assertTrue(player.getScore() == 0);
         player.addToScore(1);
@@ -36,13 +46,7 @@ public class PlayerTest {
 
     @Test
     public void submit() {
-        Board board = new Board();
-        Bag bag = new Bag();
-        player = new Player(board,bag);
-
         //place AND on the starting tile
-        tiles = new ArrayList<>();
-        coordinates = new ArrayList<>();
         tiles.add(LetterTile.A);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.EIGHT));
         tiles.add(LetterTile.N);
@@ -133,20 +137,11 @@ public class PlayerTest {
         }
         //System.out.println(player.submit());
         assertTrue(player.submit()== Game.Status.OVER);
-
-
     }
 
     @Test
     public void resetTurn() {
-        Board board = new Board();
-        Bag bag = new Bag();
-        player = new Player(board,bag);
-
-        player = new Player(new Board(),new Bag());
         //place AND on the starting tile
-        tiles = new ArrayList<>();
-        coordinates = new ArrayList<>();
         tiles.add(LetterTile.A);
         coordinates.add(new Coordinate(Coordinate.Column.F,Coordinate.Row.EIGHT));
         tiles.add(LetterTile.N);

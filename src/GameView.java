@@ -143,7 +143,7 @@ public class GameView extends JFrame {
         southContainer.remove(1);
         Player player = game.getPlayers().get(playerTurn);
         if (player instanceof AIPlayer) {
-            game.submitAI();
+            game.submit();
             playerTurn = ++playerTurn % game.getPlayers().size();
             southContainer.add(playerViews.get(playerTurn), 1);
         } else southContainer.add(playerViews.get(playerTurn), 1);
