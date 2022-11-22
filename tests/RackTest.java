@@ -21,13 +21,13 @@ public class RackTest {
         rack = new Rack(new Bag());
         rackTiles = rack.getTilesList();
         randomTiles = new ArrayList<>();
-        randomTiles.add(Tile.A);
-        randomTiles.add(Tile.H);
-        randomTiles.add(Tile.K);
-        randomTiles.add(Tile.Z);
-        randomTiles.add(Tile.Q);
-        randomTiles.add(Tile.X);
-        randomTiles.add(Tile.M);
+        randomTiles.add(LetterTile.A);
+        randomTiles.add(LetterTile.H);
+        randomTiles.add(LetterTile.K);
+        randomTiles.add(LetterTile.Z);
+        randomTiles.add(LetterTile.Q);
+        randomTiles.add(LetterTile.X);
+        randomTiles.add(LetterTile.M);
     }
 
     /**
@@ -48,6 +48,22 @@ public class RackTest {
             tile.add(t);
             assertEquals(tile, rack.removeTiles(tile));
         }
+        assertEquals(0, rack.getNumTiles());
+    }
+
+    /**
+     * Tests that removeTiles removes Blank Tile
+     */
+    @Test
+    public void testRemoveBlankTiles(){
+        for (Tile t: rackTiles){
+            rack.removeTileFromRack(t);
+        }
+        assertEquals(0, rack.getNumTiles());
+
+        BlankTile tile = new BlankTile();
+        rack.putTileOnRack(tile);
+        assertEquals(tile, rack.removeTileFromRack(new BlankTile()));
         assertEquals(0, rack.getNumTiles());
     }
 
@@ -73,12 +89,12 @@ public class RackTest {
      */
     @Test
     public void testPutTileOnRack(){
-        assertFalse(rack.putTileOnRack(Tile.B));
+        assertFalse(rack.putTileOnRack(LetterTile.B));
         ArrayList<Tile> tile = new ArrayList<>();
         tile.add(rack.getTilesList().get(0));
         rack.removeTiles(tile);
-        assertTrue(rack.putTileOnRack(Tile.A));
-        assertFalse(rack.putTileOnRack(Tile.Z));
+        assertTrue(rack.putTileOnRack(LetterTile.A));
+        assertFalse(rack.putTileOnRack(LetterTile.Z));
     }
 
     /**
@@ -103,38 +119,38 @@ public class RackTest {
     public void testTallyRackScore() {
         rack.removeTiles(rackTiles);
         ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(Tile.A);
-        tiles.add(Tile.E);
-        tiles.add(Tile.I);
-        tiles.add(Tile.L);
-        tiles.add(Tile.N);
-        tiles.add(Tile.O);
-        tiles.add(Tile.R);
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.E);
+        tiles.add(LetterTile.I);
+        tiles.add(LetterTile.L);
+        tiles.add(LetterTile.N);
+        tiles.add(LetterTile.O);
+        tiles.add(LetterTile.R);
         rack.putTilesOnRack(tiles);
         assertEquals(7, rack.tallyRackScore());
         //assertEquals(Tile.A+" "+Tile.E+" "+Tile.I+" "+Tile.L+" "+Tile.N+" "+Tile.O+" "+Tile.R+" ", rack);
 
         rack.removeTiles(rack.getTilesList());
         ArrayList<Tile> tiles2 = new ArrayList<>();
-        tiles2.add(Tile.D);
-        tiles2.add(Tile.G);
-        tiles2.add(Tile.Z);
-        tiles2.add(Tile.V);
-        tiles2.add(Tile.W);
-        tiles2.add(Tile.Q);
-        tiles2.add(Tile.J);
+        tiles2.add(LetterTile.D);
+        tiles2.add(LetterTile.G);
+        tiles2.add(LetterTile.Z);
+        tiles2.add(LetterTile.V);
+        tiles2.add(LetterTile.W);
+        tiles2.add(LetterTile.Q);
+        tiles2.add(LetterTile.J);
         rack.putTilesOnRack(tiles2);
         assertEquals(40, rack.tallyRackScore());
 
         rack.removeTiles(rack.getTilesList());
         ArrayList<Tile> tiles3 = new ArrayList<>();
-        tiles3.add(Tile.J);
-        tiles3.add(Tile.K);
-        tiles3.add(Tile.L);
-        tiles3.add(Tile.M);
-        tiles3.add(Tile.N);
-        tiles3.add(Tile.O);
-        tiles3.add(Tile.P);
+        tiles3.add(LetterTile.J);
+        tiles3.add(LetterTile.K);
+        tiles3.add(LetterTile.L);
+        tiles3.add(LetterTile.M);
+        tiles3.add(LetterTile.N);
+        tiles3.add(LetterTile.O);
+        tiles3.add(LetterTile.P);
         rack.putTilesOnRack(tiles3);
         assertEquals(22, rack.tallyRackScore());
     }
@@ -146,7 +162,7 @@ public class RackTest {
     public void testToString(){
         rack.removeTiles(rackTiles);
         rack.putTilesOnRack(randomTiles);
-        String s = Tile.A+" "+Tile.H+" "+Tile.K+" "+ Tile.Z+" "+ Tile.Q+" "+ Tile.X+" "+ Tile.M+" ";
+        String s = LetterTile.A+" "+LetterTile.H+" "+LetterTile.K+" "+LetterTile.Z+" "+LetterTile.Q+" "+LetterTile.X+" "+LetterTile.M+" ";
         assertEquals(s,rack.toString());
     }
 
@@ -157,12 +173,12 @@ public class RackTest {
     public void testIsTileInRack(){
         rack.removeTiles(rackTiles);
         rack.putTilesOnRack(randomTiles);
-        assertTrue(rack.isTileInRack(Tile.A));
-        assertTrue(rack.isTileInRack(Tile.H));
-        assertTrue(rack.isTileInRack(Tile.K));
-        assertFalse(rack.isTileInRack(Tile.B));
-        assertFalse(rack.isTileInRack(Tile.J));
-        assertFalse(rack.isTileInRack(Tile.L));
+        assertTrue(rack.isTileInRack(LetterTile.A));
+        assertTrue(rack.isTileInRack(LetterTile.H));
+        assertTrue(rack.isTileInRack(LetterTile.K));
+        assertFalse(rack.isTileInRack(LetterTile.B));
+        assertFalse(rack.isTileInRack(LetterTile.J));
+        assertFalse(rack.isTileInRack(LetterTile.L));
     }
 
     /**
@@ -178,8 +194,8 @@ public class RackTest {
         assertFalse(it.hasNext());
 
         rack.removeTiles(rack.getTilesList());
-        rack.putTileOnRack(Tile.A);
-        rack.putTileOnRack(Tile.B);
+        rack.putTileOnRack(LetterTile.A);
+        rack.putTileOnRack(LetterTile.B);
         Iterator<Tile> it2 = rack.iterator();
         for (int i=0;i<2; i++){
             assertTrue(it2.hasNext());

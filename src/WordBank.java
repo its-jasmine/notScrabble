@@ -23,13 +23,16 @@ public class WordBank {
         this.validWords = new HashSet<>();
         Scanner sc;
         try {
-            sc = new Scanner(new File("src/dictionary.txt"));
+            sc = new Scanner(new File("dictionary.txt"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         while (sc.hasNextLine()) {
             validWords.add(sc.nextLine());
         }
+    }
+    public HashSet<String> getValidWords() {
+        return validWords;
     }
     /**
      * Checks the validity of a word.

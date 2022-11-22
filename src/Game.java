@@ -27,7 +27,7 @@ public class Game {
     private Bag bag;
 
     /**
-     * Creates a new game with the specifed number of players and selects a random player to go first.
+     * Creates a new game with the specifed number of players.
      * @param numPlayers the number of players of the game
      */
     public Game(int numPlayers) {
@@ -46,8 +46,32 @@ public class Game {
         }
     }
 
+
     /**
-     * Determine the player who draws the tile closest to A.
+     * Creates a new game with the specifed number of players and AI.
+     * @param numPlayers the number of players of the game
+     */
+    public Game(int numPlayers, int numAI) {
+        views = new ArrayList<>();
+        board = new Board();
+        bag = new Bag();
+
+        if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change
+        else if (numPlayers > MAXPLAYERS) numPlayers= 4;
+
+        this.playerTurn = firstPlayer(bag, numPlayers + numAI);
+
+        this.players = new ArrayList<>();
+        for (int i = 0; i < numPlayers; i++) {
+            players.add(new Player(board, bag, i + 1));
+        }
+        for (int i = 0; i < numAI; i++) {
+            players.add(new AIPlayer(board, bag, i + 1));
+        }
+    }
+
+    /**
+     * Determine the player who draws the tile closest to A or the blank tile.
      * @param bag of this Game
      * @param numPlayers of this Game
      * @return index of the Player that will go first
@@ -55,27 +79,43 @@ public class Game {
     private int firstPlayer(Bag bag, int numPlayers) {
         int playerIndex;
         ArrayList<Tile> tilesDrawn = new ArrayList<>();
-        int lowestOrdinal, lowestOrdinalCount;
+        int lowestOrdinal, lowestOrdinalCount, blankTileCount;
         do {
             ArrayList<Tile> tilesDrawnThisRound = bag.drawTiles(numPlayers);
+            ArrayList<LetterTile> letterTilesDrawnThisRound = new ArrayList<>();
             tilesDrawn.addAll(tilesDrawnThisRound);
-            List<Integer> tileOrdinals = tilesDrawnThisRound.stream().map(tile -> tile.ordinal()).collect(Collectors.toList());
-            lowestOrdinal = tileOrdinals.get(0);
-            lowestOrdinalCount = 0;
             playerIndex = 0;
-            for (int i=0; i<numPlayers; i++){
-                if (tileOrdinals.get(i) < lowestOrdinal) {
-                    lowestOrdinal = tileOrdinals.get(i);
+            lowestOrdinalCount = 0;
+            blankTileCount = 0;
+            for (int i = 0; i < numPlayers; i++) {
+                Tile t = tilesDrawnThisRound.get(i);
+                if (t instanceof BlankTile) {
                     playerIndex = i;
+                    blankTileCount++;
+                } else {
+                    LetterTile l = (LetterTile) t;
+                    letterTilesDrawnThisRound.add(l);
                 }
             }
-            for (Tile t : tilesDrawnThisRound) { // Check if 2 players picked the same highest tile
-                if (t.ordinal() == lowestOrdinal) {
-                    lowestOrdinalCount++;
+
+            if (blankTileCount == 0) {
+                playerIndex = 0;
+                List<Integer> tileOrdinals = letterTilesDrawnThisRound.stream().map(tile -> tile.ordinal()).collect(Collectors.toList());
+                lowestOrdinal = tileOrdinals.get(0);
+                for (int i = 0; i < numPlayers; i++) {
+                    if (tileOrdinals.get(i) < lowestOrdinal) {
+                        lowestOrdinal = tileOrdinals.get(i);
+                        playerIndex = i;
+                    }
+                }
+                for (LetterTile t : letterTilesDrawnThisRound) { // Check if 2 players picked the same highest tile
+                    if (t.ordinal() == lowestOrdinal) {
+                        lowestOrdinalCount++;
+                    }
                 }
             }
         }
-        while (lowestOrdinalCount > 1);
+        while (lowestOrdinalCount > 1 || blankTileCount > 1);
         bag.returnTiles(tilesDrawn);
         return playerIndex;
     }
@@ -162,6 +202,19 @@ public class Game {
         }
     }
 
+    public void submitAI(){
+        Player player = players.get(playerTurn);
+        Status status = player.submit();
+        if (status == Status.RUNNING){
+            nextTurn();
+        }
+        else{
+            endGame();
+            System.out.println("game done");
+
+        }
+    }
+
     /**
      * Ends the game
      */
@@ -224,7 +277,7 @@ public class Game {
      * @param args N/A
      */
     public static void main(String[] args) {
-        Game game = new Game(2);
+        Game game = new Game(1, 1);
         game.playGame();
     }
 }

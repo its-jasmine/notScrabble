@@ -20,7 +20,7 @@ public class WelcomeFrame extends JFrame {
                 JOptionPane.showMessageDialog(view, "Instructions blah blah blah");
             }else if (source.getActionCommand().equals(NEW_GAME_CMD)){
                 int numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
-                new GameView(numPlayers); // default 2 players for now
+                new GameView(numPlayers, 1); // default 2 players for now
                 view.dispose();
 
             }
@@ -70,6 +70,7 @@ public class WelcomeFrame extends JFrame {
         instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
 
     }

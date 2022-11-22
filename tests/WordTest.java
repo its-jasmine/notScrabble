@@ -36,46 +36,62 @@ public class WordTest {
         assertEquals(0, w.size());
     }
 
-    /**
-     * Tests that a single letter word is valid and of size 1
-     */
-    @Test
-    public void testSingleLetterWord() {
-        w.addFirst(Tile.B, Square.Type.PLAIN);
-        assertEquals(1, w.size());
-        words.add(w);
-        assertEquals(true, w.areValidWords(words));
+    public Square newPlainSquareWithTile(Tile tile){
+        Square s = new Square();
+        s.setTile(tile);
+        return s;
+    }
+    public Square newPremiumSquareWithTile(Tile tile, Square.Type type){
+        Square s = new Square(type);
+        s.setTile(tile);
+        return s;
     }
 
     /**
-     * Tests that the addFirst method appends Nodes at the beginning of the word
+     * Tests that the addFirst method appends at the beginning of the word
      */
     @Test
     public void testAddFirst() {
-        w.addFirst(Tile.K, Square.Type.PLAIN);
-        w.addFirst(Tile.C, Square.Type.PLAIN);
-        w.addFirst(Tile.A, Square.Type.PLAIN);
-        w.addFirst(Tile.B, Square.Type.PLAIN);
+        // Word: "BACK"
+        Square s = newPlainSquareWithTile(LetterTile.K);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.C);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.A);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.B);
+        w.addFirst(s);
+
         assertEquals(4, w.size());
         words.add(w);
-        assertEquals(true, w.areValidWords(words));
+        assertEquals(true, Word.areValidWords(words));
     }
 
+
     /**
-     * Tests that the addLast method appends Nodes at the end of the word
+     * Tests that the addLast method appends at the end of the word
      */
     @Test
     public void testAddLast() {
-        w.addLast(Tile.C, Square.Type.PLAIN);
-        w.addLast(Tile.O, Square.Type.PLAIN);
-        w.addLast(Tile.N, Square.Type.PLAIN);
-        w.addLast(Tile.S, Square.Type.PLAIN);
-        w.addLast(Tile.U, Square.Type.PLAIN);
-        w.addLast(Tile.L, Square.Type.PLAIN);
-        w.addLast(Tile.T, Square.Type.PLAIN);
+        // Word: "CONSULT"
+        Square s = newPlainSquareWithTile(LetterTile.C);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.O);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.N);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.S);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.U);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.L);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.T);
+        w.addLast(s);
+
         assertEquals(7, w.size());
         words.add(w);
-        assertEquals(true, w.areValidWords(words));
+        assertEquals(true, Word.areValidWords(words));
     }
 
     /**
@@ -84,16 +100,26 @@ public class WordTest {
     @Test
     public void testAddFirstAndLast() {
         // Word: "DEVELOP"
-        w.addFirst(Tile.E, Square.Type.PLAIN);
-        w.addLast(Tile.L, Square.Type.PLAIN);
-        w.addFirst(Tile.V, Square.Type.PLAIN);
-        w.addLast(Tile.O, Square.Type.PLAIN);
-        w.addFirst(Tile.E, Square.Type.PLAIN);
-        w.addLast(Tile.P, Square.Type.PLAIN);
-        w.addFirst(Tile.D, Square.Type.PLAIN);
+        Square s = newPlainSquareWithTile(LetterTile.E);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.L);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.V);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.O);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.P);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.D);
+        w.addFirst(s);
+
         assertEquals(7, w.size());
         words.add(w);
-        assertEquals(true, w.areValidWords(words));
+        assertEquals(true, Word.areValidWords(words));
+
+
     }
 
     /**
@@ -101,26 +127,46 @@ public class WordTest {
      */
     @Test
     public void testAreValidWords() {
-        w.addLast(Tile.G, Square.Type.PLAIN);
-        w.addLast(Tile.R, Square.Type.PLAIN);
-        w.addLast(Tile.A, Square.Type.PLAIN);
-        w.addLast(Tile.I, Square.Type.PLAIN);
-        w.addLast(Tile.N, Square.Type.PLAIN);
+        // Word: "GRAIN"
+        Square s = newPlainSquareWithTile(LetterTile.G);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.R);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.A);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.I);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.N);
+        w.addLast(s);
         words.add(w);
+
+        // Word: "EVIL"
         Word w2 = new Word();
-        w2.addLast(Tile.E, Square.Type.PLAIN);
-        w2.addLast(Tile.V, Square.Type.PLAIN);
-        w2.addLast(Tile.I, Square.Type.PLAIN);
-        w2.addLast(Tile.L, Square.Type.PLAIN);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w2.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.V);
+        w2.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.I);
+        w2.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.L);
+        w2.addLast(s);
         words.add(w2);
+
+        // Word: "FLOOR"
         Word w3 = new Word();
-        w3.addLast(Tile.F, Square.Type.PLAIN);
-        w3.addLast(Tile.L, Square.Type.PLAIN);
-        w3.addLast(Tile.O, Square.Type.PLAIN);
-        w3.addLast(Tile.O, Square.Type.PLAIN);
-        w3.addLast(Tile.R, Square.Type.PLAIN);
+        s = newPlainSquareWithTile(LetterTile.F);
+        w3.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.L);
+        w3.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.O);
+        w3.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.O);
+        w3.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.R);
+        w3.addLast(s);
         words.add(w3);
-        assertEquals(true, w.areValidWords(words));
+
+        assertTrue(Word.areValidWords(words));
     }
 
     /**
@@ -128,22 +174,35 @@ public class WordTest {
      */
     @Test
     public void testAreInvalidWords() {
-        w.addLast(Tile.K, Square.Type.PLAIN);
-        w.addLast(Tile.A, Square.Type.PLAIN);
-        w.addLast(Tile.Y, Square.Type.PLAIN);
+        Square s = newPlainSquareWithTile(LetterTile.K);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.A);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.Y);
+        w.addLast(s);
         words.add(w);
+
         Word w2 = new Word();
-        w2.addLast(Tile.L, Square.Type.PLAIN);
-        w2.addLast(Tile.E, Square.Type.PLAIN);
-        w2.addLast(Tile.D, Square.Type.PLAIN);
+        s = newPlainSquareWithTile(LetterTile.L);
+        w2.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w2.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.D);
+        w2.addLast(s);
         words.add(w2);
+
         Word w3 = new Word();
-        w3.addLast(Tile.M, Square.Type.PLAIN);
-        w3.addLast(Tile.S, Square.Type.PLAIN);
-        w3.addLast(Tile.N, Square.Type.PLAIN);
-        w3.addLast(Tile.E, Square.Type.PLAIN);
+        s = newPlainSquareWithTile(LetterTile.M);
+        w3.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.S);
+        w3.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.N);
+        w3.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w3.addLast(s);
         words.add(w3);
-        assertFalse(w.areValidWords(words));
+
+        assertFalse(Word.areValidWords(words));
     }
 
     /**
@@ -152,101 +211,154 @@ public class WordTest {
     @Test
     public void testScorePlain() {
         // Word: "LIST" L=1, I=1, S=1, T=1 --> score = 4
-        w.addLast(Tile.L, Square.Type.PLAIN);
-        w.addLast(Tile.I, Square.Type.PLAIN);
-        w.addLast(Tile.S, Square.Type.PLAIN);
-        w.addLast(Tile.T, Square.Type.PLAIN);
+        Square s = newPlainSquareWithTile(LetterTile.L);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.I);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.S);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.T);
+        w.addLast(s);
         words.add(w);
-        assertEquals(4, w.scoreWords(words));
+
+        assertEquals(4, Word.scoreWords(words));
     }
 
     /**
      * Tests that scoreWords for DOUBLE_LETTER Square Types work as expected
-     * FAIL: Expected: 10, Actual: 6
      */
     @Test
     public void testScoreDoubleLetter() {
         // Word: "EVE" E=1, V=4x2=8, E=1 --> score = 10
-        w.addLast(Tile.E, Square.Type.PLAIN);
-        w.addLast(Tile.V, Square.Type.DOUBLE_LETTER);
-        w.addLast(Tile.E, Square.Type.PLAIN);
+        Square s = newPlainSquareWithTile(LetterTile.E);
+        w.addLast(s);
+        s = newPremiumSquareWithTile(LetterTile.V, Square.Type.DOUBLE_LETTER);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w.addLast(s);
         words.add(w);
-        assertEquals(10, w.scoreWords(words));
+        assertEquals(10, Word.scoreWords(words));
     }
 
     /**
      * Tests that scoreWords for TRIPLE_LETTER Square Types work as expected
-     * FAIL: Expected: 15, Actual: 7
      */
     @Test
     public void testScoreTripleLetter() {
         // Word: "FELL" F=4x3=12, E=1, L=1, L=1
-        w.addFirst(Tile.L, Square.Type.PLAIN);
-        w.addFirst(Tile.L, Square.Type.PLAIN);
-        w.addFirst(Tile.E, Square.Type.PLAIN);
-        w.addFirst(Tile.F, Square.Type.TRIPLE_LETTER);
+
+        Square s = newPlainSquareWithTile(LetterTile.L);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.L);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.F, Square.Type.TRIPLE_LETTER);
+        w.addFirst(s);
         words.add(w);
-        assertEquals(15, w.scoreWords(words));
+        assertEquals(15, Word.scoreWords(words));
     }
 
     /**
      * Tests that scoreWords for DOUBLE_WORD Square Types work as expected
-     * FAIL: Expected: 12, Actual: 6
      */
     @Test
     public void testScoreDoubleWord() {
         // Word: "HAT" H=4, A=1, T=1 --> score = 6x2 = 12
-        w.addLast(Tile.H, Square.Type.DOUBLE_WORD);
-        w.addLast(Tile.A, Square.Type.PLAIN);
-        w.addLast(Tile.T, Square.Type.PLAIN);
+        Square s = newPremiumSquareWithTile(LetterTile.H, Square.Type.DOUBLE_WORD);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.A);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.T);
+        w.addFirst(s);
+
         words.add(w);
         assertEquals(12, w.scoreWords(words));
+
+
     }
 
     /**
      * Tests that scoreWords for TRIPLE_WORD Square Types work as expected
-     * FAIL: Expected: 27, Actual: 9
      */
     @Test
     public void testScoreTripleWord() {
         // Word: "KAREN" K=5, A=1, R=1, E=1, N=1 --> score = 9x3 = 27
-        w.addLast(Tile.K, Square.Type.TRIPLE_WORD);
-        w.addLast(Tile.A, Square.Type.PLAIN);
-        w.addLast(Tile.R, Square.Type.PLAIN);
-        w.addLast(Tile.E, Square.Type.PLAIN);
-        w.addLast(Tile.N, Square.Type.PLAIN);
+        Square s = newPremiumSquareWithTile(LetterTile.K, Square.Type.TRIPLE_WORD);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.A);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.R);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.N);
+        w.addFirst(s);
         words.add(w);
         assertEquals(27, w.scoreWords(words));
     }
 
     /**
      * Tests that scoreWords for a START Square Type works as expected
-     * FAIL: Expected: 10, Actual: 5
      */
     @Test
     public void testScoreStartWord() {
         // Word: "PIE" P=3, I=1, E=1 --> score = 5x2 = 10
-        w.addLast(Tile.P, Square.Type.START);
-        w.addLast(Tile.I, Square.Type.PLAIN);
-        w.addLast(Tile.E, Square.Type.PLAIN);
+        Square s = newPremiumSquareWithTile(LetterTile.P, Square.Type.START);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.I);
+        w.addFirst(s);
+        s = newPlainSquareWithTile(LetterTile.E);
+        w.addFirst(s);
+
         words.add(w);
         assertEquals(10, w.scoreWords(words));
     }
 
     /**
      * Tests that scoreWords for a combination of Square Types work as expected
-     * FAIL: Expected: 96, Actual: 5
      */
     @Test
     public void testScoreAllTileTypes() {
         // Word: "NOTE" N=1x2=2, O=1x3=3, T=1, E=1, S=1 --> score = 8x2x3x2 = 96
-        w.addLast(Tile.N, Square.Type.DOUBLE_LETTER);
-        w.addLast(Tile.O, Square.Type.TRIPLE_LETTER);
-        w.addLast(Tile.T, Square.Type.DOUBLE_WORD);
-        w.addLast(Tile.E, Square.Type.TRIPLE_WORD);
-        w.addLast(Tile.S, Square.Type.START);
+        Square s = newPremiumSquareWithTile(LetterTile.N, Square.Type.DOUBLE_LETTER);
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.O, Square.Type.TRIPLE_LETTER);
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.T, Square.Type.DOUBLE_WORD);
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.E, Square.Type.TRIPLE_WORD);
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.S, Square.Type.START);
+        w.addFirst(s);
+
         words.add(w);
         assertEquals(96, w.scoreWords(words));
+    }
+    /**
+     * Tests that scoreWords for a combination of Square Types work as expected
+     */
+    @Test
+    public void testScorePremiumTypesFromPreviousTurns() {
+        // Word: "NOTE" N=1, O=1, T=1, E=1, S=1 --> score = 1+1+1+1+1 = 5
+        Square s = newPremiumSquareWithTile(LetterTile.N, Square.Type.DOUBLE_LETTER);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.O, Square.Type.TRIPLE_LETTER);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.T, Square.Type.DOUBLE_WORD);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.E, Square.Type.TRIPLE_WORD);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+        s = newPremiumSquareWithTile(LetterTile.S, Square.Type.START);
+        s.setSquareAsPlayedPreviously();
+        w.addFirst(s);
+
+        words.add(w);
+        assertEquals(5, w.scoreWords(words));
     }
 
     /**
@@ -263,12 +375,19 @@ public class WordTest {
     @Test
     public void testToString() {
         // Word: "NOTIFY"
-        w.addLast(Tile.N, Square.Type.START);
-        w.addLast(Tile.O, Square.Type.PLAIN);
-        w.addLast(Tile.T, Square.Type.PLAIN);
-        w.addLast(Tile.I, Square.Type.PLAIN);
-        w.addLast(Tile.F, Square.Type.PLAIN);
-        w.addLast(Tile.Y, Square.Type.PLAIN);
+        Square s = newPremiumSquareWithTile(LetterTile.N, Square.Type.START);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.O);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.T);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.I);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.F);
+        w.addLast(s);
+        s = newPlainSquareWithTile(LetterTile.Y);
+        w.addLast(s);
+
         assertEquals("NOTIFY", w.toString());
     }
 }

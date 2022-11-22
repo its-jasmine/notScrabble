@@ -1,3 +1,4 @@
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.util.*;
@@ -25,6 +26,7 @@ public class Rack implements Iterable<Tile>{
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
             {
+                //return ImageIcon.class;
                 return Tile.class;
             }
         };
@@ -96,7 +98,7 @@ public class Rack implements Iterable<Tile>{
     public int tallyRackScore(){
         int rackScore = 0;
         for (Tile tile : this){
-            rackScore += tile.value;
+            rackScore += tile.getValue();
         }
         return rackScore;
     }
@@ -129,10 +131,12 @@ public class Rack implements Iterable<Tile>{
      * Removes a specific tile from the rack
      * @param tile : the tile to be removed from the rack.
      */
-    private Tile removeTileFromRack(Tile tile){
+    public Tile removeTileFromRack(Tile tile){
         for (int i = 0; i < MAXTILES; i++) {
             Tile r = (Tile) rackModel.getValueAt(0, i);
-            if (r == tile) {
+            if (r == null) continue;
+
+            if (r.equals(tile)) {
                 rackModel.setValueAt(null, 0, i);
                 return r;
             }
