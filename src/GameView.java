@@ -130,6 +130,11 @@ public class GameView extends JFrame {
         new GameView(1, 1);
     }
 
+    /**
+     * updates the view
+     * @param playerTurn the current turn
+     * @param firstTurn boolean of first turn. true if it is the first turn, false otherwise
+     */
     public void update(int playerTurn, boolean firstTurn) {
         southContainer.remove(1);
         Player player = game.getPlayers().get(playerTurn);

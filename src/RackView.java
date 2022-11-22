@@ -31,6 +31,10 @@ public class RackView extends JTable {
         setCellSelectionEnabled(true);
     }
 
+    /**
+     * gets a rack
+     * @return a rack
+     */
     public Rack getRack() {
         return rack;
     }

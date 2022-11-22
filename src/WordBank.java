@@ -31,6 +31,11 @@ public class WordBank {
             validWords.add(sc.nextLine());
         }
     }
+
+    /**
+     * gets the valid words
+     * @return A hashset containing strings of the valid words
+     */
     public HashSet<String> getValidWords() {
         return validWords;
     }

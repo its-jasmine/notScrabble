@@ -35,15 +35,27 @@ public class BoardView extends JTable {
         return (Square) getModel().getValueAt(row, col);
     }
 
+    /**
+     * gets the previously played tiles on the board
+     * @return A hashset of coordinate objects
+     */
     public HashSet<Coordinate> getPreviouslyPlayed() {
         return board.getPreviouslyPlayed();
     }
 
+    /**
+     * adds the coordinate of the tile played this turn to the list of tiles played
+     * @param coordinate a coordinate played this turn
+     */
     public void addCoordinatePlayedThisTurn(Coordinate coordinate) {
         board.getPlayedThisTurn().add(coordinate);
     }
 
 
+    /**
+     * removes the coordinate of the tile played this turn to the list of tiles played
+     * @param coordinate a coordinate played this turn
+     */
     public void removeCoordinatePlayedThisTurn(Coordinate coordinate) {
         board.getPlayedThisTurn().remove(coordinate);
     }
@@ -54,20 +66,38 @@ public class BoardView extends JTable {
         addThisTurnToPreviously();
     }
 
+    /**
+     * adds the tiles played this turn to the tiles played previously
+     */
     public void addThisTurnToPreviously() { // for testing
         board.addThisTurnToPreviously();
     }
 
+    /**
+     * adds a tile to a square
+     * @param tile the tile to be placed in the square
+     * @param row the row coordinate of the square
+     * @param col the column coordinate of the square
+     */
     public void setTileAt(Tile tile, int row, int col) {
         Square squareTrial = (Square) dataModel.getValueAt(row, col);
         squareTrial.setTile(tile);
     }
 
+    /**
+     * removes a tile from the square
+     * @param row the row in which the tile is
+     * @param col the column in which the tile is
+     * @return the tile in the square
+     */
     public Tile removeTileAt(int row, int col) {
         Square square = (Square) dataModel.getValueAt(row, col);
         return square.removeTile();
     }
 
+    /**
+     * @return a board
+     */
     public Board getBoard() {
         return board;
     }

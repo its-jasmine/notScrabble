@@ -85,24 +85,40 @@ public class Board {
     }
 
     /**
-     * @return
+     * Gets the coordinates of tiles played for the current turn
+     * @return a hashset of coordinate objects
      */
     public HashSet<Coordinate> getPlayedThisTurn() {
         return playedThisTurn;
     }
 
+    /**
+     * gets the coordinates of previously played tiles on the board
+     * @return a hashset of coordinate objects
+     */
     public HashSet<Coordinate> getPreviouslyPlayed() {
         return previouslyPlayed;
     }
 
+    /**
+     * adds the turn's placed tile to the previously played tiles
+     */
     public void addThisTurnToPreviously() {
         previouslyPlayed.addAll(playedThisTurn);
         resetPlayedThisTurn();
     }
 
+    /**
+     * reset which tiles where played this turn
+     */
     public void resetPlayedThisTurn() {
         playedThisTurn = new HashSet<>();
     }
+
+    /**
+     * converts the hashset of coordinates to an arraylist
+     * @return an arraylist of coordinate objects
+     */
     private ArrayList<Coordinate> playedHashToList() {
         return new ArrayList<>(playedThisTurn);
     }
@@ -210,6 +226,10 @@ public class Board {
         return getSquare(coordinate).isEmpty();
     }
 
+    /**
+     * Check if the start square is empty
+     * @return true if square is empty, false otherwise
+     */
     public boolean isStartSquareEmpty() {
         Coordinate coordinate = new Coordinate(START_COLUMN,START_ROW);
         return getSquare(coordinate).isEmpty();

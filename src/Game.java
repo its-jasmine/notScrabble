@@ -202,6 +202,9 @@ public class Game {
         }
     }
 
+    /**
+     * submits the AI's word
+     */
     public void submitAI(){
         Player player = players.get(playerTurn);
         Status status = player.submit();
