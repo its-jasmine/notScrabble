@@ -7,11 +7,11 @@ This project is being produced for SYSC 3110 taught by Dr. Babak Esfandiari. The
 
 This project is divided into 4 milestones with this README file corresponding to milestone 2.
 
-**Milestone 2:** Initial GUI for notScrabble
+**Milestone 3:** More complex implementation of notScrabble
 - User plays the game through the User Interface
 - User may place tiles on the board from their rack, see their score, pass their turn and submit their placed tiles
-- There is no support for blank tiles and premium squares at this time
-- UML class diagram adn sequence diagram are provided
+- premium squares and blank tiles are supported
+- UML class diagram and sequence diagram are provided
 - Design choices such as data structure and relevant operations are discussed
 
 
@@ -38,23 +38,23 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 
 ### Version 
 
-11/13/2022 - Milestone 2 
+11/21/2022 - Milestone 3
 
 ### Usage 
 
 To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4. The user will be prompted.
 The game Welcome View is initiated, which prompts the user to select either instructions or New Game, which starts a notScrabble game of two players.
 
-Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined. 
-
+Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined.
 When prompted, a player may pass or play their turn by clicking the submit or pass button.
 The player needs to drag and drop their tiles from their rack to the board.
 The player can swap the order of tiles in their rack by dragging and dropping to reorder their rack.
 The player can place unsubmited tiles from the board back to their rack.
+The player can place blank tiles, and will be prompted as to which letter the blank tile represents
 when submitting their word after placement, if it is determined to be invalid, the player's tiles are returned to the rack.
 
     
- **First turn** reminder: The player who places the first word onto the board must place a tile on the start square. This will later be color coded to be easier to see. 
+ **First turn** reminder: The player who places the first word onto the board must place a tile on the start square. 
 
 <img width="639" alt="Screen Shot 2022-10-25 at 10 04 24 AM" src="https://user-images.githubusercontent.com/84146479/197795120-00438956-c3fc-4f35-a596-05640f70e335.png">
 
@@ -67,22 +67,18 @@ when submitting their word after placement, if it is determined to be invalid, t
 
 ### Known issues
 
-It is hard to see where the starting square (H8) is currently. This will later be color coded for ease of use.
+The AI can only place words in a downward manner. This will later be fixed to place words in all directions.
 
-In rare instances, a tile can not be returned to the rack when an invalid word or placement is detected upon pressing the submit button.
-For now, the user can drag it back onto their rack or move it around the board to input a valid word
-
-Extra points for special squares are not implemented at this time.
-
+In some instances, the AI places blank tiles that it does not have.
 
 ### Roadmap ahead
 
-For milestone 3 and onwards, the team will try to use JIRA, GitHub's Projects. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
+For milestone 4 and onwards, the team will try to use JIRA, GitHub's Projects. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
 
-Milestone 2 provides an initial design and implementation of the MVC pattern. The roadmap ahead is concerned with the design and implementation of the AI, blank tiles, and premium squares. 
+The roadmap ahead is concerned with the refinement of the AI, UI, and added features like saving and loading games as well as new premium squares patterns
 
-**Goal** for milestone 3:
-- Fix the edge case bug where one tile is not placed back in rack.
-- set a background board picture for the board to make the UI more user friendly.
-- Implement the AI
+**Goal** for milestone 4:
+- Refine the AI
+- Winner screen
+- Add saving and loading functionalities.
 
