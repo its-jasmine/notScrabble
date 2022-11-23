@@ -40,17 +40,15 @@ public class PlayerView extends JPanel{
         String message = player.getName() + " got " + score + " points";
         JLabel l = new JLabel(message, SwingConstants.CENTER);
         notif.setUndecorated(true);
-        //notif.setBackground(Color.RED);
         notif.setBackground(new Color(1.0F,0F,0F,0.8F));
         l.setForeground(Color.WHITE);
-        l.setFont(new Font("Tahoma",Font.BOLD, 18));
+        l.setFont(new Font("Tahoma",Font.BOLD, 14));
         notif.add(l);
-        notif.setSize(300,100);
+        notif.setSize(200,50);
         notif.setLocationRelativeTo(null);
-        //notif.setOpacity(0.8F);
         Timer timer;
         if (player instanceof AIPlayer) {
-            timer = new Timer(3000, event -> {
+            timer = new Timer(2000, event -> {
                 notif.setVisible(true);
                 Timer timer2 = new Timer(1000, event2 -> {
                     notif.setVisible(false);
@@ -69,15 +67,11 @@ public class PlayerView extends JPanel{
             timer.setRepeats(false);
             timer.start();
         }
-        //notif.setVisible(true);
-
-
-
-        /*try {
+        try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
 
     /**
