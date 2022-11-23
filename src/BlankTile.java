@@ -8,10 +8,10 @@ import javax.swing.*;
 public class BlankTile implements Tile {
 
     /** The letter on the tile */
-    public String letter; // set to public so it can be accessed directly. Since it's final it can't be changed
+    private String letter; // set to public so it can be accessed directly. Since it's final it can't be changed
 
     /** The score value of the blank tile */
-    public static final int VALUE = 0; // set to public so it can be accessed directly. Since it's final it can't be changed
+    private static final int VALUE = 0; // set to public so it can be accessed directly. Since it's final it can't be changed
 
     /** The total quantity of blank tiles in the bag */
     public static final int TOTAL_NUM = 2; // total number of blank tiles in the game

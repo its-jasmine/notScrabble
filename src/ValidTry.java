@@ -11,7 +11,7 @@ public class ValidTry implements Comparable<ValidTry>{
         this.score = score;
         this.tilesToPlay = new ArrayList<>();
         for (Tile t : tilesToPlay) {
-            if (t instanceof BlankTile) t = new BlankTile(((BlankTile) t).letter); // pass by value as blanks maybe be reset for other tries
+            if (t instanceof BlankTile) t = new BlankTile(((BlankTile) t).getLetter()); // pass by value as blanks maybe be reset for other tries
             this.tilesToPlay.add(t);
         }
         this.whereToPlayTiles = new ArrayList<>(whereToPlayTiles);

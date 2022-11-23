@@ -142,7 +142,12 @@ public class GameView extends JFrame {
      */
     public void update(int playerTurn, boolean firstTurn) {
         Player player = game.getPlayers().get(playerTurn);
-        southContainer.remove(1);
+        if (firstTurn) {
+            JOptionPane.showMessageDialog(this,
+                    player.getName() + " drew the highest tile and gets to go first",
+                    "Congrats!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
         if (player instanceof AIPlayer) {
             game.submit();
 
