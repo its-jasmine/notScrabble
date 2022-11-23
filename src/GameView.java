@@ -144,7 +144,7 @@ public class GameView extends JFrame {
         Player player = game.getPlayers().get(playerTurn);
         if (firstTurn) {
             JOptionPane.showMessageDialog(this,
-                    player.getName() + " goes first",
+                    player.getName() + " drew the highest tile and gets to go first",
                     "Congrats!",
                     JOptionPane.INFORMATION_MESSAGE);
         }
