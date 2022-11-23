@@ -71,20 +71,19 @@ public class AIPlayer extends Player{
      */
     private void tryToMakeWords(ArrayList<Coordinate> prevPlayed, ArrayList<ValidTry> validTries){
         for (int i = 0; i < min(prevPlayed.size(), NUMBER_TILES_TO_TRY); i++) {
-            trySpaces(rack.getNumTiles(), prevPlayed.get(i), validTries, BoardValidator.Direction.VERTICAL);
-            trySpaces(rack.getNumTiles(), prevPlayed.get(i), validTries, BoardValidator.Direction.HORIZONTAL);
+            trySpaces(prevPlayed.get(i), validTries, BoardValidator.Direction.VERTICAL);
+            trySpaces(prevPlayed.get(i), validTries, BoardValidator.Direction.HORIZONTAL);
         }
     }
 
     /**
      * Tries to make words with empty squares up to the number of tiles on the rack. Also uses previously played tiles above and below the empty squares
      *
-     * @param numTilesOnRack the number of tiles on the AI's rack
      * @param coordinate     the coordinate to start looking from
      * @param validTries     list of tries that were valid
      * @param direction the direction to try words in
      */
-    private void trySpaces(int numTilesOnRack, Coordinate coordinate, ArrayList<ValidTry> validTries, BoardValidator.Direction direction) {
+    private void trySpaces(Coordinate coordinate, ArrayList<ValidTry> validTries, BoardValidator.Direction direction) {
         Coordinate.Adjacent before;
         Coordinate.Adjacent after;
         if (direction == BoardValidator.Direction.HORIZONTAL) {
@@ -95,12 +94,17 @@ public class AIPlayer extends Player{
             after = Coordinate.Adjacent.BELOW;
         }
 
-        StringBuilder wordFormat = new StringBuilder();
-        ArrayList<Coordinate> emptySquareCoordinates = new ArrayList<>(); // order matters
-        ArrayList<Tile> boardTiles = new ArrayList<>(); // order doesn't matter
 
+
+        int numTilesOnRack = rack.getNumTiles();
         int emptySpacesBefore;
         for (emptySpacesBefore = 0; emptySpacesBefore <= numTilesOnRack; emptySpacesBefore++) {
+
+            StringBuilder wordFormat = new StringBuilder();
+            ArrayList<Coordinate> emptySquareCoordinates = new ArrayList<>(); // order matters
+            ArrayList<Tile> boardTiles = new ArrayList<>(); // order doesn't matter
+
+
             Coordinate coordinateBefore = findContiguousTiles(coordinate, boardTiles, wordFormat, before);
             for (int numEmpties = 0; numEmpties < emptySpacesBefore; numEmpties++) {
                 coordinateBefore = findAnEmptyAndTiles(coordinateBefore, emptySquareCoordinates, wordFormat, boardTiles, before);
@@ -231,10 +235,9 @@ public class AIPlayer extends Player{
                 if (tile == null) {
                     Tile blankTile = rack.removeTileFromRack(new BlankTile());
                     if (blankTile == null) {
-                        System.out.println("couldn't get blank from rack");
+                        System.out.println("couldn't get blank from rack. Letter: " + letter + " Rack: " + rack);
                         return;
                     }
-                    System.out.println("USED BLANK");
                     ((BlankTile)blankTile).setLetter(LetterTile.valueOf(letter));
                     tilesToPlay.add(blankTile);
                 } else tilesToPlay.add(tile);
