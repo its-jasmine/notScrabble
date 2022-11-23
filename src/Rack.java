@@ -13,7 +13,7 @@ public class Rack implements Iterable<Tile>{
     /** The list of tiles in the rack */
     private DefaultTableModel rackModel;
     /** The maximum number of tiles in the rack */
-    private final static int MAXTILES = 7;
+    public final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
 
@@ -169,7 +169,7 @@ public class Rack implements Iterable<Tile>{
      */
     public void putTilesOnRack(ArrayList<Tile> tiles){
         for (Tile t: tiles){
-            if (!putTileOnRack(t)) System.out.println("couldn't add tile"); //TODO error
+            if (!putTileOnRack(t)) ; //System.out.println("couldn't add tile");
         }
     }
     /**

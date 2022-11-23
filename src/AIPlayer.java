@@ -15,7 +15,8 @@ public class AIPlayer extends Player{
     private final WordFinder wordFinder;
 
     public AIPlayer(Board board, Bag bag, int playerNumber) {
-        super(board, bag, playerNumber);
+        super(board, bag);
+        name = "AI " + playerNumber;
         wordFinder = new WordFinder();
     }
 
@@ -35,14 +36,14 @@ public class AIPlayer extends Player{
 
         ArrayList<ValidTry> validTries = new ArrayList<>();
         tryToMakeWords(prevPlayed, validTries);
-        if (validTries.size() == 0) return Game.Status.RUNNING; // couldn't make any valid word, passing
-
-        ValidTry bestTry = Collections.max(validTries);
-        ArrayList<Tile> playTiles = bestTry.getTilesToPlay();
-        rack.removeTiles(playTiles);
-        board.placeTiles(bestTry.getWhereToPlayTiles(),playTiles);
-        this.addToScore(board.submit());
-        System.out.println(bestTry.getScore());
+        if (validTries.size() != 0) {
+            ValidTry bestTry = Collections.max(validTries);
+            ArrayList<Tile> playTiles = bestTry.getTilesToPlay();
+            rack.removeTiles(playTiles);
+            board.placeTiles(bestTry.getWhereToPlayTiles(), playTiles);
+            this.addToScore(board.submit());
+            System.out.println(bestTry.getScore());
+        }
         return this.endTurn();
     }
 

@@ -263,11 +263,11 @@ public class BoardTest {
         board.placeTiles(coordinates, tiles);
         thisTurnHashSet.addAll(coordinates);
         board.setPlayedThisTurn(thisTurnHashSet);
-        assertEquals(7,board.submit());
+        assertEquals(14,board.submit());
         previouslyHashSet.addAll(thisTurnHashSet);
         thisTurnHashSet = new HashSet<>();
 
-        // Placement 2: FARM
+        // Placement 2: FAM
         ArrayList<Coordinate> coordinates2 = new ArrayList<>();
         ArrayList<Tile> tiles2 = new ArrayList<>();
         Coordinate c5 = new Coordinate(Coordinate.Column.H, Coordinate.Row.SIX);
@@ -283,7 +283,7 @@ public class BoardTest {
         thisTurnHashSet.addAll(coordinates2);
         board.setPlayedThisTurn(thisTurnHashSet);
         board.setPreviouslyPlayed(previouslyHashSet);
-        assertEquals(9,board.submit());
+        assertEquals(18,board.submit());
         previouslyHashSet.addAll(thisTurnHashSet);
         thisTurnHashSet = new HashSet<>();
 
@@ -309,7 +309,7 @@ public class BoardTest {
         thisTurnHashSet.addAll(coordinates3);
         board.setPlayedThisTurn(thisTurnHashSet);
         board.setPreviouslyPlayed(previouslyHashSet);
-        assertEquals(17,board.submit());
+        assertEquals(35,board.submit());
         previouslyHashSet.addAll(thisTurnHashSet);
         thisTurnHashSet = new HashSet<>();
 
@@ -329,7 +329,7 @@ public class BoardTest {
         thisTurnHashSet.addAll(coordinates4);
         board.setPlayedThisTurn(thisTurnHashSet);
         board.setPreviouslyPlayed(previouslyHashSet);
-        assertEquals(11,board.submit());
+        assertEquals(22,board.submit());
     }
 
 }

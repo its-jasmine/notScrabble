@@ -27,6 +27,15 @@ public class PlayerTest {
         coordinateHashSet = new HashSet<>();
     }
 
+    @Before
+    public void setUp() throws Exception {
+        bag = new Bag();
+        board = new Board();
+        player = new Player(board, bag);
+        tiles = new ArrayList<>();
+        coordinates = new ArrayList<>();
+    }
+
     @Test
     public void addToScore() {
         player.addToScore(0);
@@ -46,7 +55,7 @@ public class PlayerTest {
         //is actually private
     }
 
-    @Test
+ 
     public void submitValidStartWord() {
         //place AND on the starting tile
         tiles.add(LetterTile.A);
@@ -133,6 +142,7 @@ public class PlayerTest {
         coordinateHashSet.addAll(coordinates);
         board.placeTiles(coordinates,tiles);
         board.setPlayedThisTurn(coordinateHashSet);
+
         for (int i=0; i<15; i++) {
             player.getRack().removeTiles(player.getRack().getTilesList());
             player.getRack().drawTiles();

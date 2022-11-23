@@ -3,6 +3,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class GameView extends JFrame {
 
@@ -140,7 +141,6 @@ public class GameView extends JFrame {
      * @param firstTurn boolean of first turn. true if it is the first turn, false otherwise
      */
     public void update(int playerTurn, boolean firstTurn) {
-        southContainer.remove(1);
         Player player = game.getPlayers().get(playerTurn);
         if (firstTurn) {
             JOptionPane.showMessageDialog(this,
@@ -149,7 +149,8 @@ public class GameView extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         }
         if (player instanceof AIPlayer) {
-            game.submitAI();
+            game.submit();
+
             playerTurn = ++playerTurn % game.getPlayers().size();
             southContainer.add(playerViews.get(playerTurn), 1);
         } else southContainer.add(playerViews.get(playerTurn), 1);

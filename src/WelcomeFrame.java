@@ -23,7 +23,6 @@ public class WelcomeFrame extends JFrame {
                 int numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
                 new GameView(numPlayers, 0); // default 2 players for now
                 view.dispose();
-
             } else if (source.getActionCommand().equals(PLAYER_VS_AI)) {
                 new GameView(1,1);
                 view.dispose();
