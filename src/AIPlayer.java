@@ -15,7 +15,8 @@ public class AIPlayer extends Player{
     private final WordFinder wordFinder;
 
     public AIPlayer(Board board, Bag bag, int playerNumber) {
-        super(board, bag, playerNumber);
+        super(board, bag);
+        name = "AI " + playerNumber;
         wordFinder = new WordFinder();
     }
 

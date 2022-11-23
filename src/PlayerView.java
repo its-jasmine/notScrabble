@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerView extends JPanel{
     private Player player;
@@ -34,6 +35,39 @@ public class PlayerView extends JPanel{
      */
     public void update(int score){
         scoreLabel.setText("Score: "+score+"        ");
+        /*
+        JDialog notif = new JDialog();
+        String message = player.getName() + " got " + score + " points";
+        JLabel l = new JLabel(message, SwingConstants.CENTER);
+        notif.setUndecorated(true);
+        //notif.setBackground(Color.RED);
+        notif.setBackground(new Color(1.0F,0F,0F,0.8F));
+        l.setForeground(Color.WHITE);
+        l.setFont(new Font("Tahoma",Font.BOLD, 18));
+        notif.add(l);
+        notif.setSize(300,100);
+        notif.setLocationRelativeTo(null);
+        //notif.setOpacity(0.8F);
+        if (player instanceof AIPlayer) {
+            Timer timer = new Timer(3000, event -> {
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
+        notif.setVisible(true);
+
+        Timer timer = new Timer(2000, event -> {
+            notif.dispose();
+        });
+        timer.setRepeats(false);
+        timer.start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        */
+
     }
 
     /**

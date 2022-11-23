@@ -13,7 +13,7 @@ public class Player {
     /** The player's current score */
     private int score;
     /** The player's name */
-    private String name;
+    protected String name;
     /** the views of the player */
     private List<PlayerView> views;
 
