@@ -35,7 +35,7 @@ public class PlayerView extends JPanel{
      */
     public void update(int score){
         scoreLabel.setText("Score: "+score+"        ");
-        /*
+
         JDialog notif = new JDialog();
         String message = player.getName() + " got " + score + " points";
         JLabel l = new JLabel(message, SwingConstants.CENTER);
@@ -48,26 +48,36 @@ public class PlayerView extends JPanel{
         notif.setSize(300,100);
         notif.setLocationRelativeTo(null);
         //notif.setOpacity(0.8F);
+        Timer timer;
         if (player instanceof AIPlayer) {
-            Timer timer = new Timer(3000, event -> {
+            timer = new Timer(3000, event -> {
+                notif.setVisible(true);
+                Timer timer2 = new Timer(1000, event2 -> {
+                    notif.setVisible(false);
+                });
+                timer2.setRepeats(false);
+                timer2.start();
             });
             timer.setRepeats(false);
             timer.start();
         }
-        notif.setVisible(true);
+        else{
+            notif.setVisible(true);
+            timer = new Timer(2000, event -> {
+                notif.setVisible(false);
+            });
+            timer.setRepeats(false);
+            timer.start();
+        }
+        //notif.setVisible(true);
 
-        Timer timer = new Timer(2000, event -> {
-            notif.dispose();
-        });
-        timer.setRepeats(false);
-        timer.start();
-        try {
+
+
+        /*try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
-        */
-
+        }*/
     }
 
     /**
