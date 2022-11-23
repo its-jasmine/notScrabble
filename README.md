@@ -60,14 +60,11 @@ when submitting their word after placement, if it is determined to be invalid, t
 
 ### Rest of Deliverables
 
-| Milestone | Due Date   | Main Deliverables                                                                                                                                                                                                                                                                                                           |
-|:---------:|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|     3     | 11/21/2022 | **Fully functioning game with AI capabilities:** Tile placement validation, scoring, blank tile and premium square functionalities are included. AI players with the ability to play the highest scoring word will be implemented. Changes from Milestone 2 will be documented. (The code will smell like fresh flowers) 🌻 |
-|     4     | 12/05/2022 | **Undo, saving and customization features:** Ability to undo or redo moves at multiple levels. Ability to save and load the game using Java Serialization. Ability to customize boards by alternating the placement of premium squares.                                                                                     |
+| Milestone | Due Date   | Main Deliverables                                                                                                                                                                                                                          |
+|:---------:|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     4     | 12/05/2022 | **Undo, saving and customization features:** Ability to undo or redo moves at multiple levels. Ability to save and load the game using Java Serialization. Ability to customize boards by alternating the placement of premium squares.    |
 
 ### Known issues
-
-The AI can only place words in a downward manner. This will later be fixed to place words in all directions.
 
 In some instances, the AI places blank tiles that it does not have.
 
@@ -79,6 +76,11 @@ The roadmap ahead is concerned with the refinement of the AI, UI, and added feat
 
 **Goal** for milestone 4:
 - Refine the AI
+- Make it able to customize the amount of AI players
+- merge exchange tile implementation.
 - Winner screen
 - Add saving and loading functionalities.
+- add a score table to see every player scores
+- refine the blank tile visibility on the board to be able to check which letter the blank tile represents
+- implement the functionality for the menu bar
 
