@@ -113,7 +113,7 @@ public class AIPlayer extends Player{
 
             int tileDif = numTilesOnRack - emptySpacesBefore;
             for (int j = 0; j <= tileDif; j++) {
-                if (emptySpacesBefore == 0) continue; // we need to place at least one tile
+                if (emptySpacesBefore == 0 && j == 0) continue; // we need to place at least one tile
                 coordinateAfter = findAnEmptyAndTiles(coordinateAfter, emptySquareCoordinates, wordFormat, boardTiles, after);
 
                 String sWordFormat = wordFormat.toString();
