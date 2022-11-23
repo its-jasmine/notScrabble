@@ -25,10 +25,13 @@ public class AIPlayer extends Player{
      */
     @Override
     public Game.Status submit() {
-        if (board.isStartSquareEmpty()) return Game.Status.RUNNING; //TODO handle AI goes first
 
         ArrayList<Coordinate> prevPlayed = new ArrayList<>(board.getPreviouslyPlayed());
         shuffle(prevPlayed); // some systems will return hash sets in the same order every time
+        if (prevPlayed.size() == 0) {
+            prevPlayed.add(new Coordinate(Board.START_COLUMN, Board.START_ROW));
+        }
+
 
         ArrayList<ValidTry> validTries = new ArrayList<>();
         tryToMakeWords(prevPlayed, validTries);

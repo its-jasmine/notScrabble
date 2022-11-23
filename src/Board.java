@@ -10,8 +10,8 @@ import java.util.*;
  * @version Milestone2
  */
 public class Board {
-    private final Coordinate.Row START_ROW = Coordinate.Row.EIGHT;
-    private final Coordinate.Column START_COLUMN = Coordinate.Column.H;
+    public final static Coordinate.Row START_ROW = Coordinate.Row.EIGHT;
+    public final static Coordinate.Column START_COLUMN = Coordinate.Column.H;
 
     /** the tiles being played during the turn */
     private HashSet<Coordinate> playedThisTurn;
