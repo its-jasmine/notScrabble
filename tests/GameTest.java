@@ -185,6 +185,6 @@ public class GameTest {
 
         int currentPlayerIndex = game4.getPlayerTurn();
         assertNotEquals(currentPlayerIndex, firstPlayerIndex); // game should move on to next player
-        assertEquals(9,firstPlayer.getScore()); // first player should recieve score update for their played word
+        assertEquals(18,firstPlayer.getScore()); // first player should recieve score update for their played word
     }
 }

@@ -101,13 +101,17 @@ public class RackTest {
      * Tests that drawTiles returns RUNNING if there are tiles leftover and OVER otherwise
      */
     @Test
-    public void testDrawTiles(){
+    public void testDrawAllTiles(){
         for (int i=0; i<13; i++) {
             rack.removeTiles(rack.getTilesList());
             assertEquals(0, rack.getNumTiles());
             assertEquals(Game.Status.RUNNING, rack.drawTiles());
             assertEquals(7, rack.getNumTiles());
         }
+        rack.removeTiles(rack.getTilesList());
+        assertEquals(0, rack.getNumTiles());
+        assertEquals(Game.Status.RUNNING, rack.drawTiles());
+        assertEquals(2, rack.getNumTiles());
         rack.removeTiles(rack.getTilesList());
         assertEquals(Game.Status.OVER, rack.drawTiles());
     }

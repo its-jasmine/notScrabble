@@ -18,7 +18,7 @@ public class BagTest {
         b = new Bag();
         assertEquals(7, b.drawTiles(7).size());
         assertEquals(0, b.drawTiles(0).size());
-        b.drawTiles(91); // bag now empty
+        b.drawTiles(93); // bag now empty
         assertEquals(0, b.drawTiles(19).size());
     }
 

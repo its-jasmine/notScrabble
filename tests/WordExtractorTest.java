@@ -206,7 +206,7 @@ public class WordExtractorTest {
         newCoordinateList.add(new Coordinate(Coordinate.Column.M, Coordinate.Row.EIGHT));
         newTileList.add(LetterTile.S);
         board.placeTiles(newCoordinateList, newTileList);
-        System.out.println(board);
+        //System.out.println(board);
 
         wordExtractor = new WordExtractor(board);
         words = wordExtractor.getWordsCreated(newCoordinateList, BoardValidator.Direction.HORIZONTAL);
@@ -284,7 +284,7 @@ public class WordExtractorTest {
         tileList.add(LetterTile.P);
 
         b.placeTiles(coordinateList, tileList);
-        System.out.println(b);
+        //System.out.println(b);
         return b;
     }
 }

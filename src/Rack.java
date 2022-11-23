@@ -169,7 +169,7 @@ public class Rack implements Iterable<Tile>{
      */
     public void putTilesOnRack(ArrayList<Tile> tiles){
         for (Tile t: tiles){
-            if (!putTileOnRack(t)) System.out.println("couldn't add tile"); //TODO error
+            if (!putTileOnRack(t)) ; //System.out.println("couldn't add tile");
         }
     }
     /**

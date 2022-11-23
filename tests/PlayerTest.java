@@ -130,7 +130,7 @@ public class PlayerTest {
         board.placeTiles(coordinates,tiles);
         board.setPlayedThisTurn(coordinateHashSet);
         //System.out.println(board.getPlayedThisTurn());
-        for (int i=0; i<14; i++) {
+        for (int i=0; i<15; i++) {
             //System.out.println(player.getRack());
             player.getRack().removeTiles(player.getRack().getTilesList());
             player.getRack().drawTiles();
