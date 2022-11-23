@@ -30,14 +30,14 @@ public class PlayerView extends JPanel{
     }
 
     /**
-     * updates the score
-     * @param score the score of the player
+     * updates the score label
+     * @param turnScore the turnScore of the player
      */
-    public void update(int score){
-        scoreLabel.setText("Score: "+score+"        ");
+    public void update(int turnScore){
+        scoreLabel.setText("Score: "+player.getScore()+"        ");
 
         JDialog notif = new JDialog();
-        String message = player.getName() + " got " + score + " points";
+        String message = player.getName() + " got " + turnScore + " points";
         JLabel l = new JLabel(message, SwingConstants.CENTER);
         notif.setUndecorated(true);
         notif.setBackground(new Color(1.0F,0F,0F,0.8F));

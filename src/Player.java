@@ -78,7 +78,7 @@ public class Player {
     public void addToScore(int score) {
         this.score += score;
         for (PlayerView v : views) {
-            v.update(this.score);
+            v.update(score);
         }
     }
     /**
