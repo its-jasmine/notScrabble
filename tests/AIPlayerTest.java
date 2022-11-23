@@ -23,15 +23,26 @@ public class AIPlayerTest {
 
     @Test
     public void submit() {
-        Game game = new Game(1,1);
-        ArrayList<Player> players = game.getPlayers();
-        aiPlayer = (AIPlayer) players.get(1);
-        if (game.getPlayerTurn() == 1){ // AI is the first player
-            game.submit();
-            assertEquals(0, aiPlayer.getScore()); // AI currently cannot play first, it should pass
+        ArrayList<Tile> aiTilesBefore = aiPlayer.getRack().getTilesList();
+        // at least two tiles should be different
+        assertEquals(0, aiPlayer.getScore());
+        assertEquals(Game.Status.RUNNING, aiPlayer.submit());
+        assertNotEquals(0, aiPlayer.getScore());
+        ArrayList<Tile> aiTilesAfter = aiPlayer.getRack().getTilesList();
+        assertEquals(aiTilesBefore.size(), aiTilesAfter.size());
+        int differentTileCount = 0;
+        for (int i = 0; i < aiTilesBefore.size(); i++){
+            if (aiTilesBefore.get(i) != aiTilesAfter.get(i)) differentTileCount++;
         }
-        game.submit();
+        assertTrue(differentTileCount > 1);
 
+        bag.drawTiles(Bag.MAX_TILES - Rack.MAXTILES);
+        assertEquals(0, bag.getNumTilesLeft());
+        ArrayList<Tile> aiRackTiles = aiPlayer.getRack().getTilesList();
+        aiPlayer.getRack().removeTiles(aiRackTiles);
+        assertEquals(0, aiPlayer.getRack().getNumTiles());
+
+        assertEquals(Game.Status.OVER, aiPlayer.submit());
     }
 
     // visual test
