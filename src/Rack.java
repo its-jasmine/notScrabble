@@ -136,7 +136,13 @@ public class Rack implements Iterable<Tile>{
             Tile r = (Tile) rackModel.getValueAt(0, i);
             if (r == null) continue;
 
-            if (r.equals(tile)) {
+            // needed if trying to remove a blank, using a set blank as input tile
+            if (r instanceof BlankTile && tile instanceof BlankTile) {
+                rackModel.setValueAt(null, 0, i);
+                return r;
+            }
+
+            else if (r.equals(tile)) {
                 rackModel.setValueAt(null, 0, i);
                 return r;
             }
