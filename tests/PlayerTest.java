@@ -27,15 +27,6 @@ public class PlayerTest {
         coordinateHashSet = new HashSet<>();
     }
 
-    @Before
-    public void setUp() throws Exception {
-        bag = new Bag();
-        board = new Board();
-        player = new Player(board, bag);
-        tiles = new ArrayList<>();
-        coordinates = new ArrayList<>();
-    }
-
     @Test
     public void addToScore() {
         player.addToScore(0);
