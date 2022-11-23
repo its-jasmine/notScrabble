@@ -150,7 +150,7 @@ public class Board {
         }
 
         if (!Word.areValidWords(words)) {
-            System.out.println("One or more of the words created was invalid.");
+            // should tell player this System.out.println("One or more of the words created was invalid.");
             return -1;
         }
 

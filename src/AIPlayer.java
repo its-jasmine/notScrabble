@@ -10,7 +10,7 @@ import static java.util.Collections.shuffle;
  */
 
 public class AIPlayer extends Player{
-    private static final int NUMBER_TILES_TO_TRY = 20; // to help limit how long the AI's turn is
+    private static final int NUMBER_TILES_TO_TRY = 10; // to help limit how long the AI's turn is and make it easier to play against
     /** A Wordfinder to find words */
     private final WordFinder wordFinder;
 
@@ -121,7 +121,7 @@ public class AIPlayer extends Player{
                 coordinateAfter = findAnEmptyAndTiles(coordinateAfter, emptySquareCoordinates, wordFormat, boardTiles, after);
 
                 String sWordFormat = wordFormat.toString();
-                ArrayList<String> words = new ArrayList<>(wordFinder.findWord(allNeededTiles(boardTiles, boardTiles), sWordFormat));
+                ArrayList<String> words = new ArrayList<>(wordFinder.findWord(allNeededTiles(boardTiles), sWordFormat));
 
                 findValidTries(words, sWordFormat, emptySquareCoordinates, validTries);
                 if (coordinateAfter == null) break; // edge of board was found
@@ -131,14 +131,12 @@ public class AIPlayer extends Player{
 
     /**
      * Puts all the tiles needed for wordFinder in one list. Needed tiles are previously played tiles that will be used and tiles from the rack that can be used.
-     * @param boardTilesBelow tiles on the board that will be used
-     * @param boardTilesAboveAndCenter tiles on the board that will be used
+     * @param boardTiles tiles on the board that will be used
      * @return list of all the needed tiles
      */
-    private ArrayList<Tile> allNeededTiles(ArrayList<Tile> boardTilesBelow, ArrayList<Tile> boardTilesAboveAndCenter) {
+    private ArrayList<Tile> allNeededTiles(ArrayList<Tile> boardTiles) {
         ArrayList<Tile> allTiles = new ArrayList<>(rack.getTilesList());
-        allTiles.addAll(boardTilesBelow);
-        allTiles.addAll(boardTilesAboveAndCenter);
+        allTiles.addAll(boardTiles);
         return allTiles;
     }
 
