@@ -16,15 +16,17 @@ public class BoardConfiguration {
         put(BoardConfigType.Expert, "expertConfig.json");
 
     }};
-    private String name;
+    private BoardConfigType boardConfigType;
     private JsonObject config;
 
+
+
     public BoardConfiguration(BoardConfigType t) throws Exception {
+        boardConfigType = t;
         JsonReader jsonReader = Json.createReader(new FileInputStream(boardConfigFiles.get(t)));
         JsonObject data = jsonReader.readObject();
-        name = data.getString("name").toString();
-        config = data.getJsonObject("config");
 
+        config = data.getJsonObject("config");
         if (config.size() != Coordinate.Row.values().length) throw new Exception("The config file is not of the required format");
         for (JsonValue v : config.values()){
             if (v.asJsonArray().size() != Coordinate.Column.values().length) new Exception("The config file is not of the required format");
@@ -32,50 +34,51 @@ public class BoardConfiguration {
     }
 
     public DefaultTableModel generateDefaultTableModel() {
-
-        DefaultTableModel m = new DefaultTableModel();
+        DefaultTableModel m = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length);
         JsonArray rawRowData;
         for (Coordinate.Row r : Coordinate.Row.values()){
-            //System.out.println(r.name());
             rawRowData = config.getJsonArray(r.name());
-            Object[] rowAsString = Arrays.stream(rawRowData.toArray()).map(v->v.toString()).toArray();
+            String[] rowAsString = Arrays.stream(rawRowData.toArray()).map(v->v.toString().replace("\"","")).toArray(String[]::new);
+            Square[] rowAsSquares = Arrays.stream(rowAsString).map(s -> new Square(Square.Type.valueOf(s))).toArray(Square[]::new);
 
-            //System.out.println(rowData.toArray()[0].getClass());
-            //JsonString[] rowOfJsonStrings = (JsonString[]) rowData.toArray();
-            Square[] rowOfSquares = (Square[]) Arrays.stream(rowAsString).map(s ->new Square(Square.Type.valueOf((String)s))).toArray();
-            m.addRow(rowOfSquares);
-
-            //System.out.println(rowData);
-
+            for (int i = 0; i < rowAsSquares.length; i++){
+                m.setValueAt(rowAsSquares[i], r.ordinal(), i);
+            }
         }
-
         return m;
+    }
+    public String toString(){
+        DefaultTableModel m = generateDefaultTableModel();
+        String s = "   ";
+        for (Coordinate.Column c : Coordinate.Column.values()) {
+            s += c + "  ";
+        }
+        s += "\n";
+        for (Coordinate.Row r : Coordinate.Row.values()) {
+            int row = r.ordinal() + 1;
+            if(row < 10) s += row + "  "; else s += row + " "; // keeps columns straight
+            for (Coordinate.Column c : Coordinate.Column.values()) {
+                s += m.getValueAt(r.ordinal(), c.ordinal()) + "  "; // Each square will be separated by two spaces.
+            }
+            s += "\n";
+        }
+        return s;
+
     }
 
     public static void main(String[] args) {
         BoardConfiguration b =null;
+        BoardConfiguration b2 =null;
+
         try {
             b = new BoardConfiguration(BoardConfigType.Basic);
-            /*String s = "   ";
-            for (Coordinate.Column c : Coordinate.Column.values()) {
-                s += c + "  ";
-            }
-            s += "\n";
-            for (Coordinate.Row r : Coordinate.Row.values()) {
-                int row = r.ordinal() + 1;
-                if(row < 10) s += row + "  "; else s += row + " "; // keeps columns straight
-                for (Coordinate.Column c : Coordinate.Column.values()) {
-                    s += m.getValueAt(r.ordinal(), c.ordinal()) + "  "; // Each square will be separated by two spaces.
-                }
-                s += "\n";
-            }
-            System.out.println(s);*/
+            b2 = new BoardConfiguration(BoardConfigType.Expert);
+
         } catch (Exception e){
             System.out.println("Exception!");
         }
-        DefaultTableModel m = b.generateDefaultTableModel();
-
-
+        System.out.println(b);
+        System.out.println(b2);
     }
 
 }
