@@ -80,6 +80,17 @@ public class Board {
     }
 
     /**
+     * Creates a new board using the specified board configuration.
+     * @param type The board configuration type
+     * @throws Exception when config file is not appropriately formatted
+     */
+    public Board(BoardConfiguration.BoardConfigType type) throws Exception {
+        boardModel = new BoardConfiguration(type).generateDefaultTableModel();
+        this.playedThisTurn = new HashSet<>();
+        this.previouslyPlayed = new HashSet<>();
+    }
+
+    /**
      * Gets the DefaultTableModel of the board
      * @return boardModel
      */

@@ -19,8 +19,6 @@ public class BoardConfiguration {
     private BoardConfigType boardConfigType;
     private JsonObject config;
 
-
-
     public BoardConfiguration(BoardConfigType t) throws Exception {
         boardConfigType = t;
         JsonReader jsonReader = Json.createReader(new FileInputStream(boardConfigFiles.get(t)));
@@ -34,7 +32,13 @@ public class BoardConfiguration {
     }
 
     public DefaultTableModel generateDefaultTableModel() {
-        DefaultTableModel m = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length);
+        DefaultTableModel m = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length){
+            //  renderers to be used based on Class
+            public Class<Square> getColumnClass(int column)
+            {
+                return Square.class;
+            }
+        };
         JsonArray rawRowData;
         for (Coordinate.Row r : Coordinate.Row.values()){
             rawRowData = config.getJsonArray(r.name());
