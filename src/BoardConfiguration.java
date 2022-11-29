@@ -9,7 +9,7 @@ An
  */
 public class BoardConfiguration {
     public enum BoardConfigType {
-        Basic, Expert
+        Basic, Expert, ExternalFile
     }
     public static final HashMap<BoardConfigType, String> boardConfigFiles = new HashMap<>() {{
         put(BoardConfigType.Basic, "basicConfig.json");
@@ -22,6 +22,16 @@ public class BoardConfiguration {
     public BoardConfiguration(BoardConfigType t) throws Exception {
         boardConfigType = t;
         JsonReader jsonReader = Json.createReader(new FileInputStream(boardConfigFiles.get(t)));
+        importBoardConfig(jsonReader);
+    }
+
+    public BoardConfiguration(String fileName) throws Exception {
+        boardConfigType = BoardConfigType.ExternalFile;
+        JsonReader jsonReader = Json.createReader(new FileInputStream(fileName));
+        importBoardConfig(jsonReader);
+    }
+
+    private void importBoardConfig(JsonReader jsonReader) throws Exception {
         JsonObject data = jsonReader.readObject();
 
         config = data.getJsonObject("config");
