@@ -46,7 +46,7 @@ public class AIPlayerTest {
 
     // visual test
     public static void main(String[] args) {
-        GameView gameView = new GameView(1, 1);
+        GameView gameView = new GameView(new GameConfiguration(null, 1,1));
         Game game = gameView.getGame();
         ArrayList<Player> players = game.getPlayers();
         for (Player p: players) {

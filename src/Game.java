@@ -47,13 +47,19 @@ public class Game {
     }
 
 
+
     /**
-     * Creates a new game with the specifed number of players and AI.
-     * @param numPlayers the number of players of the game
+     * Creates a new game using the given game configuration.
+     * @param gameConfig contains the game configuration information.
      */
-    public Game(int numPlayers, int numAI) {
+    public Game(GameConfiguration gameConfig) {
+        int numPlayers = gameConfig.getNumPlayers();
+        int numAI = gameConfig.getNumAI();
+        BoardConfiguration b = gameConfig.getBoardConfiguration();
+
         views = new ArrayList<>();
-        board = new Board();
+        if (b == null) board = new Board();
+        else board = new Board(b);
         bag = new Bag();
 
         if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change
@@ -267,7 +273,7 @@ public class Game {
      * @param args N/A
      */
     public static void main(String[] args) {
-        Game game = new Game(1, 1);
-        game.playGame();
+        //Game game = new Game(1, 1, );
+        //game.playGame();
     }
 }
