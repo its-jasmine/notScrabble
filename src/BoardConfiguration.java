@@ -11,6 +11,7 @@ import java.util.HashMap;
  * @version Milestone4
  */
 public class BoardConfiguration {
+    /** The different board configuration types */
     public enum Type {
         Basic, // class scrabble board
         Expert, // no premium squares
@@ -18,7 +19,7 @@ public class BoardConfiguration {
         ExternalFile // external config file possibly provided by user
     }
 
-    /**Game-provided BoardConfigTypes and their corresponding fileNames*/
+    /** Game-provided BoardConfigTypes and their corresponding fileNames */
     public static final HashMap<Type, String> boardConfigFiles = new HashMap<>() {{
         put(Type.Basic, "basicConfig.json");
         put(Type.Expert, "expertConfig.json");
@@ -59,6 +60,8 @@ public class BoardConfiguration {
     }
 
     /**
+     * Converts data read from .json file into JsonObject.
+     *
      * @param jsonReader The json reader initialized to read from desired board config json file.
      * @return JsonObject contained the baord config data
      * @throws InstantiationError thrown when json config file is not of the required 15x15 grid format
@@ -76,6 +79,11 @@ public class BoardConfiguration {
         return configJsonToValidate;
     }
 
+    /**
+     * Creates a default table model of Squares based on this board configuration.
+     *
+     * @return generated DefaultTableModel that represents this BoardConfiguration
+     */
     public DefaultTableModel generateDefaultTableModel() {
         DefaultTableModel m = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length) {
             //  renderers to be used based on Class
