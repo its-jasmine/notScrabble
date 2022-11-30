@@ -1,7 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
+/**
+ * The main frame of the game, displays the game board, active player rack,
+ * @author Rebecca Elliott
+ * @author Jasmine Gad El Hak
+ * @author Arthur Atangana
+ * @author Victoria Malouf
+ * @version Milestone4
+ */
 public class GameView extends JFrame {
 
     public Game getGame() { // for testing

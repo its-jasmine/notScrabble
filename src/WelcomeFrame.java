@@ -3,7 +3,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
+/**
+ * The initial frame of the game, provides options for the user to start a new game or see game instructions.
+ * @author Jasmine Gad El Hak
+ * @version Milestone4
+ */
 public class WelcomeFrame extends JFrame {
     private static final String  INSTRUCTIONS_CMD = "instructions";
     private static final String  NEW_GAME_CMD = "new game";
@@ -50,7 +54,7 @@ public class WelcomeFrame extends JFrame {
             ButtonGroup options = new ButtonGroup();
             JRadioButton b;
 
-            for (BoardConfiguration.BoardConfigType t : BoardConfiguration.BoardConfigType.values()){
+            for (BoardConfiguration.Type t : BoardConfiguration.Type.values()){
                 b = new JRadioButton(t.name());
                 b.setActionCommand(t.name());
                 options.add(b);
@@ -60,9 +64,9 @@ public class WelcomeFrame extends JFrame {
 
             JOptionPane.showMessageDialog(null, panel);
 
-            BoardConfiguration.BoardConfigType t = BoardConfiguration.BoardConfigType.valueOf(options.getSelection().getActionCommand());
+            BoardConfiguration.Type t = BoardConfiguration.Type.valueOf(options.getSelection().getActionCommand());
             try {
-                if (t == BoardConfiguration.BoardConfigType.ExternalFile) {
+                if (t == BoardConfiguration.Type.ExternalFile) {
                     String fileName = JOptionPane.showInputDialog("Please enter the file name of the .json board configuration file");
                     return new BoardConfiguration(fileName);
                 } else return new BoardConfiguration(t);

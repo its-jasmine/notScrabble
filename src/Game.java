@@ -1,10 +1,12 @@
 import java.util.*;
 import java.util.stream.Collectors;
-
 /**
  * Models the letter crossing game.
- *  @author Rebecca Elliott
- *  @version Milestone1
+ * @author Rebecca Elliott
+ * @author Jasmine Gad El Hak
+ * @author Arthur Atangana
+ * @author Victoria Malouf
+ * @version Milestone4
  */
 public class Game {
 

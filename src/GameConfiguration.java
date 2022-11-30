@@ -1,6 +1,11 @@
+/**
+ * Encapsulates game configuration information.
+ * @author Jasmine Gad El Hak
+ * @version Milestone4
+ */
 public class GameConfiguration {
+    /** */
     private final BoardConfiguration boardConfiguration;
-
     private final int numPlayers;
     private final int numAI;
     public GameConfiguration(BoardConfiguration b, int numPlayers, int numAI){
