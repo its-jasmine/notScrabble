@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 /**
- * Class responsible for extracting board configuration data from Json files.
+ * Class responsible for extracting board configuration data from .json files.
  * Please see User Manual for information regarding required Json file format.
  * @author Jasmine Gad El Hak
  * @version Milestone4
