@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -45,8 +46,8 @@ public class AIPlayerTest {
     }
 
     // visual test
-    public static void main(String[] args) {
-        GameView gameView = new GameView(1, 1);
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        GameView gameView = new GameView(1, 1, null);
         Game game = gameView.getGame();
         ArrayList<Player> players = game.getPlayers();
         for (Player p: players) {

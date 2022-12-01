@@ -12,12 +12,12 @@ import static java.util.Collections.shuffle;
 public class AIPlayer extends Player{
     private static final int NUMBER_TILES_TO_TRY = 10; // to help limit how long the AI's turn is and make it easier to play against
     /** A Wordfinder to find words */
-    private final WordFinder wordFinder;
+    private final transient WordFinder wordFinder = new WordFinder();
 
     public AIPlayer(Board board, Bag bag, int playerNumber) {
         super(board, bag);
         name = "AI " + playerNumber;
-        wordFinder = new WordFinder();
+        //wordFinder = new WordFinder();
     }
 
     /**

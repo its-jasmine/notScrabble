@@ -2,11 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class WelcomeFrame extends JFrame {
     private static final String  INSTRUCTIONS_CMD = "instructions";
     private static final String  NEW_GAME_CMD = "new game";
     private static final String PLAYER_VS_AI = "1 vs ai";
+    private static final String LOAD_GAME_CMD = "load game";
     private class WelcomeController implements ActionListener {
         private WelcomeFrame view;
 
@@ -21,11 +23,32 @@ public class WelcomeFrame extends JFrame {
                 JOptionPane.showMessageDialog(view, "Instructions blah blah blah");
             }else if (source.getActionCommand().equals(NEW_GAME_CMD)){
                 int numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
-                new GameView(numPlayers, 0); // default 2 players for now
+                try {
+                    new GameView(numPlayers, 0, null); // default 2 players for now
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
                 view.dispose();
             } else if (source.getActionCommand().equals(PLAYER_VS_AI)) {
-                new GameView(1,1);
+                try {
+                    new GameView(1,1, null);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
                 view.dispose();
+            } else if (source.getActionCommand().equals(LOAD_GAME_CMD)) {
+                String fileName = JOptionPane.showInputDialog("Provide file name:" );
+                try {
+                    new GameView(0,0,fileName);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }
@@ -35,7 +58,7 @@ public class WelcomeFrame extends JFrame {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.setBackground(Color.WHITE);
         setTitle("notScrabble");
-        setSize(920, 450);
+        setSize(920, 550);
         String imagePath = "images/notScrabble_logo.png";
         ImageIcon logo = new ImageIcon(imagePath);
 
@@ -62,6 +85,14 @@ public class WelcomeFrame extends JFrame {
         newGame.setActionCommand(NEW_GAME_CMD);
         newGame.addActionListener(c);
 
+        JButton loadGame = new JButton("    Load Game   ");
+        loadGame.setFocusPainted(false);
+        loadGame.setBackground(Color.RED);
+        loadGame.setForeground(Color.WHITE);
+        loadGame.setFont(new Font("Tahoma",Font.BOLD, 15));
+        loadGame.setActionCommand(LOAD_GAME_CMD);
+        loadGame.addActionListener(c);
+
         JButton aiGame = new JButton("1 VS Computer");
         aiGame.setFocusPainted(false);
         aiGame.setBackground(Color.RED);
@@ -77,10 +108,13 @@ public class WelcomeFrame extends JFrame {
         container.add(Box.createRigidArea(new Dimension(0,30)));
         container.add(newGame);
         container.add(Box.createRigidArea(new Dimension(0,30)));
+        container.add(loadGame);
+        container.add(Box.createRigidArea(new Dimension(0,30)));
         container.add(aiGame);
 
         image.setAlignmentX(Component.CENTER_ALIGNMENT);
         newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loadGame.setAlignmentX(Component.CENTER_ALIGNMENT);
         instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
         aiGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 

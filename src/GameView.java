@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -17,20 +18,24 @@ public class GameView extends JFrame {
     private BoardView boardView;
     private int currentView;
 
-    public GameView(int numPlayers, int numAI) throws HeadlessException {
+    public GameView(int numPlayers, int numAI, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
         super("notScrabble");
-        if (numAI >0){
-            game = new Game(numPlayers, numAI);
+        if (fileName != null){
+            game = (Game) Game.loadGame(fileName);
         }
         else {
-            game = new Game(numPlayers);
-        }
-        currentView = 0;
-        boardView = new BoardView(game.getBoard());
-        playerViews = new ArrayList<>();
-        ArrayList<Player> players =  game.getPlayers();
-        for (Player player : players){
-            playerViews.add(new PlayerView(player));
+            if (numAI > 0) {
+                game = new Game(numPlayers, numAI);
+            } else {
+                game = new Game(numPlayers);
+            }
+            currentView = 0;
+            boardView = new BoardView(game.getBoard());
+            playerViews = new ArrayList<>();
+            ArrayList<Player> players = game.getPlayers();
+            for (Player player : players) {
+                playerViews.add(new PlayerView(player));
+            }
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -128,11 +133,14 @@ public class GameView extends JFrame {
         this.setVisible(true);
 
         game.addView(this);
-        game.playGame();
+
+        if (fileName != null) {
+            game.playGame();
+        }
     }
 
-    public static void main(String[] args) {
-        new GameView(1, 1);
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        new GameView(1, 1, null);
     }
 
     /**

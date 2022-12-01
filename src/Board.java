@@ -21,10 +21,10 @@ public class Board {
 
 
     /** The direction of the word currently be validated */
-    private final BoardValidator boardValidator = new BoardValidator(this);
+    private final transient BoardValidator boardValidator = new BoardValidator(this);
 
     /** the word extractor */
-    private final WordExtractor wordExtractor = new WordExtractor(this);
+    private final transient WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
 

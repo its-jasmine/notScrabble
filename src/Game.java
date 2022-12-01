@@ -1,3 +1,7 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -68,6 +72,14 @@ public class Game {
         for (int i = 0; i < numAI; i++) {
             players.add(new AIPlayer(board, bag, i + 1));
         }
+    }
+
+    /**
+     * Creates a new game from an imported file
+     * @param fileName the file to be read
+     */
+    public Game(String fileName) throws IOException, ClassNotFoundException {
+        this.loadGame(fileName);
     }
 
     /**
@@ -260,6 +272,22 @@ public class Game {
      */
     public void addView(GameView gameView) {
         views.add(gameView);
+    }
+
+    /**
+     * Recreates a Game object with the same state as the Game saved in the file
+     * @param fileName
+     * @return Game object
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public static Object loadGame(String fileName) throws ClassNotFoundException, IOException {
+        FileInputStream file = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(file);
+        Object obj = in.readObject();
+        in.close();
+        file.close();
+        return obj;
     }
 
     /**
