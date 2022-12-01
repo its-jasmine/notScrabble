@@ -1,40 +1,35 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.HashMap;
 
 public class BoardRenderer  extends DefaultTableCellRenderer {
+    private static final HashMap<Square.Type, Color> typeToColor = new HashMap<>(){{
+        put(Square.Type.PLAIN, new Color(216,213,194));
+        put(Square.Type.START, new Color(142, 177, 37));
+        put(Square.Type.DOUBLE_LETTER, new Color(196,230,245));
+        put(Square.Type.TRIPLE_LETTER,new Color(43,160,220));
+        put(Square.Type.DOUBLE_WORD, new Color(255,168,178));
+        put(Square.Type.TRIPLE_WORD, new Color(244,37,36));
+    }};
+    private String getSquareTypeRenderString(Square.Type t){
+        if (t == Square.Type.PLAIN) {
+            return "";
+        }else if (t == Square.Type.START){
+            return t.name();
+        } else {
+            String[] splitName = t.name().split("_");
+            return "<html><p style='text-align:center'>" + splitName[0] + "<br>" + splitName[1] + "</p></html>";
+        }
+    }
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        if (((Square) value).getType() == Square.Type.PLAIN){
-            //c.setBackground(new Color(227,207,170)); // a bit too close to tile color.
-            c.setBackground(new Color(216,213,194));
-        }
-        else if (((Square) value).getType() == Square.Type.START){
-            c.setBackground(new Color(142, 177, 37));
-            ((JLabel)c).setText("START");
-            ((JLabel)c).setHorizontalAlignment(JLabel.CENTER);
-        }
-        else if (((Square) value).getType() == Square.Type.DOUBLE_LETTER){
-            c.setBackground(new Color(196,230,245));
-            ((JLabel)c).setText("<html><p style='text-align:center'>DOUBLE<br>LETTER</p></html>");
-            ((JLabel)c).setHorizontalAlignment(JLabel.CENTER);
-        }
-        else if (((Square) value).getType() == Square.Type.TRIPLE_LETTER){
-            c.setBackground(new Color(43,160,220));
-            ((JLabel)c).setText("<html><p style='text-align:center'>TRIPLE<br>LETTER</p></html>");
-            ((JLabel)c).setHorizontalAlignment(JLabel.CENTER);
-        }
-        else if (((Square) value).getType() == Square.Type.DOUBLE_WORD){
-            c.setBackground(new Color(255,168,178));
-            ((JLabel)c).setText("<html><p style='text-align:center'>DOUBLE<br>WORD</p></html>");
-            ((JLabel)c).setHorizontalAlignment(JLabel.CENTER);
-        }
-        else if (((Square) value).getType() == Square.Type.TRIPLE_WORD){
-            c.setBackground(new Color(244,37,36));
-            ((JLabel)c).setText("<html><p style='text-align:center'>TRIPLE<br>WORD</p></html>");
-            ((JLabel)c).setHorizontalAlignment(JLabel.CENTER);
-        }
+        Square.Type type = ((Square)value).getType();
+        ((JLabel)c).setText(getSquareTypeRenderString(type));
+        c.setBackground(typeToColor.get(type));
+        ((JLabel)c).setHorizontalAlignment(JLabel.CENTER);
+
         if (((Square) value).getTile() == null){
             ((JLabel) c).setIcon(null);
             //((JLabel) c).setText(null);

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://notSrabble.com/boardConfig.schema.json",
+  "title": "BoardConfiguration",
+  "description": "A board configuration for a notScrabble board",
+  "type": "object"
+}
