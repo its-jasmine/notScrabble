@@ -21,20 +21,24 @@ public class GameView extends JFrame implements Serializable {
     private BoardView boardView;
     private int currentView;
 
-    public GameView(int numPlayers, int numAI) throws HeadlessException {
+    public GameView(int numPlayers, int numAI, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
         super("notScrabble");
-        if (numAI >0){
-            game = new Game(numPlayers, numAI);
+        if (fileName != null){
+            game = (Game) Game.loadGame(fileName);
         }
         else {
-            game = new Game(numPlayers);
-        }
-        currentView = 0;
-        boardView = new BoardView(game.getBoard());
-        playerViews = new ArrayList<>();
-        ArrayList<Player> players =  game.getPlayers();
-        for (Player player : players){
-            playerViews.add(new PlayerView(player));
+            if (numAI > 0) {
+                game = new Game(numPlayers, numAI);
+            } else {
+                game = new Game(numPlayers);
+            }
+            currentView = 0;
+            boardView = new BoardView(game.getBoard());
+            playerViews = new ArrayList<>();
+            ArrayList<Player> players = game.getPlayers();
+            for (Player player : players) {
+                playerViews.add(new PlayerView(player));
+            }
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -50,7 +54,7 @@ public class GameView extends JFrame implements Serializable {
         JMenuItem saveGame = new JMenuItem("Save Game");
         saveGame.addActionListener(e -> {
             try {
-                saveGame(e.getActionCommand());
+                game.saveGame(e.getActionCommand());
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -144,8 +148,8 @@ public class GameView extends JFrame implements Serializable {
         game.playGame();
     }
 
-    public static void main(String[] args) {
-        new GameView(1, 1);
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        new GameView(1, 1,null);
     }
 
     /**
@@ -171,11 +175,11 @@ public class GameView extends JFrame implements Serializable {
         southContainer.revalidate();
         southContainer.repaint();
     }
-    public void saveGame(String fileName) throws IOException {
+    /*public void saveGame(String fileName) throws IOException {
         FileOutputStream outputFile = new FileOutputStream(fileName);
         ObjectOutputStream outputObject = new ObjectOutputStream(outputFile);
         outputObject.writeObject(this);
         outputObject.close();
         outputFile.close();
-    }
+    }*/
 }

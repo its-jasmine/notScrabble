@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class WelcomeFrame extends JFrame {
     private static final String  INSTRUCTIONS_CMD = "instructions";
@@ -22,13 +23,26 @@ public class WelcomeFrame extends JFrame {
                 JOptionPane.showMessageDialog(view, "Instructions blah blah blah");
             }else if (source.getActionCommand().equals(NEW_GAME_CMD)){
                 int numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
-                new GameView(numPlayers, 0); // default 2 players for now
+                try {
+                    new GameView(numPlayers, 0,null); // default 2 players for now
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
                 view.dispose();
             } else if (source.getActionCommand().equals(PLAYER_VS_AI)) {
-                new GameView(1,1);
+                try {
+                    new GameView(1,1,null);
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
                 view.dispose();
-            } else if (source.getActionCommand().equals(LOAD_GAME_CMD)) {
-
+            }else if (source.getActionCommand().equals(LOAD_GAME_CMD)) { // if no input, don't crete 2 player game
+                String fileName = JOptionPane.showInputDialog("Provide file name:" );
+                try {
+                    new GameView(0,0,fileName);
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }

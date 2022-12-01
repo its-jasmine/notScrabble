@@ -271,6 +271,21 @@ public class Game implements Serializable {
         outputFile.close();
     }
     /**
+     * Recreates a Game object with the same state as the Game saved in the file
+     * @param fileName
+     * @return Game object
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public static Object loadGame(String fileName) throws ClassNotFoundException, IOException {
+        FileInputStream file = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(file);
+        Object obj = in.readObject();
+        in.close();
+        file.close();
+        return obj;
+    }
+    /**
      * Runs a game with 2 players
      * @param args N/A
      */
