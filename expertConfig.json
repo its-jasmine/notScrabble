@@ -1,4 +1,6 @@
 {
+  "$schema": "https://notSrabble.com/boardConfig.schema.json",
+  "description": "A board configuration with no premium squares for a notScrabble board",
   "name": "Expert",
   "config": {
     "ONE": [

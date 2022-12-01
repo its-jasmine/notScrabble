@@ -1,5 +1,7 @@
 {
-  "name": "Expert",
+  "$schema": "https://notSrabble.com/boardConfig.schema.json",
+  "description": "A board configuration with a smiley face of premium squares for a notScrabble board",
+  "name": "Smile",
   "config": {
     "ONE": [
       "PLAIN",

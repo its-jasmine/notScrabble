@@ -1,4 +1,6 @@
 {
+  "$schema": "https://notSrabble.com/boardConfig.schema.json",
+  "description": "A board configuration for a notScrabble board",
   "name": "Basic",
   "config": {
     "ONE": [
