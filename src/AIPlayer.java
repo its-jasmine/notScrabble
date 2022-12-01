@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -9,7 +10,7 @@ import static java.util.Collections.shuffle;
  * @author Rebecca Elliott *
  */
 
-public class AIPlayer extends Player{
+public class AIPlayer extends Player implements Serializable {
     private static final int NUMBER_TILES_TO_TRY = 10; // to help limit how long the AI's turn is and make it easier to play against
     /** A Wordfinder to find words */
     private final WordFinder wordFinder;

@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -5,7 +6,7 @@ import java.util.*;
  * @author Arthur Atangana
  * @version Milestone1
  */
-public class Player {
+public class Player implements Serializable {
     /** The board of the game the player is participating in */
     protected final Board board;
     /** The player's rack */

@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -6,7 +7,7 @@ import java.util.stream.Collectors;
  *  @author Rebecca Elliott
  *  @version Milestone1
  */
-public class Game {
+public class Game implements Serializable {
 
     /** The allowable game statuses */
     public enum Status {RUNNING, OVER, RETRY;} // used as a way to have a named boolean for readability
@@ -217,16 +218,6 @@ public class Game {
     }
 
     /**
-     * updates the views of the game.
-     * @param firstTurn if it is the first turn, true, else, false
-     */
-    private void updateGameView(boolean firstTurn){
-        for (GameView view : views){
-            view.update(playerTurn, firstTurn);
-        }
-    }
-
-    /**
      * Gets the player with the highest score.
      * @return the player with the highest score
      */
@@ -255,6 +246,16 @@ public class Game {
     }
 
     /**
+     * updates the views of the game.
+     * @param firstTurn if it is the first turn, true, else, false
+     */
+    private void updateGameView(boolean firstTurn){
+        for (GameView view : views){
+            view.update(playerTurn, firstTurn);
+        }
+    }
+
+    /**
      * adds a view to the game
      * @param gameView the view to be added
      */
@@ -262,6 +263,13 @@ public class Game {
         views.add(gameView);
     }
 
+    public void saveGame(String fileName) throws IOException {
+        FileOutputStream outputFile = new FileOutputStream(fileName);
+        ObjectOutputStream outputObject = new ObjectOutputStream(outputFile);
+        outputObject.writeObject(this);
+        outputObject.close();
+        outputFile.close();
+    }
     /**
      * Runs a game with 2 players
      * @param args N/A

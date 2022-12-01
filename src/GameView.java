@@ -1,11 +1,15 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class GameView extends JFrame {
+public class GameView extends JFrame implements Serializable {
 
     public Game getGame() { // for testing
         return game;
@@ -43,10 +47,19 @@ public class GameView extends JFrame {
         JMenuItem newGame = new JMenuItem("New Game");
         JMenuItem restart = new JMenuItem("Restart");
         JMenuItem seeRules = new JMenuItem("See rules");
+        JMenuItem saveGame = new JMenuItem("Save Game");
+        saveGame.addActionListener(e -> {
+            try {
+                saveGame(e.getActionCommand());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         menu.add(newGame);
         menu.add(restart);
         menu.add(seeRules);
+        menu.add(saveGame);
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -157,5 +170,12 @@ public class GameView extends JFrame {
 
         southContainer.revalidate();
         southContainer.repaint();
+    }
+    public void saveGame(String fileName) throws IOException {
+        FileOutputStream outputFile = new FileOutputStream(fileName);
+        ObjectOutputStream outputObject = new ObjectOutputStream(outputFile);
+        outputObject.writeObject(this);
+        outputObject.close();
+        outputFile.close();
     }
 }

@@ -1,4 +1,5 @@
 import javax.swing.table.DefaultTableModel;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -9,7 +10,7 @@ import java.util.*;
  * @author Victoria Malouf
  * @version Milestone2
  */
-public class Board {
+public class Board implements Serializable {
     public final static Coordinate.Row START_ROW = Coordinate.Row.EIGHT;
     public final static Coordinate.Column START_COLUMN = Coordinate.Column.H;
 
