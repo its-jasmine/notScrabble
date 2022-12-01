@@ -1,13 +1,7 @@
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class GameView extends JFrame implements Serializable {
 
@@ -32,13 +26,13 @@ public class GameView extends JFrame implements Serializable {
             } else {
                 game = new Game(numPlayers);
             }
-            currentView = 0;
-            boardView = new BoardView(game.getBoard());
-            playerViews = new ArrayList<>();
-            ArrayList<Player> players = game.getPlayers();
-            for (Player player : players) {
-                playerViews.add(new PlayerView(player));
-            }
+        }
+        currentView = 0;
+        boardView = new BoardView(game.getBoard());
+        playerViews = new ArrayList<>();
+        ArrayList<Player> players = game.getPlayers();
+        for (Player player : players) {
+            playerViews.add(new PlayerView(player));
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -54,7 +48,7 @@ public class GameView extends JFrame implements Serializable {
         JMenuItem saveGame = new JMenuItem("Save Game");
         saveGame.addActionListener(e -> {
             try {
-                game.saveGame(e.getActionCommand());
+                game.saveGame("save");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

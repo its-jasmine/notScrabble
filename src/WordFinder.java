@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.*;
 import java.util.regex.*;
 
 /**
  * Finds words for the AI to place on the board using tiles and a format
  */
-public class WordFinder {
+public class WordFinder implements Serializable {
 
     /** Hashmap containing letters and their occurrences to find a word */
     private HashMap<Character, Integer> letterMap;

@@ -1,4 +1,7 @@
 import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 
@@ -22,10 +25,10 @@ public class Board implements Serializable {
 
 
     /** The direction of the word currently be validated */
-    private final BoardValidator boardValidator = new BoardValidator(this);
+    private BoardValidator boardValidator = new BoardValidator(this);
 
     /** the word extractor */
-    private final WordExtractor wordExtractor = new WordExtractor(this);
+    private WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
 
@@ -291,5 +294,24 @@ public class Board implements Serializable {
      */
     public void setPreviouslyPlayed(HashSet<Coordinate> previouslyPlayed) {
         this.previouslyPlayed = previouslyPlayed;
+    }
+
+    /*private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(this.boardValidator);
+        out.writeObject(this.wordExtractor);
+    }
+    private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+        aInputStream.defaultReadObject();
+        boardValidator = ((Board) aInputStream.readObject()).getBoardValidator();
+        wordExtractor = ((Board)aInputStream.readObject()).getWordExtractor();
+    }*/
+
+    private WordExtractor getWordExtractor() {
+        return wordExtractor;
+    }
+
+    private BoardValidator getBoardValidator() {
+        return boardValidator;
     }
 }

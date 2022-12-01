@@ -39,7 +39,7 @@ public class WelcomeFrame extends JFrame {
             }else if (source.getActionCommand().equals(LOAD_GAME_CMD)) { // if no input, don't crete 2 player game
                 String fileName = JOptionPane.showInputDialog("Provide file name:" );
                 try {
-                    new GameView(0,0,fileName);
+                    new GameView(0,0,"save");
                 } catch (IOException | ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }

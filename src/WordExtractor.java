@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,7 +7,7 @@ import java.util.List;
  * @author  Rebecca Elliott
  */
 
-public class WordExtractor {
+public class WordExtractor implements Serializable {
 
     private final Board board;
 
