@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://notSrabble.com/boardConfig.schema.json",
+  "title": "BoardConfiguration",
+  "description": "A board configuration for a notScrabble board",
+
+  "type": "object",
+
+
+  "properties" : {
+    "name": {
+      "description": "Name of the board configuration",
+      "type": "string"
+    },
+    "config": {
+      "description": "The rows of square types of the board.",
+      "type": "object",
+      "properties": {
+        "ONE": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "TWO": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "THREE": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "FOUR": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "FIVE": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "SIX": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "SEVEN": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "EIGHT": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "NINE": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "TEN": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "ELEVEN": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "TWELVE": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "THIRT": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "FOURT": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        },
+        "FIFT": {
+                    "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "PLAIN",
+              "START",
+              "DOUBLE_LETTER",
+              "DOUBLE_WORD",
+              "TRIPLE_LETTER",
+              "TRIPLE_WORD"
+            ]
+          }
+        }
+      },
+      "required": [
+        "ONE",
+        "TWO",
+        "THREE",
+        "FOUR",
+        "FIVE",
+        "SIX",
+        "SEVEN",
+        "EIGHT",
+        "NINE",
+        "TEN",
+        "ELEVEN"
+      ]
+    },
+    "required": [
+      "name",
+      "config"
+    ]
+  }
+}
