@@ -159,7 +159,7 @@ public class BoardTransferHelper extends TransferHandler {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
                 }
 
-
+                Move move = new Move(targetLocation, sourceLocation, importValue, exportValue, true, sourceIsBoard);
 
 
                 imported = true;

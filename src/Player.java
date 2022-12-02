@@ -6,6 +6,8 @@ import java.util.*;
  * @version Milestone1
  */
 public class Player {
+    public final MovesStack moves;
+    public final MovesStack redoMoves;
     /** The board of the game the player is participating in */
     protected final Board board;
     /** The player's rack */
@@ -29,6 +31,8 @@ public class Player {
         this.name = "";
         this.score = 0;
         this.rack = new Rack(bag);
+        this.moves = new MovesStack(board, rack);
+        this.redoMoves = new MovesStack(board, rack);
     }
     /**
      * Creates a new player with a specified board, bag and player number.
@@ -139,6 +143,18 @@ public class Player {
         rack.putTilesOnRack(returnTiles);
         board.resetPlayedThisTurn();
         board.getModel().fireTableDataChanged();
+    }
+
+    public void undo() {
+        if (moves.size() != 0) {
+            redoMoves.push(moves.undo());
+        }
+    }
+
+    public void redo() {
+        if(redoMoves.size() != 0) {
+            moves.push((redoMoves.redo()));
+        }
     }
 
 
