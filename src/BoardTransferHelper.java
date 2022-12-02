@@ -4,10 +4,14 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Stack;
 
 public class BoardTransferHelper extends TransferHandler {
 
-    public BoardTransferHelper() {
+    private final Stack<Move> moves;
+
+    public BoardTransferHelper(Stack<Move> moves) {
+        this.moves = moves;
     }
 
     @Override
@@ -159,7 +163,8 @@ public class BoardTransferHelper extends TransferHandler {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
                 }
 
-                Move move = new Move(targetLocation, sourceLocation, importValue, exportValue, true, sourceIsBoard);
+                Move move = new Move(targetLocation, sourceLocation, importValue, exportValue, sourceIsBoard);
+                moves.push(move);
 
 
                 imported = true;

@@ -9,12 +9,11 @@ public class Move {
     public boolean isPlayedFromWasBoard;
 
 
-    public Move(Coordinate playedTo, Coordinate playedFrom, Tile playedToTile, Tile playedFromTile, Boolean playedToWasBoard, Boolean isPlayedFromWasBoard) {
+    public Move(Coordinate playedTo, Coordinate playedFrom, Tile playedToTile, Tile playedFromTile, Boolean isPlayedFromWasBoard) {
         this.playedTo = playedTo;
         this.playedFrom = playedFrom;
         this.playedToTile = playedToTile;
         this.playedFromTile = playedFromTile;
-        this.playedToWasBoard = playedToWasBoard;
         this.isPlayedFromWasBoard = isPlayedFromWasBoard;
     }
 }

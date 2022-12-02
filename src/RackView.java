@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 /**
@@ -26,7 +25,7 @@ public class RackView extends JTable {
         //setGridColor(Color.BLACK);
         setDragEnabled(true);
         setDropMode(DropMode.ON);
-        setTransferHandler(new RackTransferHelper());
+        setTransferHandler(new RackTransferHelper(rack.moves));
         setRowSelectionAllowed(false);
         setCellSelectionEnabled(true);
     }

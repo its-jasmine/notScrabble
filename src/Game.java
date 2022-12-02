@@ -10,8 +10,10 @@ import java.util.stream.Collectors;
  */
 public class Game {
 
+    private final UndoRedo undoRedo;
+
     /** The allowable game statuses */
-    public enum Status {RUNNING, OVER, RETRY;} // used as a way to have a named boolean for readability
+    public enum Status {RUNNING, OVER, RETRY} // used as a way to have a named boolean for readability
     /** The maximum number of players in a game */
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
@@ -33,8 +35,9 @@ public class Game {
      * @param numPlayers the number of players of the game
      */
     public Game(int numPlayers) {
+        Stack<Move> moves = new Stack<>();
         views = new ArrayList<>();
-        board = new Board();
+        board = new Board(moves);
         bag = new Bag();
 
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
@@ -44,8 +47,9 @@ public class Game {
 
         this.players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(board, bag, i + 1));
+            players.add(new Player(board, bag, moves, i + 1));
         }
+        undoRedo = new UndoRedo(board, moves);
     }
 
 
@@ -55,13 +59,14 @@ public class Game {
      * @param gameConfig contains the game configuration information.
      */
     public Game(GameConfiguration gameConfig) {
+        Stack<Move> moves = new Stack<>();
         int numPlayers = gameConfig.getNumPlayers();
         int numAI = gameConfig.getNumAI();
         BoardConfiguration b = gameConfig.getBoardConfiguration();
 
         views = new ArrayList<>();
-        if (b == null) board = new Board();
-        else board = new Board(b);
+        if (b == null) board = new Board(moves);
+        else board = new Board(b, moves);
         bag = new Bag();
 
         if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change
@@ -71,11 +76,12 @@ public class Game {
 
         this.players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(board, bag, i + 1));
+            players.add(new Player(board, bag, moves, i + 1));
         }
         for (int i = 0; i < numAI; i++) {
-            players.add(new AIPlayer(board, bag, i + 1));
+            players.add(new AIPlayer(board, bag, moves, i + 1));
         }
+        undoRedo = new UndoRedo(board, moves);
     }
 
     /**
@@ -268,6 +274,15 @@ public class Game {
      */
     public void addView(GameView gameView) {
         views.add(gameView);
+    }
+
+    public void undo() {
+        undoRedo.undo(players.get(playerTurn).getRack());
+
+    }
+
+    public void redo() {
+        undoRedo.redo(players.get(playerTurn).getRack());
     }
 
     /**

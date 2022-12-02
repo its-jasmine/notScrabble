@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -11,10 +12,11 @@ public class AIPlayerTest {
     ArrayList<Tile> tiles;
     ArrayList<Coordinate> coordinates;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        Stack<Move> moves = new Stack<>();
         bag = new Bag();
-        board = new Board();
-        aiPlayer = new AIPlayer(board, bag, 1);
+        board = new Board(moves);
+        aiPlayer = new AIPlayer(board, bag, moves, 1);
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
     }

@@ -1,9 +1,5 @@
-import org.w3c.dom.css.RGBColor;
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.util.HashSet;
 
@@ -15,8 +11,6 @@ public class BoardView extends JTable {
         this.board = board;
         setModel(board.getModel());
         setDefaultRenderer(Square.class,new BoardRenderer());
-        //DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) this.getDefaultRenderer(Object.class);
-        //renderer.setHorizontalAlignment(SwingConstants.CENTER);
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(48);
         setOpaque(true);
@@ -25,7 +19,7 @@ public class BoardView extends JTable {
         setGridColor(Color.BLACK);
         setDragEnabled(true);
         setDropMode(DropMode.ON);
-        setTransferHandler(new BoardTransferHelper());
+        setTransferHandler(new BoardTransferHelper(board.moves));
         setRowSelectionAllowed(false);
         setCellSelectionEnabled(true);
     }

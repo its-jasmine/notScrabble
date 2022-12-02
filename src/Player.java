@@ -6,8 +6,6 @@ import java.util.*;
  * @version Milestone1
  */
 public class Player {
-    public final MovesStack moves;
-    public final MovesStack redoMoves;
     /** The board of the game the player is participating in */
     protected final Board board;
     /** The player's rack */
@@ -22,17 +20,16 @@ public class Player {
 
     /**
      * Creates a new player with a specified board and bag.
+     *
      * @param board of the game the player is participating in
      * @param bag that the player will draw tiles from
      */
-    public Player(Board board, Bag bag){
+    public Player(Board board, Bag bag, Stack<Move> moves){
         views = new ArrayList<>();
         this.board = board;
         this.name = "";
         this.score = 0;
-        this.rack = new Rack(bag);
-        this.moves = new MovesStack(board, rack);
-        this.redoMoves = new MovesStack(board, rack);
+        this.rack = new Rack(bag, moves);
     }
     /**
      * Creates a new player with a specified board, bag and player number.
@@ -40,8 +37,8 @@ public class Player {
      * @param bag that the player will draw tiles from
      * @param playerNumber the index of the player being created
      */
-    public Player(Board board, Bag bag, int playerNumber) {
-        this(board,bag);
+    public Player(Board board, Bag bag, Stack<Move> moves, int playerNumber) {
+        this(board, bag, moves);
         this.name = "Player " + playerNumber;
     }
     /**
@@ -50,8 +47,8 @@ public class Player {
      * @param bag that the player will draw tiles from
      * @param name of the player
      */
-    public Player(Board board, Bag bag,String name) {
-        this(board, bag);
+    public Player(Board board, Bag bag, Stack<Move> moves, String name) {
+        this(board, bag, moves);
         this.name = name;
     }
 
@@ -145,17 +142,7 @@ public class Player {
         board.getModel().fireTableDataChanged();
     }
 
-    public void undo() {
-        if (moves.size() != 0) {
-            redoMoves.push(moves.undo());
-        }
-    }
 
-    public void redo() {
-        if(redoMoves.size() != 0) {
-            moves.push((redoMoves.redo()));
-        }
-    }
 
 
 }
