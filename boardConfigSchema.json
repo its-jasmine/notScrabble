@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "https://notSrabble.com/boardConfig.schema.json",
+  "title": "BoardConfiguration",
+  "description": "A board configuration for a notScrabble board",
+
+  "definitions": {
+    "row": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "PLAIN",
+          "START",
+          "DOUBLE_LETTER",
+          "DOUBLE_WORD",
+          "TRIPLE_LETTER",
+          "TRIPLE_WORD"
+        ]
+      },
+      "minItems": 15,
+      "maxItems": 15
+    }
+  },
+  "type": "object",
+  "properties" : {
+    "name": {
+      "description": "Name of the board configuration",
+      "type": "string"
+    },
+    "config": {
+      "description": "The rows of square types of the board.",
+      "type": "object",
+      "properties": {
+        "ONE": {
+          "$ref":"#/definitions/row"
+        },
+        "TWO": {
+          "$ref":"#/definitions/row"
+        },
+        "THREE": {
+          "$ref":"#/definitions/row"
+        },
+        "FOUR": {
+          "$ref":"#/definitions/row"
+        },
+        "FIVE": {
+          "$ref":"#/definitions/row"
+        },
+        "SIX": {
+          "$ref":"#/definitions/row"
+        },
+        "SEVEN": {
+          "$ref":"#/definitions/row"
+        },
+        "EIGHT": {
+          "$ref":"#/definitions/row"
+        },
+        "NINE": {
+          "$ref":"#/definitions/row"
+        },
+        "TEN": {
+          "$ref":"#/definitions/row"
+        },
+        "ELEVEN": {
+          "$ref":"#/definitions/row"
+        },
+        "TWELVE": {
+          "$ref":"#/definitions/row"
+        },
+        "THIRT": {
+          "$ref":"#/definitions/row"
+        },
+        "FOURT": {
+          "$ref":"#/definitions/row"
+        },
+        "FIFT": {
+          "$ref":"#/definitions/row"
+        }
+      },
+      "required": [
+        "ONE",
+        "TWO",
+        "THREE",
+        "FOUR",
+        "FIVE",
+        "SIX",
+        "SEVEN",
+        "EIGHT",
+        "NINE",
+        "TEN",
+        "ELEVEN",
+        "TWELVE",
+        "THIRT",
+        "FOURT",
+        "FIFT"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "config"
+  ]
+}

@@ -2,7 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.IOException;
+/**
+ * The initial frame of the game, provides options for the user to start a new game or see game instructions.
+ * @author Jasmine Gad El Hak
+ * @version Milestone4
+ */
 public class WelcomeFrame extends JFrame {
     private static final String  INSTRUCTIONS_CMD = "instructions";
     private static final String  NEW_GAME_CMD = "new game";
@@ -19,13 +24,55 @@ public class WelcomeFrame extends JFrame {
             JButton source = (JButton)e.getSource();
             if (source.getActionCommand().equals(INSTRUCTIONS_CMD)){
                 JOptionPane.showMessageDialog(view, "Instructions blah blah blah");
-            }else if (source.getActionCommand().equals(NEW_GAME_CMD)){
-                int numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
-                new GameView(numPlayers, 0); // default 2 players for now
+            }else {
+                GameConfiguration c;
+                int numPlayers;
+                int numAI;
+
+                if (source.getActionCommand().equals(NEW_GAME_CMD)) {
+                    numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
+                    numAI = 0;
+                } else { // source.getActionCommand().equals(PLAYER_VS_AI)
+                    numPlayers = 1;
+                    numAI = 0;
+                }
+
+                BoardConfiguration b = requestBoardConfiguration();
+                c = new GameConfiguration(b, numPlayers, numAI);
                 view.dispose();
-            } else if (source.getActionCommand().equals(PLAYER_VS_AI)) {
-                new GameView(1,1);
-                view.dispose();
+                new GameView(c);
+            }
+        }
+
+        private BoardConfiguration requestBoardConfiguration() {
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+
+            JLabel select = new JLabel("Please select a board configuration option:");
+            panel.add(select, BorderLayout.NORTH);
+            JPanel radioButtonPanel = new JPanel();
+            ButtonGroup options = new ButtonGroup();
+            JRadioButton b;
+
+            for (BoardConfiguration.Type t : BoardConfiguration.Type.values()){
+                b = new JRadioButton(t.name());
+                b.setActionCommand(t.name());
+                options.add(b);
+                radioButtonPanel.add(b);
+            }
+            panel.add(radioButtonPanel, BorderLayout.CENTER);
+
+            JOptionPane.showMessageDialog(null, panel);
+
+            BoardConfiguration.Type t = BoardConfiguration.Type.valueOf(options.getSelection().getActionCommand());
+            try {
+                if (t == BoardConfiguration.Type.ExternalFile) {
+                    String fileName = JOptionPane.showInputDialog("Please enter the file name of the .json board configuration file");
+                    return new BoardConfiguration(fileName);
+                } else return new BoardConfiguration(t);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Invalid Board Configuration file. Default board configuration will be used", "Board Configuration Error", JOptionPane.ERROR_MESSAGE);
+                return null;
             }
         }
     }

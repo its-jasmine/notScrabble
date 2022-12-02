@@ -1,10 +1,14 @@
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
+/**
+ * The main frame of the game, displays the game board, active player rack,
+ * @author Rebecca Elliott
+ * @author Jasmine Gad El Hak
+ * @author Arthur Atangana
+ * @author Victoria Malouf
+ * @version Milestone4
+ */
 public class GameView extends JFrame {
 
     public Game getGame() { // for testing
@@ -17,14 +21,11 @@ public class GameView extends JFrame {
     private BoardView boardView;
     private int currentView;
 
-    public GameView(int numPlayers, int numAI) throws HeadlessException {
+    public GameView(GameConfiguration gameConfig) throws HeadlessException {
         super("notScrabble");
-        if (numAI >0){
-            game = new Game(numPlayers, numAI);
-        }
-        else {
-            game = new Game(numPlayers);
-        }
+
+        game = new Game(gameConfig);
+
         currentView = 0;
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
@@ -132,7 +133,7 @@ public class GameView extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameView(1, 1);
+        //new GameView();
     }
 
     /**
