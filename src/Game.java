@@ -278,11 +278,13 @@ public class Game {
 
     public void undo() {
         undoRedo.undo(players.get(playerTurn).getRack());
+        views.get(0).repaint();
 
     }
 
     public void redo() {
         undoRedo.redo(players.get(playerTurn).getRack());
+        views.get(0).repaint();
     }
 
     /**

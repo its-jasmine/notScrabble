@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 /**
  * The main frame of the game, displays the game board, active player rack,
@@ -109,6 +110,17 @@ public class GameView extends JFrame {
             leftContainer.add(Box.createRigidArea(new Dimension(20,32)));
         }
         contentPane.add(leftContainer,BorderLayout.WEST);
+
+        Container northContainer = new Container();
+        contentPane.add(northContainer, BorderLayout.NORTH);
+        northContainer.setLayout(new GridLayout(1, 2));
+        JButton undo = new JButton("UNDO");
+        undo.addActionListener(e -> game.undo());
+        northContainer.add(undo);
+
+        JButton redo = new JButton("REDO");
+        undo.addActionListener(e -> game.redo());
+        northContainer.add(redo);
 
         /*JLabel timeLabel = new JLabel("game time GOES HERE");
         timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));

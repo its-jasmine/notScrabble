@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +18,8 @@ public class BoardValidatorTest {
      */
     @Before
     public void setUp() throws Exception {
-        board = new Board();
+        Stack<Move> moves = new Stack<>();
+        board = new Board(moves);
         coordinateList = new ArrayList<>();
     }
 
@@ -126,7 +128,8 @@ public class BoardValidatorTest {
      * Helper method that returns a board with a horizontal word placed on the start square
      */
     private Board setBoardWithOneWordOnStartH() {
-        Board b = new Board();
+        Stack<Move> moves = new Stack<>();
+        Board b = new Board(moves);
         ArrayList<Coordinate> coordinateList2 = new ArrayList<>();
         coordinateList2.add(new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT));
         coordinateList2.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
@@ -143,7 +146,8 @@ public class BoardValidatorTest {
      * Helper method that returns a board with a vertical word placed on the start square
      */
     private Board setBoardWithOneWordOnStartV() {
-        Board b = new Board();
+        Stack<Move> moves = new Stack<>();
+        Board b = new Board(moves);
         ArrayList<Coordinate> coordinateList3 = new ArrayList<>();
         coordinateList3.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SEVEN));
         coordinateList3.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));

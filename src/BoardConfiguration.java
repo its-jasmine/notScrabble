@@ -20,7 +20,7 @@ public class BoardConfiguration {
     }
 
     /** Game-provided BoardConfigTypes and their corresponding fileNames */
-    public static final HashMap<Type, String> boardConfigFiles = new HashMap<>() {{
+    public static final HashMap<Type, String> boardConfigFiles = new HashMap<Type, String>() {{
         put(Type.Basic, "basicConfig.json");
         put(Type.Expert, "expertConfig.json");
         put(Type.Smile, "smileConfig.json");
@@ -73,8 +73,8 @@ public class BoardConfiguration {
         if (configJsonToValidate.size() != Coordinate.Row.values().length)
             throw new InstantiationError("The config file is not of the required format");
         for (JsonValue v : configJsonToValidate.values()) {
-            if (v.asJsonArray().size() != Coordinate.Column.values().length)
-                throw new InstantiationError("The config file is not of the required format");
+            //if (v.asJsonArray().size() != Coordinate.Column.values().length)
+               // throw new InstantiationError("The config file is not of the required format");
         }
         return configJsonToValidate;
     }

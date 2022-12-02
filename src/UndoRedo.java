@@ -29,23 +29,24 @@ public class UndoRedo {
     }
 
     private void moveTiles(Move move, Rack rack) {
-        if (move.isPlayedFromWasBoard) {
-            board.getSquare(move.playedFrom).setTile(move.playedToTile);
-            board.getPlayedThisTurn().add(move.playedFrom);
-        }
-        else {
-            rack.removeTileFromRack(move.playedFromTile);
-            rack.putTileOnRack(move.playedToTile);
-        }
-
-
-        if (move.playedToWasBoard) {
+        //revert To
+        if (move.playedTo != null) {
             board.getSquare(move.playedTo).setTile(move.playedFromTile);
             board.getPlayedThisTurn().remove(move.playedTo);
         }
         else  {
-            rack.removeTileFromRack(move.playedToTile);
+            if (!move.cameFromWasBoard) rack.removeTileFromRack(move.playedToTile);
             rack.putTileOnRack(move.playedFromTile);
+        }
+
+        //revert From
+        if (move.cameFromWasBoard) {
+            board.getSquare(move.playedFrom).setTile(move.playedToTile);
+            board.getPlayedThisTurn().add(move.playedFrom);
+        }
+        else {
+            if (move.playedTo == null) rack.removeTileFromRack(move.playedFromTile);
+            rack.putTileOnRack(move.playedToTile);
         }
     }
 
