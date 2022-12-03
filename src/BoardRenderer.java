@@ -29,17 +29,21 @@ public class BoardRenderer  extends DefaultTableCellRenderer {
         ((JLabel)c).setText(getSquareTypeRenderString(type));
         c.setBackground(typeToColor.get(type));
         ((JLabel)c).setHorizontalAlignment(JLabel.CENTER);
-
-        if (((Square) value).getTile() == null){
+        Tile t = ((Square) value).getTile();
+        if (t == null){
             ((JLabel) c).setIcon(null);
             //((JLabel) c).setText(null);
             return c;
         }
         else {
-            ImageIcon image = new ImageIcon("images/"+((Square) value).getTile().getName()+"_tile.jpg");
+            ImageIcon image = new ImageIcon("images/"+t.getName()+"_tile.jpg");
             ((JLabel) c).setIcon(image);
             ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
             ((JLabel) c).setText(null);
+            if (t instanceof BlankTile) {
+                ((JLabel) c).setToolTipText(((BlankTile) t).getLetter());
+                UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 30));
+            }
         }
         return c;
     }
