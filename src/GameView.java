@@ -89,15 +89,14 @@ public class GameView extends JFrame {
                 displayExchangeView();
                 b.setText("Done");
                 b.setActionCommand(PROCESS_EXCHANGE_CMD);
-            } else if (actCmd.equals(SHOW_EXCHANGE_CMD)){
+            } else if (actCmd.equals(PROCESS_EXCHANGE_CMD)){
                 boolean success = game.exchangeTiles();
                 if (success) {
                     b.setText("Exchange");
-                    b.setActionCommand(PROCESS_EXCHANGE_CMD);
+                    b.setActionCommand(SHOW_EXCHANGE_CMD);
                } else {
                 JOptionPane.showMessageDialog(this,
                         "There are not enough tiles in the bag to exchange these tiles. Try exchanging less tiles, or pass instead.");
-
                 }
             }
         });
