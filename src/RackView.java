@@ -28,6 +28,9 @@ public class RackView extends JTable {
         setTransferHandler(new RackTransferHelper(rack.moves));
         setRowSelectionAllowed(false);
         setCellSelectionEnabled(true);
+        getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
     }
 
     /**

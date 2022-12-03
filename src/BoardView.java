@@ -10,18 +10,21 @@ public class BoardView extends JTable {
         super();
         this.board = board;
         setModel(board.getModel());
-        setDefaultRenderer(Square.class,new BoardRenderer());
+        setDefaultRenderer(Square.class, new BoardRenderer());
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(48);
         setOpaque(true);
         setFillsViewportHeight(true);
-        setBackground(new Color(91,159,115));
+        setBackground(new Color(91, 159, 115));
         setGridColor(Color.BLACK);
         setDragEnabled(true);
         setDropMode(DropMode.ON);
         setTransferHandler(new BoardTransferHelper(board.moves));
         setRowSelectionAllowed(false);
         setCellSelectionEnabled(true);
+        getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
     }
 
     @Override
