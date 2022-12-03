@@ -138,7 +138,9 @@ public class RackTransferHelper extends TransferHandler {
                 } else {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol);
                 }
-                Move move = new Move(null, sourceLocation, importValue, exportValue, sourceIsBoard);
+
+                Coordinate targetCoordinate = new Coordinate(Coordinate.Column.values()[dropCol], Coordinate.Row.values()[dropRow]);
+                Move move = new Move(targetCoordinate, sourceLocation, importValue, exportValue, sourceIsBoard, false);
                 moves.push(move);
 
                 imported = true;

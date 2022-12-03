@@ -111,29 +111,18 @@ public class GameView extends JFrame {
         }
         contentPane.add(leftContainer,BorderLayout.WEST);
 
+
         Container northContainer = new Container();
         contentPane.add(northContainer, BorderLayout.NORTH);
         northContainer.setLayout(new GridLayout(1, 2));
+
         JButton undo = new JButton("UNDO");
         undo.addActionListener(e -> game.undo());
         northContainer.add(undo);
 
         JButton redo = new JButton("REDO");
-        undo.addActionListener(e -> game.redo());
+        redo.addActionListener(e -> game.redo());
         northContainer.add(redo);
-
-        /*JLabel timeLabel = new JLabel("game time GOES HERE");
-        timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        northContainer.add(timeLabel, 0);
-
-        JLabel northLabel = new JLabel("NotScrabble");
-        northLabel.setHorizontalAlignment(JLabel.CENTER);
-        northLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        northContainer.add(northLabel, 1);
-
-        JLabel scoreLabel = new JLabel("game score GOES HERE");
-        scoreLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        northContainer.add(scoreLabel, 2);*/
 
 
         this.setSize(1000, 865);

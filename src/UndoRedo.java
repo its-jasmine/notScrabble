@@ -16,6 +16,7 @@ public class UndoRedo {
         if (moves.size() != 0) {
             Move lastMove = moves.pop();
             moveTiles(lastMove, rack);
+            lastMove.invertMove();
             redoMoves.push(lastMove);
         }
     }
@@ -24,30 +25,34 @@ public class UndoRedo {
         if (redoMoves.size() != 0) {
             Move redoMove = redoMoves.pop();
             moveTiles(redoMove, rack);
+            redoMove.invertMove();
             moves.push(redoMove);
         }
     }
 
     private void moveTiles(Move move, Rack rack) {
         //revert To
-        if (move.playedTo != null) {
+        if (move.sentToWasBoard) {
             board.getSquare(move.playedTo).setTile(move.playedFromTile);
-            board.getPlayedThisTurn().remove(move.playedTo);
+            if (move.playedToTile == null) board.getPlayedThisTurn().remove(move.playedTo);
         }
         else  {
-            if (!move.cameFromWasBoard) rack.removeTileFromRack(move.playedToTile);
-            rack.putTileOnRack(move.playedFromTile);
+            rack.getModel().setValueAt(move.playedFromTile, 0, move.playedTo.getColumnIndex());
         }
 
         //revert From
         if (move.cameFromWasBoard) {
             board.getSquare(move.playedFrom).setTile(move.playedToTile);
-            board.getPlayedThisTurn().add(move.playedFrom);
+            if (move.playedFromTile != null) board.getPlayedThisTurn().add(move.playedFrom);
         }
         else {
-            if (move.playedTo == null) rack.removeTileFromRack(move.playedFromTile);
-            rack.putTileOnRack(move.playedToTile);
+            rack.getModel().setValueAt(move.playedToTile, 0, move.playedFrom.getColumnIndex());
         }
+    }
+
+    public void clearMoves() {
+        moves.clear();
+        redoMoves.clear();
     }
 
 

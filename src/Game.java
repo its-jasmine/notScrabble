@@ -183,6 +183,7 @@ public class Game {
      * Increments the turn
      */
     private void nextTurn(){
+        undoRedo.clearMoves();
         playerTurn = ++playerTurn % players.size();
     }
 
@@ -210,6 +211,7 @@ public class Game {
             }
         }
         else if (status == Status.RETRY){ // only happens for non-AI players
+            undoRedo.clearMoves();
             player.resetTurn();
         }
         else{

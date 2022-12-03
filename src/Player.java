@@ -112,7 +112,7 @@ public class Player {
      * @return Game.Status the status of the game
      */
     public Game.Status submit(){
-        int turnScore = board.submit(); // we will update board to have internal list of tiles, no need for arg
+        int turnScore = board.submit();
         if (turnScore < 0) return Game.Status.RETRY;
         Square s;
         for (Coordinate c : board.getPlayedThisTurn()){
