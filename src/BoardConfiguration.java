@@ -74,7 +74,7 @@ public class BoardConfiguration {
             throw new InstantiationError("The config file is not of the required format");
         for (JsonValue v : configJsonToValidate.values()) {
             if (v.asJsonArray().size() != Coordinate.Column.values().length)
-               throw new InstantiationError("The config file is not of the required format");
+                throw new InstantiationError("The config file is not of the required format");
         }
         return configJsonToValidate;
     }
