@@ -2,6 +2,7 @@ import javax.json.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 /**
@@ -21,11 +22,9 @@ public class BoardConfiguration {
 
     /** Game-provided BoardConfigTypes and their corresponding fileNames */
     public static final HashMap<Type, String> boardConfigFiles = new HashMap<>() {{
-        put(Type.Basic, "basicConfig.json");
-        put(Type.Expert, "expertConfig.json");
-        put(Type.Smile, "smileConfig.json");
-
-
+        put(Type.Basic, "boardConfig/basicConfig.json");
+        put(Type.Expert, "boardConfig/expertConfig.json");
+        put(Type.Smile, "boardConfig/smileConfig.json");
     }};
     /** The type of board configuration */
     private Type boardConfigType;
@@ -42,7 +41,10 @@ public class BoardConfiguration {
      */
     public BoardConfiguration(Type t) throws IOException {
         boardConfigType = t;
-        JsonReader jsonReader = Json.createReader(new FileInputStream(boardConfigFiles.get(t)));
+        InputStream in = getClass().getResourceAsStream(boardConfigFiles.get(t));
+
+        //JsonReader jsonReader = Json.createReader(new FileInputStream(boardConfigFiles.get(t)));
+        JsonReader jsonReader = Json.createReader(in);
         configJson = convertDataToJsonObject(jsonReader);
     }
 
