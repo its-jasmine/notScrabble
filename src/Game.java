@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.stream.Collectors;
+
 /**
  * Models the letter crossing game.
  * @author Rebecca Elliott
@@ -16,7 +17,6 @@ public class Game {
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
     private final static int MINPLAYERS = 2;
-
     /** The list of players in the game */
     private List<Player> players; // if we don't want players to be able to join once a game has started this can be final
 
@@ -47,7 +47,6 @@ public class Game {
             players.add(new Player(board, bag, i + 1));
         }
     }
-
 
 
     /**
@@ -151,6 +150,7 @@ public class Game {
     public int getPlayerTurn() {
         return playerTurn;
     }
+
     /**
      * Getter for the views list (for testing purposes only)
      * @return list of the GameViews observing this game
@@ -210,6 +210,11 @@ public class Game {
             endGame();
             System.out.println("game done");
         }
+    }
+    public boolean exchangeTiles() {
+        boolean successfulExchange = players.get(playerTurn).exchangeTiles();
+        if (successfulExchange) {passTurn(); return true;}
+        return false;
     }
 
 
