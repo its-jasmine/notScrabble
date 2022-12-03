@@ -278,15 +278,23 @@ public class Game {
         views.add(gameView);
     }
 
+    /**
+     * Undoes the move the player most recently played, can be called repeatedly for moves up to the most recent "submit"
+     */
     public void undo() {
         undoRedo.undo(players.get(playerTurn).getRack());
         views.get(0).repaint();
+        views.get(0).revalidate();
 
     }
 
+    /**
+     * Redoes an undone player turn
+     */
     public void redo() {
         undoRedo.redo(players.get(playerTurn).getRack());
         views.get(0).repaint();
+        views.get(0).revalidate();
     }
 
     /**

@@ -1,17 +1,24 @@
 import java.util.Stack;
 
+/**
+ * This class stores moves and supports undoing and redoing moves.
+ * @author Rebecca Elliott
+ */
 public class UndoRedo {
     private final Stack<Move> moves;
     private final Stack<Move> redoMoves;
-
     private final Board board;
 
     public UndoRedo(Board board, Stack<Move> moves) {
         this.board = board;
         this.moves = moves;
-        redoMoves = new Stack<Move>();
+        redoMoves = new Stack<>();
     }
 
+    /**
+     * If there is a move stored, it is reverted
+     * @param rack the rack of the player whose turn it is
+     */
     public void undo(Rack rack) {
         if (moves.size() != 0) {
             Move lastMove = moves.pop();
@@ -21,6 +28,10 @@ public class UndoRedo {
         }
     }
 
+    /**
+     * If there is an undone move that is stored, it is reverted
+     * @param rack the rack of the player whose turn it is
+     */
     public void redo(Rack rack) {
         if (redoMoves.size() != 0) {
             Move redoMove = redoMoves.pop();
@@ -30,6 +41,11 @@ public class UndoRedo {
         }
     }
 
+    /**
+     * Places the give move
+     * @param move to place
+     * @param rack the rack of the player whose turn it is
+     */
     private void moveTiles(Move move, Rack rack) {
         //revert To
         if (move.sentToWasBoard) {
@@ -50,6 +66,9 @@ public class UndoRedo {
         }
     }
 
+    /**
+     * Clears the stacks storing moves
+     */
     public void clearMoves() {
         moves.clear();
         redoMoves.clear();

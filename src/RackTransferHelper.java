@@ -6,8 +6,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Stack;
 
+/**
+ * This class dictates where things can be dragged to on the rack and what to do when something is dropped on the rack.
+ * @author Rebecca Elliott
+ */
 public class RackTransferHelper extends TransferHandler {
-    private final Stack<Move> moves;
+    private final Stack<Move> moves; // pointer to the stack that is used for undoing and redoing moves
 
     public RackTransferHelper(Stack<Move> moves) {
         this.moves = moves;
@@ -28,6 +32,12 @@ public class RackTransferHelper extends TransferHandler {
 
     }
 
+    /**
+     * Checks if the cell that the mouse is over, while dragging something, can be imported to
+     * @param support the object containing the details of
+     *        the transfer, not <code>null</code>.
+     * @return true if it is possible to import to this cell, false otherwise
+     */
     @Override
     public boolean canImport(TransferSupport support) {
         // Reject the import by default
@@ -77,6 +87,12 @@ public class RackTransferHelper extends TransferHandler {
         return canImport;
     }
 
+    /**
+     * Swaps the data in the cell with the data in the cell that was dragged from
+     * @param support the object containing the details of
+     *        the transfer, not <code>null</code>.
+     * @return true if the data was successfully imported, false otherwise
+     */
     @Override
     public boolean importData(TransferSupport support) {
         boolean imported = false;
@@ -139,6 +155,7 @@ public class RackTransferHelper extends TransferHandler {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol);
                 }
 
+                // stores the move that just occurred
                 Coordinate targetCoordinate = new Coordinate(Coordinate.Column.values()[dropCol], Coordinate.Row.values()[dropRow]);
                 Move move = new Move(targetCoordinate, sourceLocation, importValue, exportValue, sourceIsBoard, false);
                 moves.push(move);
