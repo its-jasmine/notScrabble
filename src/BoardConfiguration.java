@@ -37,7 +37,6 @@ public class BoardConfiguration {
      *
      * @param t The type of board configuration being instatiated.
      * @throws IOException        thrown when json config file cannot be found.
-     * @throws InstantiationError thrown when json config file is not of the required 15x15 grid format
      */
     public BoardConfiguration(Type t) throws IOException {
         boardConfigType = t;
@@ -53,7 +52,6 @@ public class BoardConfiguration {
      *
      * @param fileName The name of the json file contain the board configuration data.
      * @throws IOException        thrown when json config file cannot be found.
-     * @throws InstantiationError thrown when json config file is not of the required 15x15 grid format
      */
     public BoardConfiguration(String fileName) throws IOException {
         boardConfigType = Type.ExternalFile;
