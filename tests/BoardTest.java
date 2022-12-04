@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +17,8 @@ public class BoardTest {
 
     @Before
     public void setUp() throws Exception {
-        board = new Board();
+        Stack<Move> moves = new Stack<>();
+        board = new Board(moves);
         coordinates = new ArrayList<>();
         tiles = new ArrayList<>();
     }

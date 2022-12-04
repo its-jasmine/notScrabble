@@ -2,6 +2,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Represents a 15x15-grid board where the tiles of the game are played.
@@ -30,10 +31,12 @@ public class Board {
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
 
+    public final Stack<Move> moves;
+
     /**
      * Creates a new board with plain boardModel.
      */
-    public Board() {
+    public Board(Stack<Move> moves) {
         boardModel = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length){
             //  renderers to be used based on Class
             public Class<Square> getColumnClass(int column)
@@ -76,6 +79,7 @@ public class Board {
 
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
+        this.moves = moves;
 
     }
 
@@ -83,10 +87,11 @@ public class Board {
      * Creates a new board using the specified board configuration.
      * @param b The board configuration that defines square placement.
      */
-    public Board(BoardConfiguration b) {
+    public Board(BoardConfiguration b, Stack<Move> moves) {
         boardModel = b.generateDefaultTableModel();
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
+        this.moves = moves;
     }
 
     /**

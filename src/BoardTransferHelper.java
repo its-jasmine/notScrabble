@@ -4,10 +4,17 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashSet;
-
+import java.util.Stack;
+/**
+ * This class dictates where things can be dragged to on the board and what to do when something is dropped on the board.
+ * @author Rebecca Elliott
+ */
 public class BoardTransferHelper extends TransferHandler {
 
-    public BoardTransferHelper() {
+    private final Stack<Move> moves; // pointer to the stack that is used for undoing and redoing moves
+
+    public BoardTransferHelper(Stack<Move> moves) {
+        this.moves = moves;
     }
 
     @Override
@@ -159,7 +166,9 @@ public class BoardTransferHelper extends TransferHandler {
                     source.setValueAt(exportValue, draggedFromRow, draggedFromCol); //dropped value is set
                 }
 
-
+                // stores the move that just occurred
+                Move move = new Move(targetLocation, sourceLocation, importValue, exportValue, sourceIsBoard, true);
+                moves.push(move);
 
 
                 imported = true;

@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -17,8 +18,9 @@ public class RackTest {
     ArrayList<Tile> randomTiles;
 
     @Before
-    public void setUp() throws Exception {
-        rack = new Rack(new Bag());
+    public void setUp() {
+        Stack<Move> moves = new Stack<>();
+        rack = new Rack(new Bag(), moves);
         rackTiles = rack.getTilesList();
         randomTiles = new ArrayList<>();
         randomTiles.add(LetterTile.A);
