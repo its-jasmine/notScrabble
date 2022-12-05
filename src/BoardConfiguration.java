@@ -21,7 +21,7 @@ public class BoardConfiguration {
     }
 
     /** Game-provided BoardConfigTypes and their corresponding fileNames */
-    public static final HashMap<Type, String> boardConfigFiles = new HashMap<>() {{
+    public static final HashMap<Type, String> boardConfigFiles = new HashMap<Type, String>() {{
         put(Type.Basic, "boardConfig/basicConfig.json");
         put(Type.Expert, "boardConfig/expertConfig.json");
         put(Type.Smile, "boardConfig/smileConfig.json");

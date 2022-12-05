@@ -251,9 +251,4 @@ public class Rack implements Iterable<Tile>{
     public void returnExchangeTilesToRack(){
         putTilesOnRack(removeTilesToExchange());
     }
-    public void clearExchangeRack() {
-        for (int i = 0; i < MAXTILES; i++) {
-            tilesToExchange.setValueAt(null, 0, i);
-        }
-    }
 }

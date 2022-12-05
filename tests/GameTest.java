@@ -3,7 +3,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
@@ -308,12 +307,11 @@ public class GameTest {
         game2.exchangeTiles();
 
         ArrayList<Tile> rackTilesActual = firstPlayerRack.getTilesList();
-        assertEquals(6, rackTilesActual.size()); // should still have one removed tile
+        assertEquals(7, rackTilesActual.size()); // tile should be returned to the rack
         for (int i = 0; i < rackTilesActual.size(); i++){
-            assertEquals(rackTiles.get(i+1), rackTilesActual.get(i)); // rest of tiles should be the same
+            assertTrue(rackTilesActual.contains(rackTiles.get(i)));
         }
-        // exchange rack should still have the tile
-        assertEquals(firstTile.get(0), firstPlayer.getRack().getExchangeModel().getValueAt(0,0));
+
 
         assertEquals(0, game2.getBag().getNumTilesLeft()); // bag should still be empty
 
