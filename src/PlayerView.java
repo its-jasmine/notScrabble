@@ -38,13 +38,23 @@ public class PlayerView extends JPanel{
         hideExchangeView();
         if (turnScore != 0) {
             scoreLabel.setText("Score: " + player.getScore() + "        ");
-            displayScoreNotification(turnScore);
         }
+        displayScoreNotification(turnScore);
     }
+
+    /**
+     * Displays temporary notification regarding the last play.
+     * @param turnScore
+     */
 
     private void displayScoreNotification(int turnScore) {
         JDialog notif = new JDialog();
-        String message = player.getName() + " got " + turnScore + " points";
+        String message;
+        if (turnScore > 0) {
+            message = player.getName() + " got " + turnScore + " points";
+        } else {
+            message = player.getName() + "  their turn";
+        }
         JLabel l = new JLabel(message, SwingConstants.CENTER);
         notif.setUndecorated(true);
         notif.setBackground(new Color(1.0F, 0F, 0F, 0.8F));
@@ -88,20 +98,8 @@ public class PlayerView extends JPanel{
         BorderLayout layout = (BorderLayout) this.getLayout();
         Component c = layout.getLayoutComponent(BorderLayout.SOUTH);
         if (c == exchangeView) {
-            rackView.getRack().resetTilesToExchange();
-
+            rackView.getRack().returnExchangeTilesToRack();
             this.remove(c);
         }
-    }
-    /**
-     * gets the player's rackView
-     * @return the rack's view
-     */
-    public Component getRackView() {
-        return rackView;
-    }
-
-    public Component getExchangeView() {
-        return exchangeView;
     }
 }

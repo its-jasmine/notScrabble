@@ -194,11 +194,13 @@ public class Rack implements Iterable<Tile>{
     }
 
 
-    public ArrayList<Tile> getTilesToExchange() {
+    public ArrayList<Tile> removeTilesToExchange() {
         ArrayList<Tile> tileList = new ArrayList<>();
+        Tile tileToExchange;
         for(int i = 0; i < 7; i++){
-            Tile tileToExchange = (Tile)tilesToExchange.getValueAt(0,i);
+            tileToExchange = (Tile)tilesToExchange.getValueAt(0,i);
             if (tileToExchange != null) {
+                tilesToExchange.setValueAt(null,0,i);
                 tileList.add(tileToExchange);
             }
         }
@@ -243,11 +245,15 @@ public class Rack implements Iterable<Tile>{
         return tilesToExchange;
     }
 
-    public void resetTilesToExchange() {
-        if (!(getTilesToExchange().isEmpty())) { // there are still some tiles on exchange rack
-            for (int i = 0; i < MAXTILES; i++) {
-                tilesToExchange.setValueAt(null, 0, i);
-            }
+    /**
+     * Returns all the tiles placed on the exchange rack back to the playing rack.
+     */
+    public void returnExchangeTilesToRack(){
+        putTilesOnRack(removeTilesToExchange());
+    }
+    public void clearExchangeRack() {
+        for (int i = 0; i < MAXTILES; i++) {
+            tilesToExchange.setValueAt(null, 0, i);
         }
     }
 }

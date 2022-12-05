@@ -125,7 +125,7 @@ public class Player {
     }
 
     /**
-     * resets the turn
+     * Resets the players turn, returning all tiles they've played this round back to their rack.
      */
     public void resetTurn() {
         ArrayList<Tile> returnTiles = new ArrayList<>();
@@ -144,16 +144,17 @@ public class Player {
     }
 
 
-    /*
-  Attempts to exchange tiles from player's Rack for new tiles from the bag.
-  @param tilesToExchange The tiles the player wishes to exchange.
-  @return true, if the exchange is successful, false, if there are not enough tiles in the bag to perform the exchange.
-   */
+    /**Attempts to exchange tiles from player's Rack for new tiles from the bag.
+     * @return true, if the exchange is successful, false, if there are not enough tiles in the bag to perform the exchange.
+     */
     public boolean exchangeTiles() {
-        ArrayList<Tile> newTiles = bag.exchangeTiles(rack.getTilesToExchange());
-        if (newTiles.isEmpty()) return false;
+        ArrayList<Tile> tilesToExchange = rack.removeTilesToExchange();
+        ArrayList<Tile> newTiles = bag.exchangeTiles(tilesToExchange);
+        if (newTiles.isEmpty()) {
+            rack.putTilesOnRack(tilesToExchange);
+            return false;
+        }
         rack.putTilesOnRack(newTiles);
-        rack.resetTilesToExchange();
         for (PlayerView v : views) v.update(0);
         return true;
     }
