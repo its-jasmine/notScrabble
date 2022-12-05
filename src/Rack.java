@@ -49,12 +49,7 @@ public class Rack implements Iterable<Tile>{
      * @return number of tiles in rack
      */
     public int getNumTiles() {
-        int numTiles = 0;
-        for (Tile t : this) {
-            if (t == null) continue;
-            numTiles++;
-        }
-        return numTiles;
+        return getTilesList().size();
     }
 
 
@@ -249,9 +244,10 @@ public class Rack implements Iterable<Tile>{
     }
 
     public void resetTilesToExchange() {
-        if (getTilesToExchange().size() > 0) putTilesOnRack(getTilesToExchange());
-        for (int i = 0; i < MAXTILES; i++) {
-            tilesToExchange.setValueAt(null,0,i);
+        if (!(getTilesToExchange().isEmpty())) { // there are still some tiles on exchange rack
+            for (int i = 0; i < MAXTILES; i++) {
+                tilesToExchange.setValueAt(null, 0, i);
+            }
         }
     }
 }

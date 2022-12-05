@@ -150,12 +150,10 @@ public class Player {
   @return true, if the exchange is successful, false, if there are not enough tiles in the bag to perform the exchange.
    */
     public boolean exchangeTiles() {
-        ArrayList<Tile> tilesToExchange = rack.getTilesToExchange();
-        if (bag.getNumTilesLeft() < tilesToExchange.size()) return false;
-        //rack.removeTiles(tilesToExchange);
+        ArrayList<Tile> newTiles = bag.exchangeTiles(rack.getTilesToExchange());
+        if (newTiles.isEmpty()) return false;
+        rack.putTilesOnRack(newTiles);
         rack.resetTilesToExchange();
-        rack.drawTiles();
-        bag.returnTiles(tilesToExchange);
         for (PlayerView v : views) v.update(0);
         return true;
     }
