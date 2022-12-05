@@ -38,7 +38,6 @@ public class PlayerView extends JPanel{
         hideExchangeView();
         if (turnScore != 0) {
             scoreLabel.setText("Score: " + player.getScore() + "        ");
-
             displayScoreNotification(turnScore);
         }
     }
@@ -88,7 +87,11 @@ public class PlayerView extends JPanel{
     private void hideExchangeView() {
         BorderLayout layout = (BorderLayout) this.getLayout();
         Component c = layout.getLayoutComponent(BorderLayout.SOUTH);
-        if (c == exchangeView) this.remove(c);
+        if (c == exchangeView) {
+            rackView.getRack().resetTilesToExchange();
+
+            this.remove(c);
+        }
     }
     /**
      * gets the player's rackView

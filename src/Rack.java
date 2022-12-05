@@ -1,16 +1,17 @@
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 /**
  * Represents a rack that contains the tiles that a player can use during their turn.
  * @author Arthur Atangana
  * @author Jasmine Gad El Hak
- * @version Milestone3
+ * @version Milestone4
  */
 public class Rack implements Iterable<Tile>{
+
     /** The list of tiles in the rack */
     private DefaultTableModel rackModel;
     /** The maximum number of tiles in the rack */
@@ -31,7 +32,7 @@ public class Rack implements Iterable<Tile>{
                 return Tile.class;
             }
         };
-        rackModel = new DefaultTableModel(1, 7){
+        rackModel = new DefaultTableModel(1, 7) {
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
             {
@@ -248,6 +249,9 @@ public class Rack implements Iterable<Tile>{
     }
 
     public void resetTilesToExchange() {
-        for (int i = 0; i < MAXTILES; i++) tilesToExchange.setValueAt(null,0,i);
+        if (getTilesToExchange().size() > 0) putTilesOnRack(getTilesToExchange());
+        for (int i = 0; i < MAXTILES; i++) {
+            tilesToExchange.setValueAt(null,0,i);
+        }
     }
 }

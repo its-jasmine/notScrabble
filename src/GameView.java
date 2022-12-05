@@ -21,7 +21,6 @@ public class GameView extends JFrame {
     private ArrayList<PlayerView> playerViews;
     private Container southContainer;
     private BoardView boardView;
-    private int currentView;
     private JButton exchangeButton;
     //private JButton doneExchangeButton;
 
@@ -30,7 +29,6 @@ public class GameView extends JFrame {
 
         game = new Game(gameConfig);
 
-        currentView = 0;
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
         ArrayList<Player> players =  game.getPlayers();
@@ -65,7 +63,11 @@ public class GameView extends JFrame {
         submitButton.setForeground(Color.WHITE);
         submitButton.setFont(new Font("Tahoma",Font.BOLD, 14));
         submitButton.setPreferredSize(new Dimension(100,50));
-        submitButton.addActionListener(e -> game.submit());
+        submitButton.addActionListener(e -> {
+            game.submit();
+            setExchangeButtonStatus(SHOW_EXCHANGE_CMD);
+
+        });
 
         JButton passButton = new JButton("Pass");
         passButton.setFocusPainted(false);
@@ -73,7 +75,11 @@ public class GameView extends JFrame {
         passButton.setForeground(Color.WHITE);
         passButton.setFont(new Font("Tahoma",Font.BOLD, 14));
         passButton.setPreferredSize(new Dimension(100,50));
-        passButton.addActionListener(e -> game.passTurn());
+        passButton.addActionListener(e -> {
+            getCurrentPlayerView().update(0);
+            game.passTurn();
+            setExchangeButtonStatus(SHOW_EXCHANGE_CMD);
+        });
 
         exchangeButton = new JButton("Exchange");
         exchangeButton.setFocusPainted(false);
@@ -87,13 +93,11 @@ public class GameView extends JFrame {
             String actCmd = b.getActionCommand();
             if (actCmd.equals(SHOW_EXCHANGE_CMD)) {
                 displayExchangeView();
-                b.setText("Done");
-                b.setActionCommand(PROCESS_EXCHANGE_CMD);
+                setExchangeButtonStatus(PROCESS_EXCHANGE_CMD);
             } else if (actCmd.equals(PROCESS_EXCHANGE_CMD)){
                 boolean success = game.exchangeTiles();
                 if (success) {
-                    b.setText("Exchange");
-                    b.setActionCommand(SHOW_EXCHANGE_CMD);
+                    setExchangeButtonStatus(SHOW_EXCHANGE_CMD);
                } else {
                 JOptionPane.showMessageDialog(this,
                         "There are not enough tiles in the bag to exchange these tiles. Try exchanging less tiles, or pass instead.");
@@ -159,11 +163,28 @@ public class GameView extends JFrame {
         game.addView(this);
         game.playGame();
     }
+/*
+    private void hideExchangeView() {
+        PlayerView currentPlayerView = getCurrentPlayerView();
+        currentPlayerView.hideExchangeView();
+
+    }*/
+
+    public void setExchangeButtonStatus(String command){
+        if (exchangeButton.getActionCommand().equals(command)) return; // already set to desired state
+
+        if (command.equals(SHOW_EXCHANGE_CMD)) {
+            exchangeButton.setText("Exchange");
+            exchangeButton.setActionCommand(SHOW_EXCHANGE_CMD);
+        } else if (command.equals(PROCESS_EXCHANGE_CMD)){
+            exchangeButton.setText("Done");
+            exchangeButton.setActionCommand(PROCESS_EXCHANGE_CMD);
+        }
+    }
 
     private void displayExchangeView() {
-        BorderLayout layout =  (BorderLayout)southContainer.getLayout();
-        PlayerView currentPlayerView = (PlayerView) layout.getLayoutComponent(BorderLayout.CENTER);
-        Container rightSouth = (Container) layout.getLayoutComponent(BorderLayout.EAST);
+        PlayerView currentPlayerView = getCurrentPlayerView();
+        //Container rightSouth = (Container) layout.getLayoutComponent(BorderLayout.EAST);
 
         currentPlayerView.displayExchangeView();
         //rightSouth.remove(exchangeButton);
@@ -171,6 +192,11 @@ public class GameView extends JFrame {
         //rightSouth.add(doneExchangeButton, BorderLayout.EAST);
         southContainer.revalidate();
         southContainer.repaint();
+    }
+
+    private PlayerView getCurrentPlayerView() {
+        BorderLayout layout =  (BorderLayout)southContainer.getLayout();
+        return (PlayerView) layout.getLayoutComponent(BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {
