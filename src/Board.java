@@ -1,7 +1,6 @@
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 
@@ -25,10 +24,10 @@ public class Board implements Serializable {
 
 
     /** The direction of the word currently be validated */
-    private BoardValidator boardValidator = new BoardValidator(this);
+    private transient BoardValidator boardValidator = new BoardValidator(this);
 
     /** the word extractor */
-    private WordExtractor wordExtractor = new WordExtractor(this);
+    private transient WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
 
@@ -296,22 +295,29 @@ public class Board implements Serializable {
         this.previouslyPlayed = previouslyPlayed;
     }
 
-    /*private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(this.boardValidator);
-        out.writeObject(this.wordExtractor);
-    }
+    /**
+     * Overrides readObject to set the transient fields boardValidator and wordExtracter
+     * @param aInputStream
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
         aInputStream.defaultReadObject();
-        boardValidator = ((Board) aInputStream.readObject()).getBoardValidator();
-        wordExtractor = ((Board)aInputStream.readObject()).getWordExtractor();
-    }*/
-
-    private WordExtractor getWordExtractor() {
-        return wordExtractor;
+        setBoardValidator();
+        setWordExtractor();
     }
 
-    private BoardValidator getBoardValidator() {
-        return boardValidator;
+    /**
+     * Sets the wordExtractor field to a new WordExtractor object
+     */
+    private void setWordExtractor() {
+        wordExtractor = new WordExtractor(this);
+    }
+
+    /**
+     * Sets the boardValidator field to a new boardValidator object
+     */
+    private void setBoardValidator() {
+        boardValidator = new BoardValidator(this);
     }
 }

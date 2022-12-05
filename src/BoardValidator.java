@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Victoria Malouf
  * @author Rebecca Elliott
  */
-public class BoardValidator implements Serializable {
+public class BoardValidator {
 
     /** The allowable word alignment directions */
     public enum Direction {HORIZONTAL, VERTICAL, UNKNOWN}

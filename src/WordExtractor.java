@@ -7,7 +7,7 @@ import java.util.List;
  * @author  Rebecca Elliott
  */
 
-public class WordExtractor implements Serializable {
+public class WordExtractor {
 
     private final Board board;
 

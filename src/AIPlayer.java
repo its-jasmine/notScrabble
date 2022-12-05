@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,12 +15,11 @@ import static java.util.Collections.shuffle;
 public class AIPlayer extends Player implements Serializable {
     private static final int NUMBER_TILES_TO_TRY = 10; // to help limit how long the AI's turn is and make it easier to play against
     /** A Wordfinder to find words */
-    private final WordFinder wordFinder;
+    private transient WordFinder wordFinder = new WordFinder();
 
     public AIPlayer(Board board, Bag bag, int playerNumber) {
         super(board, bag);
         name = "AI " + playerNumber;
-        wordFinder = new WordFinder();
     }
 
     /**
@@ -247,5 +248,23 @@ public class AIPlayer extends Player implements Serializable {
             ValidTry validTry = submitAndReset(emptySquareCoordinates, tilesToPlay);
             if (validTry != null) validTries.add(validTry);
         }
+    }
+
+    /**
+     * Overrides readObject to set the transient field wordFinder
+     * @param aInputStream
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+        aInputStream.defaultReadObject();
+        setWordFinder();
+    }
+
+    /**
+     * Sets the wordFinder field to a new WordFinder object
+     */
+    private void setWordFinder() {
+        wordFinder = new WordFinder();
     }
 }
