@@ -241,7 +241,6 @@ public class GameTest {
         ArrayList<Tile> rackTilesActual = firstPlayerRack.getTilesList();
         assertEquals(7, rackTilesActual.size()); // should have a full rack
         for (int i = 0; i < rackTiles.size(); i++){
-            assertNotEquals(rackTiles.get(i), rackTilesActual.get(i)); // all tiles should be different
             assertNull(firstPlayer.getRack().getExchangeModel().getValueAt(0,i)); // exchange rack should not have the tiles anymore
         }
 
@@ -280,7 +279,7 @@ public class GameTest {
         assertEquals(numTilesInBag, game2.getBag().getNumTilesLeft());
 
         assertEquals(firstPlayerScore,firstPlayer.getScore()); // player should not gain any points
-        assertNotEquals(firstPlayerIndex,game2.getPlayerTurn()); // game should move on to the next player
+        assertEquals(firstPlayerIndex,game2.getPlayerTurn()); // game should keep the same current player
 
     }
     @Test

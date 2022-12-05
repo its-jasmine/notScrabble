@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -228,12 +227,10 @@ public class PlayerTest {
         assertFalse(player.exchangeTiles());
 
         ArrayList<Tile> tilesActual = r.getTilesList();
-        assertEquals(6, tilesActual.size()); // should still have one removed tile
+        assertEquals(7, tilesActual.size()); // tile should be returned
         for (int i = 0; i < tilesActual.size(); i++){
-            assertEquals(tiles.get(i+1), tilesActual.get(i)); // rest of tiles should be the same
+            assertTrue(tiles.contains(tilesActual.get(i))); // rest of tiles should be the same
         }
-        // exchange rack should still have the tile
-        assertEquals(firstTile.get(0), r.getExchangeModel().getValueAt(0,0));
 
         // the number of tiles in the bag should be the same
         assertEquals(numTilesInBag,bag.getNumTilesLeft());
