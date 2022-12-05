@@ -43,6 +43,8 @@ public class BoardRenderer  extends DefaultTableCellRenderer {
             if (t instanceof BlankTile) {
                 ((JLabel) c).setToolTipText(((BlankTile) t).getLetter());
                 UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 30));
+            }else{
+                ((JLabel) c).setToolTipText(null); // ensures the rest of the squares do not have a tool tip
             }
         }
         return c;
