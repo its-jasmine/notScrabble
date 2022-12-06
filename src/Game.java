@@ -162,8 +162,8 @@ public class Game implements Serializable {
     /**
      * Starts the game and continues to tell players to take turns until the game is over.
      */
-    public void playGame() {
-        updateGameView(true);
+    public void playGame(boolean firstTurn) {
+        updateGameView(firstTurn);
     }
 
     /**
@@ -291,6 +291,6 @@ public class Game implements Serializable {
      */
     public static void main(String[] args) {
         Game game = new Game(1, 1);
-        game.playGame();
+        game.playGame(true);
     }
 }

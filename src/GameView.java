@@ -139,7 +139,8 @@ public class GameView extends JFrame implements Serializable {
         this.setVisible(true);
 
         game.addView(this);
-        game.playGame();
+        if (fileName != null) game.playGame(false);
+        else game.playGame(true);
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -169,11 +170,4 @@ public class GameView extends JFrame implements Serializable {
         southContainer.revalidate();
         southContainer.repaint();
     }
-    /*public void saveGame(String fileName) throws IOException {
-        FileOutputStream outputFile = new FileOutputStream(fileName);
-        ObjectOutputStream outputObject = new ObjectOutputStream(outputFile);
-        outputObject.writeObject(this);
-        outputObject.close();
-        outputFile.close();
-    }*/
 }
