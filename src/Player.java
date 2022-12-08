@@ -31,7 +31,7 @@ public class Player {
         this.name = "";
         this.score = 0;
         this.bag = bag;
-        this.rack = new Rack(bag);
+        this.rack = new Rack(bag, moves);
 
     }
     /**

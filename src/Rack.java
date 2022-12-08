@@ -2,6 +2,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -28,7 +29,7 @@ public class Rack implements Iterable<Tile>{
      * @param bag   where the tiles are drawn from
      * @param moves
      */
-    public Rack(Bag bag){
+    public Rack(Bag bag, Stack<Move> moves){
         tilesToExchange = new DefaultTableModel(1, 7){
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
