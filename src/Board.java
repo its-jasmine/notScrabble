@@ -24,10 +24,10 @@ public class Board implements Serializable {
 
 
     /** The direction of the word currently be validated */
-    private transient BoardValidator boardValidator = new BoardValidator(this);
+    private transient final BoardValidator boardValidator = new BoardValidator(this);
 
     /** the word extractor */
-    private transient WordExtractor wordExtractor = new WordExtractor(this);
+    private transient final WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
 
@@ -50,6 +50,7 @@ public class Board implements Serializable {
                 boardModel.setValueAt(new Square(), row, col);
             }
         }
+
         String[][] squarePlacement =
         {{"TRIPLE_WORD","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_WORD","PLAIN","PLAIN","PLAIN","DOUBLE_LETTER","PLAIN","PLAIN","TRIPLE_WORD"},
         {"PLAIN","DOUBLE_WORD","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","TRIPLE_LETTER","PLAIN","PLAIN","PLAIN","DOUBLE_WORD","PLAIN"},
@@ -77,6 +78,16 @@ public class Board implements Serializable {
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
 
+    }
+
+    /**
+     * Creates a new board using the specified board configuration.
+     * @param b The board configuration that defines square placement.
+     */
+    public Board(BoardConfiguration b) {
+        boardModel = b.generateDefaultTableModel();
+        this.playedThisTurn = new HashSet<>();
+        this.previouslyPlayed = new HashSet<>();
     }
 
     /**

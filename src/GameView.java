@@ -2,6 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+/**
+ * The main frame of the game, displays the game board, active player rack,
+ * @author Rebecca Elliott
+ * @author Jasmine Gad El Hak
+ * @author Arthur Atangana
+ * @author Victoria Malouf
+ * @version Milestone4
+ */
 
 public class GameView extends JFrame implements Serializable {
 
@@ -15,17 +23,13 @@ public class GameView extends JFrame implements Serializable {
     private BoardView boardView;
     private int currentView;
 
-    public GameView(int numPlayers, int numAI, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
+    public GameView(GameConfiguration gameConfig, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
         super("notScrabble");
         if (fileName != null){
             game = (Game) Game.loadGame(fileName);
         }
         else {
-            if (numAI > 0) {
-                game = new Game(numPlayers, numAI);
-            } else {
-                game = new Game(numPlayers);
-            }
+            game = new Game(gameConfig);
         }
         currentView = 0;
         boardView = new BoardView(game.getBoard());
@@ -143,8 +147,8 @@ public class GameView extends JFrame implements Serializable {
         else game.playGame(true);
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        new GameView(1, 1,null);
+    public static void main(String[] args) {
+        //new GameView();
     }
 
     /**

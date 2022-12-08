@@ -120,4 +120,12 @@ public class Square implements Serializable {
         if (isEmpty()) return type.toString();
         return tile.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof Square)) return false;
+        Square s = (Square) obj;
+        return s.tile == this.tile && s.type == this.type;
+    }
 }
