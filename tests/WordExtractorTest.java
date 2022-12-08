@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 import static org.junit.Assert.*;
@@ -26,7 +27,8 @@ public class WordExtractorTest {
 
         /* test first tiles */
         // on start square
-        Board b = new Board();
+        Stack<Move> moves = new Stack<>();
+        Board b = new Board(moves);
         newCoordinateList = new ArrayList<>();
         newTileList = new ArrayList<>();
         newCoordinateList.add(new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT));
@@ -217,7 +219,8 @@ public class WordExtractorTest {
     }
 
     private Board setBoardWithOneWordOnStartH() {
-        Board b = new Board();
+        Stack<Move> moves = new Stack<>();
+        Board b = new Board(moves);
         ArrayList<Coordinate> coordinateList = new ArrayList<>();
         coordinateList.add(new Coordinate(Coordinate.Column.G, Coordinate.Row.EIGHT));
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
@@ -231,7 +234,8 @@ public class WordExtractorTest {
     }
 
     private Board setBoardWithOneWordOnStartV() {
-        Board b = new Board();
+        Stack<Move> moves = new Stack<>();
+        Board b = new Board(moves);
         ArrayList<Coordinate> coordinateList = new ArrayList<>();
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SEVEN));
         coordinateList.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
@@ -245,7 +249,8 @@ public class WordExtractorTest {
     }
 
     private Board setBoardWithManyWordsOnIt() {
-        Board b = new Board();
+        Stack<Move> moves = new Stack<>();
+        Board b = new Board(moves);
         ArrayList<Coordinate> coordinateList = new ArrayList<>();
         ArrayList<Tile> tileList = new ArrayList<>();
         coordinateList.add(new Coordinate(Coordinate.Column.D, Coordinate.Row.EIGHT));

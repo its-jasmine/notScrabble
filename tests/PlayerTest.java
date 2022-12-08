@@ -3,6 +3,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Stack;
 
 import static org.junit.Assert.*;
 
@@ -17,10 +18,11 @@ public class PlayerTest {
     HashSet<Coordinate> coordinateHashSet;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        Stack<Move> moves = new Stack<>();
         bag = new Bag();
-        board = new Board();
-        player = new Player(board, bag);
+        board = new Board(moves);
+        player = new Player(board, bag, moves);
         tiles = new ArrayList<>();
         coordinates = new ArrayList<>();
         coordinateHashSet = new HashSet<>();

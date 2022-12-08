@@ -19,10 +19,14 @@ public class Rack implements Iterable<Tile>{
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
     private DefaultTableModel tilesToExchange;
+    public final Stack<Move> moves;
+
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).
-     * @param bag where the tiles are drawn from
+     *
+     * @param bag   where the tiles are drawn from
+     * @param moves
      */
     public Rack(Bag bag){
         tilesToExchange = new DefaultTableModel(1, 7){
@@ -33,6 +37,7 @@ public class Rack implements Iterable<Tile>{
             }
         };
         rackModel = new DefaultTableModel(1, 7) {
+
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
             {
@@ -40,6 +45,7 @@ public class Rack implements Iterable<Tile>{
                 return Tile.class;
             }
         };
+        this.moves = moves;
         this.bag = bag;
         drawTiles(); // draw tiles at beginning of game
     }

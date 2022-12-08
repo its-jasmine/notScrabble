@@ -21,16 +21,18 @@ public class Player {
 
     /**
      * Creates a new player with a specified board and bag.
+     *
      * @param board of the game the player is participating in
      * @param bag that the player will draw tiles from
      */
-    public Player(Board board, Bag bag){
+    public Player(Board board, Bag bag, Stack<Move> moves){
         views = new ArrayList<>();
         this.board = board;
         this.name = "";
         this.score = 0;
         this.bag = bag;
         this.rack = new Rack(bag);
+
     }
     /**
      * Creates a new player with a specified board, bag and player number.
@@ -38,8 +40,8 @@ public class Player {
      * @param bag that the player will draw tiles from
      * @param playerNumber the index of the player being created
      */
-    public Player(Board board, Bag bag, int playerNumber) {
-        this(board,bag);
+    public Player(Board board, Bag bag, Stack<Move> moves, int playerNumber) {
+        this(board, bag, moves);
         this.name = "Player " + playerNumber;
     }
     /**
@@ -48,8 +50,8 @@ public class Player {
      * @param bag that the player will draw tiles from
      * @param name of the player
      */
-    public Player(Board board, Bag bag,String name) {
-        this(board, bag);
+    public Player(Board board, Bag bag, Stack<Move> moves, String name) {
+        this(board, bag, moves);
         this.name = name;
     }
 
@@ -113,7 +115,7 @@ public class Player {
      * @return Game.Status the status of the game
      */
     public Game.Status submit(){
-        int turnScore = board.submit(); // we will update board to have internal list of tiles, no need for arg
+        int turnScore = board.submit();
         if (turnScore < 0) return Game.Status.RETRY;
         Square s;
         for (Coordinate c : board.getPlayedThisTurn()){
@@ -158,4 +160,5 @@ public class Player {
         for (PlayerView v : views) v.update(0);
         return true;
     }
+
 }
