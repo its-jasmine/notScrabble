@@ -24,10 +24,10 @@ public class Board implements Serializable {
 
 
     /** The direction of the word currently be validated */
-    private transient final BoardValidator boardValidator = new BoardValidator(this);
+    private transient BoardValidator boardValidator = new BoardValidator(this);
 
     /** the word extractor */
-    private transient final WordExtractor wordExtractor = new WordExtractor(this);
+    private transient WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
     private final DefaultTableModel boardModel;
 

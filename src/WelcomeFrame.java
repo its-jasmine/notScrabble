@@ -49,7 +49,11 @@ public class WelcomeFrame extends JFrame {
                 BoardConfiguration b = requestBoardConfiguration();
                 c = new GameConfiguration(b, numPlayers, numAI);
                 view.dispose();
-                new GameView(c);
+                try {
+                    new GameView(c, null);
+                } catch (IOException | ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
         private BoardConfiguration requestBoardConfiguration() {
