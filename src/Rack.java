@@ -21,7 +21,7 @@ public class Rack implements Iterable<Tile>{
      * Creates a new full rack (has 7 tiles, drawn from given bag).
      *
      * @param bag   where the tiles are drawn from
-     * @param moves
+     * @param moves pointer to the stack that stores moves played
      */
     public Rack(Bag bag, Stack<Move> moves){
         rackModel = new DefaultTableModel(1, 7){

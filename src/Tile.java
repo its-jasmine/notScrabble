@@ -1,5 +1,3 @@
-import javax.swing.*;
-
 public interface Tile {
     /**
      * Gets the total number of that letter to be included in the game.

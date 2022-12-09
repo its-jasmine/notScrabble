@@ -141,8 +141,4 @@ public class Player {
         board.resetPlayedThisTurn();
         board.getModel().fireTableDataChanged();
     }
-
-
-
-
 }
