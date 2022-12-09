@@ -94,7 +94,7 @@ public class Board implements Serializable {
      *
      * @param boardModel
      */
-    public Board(DefaultTableModel boardModel) {
+    public Board(DefaultTableModel boardModel, Stack<Move> moves) {
         this.boardModel = boardModel;
 
         this.playedThisTurn = new HashSet<>();

@@ -2,6 +2,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -71,7 +72,7 @@ public class Game implements Serializable {
         views = new ArrayList<>();
 
         if (b == null) board = new Board(moves);
-        else board = new Board(b, moves);
+        else board = new Board(b.generateDefaultTableModel(), moves);
         bag = new Bag();
 
         if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change

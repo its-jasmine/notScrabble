@@ -53,7 +53,7 @@ public class PlayerView extends JPanel {
         if (turnScore > 0) {
             message = player.getName() + " got " + turnScore + " points";
         } else {
-            message = player.getName() + "  their turn";
+            message = player.getName() + " passed their turn";
         }
         JLabel l = new JLabel(message, SwingConstants.CENTER);
         notif.setUndecorated(true);
