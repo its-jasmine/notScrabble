@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 /**
  * The main frame of the game, displays the game board, active player rack,
@@ -13,11 +12,6 @@ import java.util.ArrayList;
  */
 
 public class GameView extends JFrame {
-
-    public Game getGame() { // for testing
-        return game;
-    }
-
     private Game game;
     private ArrayList<PlayerView> playerViews;
     private Container southContainer;
@@ -41,7 +35,6 @@ public class GameView extends JFrame {
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //this.setLocationRelativeTo(null);
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         JMenu menu = new JMenu("Options");
@@ -149,9 +142,11 @@ public class GameView extends JFrame {
         else game.playGame(true);
     }
 
-    public static void main(String[] args) {
-        //new GameView();
+
+    public Game getGame() { // for testing
+        return game;
     }
+
 
     /**
      * updates the view

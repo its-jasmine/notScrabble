@@ -148,8 +148,4 @@ public class Player implements Serializable {
         aInputStream.defaultReadObject();
         views = new ArrayList<>();
     }
-
-
-
-
 }
