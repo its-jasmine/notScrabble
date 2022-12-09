@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * Implements
+ * Implements a valid try by the AI to play a word.
  * @author Rebecca Elliot
  * @author Milestone3
  */
