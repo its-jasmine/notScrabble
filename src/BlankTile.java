@@ -1,11 +1,12 @@
 import javax.swing.*;
+import java.io.Serializable;
 
 /**
  * Models the blank tiles in the game.
  * @author Victoria Malouf
  * @version Milestone3
  */
-public class BlankTile implements Tile {
+public class BlankTile implements Tile, Serializable {
 
     /** The letter on the tile */
     private String letter; // set to public so it can be accessed directly. Since it's final it can't be changed

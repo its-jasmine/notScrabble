@@ -1,10 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.io.IOException;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -185,6 +183,48 @@ public class GameTest {
 
         int currentPlayerIndex = game4.getPlayerTurn();
         assertNotEquals(currentPlayerIndex, firstPlayerIndex); // game should move on to next player
-        assertEquals(18,firstPlayer.getScore()); // first player should recieve score update for their played word
+        assertEquals(18,firstPlayer.getScore()); // first player should receive score update for their played word
+    }
+
+    @Test
+    public void testSaveLoad() throws IOException, ClassNotFoundException {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(LetterTile.A);
+        tiles.add(LetterTile.N);
+        tiles.add(LetterTile.D);
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        HashSet<Coordinate> coordsHash = new HashSet<>();
+        coords.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.SEVEN));
+        coords.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.EIGHT));
+        coords.add(new Coordinate(Coordinate.Column.H, Coordinate.Row.TEN));
+        coordsHash.addAll(coords);
+        game4.getBoard().placeTiles(coords, tiles);
+        game4.getBoard().setPlayedThisTurn(coordsHash);
+        game4.submit();
+
+        game4.saveGame("gameTest.txt");
+
+        Game game5 = (Game) Game.loadGame("gameTest.txt");
+
+        // Same Players
+        ArrayList<Player> game4Players = game4.getPlayers();
+        ArrayList<Player> game5Players = game5.getPlayers();
+        for (int i=0; i< game4Players.size(); i++){
+            assertEquals(game4Players.get(i).getName(),game5Players.get(i).getName());
+            assertEquals(game4Players.get(i).getScore(),game5Players.get(i).getScore());
+        }
+        // Same turn
+        assertEquals(game4.getPlayerTurn(), game5.getPlayerTurn());
+
+        // Same Racks
+        assertEquals(game4Players.get(0).getRack().getTilesList().toString(), game5Players.get(0).getRack().getTilesList().toString());
+        assertEquals(game4Players.get(1).getRack().getTilesList().toString(), game5Players.get(1).getRack().getTilesList().toString());
+
+        // Same Bag
+        assertEquals(game4.getBag().getNumTilesLeft(), game4.getBag().getNumTilesLeft());
+
+        // Same Board
+        assertEquals(game4.getBoard().getPlayedThisTurn(),game5.getBoard().getPlayedThisTurn());
+        assertEquals(game4.getBoard().getPreviouslyPlayed(),game5.getBoard().getPreviouslyPlayed());
     }
 }

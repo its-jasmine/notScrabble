@@ -1,5 +1,6 @@
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,7 +9,7 @@ import java.util.stream.Collectors;
  * @author Arthur Atangana
  * @version Milestone1
  */
-public class Rack implements Iterable<Tile>{
+public class Rack implements Iterable<Tile>, Serializable {
     /** The list of tiles in the rack */
     private DefaultTableModel rackModel;
     /** The maximum number of tiles in the rack */

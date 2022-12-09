@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 /**
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  * @author Victoria Malouf
  * @version Milestone4
  */
+
 public class GameView extends JFrame {
 
     public Game getGame() { // for testing
@@ -22,16 +24,19 @@ public class GameView extends JFrame {
     private BoardView boardView;
     private int currentView;
 
-    public GameView(GameConfiguration gameConfig) throws HeadlessException {
+    public GameView(GameConfiguration gameConfig, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
         super("notScrabble");
-
-        game = new Game(gameConfig);
-
+        if (fileName != null){
+            game = (Game) Game.loadGame(fileName);
+        }
+        else {
+            game = new Game(gameConfig);
+        }
         currentView = 0;
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
-        ArrayList<Player> players =  game.getPlayers();
-        for (Player player : players){
+        ArrayList<Player> players = game.getPlayers();
+        for (Player player : players) {
             playerViews.add(new PlayerView(player));
         }
 
@@ -45,10 +50,20 @@ public class GameView extends JFrame {
         JMenuItem newGame = new JMenuItem("New Game");
         JMenuItem restart = new JMenuItem("Restart");
         JMenuItem seeRules = new JMenuItem("See rules");
+        JMenuItem saveGame = new JMenuItem("Save Game");
+        saveGame.addActionListener(e -> {
+            String saveFileName = JOptionPane.showInputDialog("Provide file name:" );
+            try {
+                game.saveGame(saveFileName);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         menu.add(newGame);
         menu.add(restart);
         menu.add(seeRules);
+        menu.add(saveGame);
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -130,7 +145,8 @@ public class GameView extends JFrame {
         this.setVisible(true);
 
         game.addView(this);
-        game.playGame();
+        if (fileName != null) game.playGame(false);
+        else game.playGame(true);
     }
 
     public static void main(String[] args) {
@@ -144,6 +160,7 @@ public class GameView extends JFrame {
      */
     public void update(int playerTurn, boolean firstTurn) {
         Player player = game.getPlayers().get(playerTurn);
+        southContainer.remove(1);
         if (firstTurn) {
             JOptionPane.showMessageDialog(this,
                     player.getName() + " drew the highest tile and gets to go first",

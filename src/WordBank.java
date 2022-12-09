@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.io.File;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ import java.util.Scanner;
  * @version Milestone1
  */
 
-public class WordBank {
+public class WordBank implements Serializable {
     private HashSet<String> validWords;
 
     /**
