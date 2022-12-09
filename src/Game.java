@@ -283,6 +283,11 @@ public class Game implements Serializable {
         outputObject.close();
         outputFile.close();
     }
+    private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+        aInputStream.defaultReadObject();
+        views = new ArrayList<>();
+    }
+
     /**
      * Recreates a Game object with the same state as the Game saved in the file
      * @param fileName

@@ -51,8 +51,9 @@ public class GameView extends JFrame {
         JMenuItem seeRules = new JMenuItem("See rules");
         JMenuItem saveGame = new JMenuItem("Save Game");
         saveGame.addActionListener(e -> {
+            String saveFileName = JOptionPane.showInputDialog("Provide file name:" );
             try {
-                game.saveGame("save");
+                game.saveGame(saveFileName);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -158,6 +159,7 @@ public class GameView extends JFrame {
      */
     public void update(int playerTurn, boolean firstTurn) {
         Player player = game.getPlayers().get(playerTurn);
+        southContainer.remove(1);
         if (firstTurn) {
             JOptionPane.showMessageDialog(this,
                     player.getName() + " drew the highest tile and gets to go first",
