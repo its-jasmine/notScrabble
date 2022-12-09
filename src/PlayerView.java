@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
-public class PlayerView extends JPanel{
+public class PlayerView extends JPanel {
     private Player player;
     private RackView rackView;
     private ExchangeView exchangeView;

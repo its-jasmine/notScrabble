@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -5,7 +8,7 @@ import java.util.*;
  * @author Arthur Atangana
  * @version Milestone1
  */
-public class Player {
+public class Player implements Serializable {
     /** The board of the game the player is participating in */
     protected final Board board;
     /** The player's rack */
@@ -15,7 +18,7 @@ public class Player {
     /** The player's name */
     protected String name;
     /** the views of the player */
-    private List<PlayerView> views;
+    private transient List<PlayerView> views;
     private Bag bag;
 
 
@@ -32,7 +35,6 @@ public class Player {
         this.score = 0;
         this.bag = bag;
         this.rack = new Rack(bag, moves);
-
     }
     /**
      * Creates a new player with a specified board, bag and player number.
@@ -143,6 +145,10 @@ public class Player {
         rack.putTilesOnRack(returnTiles);
         board.resetPlayedThisTurn();
         board.getModel().fireTableDataChanged();
+    }
+    private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+        aInputStream.defaultReadObject();
+        views = new ArrayList<>();
     }
 
 

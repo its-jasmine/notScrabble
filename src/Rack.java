@@ -1,5 +1,6 @@
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Stack;
@@ -11,8 +12,7 @@ import java.util.stream.Collectors;
  * @author Jasmine Gad El Hak
  * @version Milestone4
  */
-public class Rack implements Iterable<Tile>{
-
+public class Rack implements Iterable<Tile>, Serializable {
     /** The list of tiles in the rack */
     private DefaultTableModel rackModel;
     /** The maximum number of tiles in the rack */
@@ -21,7 +21,6 @@ public class Rack implements Iterable<Tile>{
     private final Bag bag;
     private DefaultTableModel tilesToExchange;
     public final Stack<Move> moves;
-
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).

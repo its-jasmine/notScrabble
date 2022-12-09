@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 /**
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  * @author Victoria Malouf
  * @version Milestone4
  */
+
 public class GameView extends JFrame {
     private static String SHOW_EXCHANGE_CMD = "ShowExchangeView";
     private static String PROCESS_EXCHANGE_CMD = "ProcessExchange";
@@ -25,15 +27,18 @@ public class GameView extends JFrame {
     private JButton exchangeButton;
     //private JButton doneExchangeButton;
 
-    public GameView(GameConfiguration gameConfig) throws HeadlessException {
+    public GameView(GameConfiguration gameConfig, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
         super("notScrabble");
-
-        game = new Game(gameConfig);
-
+        if (fileName != null){
+            game = (Game) Game.loadGame(fileName);
+        }
+        else {
+            game = new Game(gameConfig);
+        }
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
-        ArrayList<Player> players =  game.getPlayers();
-        for (Player player : players){
+        ArrayList<Player> players = game.getPlayers();
+        for (Player player : players) {
             playerViews.add(new PlayerView(player));
         }
 
@@ -47,10 +52,20 @@ public class GameView extends JFrame {
         JMenuItem newGame = new JMenuItem("New Game");
         JMenuItem restart = new JMenuItem("Restart");
         JMenuItem seeRules = new JMenuItem("See rules");
+        JMenuItem saveGame = new JMenuItem("Save Game");
+        saveGame.addActionListener(e -> {
+            String saveFileName = JOptionPane.showInputDialog("Provide file name:" );
+            try {
+                game.saveGame(saveFileName);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
         menu.add(newGame);
         menu.add(restart);
         menu.add(seeRules);
+        menu.add(saveGame);
 
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -124,14 +139,6 @@ public class GameView extends JFrame {
         boardView.getTableHeader().setReorderingAllowed(false);
         contentPane.add(centerContainer);
 
-        /*doneExchangeButton = new JButton("Done");
-        doneExchangeButton.setFocusPainted(false);
-        doneExchangeButton.setBackground(Color.RED);
-        doneExchangeButton.setForeground(Color.WHITE);
-        doneExchangeButton.setFont(new Font("Tahoma",Font.BOLD, 13));
-        doneExchangeButton.setPreferredSize(new Dimension(100,50));
-        doneExchangeButton.addActionListener(...);*/
-
         Container leftContainer = new Container();
         leftContainer.setLayout(new BoxLayout(leftContainer, BoxLayout.Y_AXIS));
         for (int i = 0; i<15; i++){
@@ -162,15 +169,9 @@ public class GameView extends JFrame {
         this.setVisible(true);
 
         game.addView(this);
-        game.playGame();
+        if (fileName != null) game.playGame(false);
+        else game.playGame(true);
     }
-/*
-    private void hideExchangeView() {
-        PlayerView currentPlayerView = getCurrentPlayerView();
-        currentPlayerView.hideExchangeView();
-
-    }*/
-
     public void setExchangeButtonStatus(String command){
         if (exchangeButton.getActionCommand().equals(command)) return; // already set to desired state
 
@@ -220,10 +221,6 @@ public class GameView extends JFrame {
         Container rightSouth = (Container) layout.getLayoutComponent(BorderLayout.EAST);
         BorderLayout layout2 =  (BorderLayout) rightSouth.getLayout();
         Component c = layout2.getLayoutComponent(BorderLayout.EAST);
-        /*if (c == doneExchangeButton) {
-            rightSouth.remove(c);
-            rightSouth.add(exchangeButton, BorderLayout.EAST);
-        }*/
 
         Player player = game.getPlayers().get(playerTurn);
         if (firstTurn) {

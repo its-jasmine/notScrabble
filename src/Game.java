@@ -1,4 +1,7 @@
-import java.util.*;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -9,7 +12,7 @@ import java.util.stream.Collectors;
  * @author Victoria Malouf
  * @version Milestone4
  */
-public class Game {
+public class Game implements Serializable {
 
     private final UndoRedo undoRedo;
 
@@ -26,9 +29,10 @@ public class Game {
     /** The index corresponding to the player who is currently playing their turn */
     private int playerTurn; // index in the player list
 
-    private List<GameView> views;
+    private transient List<GameView> views;
     private Board board;
     private Bag bag;
+    private final transient BoardConfiguration b;
 
     /**
      * Creates a new game with the specifed number of players.
@@ -39,6 +43,7 @@ public class Game {
         views = new ArrayList<>();
         board = new Board(moves);
         bag = new Bag();
+        b = null;
 
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
@@ -61,9 +66,10 @@ public class Game {
         Stack<Move> moves = new Stack<>();
         int numPlayers = gameConfig.getNumPlayers();
         int numAI = gameConfig.getNumAI();
-        BoardConfiguration b = gameConfig.getBoardConfiguration();
+        b = gameConfig.getBoardConfiguration();
 
         views = new ArrayList<>();
+
         if (b == null) board = new Board(moves);
         else board = new Board(b, moves);
         bag = new Bag();
@@ -165,6 +171,7 @@ public class Game {
         return views;
     }
 
+
     /**
      * @return an arraylist of players
      */
@@ -175,8 +182,8 @@ public class Game {
     /**
      * Starts the game and continues to tell players to take turns until the game is over.
      */
-    public void playGame() {
-        updateGameView(true);
+    public void playGame(boolean firstTurn) {
+        updateGameView(firstTurn);
     }
 
     /**
@@ -238,16 +245,6 @@ public class Game {
     }
 
     /**
-     * updates the views of the game.
-     * @param firstTurn if it is the first turn, true, else, false
-     */
-    private void updateGameView(boolean firstTurn){
-        for (GameView view : views){
-            view.update(playerTurn, firstTurn);
-        }
-    }
-
-    /**
      * Gets the player with the highest score.
      * @return the player with the highest score
      */
@@ -276,6 +273,17 @@ public class Game {
     }
 
     /**
+     * updates the views of the game.
+     * @param firstTurn if it is the first turn, true, else, false
+     */
+    private void updateGameView(boolean firstTurn){
+        for (GameView view : views){
+            view.update(playerTurn, firstTurn);
+        }
+
+    }
+
+    /**
      * adds a view to the game
      * @param gameView the view to be added
      */
@@ -283,6 +291,33 @@ public class Game {
         views.add(gameView);
     }
 
+    public void saveGame(String fileName) throws IOException {
+        FileOutputStream outputFile = new FileOutputStream(fileName);
+        ObjectOutputStream outputObject = new ObjectOutputStream(outputFile);
+        outputObject.writeObject(this);
+        outputObject.close();
+        outputFile.close();
+    }
+    private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+        aInputStream.defaultReadObject();
+        views = new ArrayList<>();
+    }
+
+    /**
+     * Recreates a Game object with the same state as the Game saved in the file
+     * @param fileName
+     * @return Game object
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public static Object loadGame(String fileName) throws ClassNotFoundException, IOException {
+        FileInputStream file = new FileInputStream(fileName);
+        ObjectInputStream in = new ObjectInputStream(file);
+        Object obj = in.readObject();
+        in.close();
+        file.close();
+        return obj;
+    }
     /**
      * Undoes the move the player most recently played, can be called repeatedly for moves up to the most recent "submit"
      */
@@ -309,5 +344,11 @@ public class Game {
     public static void main(String[] args) {
         //Game game = new Game(1, 1, );
         //game.playGame();
+        Game g = new Game(2);
+        for (Field field : g.getClass().getFields()) {
+            if (!Serializable.class.isAssignableFrom(field.getType())) {
+                System.out.println("Field " + field + " is not assignable from type " + g.getClass());
+            }
+        }
     }
 }

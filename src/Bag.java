@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.*;
 import static java.util.Collections.shuffle;
 
@@ -7,7 +8,7 @@ import static java.util.Collections.shuffle;
  * @author Arthur Atangana
  * @version Milestone1
  */
-public class Bag {
+public class Bag implements Serializable {
     public static final int MAX_TILES = 100; // will be 100 when blanks are added
     /** The list of tiles in the bag */
     private List<Tile> tiles;
