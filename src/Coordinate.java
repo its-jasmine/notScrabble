@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.List;
 import java.util.Comparator;
 
@@ -6,7 +7,7 @@ import java.util.Comparator;
  * @author Rebecca Elliott
  * @version Milestone1
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
     /** The allowable columns on the board */
     public enum Column {
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O;

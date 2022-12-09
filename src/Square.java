@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Represents a square on the game board.
  * @author Jasmine Gad El Hak
@@ -5,7 +7,7 @@
  * @version Milestone3
  */
 
-public class Square {
+public class Square implements Serializable {
     /** The allowable square type on game board */
     public enum Type {
         START("*", 1,2),

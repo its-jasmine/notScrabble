@@ -1,4 +1,6 @@
-public interface Tile {
+import java.io.Serializable;
+
+public interface Tile extends Serializable {
     /**
      * Gets the total number of that letter to be included in the game.
      * @return how many of that letter are in the game
