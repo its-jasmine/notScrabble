@@ -66,7 +66,9 @@ When submitting their word after placement, if it is determined to be invalid, t
 
 ### Known issues
 
-The AI is too good, beware.
+- The AI is too good, beware.
+- The look and feel on Mac devices may not display the GUI as expected. 
+- Pop-up notifications will always appear in the center of the screen regardless of the location of the actual Game frame. 
 
 ### Requirements
 
