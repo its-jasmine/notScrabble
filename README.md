@@ -23,7 +23,7 @@ This project is divided into 4 milestones with this README file corresponding to
    * [Usage](#usage)
    * [Rest of deliverables](#rest-of-deliverables)
    * [Known issues](#known-issues)
-   * [Roadmap ahead](#roadmap-ahead)
+   * [Requirements](#requirements)
 <!--te-->
 
 ### Authors   
@@ -67,4 +67,8 @@ When submitting their word after placement, if it is determined to be invalid, t
 ### Known issues
 
 The AI is too good, beware.
+
+### Requirements
+
+This program is compiled for JDK 18.0
 
