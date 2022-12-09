@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -33,18 +32,15 @@ public class Game implements Serializable {
     private transient List<GameView> views;
     private Board board;
     private Bag bag;
-    private final transient BoardConfiguration b;
 
-    /**
-     * Creates a new game with the specifed number of players.
-     * @param numPlayers the number of players of the game
-     */
-    public Game(int numPlayers) {
+    private Game (int numPlayers, int numAI, BoardConfiguration b){
         Stack<Move> moves = new Stack<>();
         views = new ArrayList<>();
-        board = new Board(moves);
         bag = new Bag();
-        b = null;
+        undoRedo = new UndoRedo(board, moves);
+
+        if (b == null) board = new Board(moves);
+        else board = new Board(b.generateDefaultTableModel(), moves);
 
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
@@ -55,39 +51,24 @@ public class Game implements Serializable {
         for (int i = 0; i < numPlayers; i++) {
             players.add(new Player(board, bag, moves, i + 1));
         }
-        undoRedo = new UndoRedo(board, moves);
+        for (int i = 0; i < numAI; i++) {
+            players.add(new AIPlayer(board, bag, moves, i + 1));
+        }
     }
-
+    /**
+     * Creates a new game with the specifed number of players.
+     * @param numPlayers the number of players of the game
+     */
+    public Game(int numPlayers) {
+        this(numPlayers, 0, null);
+    }
 
     /**
      * Creates a new game using the given game configuration.
      * @param gameConfig contains the game configuration information.
      */
     public Game(GameConfiguration gameConfig) {
-        Stack<Move> moves = new Stack<>();
-        int numPlayers = gameConfig.getNumPlayers();
-        int numAI = gameConfig.getNumAI();
-        b = gameConfig.getBoardConfiguration();
-
-        views = new ArrayList<>();
-
-        if (b == null) board = new Board(moves);
-        else board = new Board(b.generateDefaultTableModel(), moves);
-        bag = new Bag();
-
-        if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change
-        else if (numPlayers > MAXPLAYERS) numPlayers= 4;
-
-        this.playerTurn = firstPlayer(bag, numPlayers + numAI);
-
-        this.players = new ArrayList<>();
-        for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(board, bag, moves, i + 1));
-        }
-        for (int i = 0; i < numAI; i++) {
-            players.add(new AIPlayer(board, bag, moves, i + 1));
-        }
-        undoRedo = new UndoRedo(board, moves);
+        this(gameConfig.getNumPlayers(), gameConfig.getNumAI(), gameConfig.getBoardConfiguration());
     }
 
     /**
@@ -343,13 +324,8 @@ public class Game implements Serializable {
      * @param args N/A
      */
     public static void main(String[] args) {
-        //Game game = new Game(1, 1, );
-        //game.playGame();
-        Game g = new Game(2);
-        for (Field field : g.getClass().getFields()) {
-            if (!Serializable.class.isAssignableFrom(field.getType())) {
-                System.out.println("Field " + field + " is not assignable from type " + g.getClass());
-            }
-        }
+        Game game = new Game(2);
+        game.playGame(true);
+
     }
 }
