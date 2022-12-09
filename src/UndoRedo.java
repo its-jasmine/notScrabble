@@ -4,6 +4,7 @@ import java.util.Stack;
 /**
  * This class stores moves and supports undoing and redoing moves.
  * @author Rebecca Elliott
+ * @version Milestone4
  */
 public class UndoRedo implements Serializable {
     private final Stack<Move> moves;
