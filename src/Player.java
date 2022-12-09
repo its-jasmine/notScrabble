@@ -150,8 +150,6 @@ public class Player implements Serializable {
         aInputStream.defaultReadObject();
         views = new ArrayList<>();
     }
-
-
     /**Attempts to exchange tiles from player's Rack for new tiles from the bag.
      * @return true, if the exchange is successful, false, if there are not enough tiles in the bag to perform the exchange.
      */
@@ -166,5 +164,4 @@ public class Player implements Serializable {
         for (PlayerView v : views) v.update(0);
         return true;
     }
-
 }

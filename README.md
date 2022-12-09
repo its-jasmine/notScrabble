@@ -5,12 +5,12 @@ notScrabble is a simplified version of the classic board game Scrabble!
 
 This project is being produced for SYSC 3110 taught by Dr. Babak Esfandiari. The TA assigned to this group is Mr. Mohamed Zalat. 
 
-This project is divided into 4 milestones with this README file corresponding to milestone 2.
+This project is divided into 4 milestones with this README file corresponding to milestone 4.
 
-**Milestone 3:** More complex implementation of notScrabble
+**Milestone 4:** Final touches on the notScrabble Game
 - User plays the game through the User Interface
-- User may place tiles on the board from their rack, see their score, pass their turn and submit their placed tiles
-- premium squares and blank tiles are supported
+- User may place tiles on the board from their rack, see their score, pass their turn, exchange their tiles and submit their placed tiles
+- premium squares and blank tiles are supported, as well as custom board layouts, save and loading a game.
 - UML class diagram and sequence diagram are provided
 - Design choices such as data structure and relevant operations are discussed
 
@@ -38,49 +38,33 @@ Victoria Malouf VictoriaMalouf@cmail.carleton.ca
 
 ### Version 
 
-11/21/2022 - Milestone 3
+12/8/2022 - Milestone 4
 
 ### Usage 
 
 To start the game, the number of players need to be specified with a default minimum of 2 and a default maximum of 4. The user will be prompted.
-The game Welcome View is initiated, which prompts the user to select either instructions or New Game, which starts a notScrabble game of two players.
+The game Welcome View is initiated, which prompts the user to select either instructions, load Game, 1 VS Computer or New Game.
+load Game requests the name of the save file that the player wishes to play.
+1 VS computer starts a game against an AI opponent and requests the type of board that the player wants to play on.
+New game requests the amount of players wanted and the type of board that the players want to play on.
 
 Players will take turns until a player runs out of tiles AND there are no tiles in the bag. The winner is then determined.
 When prompted, a player may pass or play their turn by clicking the submit or pass button.
 The player needs to drag and drop their tiles from their rack to the board.
 The player can swap the order of tiles in their rack by dragging and dropping to reorder their rack.
 The player can place unsubmited tiles from the board back to their rack.
+The player can exchange their tiles for tiles in the bag. This passes their turn.
 The player can place blank tiles, and will be prompted as to which letter the blank tile represents
-when submitting their word after placement, if it is determined to be invalid, the player's tiles are returned to the rack.
+The player can save their game at any point by clicking on the drop-down save menu, and inputting the name of their save.
+When submitting their word after placement, if it is determined to be invalid, the player's tiles are returned to the rack.
+
 
     
  **First turn** reminder: The player who places the first word onto the board must place a tile on the start square. 
 
 <img width="639" alt="Screen Shot 2022-10-25 at 10 04 24 AM" src="https://user-images.githubusercontent.com/84146479/197795120-00438956-c3fc-4f35-a596-05640f70e335.png">
 
-### Rest of Deliverables
-
-| Milestone | Due Date   | Main Deliverables                                                                                                                                                                                                                          |
-|:---------:|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|     4     | 12/05/2022 | **Undo, saving and customization features:** Ability to undo or redo moves at multiple levels. Ability to save and load the game using Java Serialization. Ability to customize boards by alternating the placement of premium squares.    |
-
 ### Known issues
 
-In some instances, the AI places blank tiles that it does not have.
-
-### Roadmap ahead
-
-For milestone 4 and onwards, the team will try to use JIRA, GitHub's Projects. The team will continue to use Lucidchart and Discord as brainstorming and communication channels. 
-
-The roadmap ahead is concerned with the refinement of the AI, UI, and added features like saving and loading games as well as new premium squares patterns
-
-**Goal** for milestone 4:
-- Refine the AI
-- Make it able to customize the amount of AI players
-- merge exchange tile implementation.
-- Winner screen
-- Add saving and loading functionalities.
-- add a score table to see every player scores
-- refine the blank tile visibility on the board to be able to check which letter the blank tile represents
-- implement the functionality for the menu bar
+The AI is too good, beware.
 

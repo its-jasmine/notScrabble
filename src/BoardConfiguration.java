@@ -41,8 +41,6 @@ public class BoardConfiguration {
     public BoardConfiguration(Type t) throws IOException {
         boardConfigType = t;
         InputStream in = getClass().getResourceAsStream(boardConfigFiles.get(t));
-
-        //JsonReader jsonReader = Json.createReader(new FileInputStream(boardConfigFiles.get(t)));
         JsonReader jsonReader = Json.createReader(in);
         configJson = convertDataToJsonObject(jsonReader);
     }

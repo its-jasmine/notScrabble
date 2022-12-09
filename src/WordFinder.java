@@ -27,14 +27,6 @@ public class WordFinder {
     }
 
     /**
-     * Gets the letterMap hashmap
-     * @return a hashmap of characters keys with their occurrence value
-     */
-    private HashMap<Character, Integer> getLetterMap() {
-        return letterMap;
-    }
-
-    /**
      * clears the letterMap and adds new letters to the hashmap and their occurrences
      * @param tileList the list of tiles to add to the map
      */

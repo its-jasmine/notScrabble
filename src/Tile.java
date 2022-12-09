@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.io.Serializable;
 
 public interface Tile extends Serializable {

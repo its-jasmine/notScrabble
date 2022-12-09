@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 /**
  * The main frame of the game, displays the game board, active player rack,
@@ -18,7 +19,6 @@ public class GameView extends JFrame {
     public Game getGame() { // for testing
         return game;
     }
-
     private Game game;
     private ArrayList<PlayerView> playerViews;
     private Container southContainer;
@@ -194,7 +194,11 @@ public class GameView extends JFrame {
     private PlayerView getCurrentPlayerView() {
         BorderLayout layout =  (BorderLayout)southContainer.getLayout();
         return (PlayerView) layout.getLayoutComponent(BorderLayout.CENTER);
+
+    public Game getGame() { // for testing
+        return game;
     }
+
 
     /**
      * updates the view

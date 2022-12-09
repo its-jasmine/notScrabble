@@ -85,7 +85,6 @@ public class PlayerView extends JPanel {
             throw new RuntimeException(e);
         }
     }
-
     public void displayExchangeView() {
         this.add(exchangeView, BorderLayout.SOUTH);
     }
