@@ -43,7 +43,7 @@ public class WelcomeFrame extends JFrame {
                     numAI = 0;
                 } else { // source.getActionCommand().equals(PLAYER_VS_AI)
                     numPlayers = 1;
-                    numAI = 0;
+                    numAI = 1;
                 }
 
                 BoardConfiguration b = requestBoardConfiguration();

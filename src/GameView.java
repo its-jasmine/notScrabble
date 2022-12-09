@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @version Milestone4
  */
 
-public class GameView extends JFrame implements Serializable {
+public class GameView extends JFrame {
 
     public Game getGame() { // for testing
         return game;

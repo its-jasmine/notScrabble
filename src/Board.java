@@ -1,8 +1,11 @@
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Represents a 15x15-grid board where the tiles of the game are played.
@@ -29,7 +32,8 @@ public class Board implements Serializable {
     /** the word extractor */
     private transient WordExtractor wordExtractor = new WordExtractor(this);
     /** The list of boardModel on the board */
-    private final DefaultTableModel boardModel;
+    private transient DefaultTableModel boardModel;
+    private Square[][] boardData;
 
     /**
      * Creates a new board with plain boardModel.
@@ -41,6 +45,7 @@ public class Board implements Serializable {
             {
                 return Square.class;
             }
+
         };
 
         for (Coordinate.Row r : Coordinate.Row.values()) {
@@ -82,10 +87,11 @@ public class Board implements Serializable {
 
     /**
      * Creates a new board using the specified board configuration.
-     * @param b The board configuration that defines square placement.
+     *
+     * @param boardModel
      */
-    public Board(BoardConfiguration b) {
-        boardModel = b.generateDefaultTableModel();
+    public Board(DefaultTableModel boardModel) {
+        this.boardModel = boardModel;
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
     }
@@ -306,6 +312,31 @@ public class Board implements Serializable {
         this.previouslyPlayed = previouslyPlayed;
     }
 
+    private static Square[][] convertTableModelTo2DArray(DefaultTableModel model){
+        Square[][] data = new Square[model.getRowCount()][model.getColumnCount()];
+        for (int i = 0; i < model.getRowCount(); i++){
+            for (int j = 0; j < model.getColumnCount(); j++){
+                data[i][j] = (Square)model.getValueAt(i,j);
+            }
+        }
+        return data;
+    }
+    private static DefaultTableModel convert2DArrayToDefaultTableModel(Square[][] data){
+        DefaultTableModel model = new DefaultTableModel(data.length, data[0].length){
+            //  renderers to be used based on Class
+            public Class<Square> getColumnClass(int column)
+            {
+                return Square.class;
+            }
+
+        };
+        for (int i = 0; i < data.length; i++){
+            for (int j = 0; j < data[i].length; j++){
+                model.setValueAt(data[i][j],i ,j);
+            }
+        }
+        return model;
+    }
     /**
      * Overrides readObject to set the transient fields boardValidator and wordExtracter
      * @param aInputStream
@@ -314,8 +345,15 @@ public class Board implements Serializable {
      */
     private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
         aInputStream.defaultReadObject();
+        boardModel = convert2DArrayToDefaultTableModel(boardData);
         setBoardValidator();
         setWordExtractor();
+    }
+
+    private void writeObject(ObjectOutputStream anOutputStream) throws ClassNotFoundException, IOException{
+        boardData = convertTableModelTo2DArray(boardModel);
+        anOutputStream.defaultWriteObject();
+
     }
 
     /**

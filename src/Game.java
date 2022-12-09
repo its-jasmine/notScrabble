@@ -1,5 +1,7 @@
 import java.io.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 /**
  * Models the letter crossing game.
@@ -25,9 +27,10 @@ public class Game implements Serializable {
     /** The index corresponding to the player who is currently playing their turn */
     private int playerTurn; // index in the player list
 
-    private List<GameView> views;
+    private transient List<GameView> views;
     private Board board;
     private Bag bag;
+    private final transient BoardConfiguration b;
 
     /**
      * Creates a new game with the specifed number of players.
@@ -37,6 +40,7 @@ public class Game implements Serializable {
         views = new ArrayList<>();
         board = new Board();
         bag = new Bag();
+        b = null;
 
         if (numPlayers < MINPLAYERS) numPlayers = 2; // could add print statements to notify about the change
         else if (numPlayers > MAXPLAYERS) numPlayers= 4;
@@ -57,11 +61,11 @@ public class Game implements Serializable {
     public Game(GameConfiguration gameConfig) {
         int numPlayers = gameConfig.getNumPlayers();
         int numAI = gameConfig.getNumAI();
-        BoardConfiguration b = gameConfig.getBoardConfiguration();
+        b = gameConfig.getBoardConfiguration();
 
         views = new ArrayList<>();
         if (b == null) board = new Board();
-        else board = new Board(b);
+        else board = new Board(b.generateDefaultTableModel());
         bag = new Bag();
 
         if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change
@@ -158,6 +162,7 @@ public class Game implements Serializable {
     public List<GameView> getViews() {
         return views;
     }
+
 
     /**
      * @return an arraylist of players
@@ -260,6 +265,7 @@ public class Game implements Serializable {
         for (GameView view : views){
             view.update(playerTurn, firstTurn);
         }
+
     }
 
     /**
@@ -299,5 +305,11 @@ public class Game implements Serializable {
     public static void main(String[] args) {
         //Game game = new Game(1, 1, );
         //game.playGame();
+        Game g = new Game(2);
+        for (Field field : g.getClass().getFields()) {
+            if (!Serializable.class.isAssignableFrom(field.getType())) {
+                System.out.println("Field " + field + " is not assignable from type " + g.getClass());
+            }
+        }
     }
 }

@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.*;
 
@@ -16,7 +18,7 @@ public class Player implements Serializable {
     /** The player's name */
     protected String name;
     /** the views of the player */
-    private List<PlayerView> views;
+    private transient List<PlayerView> views;
 
 
     /**
@@ -140,6 +142,10 @@ public class Player implements Serializable {
         rack.putTilesOnRack(returnTiles);
         board.resetPlayedThisTurn();
         board.getModel().fireTableDataChanged();
+    }
+    private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+        aInputStream.defaultReadObject();
+        views = new ArrayList<>();
     }
 
 
