@@ -33,4 +33,12 @@ public class Move implements Serializable {
         cameFromWasBoard = !cameFromWasBoard;
         sentToWasBoard = !sentToWasBoard;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof Move)) return false;
+        Move m = (Move) obj;
+        return m.playedFrom.equals(this.playedFrom) && m.playedTo.equals(this.playedTo) && m.playedFromTile.equals(this.playedFromTile) && m.playedToTile.equals(this.playedToTile) && m.cameFromWasBoard == this.cameFromWasBoard && m.sentToWasBoard == this.sentToWasBoard;
+    }
 }
