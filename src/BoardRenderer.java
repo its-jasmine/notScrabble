@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class BoardRenderer  extends DefaultTableCellRenderer {
-    private static final HashMap<Square.Type, Color> typeToColor = new HashMap<>(){{
+    private static final HashMap<Square.Type, Color> typeToColor = new HashMap<Square.Type, Color>(){{
         put(Square.Type.PLAIN, new Color(216,213,194));
         put(Square.Type.START, new Color(142, 177, 37));
         put(Square.Type.DOUBLE_LETTER, new Color(196,230,245));

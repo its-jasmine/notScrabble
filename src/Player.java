@@ -19,6 +19,7 @@ public class Player implements Serializable {
     protected String name;
     /** the views of the player */
     private transient List<PlayerView> views;
+    private Bag bag;
 
 
     /**
@@ -32,6 +33,7 @@ public class Player implements Serializable {
         this.board = board;
         this.name = "";
         this.score = 0;
+        this.bag = bag;
         this.rack = new Rack(bag, moves);
     }
     /**
@@ -127,7 +129,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * resets the turn
+     * Resets the players turn, returning all tiles they've played this round back to their rack.
      */
     public void resetTurn() {
         ArrayList<Tile> returnTiles = new ArrayList<>();
@@ -150,6 +152,19 @@ public class Player implements Serializable {
     }
 
 
-
+    /**Attempts to exchange tiles from player's Rack for new tiles from the bag.
+     * @return true, if the exchange is successful, false, if there are not enough tiles in the bag to perform the exchange.
+     */
+    public boolean exchangeTiles() {
+        ArrayList<Tile> tilesToExchange = rack.removeTilesToExchange();
+        ArrayList<Tile> newTiles = bag.exchangeTiles(tilesToExchange);
+        if (newTiles.isEmpty()) {
+            rack.putTilesOnRack(tilesToExchange);
+            return false;
+        }
+        rack.putTilesOnRack(newTiles);
+        for (PlayerView v : views) v.update(0);
+        return true;
+    }
 
 }

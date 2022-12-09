@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
-import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 /**
  * The main frame of the game, displays the game board, active player rack,
@@ -13,6 +12,8 @@ import java.util.ArrayList;
  */
 
 public class GameView extends JFrame {
+    private static String SHOW_EXCHANGE_CMD = "ShowExchangeView";
+    private static String PROCESS_EXCHANGE_CMD = "ProcessExchange";
 
     public Game getGame() { // for testing
         return game;
@@ -22,7 +23,7 @@ public class GameView extends JFrame {
     private ArrayList<PlayerView> playerViews;
     private Container southContainer;
     private BoardView boardView;
-    private int currentView;
+    private JButton exchangeButton;
 
     public GameView(GameConfiguration gameConfig, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
         super("notScrabble");
@@ -32,7 +33,6 @@ public class GameView extends JFrame {
         else {
             game = new Game(gameConfig);
         }
-        currentView = 0;
         boardView = new BoardView(game.getBoard());
         playerViews = new ArrayList<>();
         ArrayList<Player> players = game.getPlayers();
@@ -41,15 +41,14 @@ public class GameView extends JFrame {
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //this.setLocationRelativeTo(null);
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         JMenu menu = new JMenu("Options");
         menuBar.add(menu);
 
-        JMenuItem newGame = new JMenuItem("New Game");
-        JMenuItem restart = new JMenuItem("Restart");
-        JMenuItem seeRules = new JMenuItem("See rules");
+        JMenuItem restart = new JMenuItem("New Game");
+        restart.addActionListener(e -> {new WelcomeFrame(); this.dispose();});
+
         JMenuItem saveGame = new JMenuItem("Save Game");
         saveGame.addActionListener(e -> {
             String saveFileName = JOptionPane.showInputDialog("Provide file name:" );
@@ -60,9 +59,7 @@ public class GameView extends JFrame {
             }
         });
 
-        menu.add(newGame);
         menu.add(restart);
-        menu.add(seeRules);
         menu.add(saveGame);
 
         Container contentPane = this.getContentPane();
@@ -75,38 +72,60 @@ public class GameView extends JFrame {
         submitButton.setFocusPainted(false);
         submitButton.setBackground(Color.RED);
         submitButton.setForeground(Color.WHITE);
-        submitButton.setFont(new Font("Tahoma",Font.BOLD, 18));
-        submitButton.setPreferredSize(new Dimension(100,45));
-        submitButton.addActionListener(e -> game.submit());
+        submitButton.setFont(new Font("Tahoma",Font.BOLD, 14));
+        submitButton.setPreferredSize(new Dimension(100,50));
+        submitButton.addActionListener(e -> {
+            game.submit();
+            setExchangeButtonStatus(SHOW_EXCHANGE_CMD);
 
-        JButton exchangeButton = new JButton("Exchange");
-        exchangeButton.setFocusPainted(false);
-        exchangeButton.setBackground(Color.RED);
-        exchangeButton.setForeground(Color.WHITE);
-        exchangeButton.setFont(new Font("Tahoma",Font.BOLD, 18));
-        exchangeButton.setPreferredSize(new Dimension(100,45));
-        //exchangeButton.addActionListener(e -> game.exchangeTiles());
-
+        });
 
         JButton passButton = new JButton("Pass");
         passButton.setFocusPainted(false);
         passButton.setBackground(Color.RED);
         passButton.setForeground(Color.WHITE);
-        passButton.setFont(new Font("Tahoma",Font.BOLD, 18));
-        passButton.setPreferredSize(new Dimension(100,45));
-        passButton.addActionListener(e -> game.passTurn());
+        passButton.setFont(new Font("Tahoma",Font.BOLD, 14));
+        passButton.setPreferredSize(new Dimension(100,50));
+        passButton.addActionListener(e -> {
+            getCurrentPlayerView().update(0);
+            game.passTurn();
+            setExchangeButtonStatus(SHOW_EXCHANGE_CMD);
+        });
 
-        southContainer.add(passButton, BorderLayout.WEST);
+        exchangeButton = new JButton("Exchange");
+        exchangeButton.setFocusPainted(false);
+        exchangeButton.setBackground(Color.RED);
+        exchangeButton.setForeground(Color.WHITE);
+        exchangeButton.setFont(new Font("Tahoma",Font.BOLD, 13));
+        exchangeButton.setPreferredSize(new Dimension(100,50));
+        exchangeButton.setActionCommand(SHOW_EXCHANGE_CMD);
+        exchangeButton.addActionListener(e -> {
+            JButton b = (JButton)e.getSource();
+            String actCmd = b.getActionCommand();
+            if (actCmd.equals(SHOW_EXCHANGE_CMD)) {
+                displayExchangeView();
+                setExchangeButtonStatus(PROCESS_EXCHANGE_CMD);
+            } else if (actCmd.equals(PROCESS_EXCHANGE_CMD)){
+                boolean success = game.exchangeTiles();
+                if (success) {
+                    setExchangeButtonStatus(SHOW_EXCHANGE_CMD);
+               } else {
+                JOptionPane.showMessageDialog(this,
+                        "There are not enough tiles in the bag to exchange these tiles. Try exchanging less tiles, or pass instead.");
+                }
+            }
+        });
+
+        Container rightSouth = new Container();
+        rightSouth.setLayout(new BorderLayout());
+        rightSouth.add(submitButton, BorderLayout.WEST);
+        rightSouth.add(passButton, BorderLayout.CENTER);
+        rightSouth.add(exchangeButton, BorderLayout.EAST);
+
+        southContainer.add(rightSouth, BorderLayout.EAST);
         southContainer.add(new JLabel("Rack goes here"), BorderLayout.CENTER);
-        southContainer.add(submitButton, BorderLayout.EAST);
-        //southContainer.add(exchangeButton, BorderLayout.EAST);
 
         contentPane.add(southContainer, BorderLayout.SOUTH);
-
-        Container rightContainer = new Container();
-        rightContainer.setLayout(new BorderLayout());
-        rightContainer.add(exchangeButton,BorderLayout.SOUTH);
-        //contentPane.add(rightContainer, BorderLayout.EAST);
 
         Container centerContainer = new Container();
         centerContainer.setLayout(new BorderLayout());
@@ -149,8 +168,32 @@ public class GameView extends JFrame {
         else game.playGame(true);
     }
 
-    public static void main(String[] args) {
-        //new GameView();
+    /**
+     * Changes the exchange button appearance and behavior according to specified command.
+     * @param command Action command desired for exchange button.
+     */
+    public void setExchangeButtonStatus(String command){
+        if (exchangeButton.getActionCommand().equals(command)) return; // already set to desired state
+
+        if (command.equals(SHOW_EXCHANGE_CMD)) {
+            exchangeButton.setText("Exchange");
+            exchangeButton.setActionCommand(SHOW_EXCHANGE_CMD);
+        } else if (command.equals(PROCESS_EXCHANGE_CMD)){
+            exchangeButton.setText("Done");
+            exchangeButton.setActionCommand(PROCESS_EXCHANGE_CMD);
+        }
+    }
+
+    private void displayExchangeView() {
+        PlayerView currentPlayerView = getCurrentPlayerView();
+        currentPlayerView.displayExchangeView();
+        southContainer.revalidate();
+        southContainer.repaint();
+    }
+
+    private PlayerView getCurrentPlayerView() {
+        BorderLayout layout =  (BorderLayout)southContainer.getLayout();
+        return (PlayerView) layout.getLayoutComponent(BorderLayout.CENTER);
     }
 
     /**
@@ -159,8 +202,17 @@ public class GameView extends JFrame {
      * @param firstTurn boolean of first turn. true if it is the first turn, false otherwise
      */
     public void update(int playerTurn, boolean firstTurn) {
-        Player player = game.getPlayers().get(playerTurn);
+
+        // add new player view
         southContainer.remove(1);
+        southContainer.add(playerViews.get(playerTurn), 1);
+
+        BorderLayout layout =  (BorderLayout)southContainer.getLayout();
+        Container rightSouth = (Container) layout.getLayoutComponent(BorderLayout.EAST);
+        BorderLayout layout2 =  (BorderLayout) rightSouth.getLayout();
+        Component c = layout2.getLayoutComponent(BorderLayout.EAST);
+
+        Player player = game.getPlayers().get(playerTurn);
         if (firstTurn) {
             JOptionPane.showMessageDialog(this,
                     player.getName() + " drew the highest tile and gets to go first",
