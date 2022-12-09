@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
-import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 /**
  * The main frame of the game, displays the game board, active player rack,
@@ -49,9 +48,9 @@ public class GameView extends JFrame {
         JMenu menu = new JMenu("Options");
         menuBar.add(menu);
 
-        JMenuItem newGame = new JMenuItem("New Game");
-        JMenuItem restart = new JMenuItem("Restart");
-        JMenuItem seeRules = new JMenuItem("See rules");
+        JMenuItem restart = new JMenuItem("New Game");
+        restart.addActionListener(e -> {new WelcomeFrame(); this.dispose();});
+
         JMenuItem saveGame = new JMenuItem("Save Game");
         saveGame.addActionListener(e -> {
             String saveFileName = JOptionPane.showInputDialog("Provide file name:" );
@@ -62,9 +61,7 @@ public class GameView extends JFrame {
             }
         });
 
-        menu.add(newGame);
         menu.add(restart);
-        menu.add(seeRules);
         menu.add(saveGame);
 
         Container contentPane = this.getContentPane();
