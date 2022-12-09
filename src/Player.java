@@ -6,7 +6,7 @@ import java.util.*;
 /**
  * Represents a player in the game.
  * @author Arthur Atangana
- * @version Milestone1
+ * @version Milestone4
  */
 public class Player implements Serializable {
     /** The board of the game the player is participating in */
