@@ -68,4 +68,18 @@ public class Bag implements Serializable {
         tiles.addAll(rTiles);
         shuffle(tiles);
     }
+
+    /**
+     * Attempts to exchange the tiles provided with the same number of new tiles from the bag.
+     * @param tilesToExchange the tiles to exchange
+     * @return list of new tiles from exchange if there are sufficient nnumber of tiles left in the bag, otherwise, empty list.
+     */
+    public ArrayList<Tile> exchangeTiles(ArrayList<Tile> tilesToExchange) {
+        ArrayList<Tile> newTiles = new ArrayList<>();
+        int numTilesNeeded = tilesToExchange.size();
+        if (getNumTilesLeft() < numTilesNeeded) return newTiles; // not enough tiles left in the bag
+        newTiles.addAll(drawTiles(numTilesNeeded));
+        returnTiles(tilesToExchange); // tiles are returned to the bag after the new tiles are drawn
+        return newTiles;
+    }
 }

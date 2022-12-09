@@ -4,6 +4,8 @@ import java.awt.*;
 
 /**
  * Represents the rack in the GUI.
+ * @author Rebecca Elliot
+ * @version Milestone4
  */
 
 public class RackView extends JTable {
@@ -12,7 +14,7 @@ public class RackView extends JTable {
     public RackView(Rack rack) {
         super();
         this.rack = rack;
-        setModel(rack.getModel());
+
         setDefaultRenderer(Tile.class,new RackRenderer());
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(48);
@@ -27,7 +29,7 @@ public class RackView extends JTable {
         setCellSelectionEnabled(true);
         getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        setModel();
     }
 
     /**
@@ -37,6 +39,8 @@ public class RackView extends JTable {
     public Rack getRack() {
         return rack;
     }
-
+    public void setModel(){
+        setModel(rack.getModel());
+    }
 
 }

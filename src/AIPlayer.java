@@ -10,7 +10,7 @@ import static java.util.Collections.shuffle;
 
 /**
  * This class models a computer controlled player that will play the highest scoring word it can.
- * @author Rebecca Elliott *
+ * @author Rebecca Elliott
  */
 
 public class AIPlayer extends Player implements Serializable {

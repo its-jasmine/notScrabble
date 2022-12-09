@@ -1,13 +1,16 @@
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
  * Represents a rack that contains the tiles that a player can use during their turn.
  * @author Arthur Atangana
- * @version Milestone1
+ * @author Jasmine Gad El Hak
+ * @version Milestone4
  */
 public class Rack implements Iterable<Tile>, Serializable {
     /** The list of tiles in the rack */
@@ -16,6 +19,7 @@ public class Rack implements Iterable<Tile>, Serializable {
     public final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
+    private DefaultTableModel tilesToExchange;
     public final Stack<Move> moves;
 
     /**
@@ -25,7 +29,15 @@ public class Rack implements Iterable<Tile>, Serializable {
      * @param moves pointer to the stack that stores moves played
      */
     public Rack(Bag bag, Stack<Move> moves){
-        rackModel = new DefaultTableModel(1, 7){
+        tilesToExchange = new DefaultTableModel(1, 7){
+            //  renderers to be used based on Class
+            public Class getColumnClass(int column)
+            {
+                return Tile.class;
+            }
+        };
+        rackModel = new DefaultTableModel(1, 7) {
+
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
             {
@@ -43,12 +55,7 @@ public class Rack implements Iterable<Tile>, Serializable {
      * @return number of tiles in rack
      */
     public int getNumTiles() {
-        int numTiles = 0;
-        for (Tile t : this) {
-            if (t == null) continue;
-            numTiles++;
-        }
-        return numTiles;
+        return getTilesList().size();
     }
 
 
@@ -193,6 +200,19 @@ public class Rack implements Iterable<Tile>, Serializable {
     }
 
 
+    public ArrayList<Tile> removeTilesToExchange() {
+        ArrayList<Tile> tileList = new ArrayList<>();
+        Tile tileToExchange;
+        for(int i = 0; i < 7; i++){
+            tileToExchange = (Tile)tilesToExchange.getValueAt(0,i);
+            if (tileToExchange != null) {
+                tilesToExchange.setValueAt(null,0,i);
+                tileList.add(tileToExchange);
+            }
+        }
+        return tileList;
+    }
+
 
     @Override
     public Iterator<Tile> iterator() {
@@ -227,5 +247,14 @@ public class Rack implements Iterable<Tile>, Serializable {
         return it;
     }
 
+    public TableModel getExchangeModel() {
+        return tilesToExchange;
+    }
 
+    /**
+     * Returns all the tiles placed on the exchange rack back to the playing rack.
+     */
+    public void returnExchangeTilesToRack(){
+        putTilesOnRack(removeTilesToExchange());
+    }
 }

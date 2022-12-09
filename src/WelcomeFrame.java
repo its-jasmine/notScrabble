@@ -24,9 +24,7 @@ public class WelcomeFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             JButton source = (JButton)e.getSource();
             String actCmd = source.getActionCommand();
-            if (actCmd.equals(INSTRUCTIONS_CMD)){
-                JOptionPane.showMessageDialog(view, "Instructions blah blah blah");
-            }else if (actCmd.equals(LOAD_GAME_CMD)) { // if no input, don't crete 2 player game
+            if (actCmd.equals(LOAD_GAME_CMD)) { // if no input, don't crete 2 player game
                 String fileName = JOptionPane.showInputDialog("Provide file name:" );
                 try {
                     new GameView(null,fileName);
@@ -39,7 +37,9 @@ public class WelcomeFrame extends JFrame {
                 int numAI;
 
                 if (actCmd.equals(NEW_GAME_CMD)) {
-                    numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
+                    try {
+                        numPlayers = Integer.valueOf(JOptionPane.showInputDialog("How many players would you like?"));
+                    } catch (Exception ex) {return;}
                     numAI = 0;
                 } else { // source.getActionCommand().equals(PLAYER_VS_AI)
                     numPlayers = 1;
@@ -101,17 +101,7 @@ public class WelcomeFrame extends JFrame {
 
         setIconImage(logo.getImage());
         JLabel image = new JLabel(logo);
-        //image.setBorder(new BevelBorder(BevelBorder.RAISED));
 
-
-
-        JButton instructions = new JButton("  Instructions  ");
-        instructions.setFocusPainted(false);
-        instructions.setFont(new Font("Tahoma",Font.BOLD, 15));
-        instructions.setBackground(Color.RED);
-        instructions.setForeground(Color.WHITE);
-        instructions.setActionCommand(INSTRUCTIONS_CMD);
-        instructions.addActionListener(c);
 
         JButton newGame = new JButton("    New Game   ");
         newGame.setFocusPainted(false);
@@ -140,7 +130,6 @@ public class WelcomeFrame extends JFrame {
 
         container.add(image);
         container.add(Box.createRigidArea(new Dimension(0,10)));
-        container.add(instructions);
         container.add(Box.createRigidArea(new Dimension(0,30)));
         container.add(newGame);
         container.add(Box.createRigidArea(new Dimension(0,30)));
@@ -151,7 +140,6 @@ public class WelcomeFrame extends JFrame {
         image.setAlignmentX(Component.CENTER_ALIGNMENT);
         newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
         loadGame.setAlignmentX(Component.CENTER_ALIGNMENT);
-        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
         aiGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -1,9 +1,11 @@
+import java.io.Serializable;
+
 /**
  * This class contains all the information needed to know what happen in a move.
  * @author Rebecca Elliott
  */
 
-public class Move {
+public class Move implements Serializable {
     public Coordinate playedTo;
     public Coordinate playedFrom;
     public Tile playedToTile;

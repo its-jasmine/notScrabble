@@ -1,11 +1,12 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.util.*;
-import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Finds words for the AI to place on the board using tiles and a format
+ * @author Arthur Atangana
+ * @version Milestone3
  */
 public class WordFinder {
 
