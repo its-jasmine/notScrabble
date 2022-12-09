@@ -4,6 +4,8 @@ import java.awt.*;
 
 /**
  * Represents the rack in the GUI.
+ * @author Rebecca Elliot
+ * @version Milestone4
  */
 
 public class RackView extends JTable {
@@ -14,15 +16,12 @@ public class RackView extends JTable {
         this.rack = rack;
 
         setDefaultRenderer(Tile.class,new RackRenderer());
-        //DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) this.getDefaultRenderer(Object.class);
-        //renderer.setHorizontalAlignment(SwingConstants.CENTER);
         setBorder(new BevelBorder(BevelBorder.RAISED));
         setRowHeight(48);
         setOpaque(true);
         setFillsViewportHeight(true);
         setBackground(new Color(137,66,0));
         setShowGrid(false);
-        //setGridColor(Color.BLACK);
         setDragEnabled(true);
         setDropMode(DropMode.ON);
         setTransferHandler(new RackTransferHelper(rack.moves));

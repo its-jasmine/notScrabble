@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 
+/**
+ * Implements
+ * @author Rebecca Elliot
+ * @author Milestone3
+ */
 public class ValidTry implements Comparable<ValidTry>{
-
 
     private final int score;
     private final ArrayList<Tile> tilesToPlay;

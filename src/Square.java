@@ -21,7 +21,6 @@ public class Square implements Serializable {
         public final int letterMultiplier;
         public final int wordMultiplier;
 
-        // public final Image squareImage... //TODO
         Type(String stringDisplay, int letterMultiplier, int wordMultiplier) {
             this.stringDisplay = stringDisplay;
             this.letterMultiplier = letterMultiplier;

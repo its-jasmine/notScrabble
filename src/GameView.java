@@ -24,7 +24,6 @@ public class GameView extends JFrame {
     private Container southContainer;
     private BoardView boardView;
     private JButton exchangeButton;
-    //private JButton doneExchangeButton;
 
     public GameView(GameConfiguration gameConfig, String fileName) throws HeadlessException, IOException, ClassNotFoundException {
         super("notScrabble");
@@ -42,7 +41,6 @@ public class GameView extends JFrame {
         }
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //this.setLocationRelativeTo(null);
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         JMenu menu = new JMenu("Options");
@@ -169,6 +167,11 @@ public class GameView extends JFrame {
         if (fileName != null) game.playGame(false);
         else game.playGame(true);
     }
+
+    /**
+     * Changes the exchange button appearance and behavior according to specified command.
+     * @param command Action command desired for exchange button.
+     */
     public void setExchangeButtonStatus(String command){
         if (exchangeButton.getActionCommand().equals(command)) return; // already set to desired state
 
@@ -183,12 +186,7 @@ public class GameView extends JFrame {
 
     private void displayExchangeView() {
         PlayerView currentPlayerView = getCurrentPlayerView();
-        //Container rightSouth = (Container) layout.getLayoutComponent(BorderLayout.EAST);
-
         currentPlayerView.displayExchangeView();
-        //rightSouth.remove(exchangeButton);
-
-        //rightSouth.add(doneExchangeButton, BorderLayout.EAST);
         southContainer.revalidate();
         southContainer.repaint();
     }
@@ -196,10 +194,6 @@ public class GameView extends JFrame {
     private PlayerView getCurrentPlayerView() {
         BorderLayout layout =  (BorderLayout)southContainer.getLayout();
         return (PlayerView) layout.getLayoutComponent(BorderLayout.CENTER);
-    }
-
-    public static void main(String[] args) {
-        //new GameView();
     }
 
     /**
@@ -210,7 +204,6 @@ public class GameView extends JFrame {
     public void update(int playerTurn, boolean firstTurn) {
 
         // add new player view
-
         southContainer.remove(1);
         southContainer.add(playerViews.get(playerTurn), 1);
 
