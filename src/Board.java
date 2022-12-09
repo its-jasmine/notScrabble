@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Represents a 15x15-grid board where the tiles of the game are played.
@@ -35,10 +36,12 @@ public class Board implements Serializable {
     private transient DefaultTableModel boardModel;
     private Square[][] boardData;
 
+    public final Stack<Move> moves;
+
     /**
      * Creates a new board with plain boardModel.
      */
-    public Board() {
+    public Board(Stack<Move> moves) {
         boardModel = new DefaultTableModel(Coordinate.Row.values().length, Coordinate.Column.values().length){
             //  renderers to be used based on Class
             public Class<Square> getColumnClass(int column)
@@ -82,6 +85,7 @@ public class Board implements Serializable {
 
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
+        this.moves = moves;
 
     }
 
@@ -92,8 +96,10 @@ public class Board implements Serializable {
      */
     public Board(DefaultTableModel boardModel) {
         this.boardModel = boardModel;
+
         this.playedThisTurn = new HashSet<>();
         this.previouslyPlayed = new HashSet<>();
+        this.moves = moves;
     }
 
     /**

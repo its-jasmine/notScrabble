@@ -13,8 +13,10 @@ import java.util.stream.Collectors;
  */
 public class Game implements Serializable {
 
+    private final UndoRedo undoRedo;
+
     /** The allowable game statuses */
-    public enum Status {RUNNING, OVER, RETRY;} // used as a way to have a named boolean for readability
+    public enum Status {RUNNING, OVER, RETRY} // used as a way to have a named boolean for readability
     /** The maximum number of players in a game */
     private final static int MAXPLAYERS = 4; //could make this more
     /** The minimum number of players in a game */
@@ -37,8 +39,9 @@ public class Game implements Serializable {
      * @param numPlayers the number of players of the game
      */
     public Game(int numPlayers) {
+        Stack<Move> moves = new Stack<>();
         views = new ArrayList<>();
-        board = new Board();
+        board = new Board(moves);
         bag = new Bag();
         b = null;
 
@@ -49,8 +52,9 @@ public class Game implements Serializable {
 
         this.players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(board, bag, i + 1));
+            players.add(new Player(board, bag, moves, i + 1));
         }
+        undoRedo = new UndoRedo(board, moves);
     }
 
 
@@ -59,13 +63,15 @@ public class Game implements Serializable {
      * @param gameConfig contains the game configuration information.
      */
     public Game(GameConfiguration gameConfig) {
+        Stack<Move> moves = new Stack<>();
         int numPlayers = gameConfig.getNumPlayers();
         int numAI = gameConfig.getNumAI();
         b = gameConfig.getBoardConfiguration();
 
         views = new ArrayList<>();
-        if (b == null) board = new Board();
-        else board = new Board(b.generateDefaultTableModel());
+
+        if (b == null) board = new Board(moves);
+        else board = new Board(b, moves);
         bag = new Bag();
 
         if (numPlayers < MINPLAYERS) numPlayers = 1; // could add print statements to notify about the change
@@ -75,11 +81,12 @@ public class Game implements Serializable {
 
         this.players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new Player(board, bag, i + 1));
+            players.add(new Player(board, bag, moves, i + 1));
         }
         for (int i = 0; i < numAI; i++) {
-            players.add(new AIPlayer(board, bag, i + 1));
+            players.add(new AIPlayer(board, bag, moves, i + 1));
         }
+        undoRedo = new UndoRedo(board, moves);
     }
 
     /**
@@ -182,6 +189,7 @@ public class Game implements Serializable {
      * Increments the turn
      */
     private void nextTurn(){
+        undoRedo.clearMoves();
         playerTurn = ++playerTurn % players.size();
     }
 
@@ -209,6 +217,7 @@ public class Game implements Serializable {
             }
         }
         else if (status == Status.RETRY){ // only happens for non-AI players
+            undoRedo.clearMoves();
             player.resetTurn();
         }
         else{
@@ -303,6 +312,25 @@ public class Game implements Serializable {
         file.close();
         return obj;
     }
+    /**
+     * Undoes the move the player most recently played, can be called repeatedly for moves up to the most recent "submit"
+     */
+    public void undo() {
+        undoRedo.undo(players.get(playerTurn).getRack());
+        views.get(0).repaint();
+        views.get(0).revalidate();
+
+    }
+
+    /**
+     * Redoes an undone player turn
+     */
+    public void redo() {
+        undoRedo.redo(players.get(playerTurn).getRack());
+        views.get(0).repaint();
+        views.get(0).revalidate();
+    }
+
     /**
      * Runs a game with 2 players
      * @param args N/A

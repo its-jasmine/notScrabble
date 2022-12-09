@@ -1,4 +1,3 @@
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.io.Serializable;
@@ -17,12 +16,15 @@ public class Rack implements Iterable<Tile>, Serializable {
     public final static int MAXTILES = 7;
     /** The bag that the tiles will be drawn from */
     private final Bag bag;
+    public final Stack<Move> moves;
 
     /**
      * Creates a new full rack (has 7 tiles, drawn from given bag).
-     * @param bag where the tiles are drawn from
+     *
+     * @param bag   where the tiles are drawn from
+     * @param moves
      */
-    public Rack(Bag bag){
+    public Rack(Bag bag, Stack<Move> moves){
         rackModel = new DefaultTableModel(1, 7){
             //  renderers to be used based on Class
             public Class getColumnClass(int column)
@@ -31,6 +33,7 @@ public class Rack implements Iterable<Tile>, Serializable {
                 return Tile.class;
             }
         };
+        this.moves = moves;
         this.bag = bag;
         drawTiles(); // draw tiles at beginning of game
     }

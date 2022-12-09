@@ -25,7 +25,7 @@ public class RackView extends JTable {
         //setGridColor(Color.BLACK);
         setDragEnabled(true);
         setDropMode(DropMode.ON);
-        setTransferHandler(new RackTransferHelper());
+        setTransferHandler(new RackTransferHelper(rack.moves));
         setRowSelectionAllowed(false);
         setCellSelectionEnabled(true);
         getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

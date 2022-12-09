@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 /**
  * The main frame of the game, displays the game board, active player rack,
@@ -125,18 +126,18 @@ public class GameView extends JFrame {
         }
         contentPane.add(leftContainer,BorderLayout.WEST);
 
-        /*JLabel timeLabel = new JLabel("game time GOES HERE");
-        timeLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        northContainer.add(timeLabel, 0);
 
-        JLabel northLabel = new JLabel("NotScrabble");
-        northLabel.setHorizontalAlignment(JLabel.CENTER);
-        northLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        northContainer.add(northLabel, 1);
+        Container northContainer = new Container();
+        contentPane.add(northContainer, BorderLayout.NORTH);
+        northContainer.setLayout(new GridLayout(1, 2));
 
-        JLabel scoreLabel = new JLabel("game score GOES HERE");
-        scoreLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        northContainer.add(scoreLabel, 2);*/
+        JButton undo = new JButton("UNDO");
+        undo.addActionListener(e -> game.undo());
+        northContainer.add(undo);
+
+        JButton redo = new JButton("REDO");
+        redo.addActionListener(e -> game.redo());
+        northContainer.add(redo);
 
 
         this.setSize(1000, 865);

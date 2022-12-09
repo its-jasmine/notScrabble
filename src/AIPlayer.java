@@ -3,6 +3,7 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 import static java.lang.Math.min;
 import static java.util.Collections.shuffle;
@@ -17,8 +18,8 @@ public class AIPlayer extends Player implements Serializable {
     /** A Wordfinder to find words */
     private transient WordFinder wordFinder = new WordFinder();
 
-    public AIPlayer(Board board, Bag bag, int playerNumber) {
-        super(board, bag);
+    public AIPlayer(Board board, Bag bag, Stack<Move> moves, int playerNumber) {
+        super(board, bag, moves);
         name = "AI " + playerNumber;
     }
 
